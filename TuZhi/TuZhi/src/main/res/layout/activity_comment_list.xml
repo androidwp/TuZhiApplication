@@ -22,7 +22,7 @@
             <ImageView
                 style="@style/NavigationLeftButton"
                 android:onClick="@{()->activity.back()}"
-                android:src="@mipmap/ic_launcher" />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             <ImageView
                 style="@style/NavigationRightButton"
                 android:onClick="@{()->activity.skipPublishCommentActivity()}"
-                android:src="@mipmap/ic_launcher" />
+                />
 
             <View style="@style/NavigationLine" />
 

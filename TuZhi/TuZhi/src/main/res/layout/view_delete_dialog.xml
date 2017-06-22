@@ -13,44 +13,49 @@
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_background"
         android:orientation="vertical"
-        android:padding="@dimen/generalSpace">
+        android:paddingLeft="@dimen/generalSpace"
+        android:paddingRight="@dimen/generalSpace">
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/generalSpace"
+            android:paddingTop="@dimen/generalSpace"
             android:text="提示"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/generalSpace"
-            android:layout_marginTop="@dimen/generalSpace"
-            android:textColor="@color/colorGeneralTintText"
-            android:text="你确定要删除该文件吗，删除后将无法恢复？" />
+            android:text="你确定要删除该文件吗，删除后将无法恢复？"
+            android:textColor="@color/colorGeneralTintText" />
 
         <LinearLayout
             android:layout_width="300dp"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="取消"
-                android:textColor="@color/colorGeneralMoreTintText"
                 android:gravity="center"
                 android:onClick="@{()->dialog.cancel()}"
-                android:layout_height="wrap_content" />
+                android:paddingBottom="@dimen/generalSpace"
+                android:paddingTop="@dimen/generalSpace"
+                android:text="取消"
+                android:textColor="@color/colorGeneralMoreTintText" />
 
             <TextView
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{()->dialog.delete()}"
-                android:text="删除"
-                android:textColor="@color/colorRedButton"
                 android:gravity="center"
-                android:layout_height="wrap_content" />
+                android:onClick="@{()->dialog.delete()}"
+                android:paddingBottom="@dimen/generalSpace"
+                android:paddingTop="@dimen/generalSpace"
+                android:text="删除"
+                android:textColor="@color/colorRedButton" />
 
         </LinearLayout>
 

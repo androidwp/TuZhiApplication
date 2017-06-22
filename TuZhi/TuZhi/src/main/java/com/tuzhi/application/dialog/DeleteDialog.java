@@ -139,7 +139,6 @@ public class DeleteDialog extends AlertDialog {
                 activity.back();
                 EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
                 dismiss();
-
             }
 
             @Override
