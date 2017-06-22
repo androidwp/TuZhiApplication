@@ -10,8 +10,8 @@
             type="com.tuzhi.application.moudle.repository.mvp.RepositoryActivity" />
 
         <variable
-            name="imageHeadUrl"
-            type="String" />
+            name="data"
+            type="com.tuzhi.application.bean.HttpInitBean" />
     </data>
 
     <LinearLayout
@@ -25,11 +25,14 @@
             android:background="@color/colorNavigationBarBackground">
 
             <com.makeramen.roundedimageview.RoundedImageView
-                style="@style/NavigationLeftButton"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
                 android:onClick="@{()->activity.skipMineActivity()}"
-                android:src="@mipmap/ic_launcher_round"
-                app:imageLoad="@{imageHeadUrl}"
-                app:riv_corner_radius="22.5dp" />
+                android:layout_marginLeft="@dimen/generalSpace"
+                android:scaleType="centerCrop"
+                app:imageLoad="@{data.userImage}"
+                app:riv_corner_radius="13dp" />
 
             <TextView
                 android:layout_width="wrap_content"

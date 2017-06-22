@@ -1,30 +1,30 @@
 package com.tuzhi.application.bean;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.tuzhi.application.BR;
+
 /**
  * Created by wangpeng on 2017/6/20.
  */
 
-public class HttpInitBean {
-    
+public class HttpInitBean extends BaseObservable {
 
-    private String resultMsg;
     private String showAdfalg;
-    private String showLogin;
+    private String phone;
+    private String nickname;
     private String loginStatus;
+    private String userImage;
+    private String userType;
+    private String resultMsg;
+    private String username;
+    private String email;
     private String userId;
     private String resultCode;
     private String updateReamrk;
     private String forceUpdate;
-    private String userType;
     private String isUpdate;
-
-    public String getResultMsg() {
-        return resultMsg;
-    }
-
-    public void setResultMsg(String resultMsg) {
-        this.resultMsg = resultMsg;
-    }
 
     public String isShowAdfalg() {
         return showAdfalg;
@@ -34,12 +34,24 @@ public class HttpInitBean {
         this.showAdfalg = showAdfalg;
     }
 
-    public String isShowLogin() {
-        return showLogin;
+    @Bindable
+    public String getPhone() {
+        return phone;
     }
 
-    public void setShowLogin(String showLogin) {
-        this.showLogin = showLogin;
+    public void setPhone(String phone) {
+        this.phone = phone;
+        notifyPropertyChanged(BR.phone);
+    }
+
+    @Bindable
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+        notifyPropertyChanged(BR.nickname);
     }
 
     public String isLoginStatus() {
@@ -48,6 +60,50 @@ public class HttpInitBean {
 
     public void setLoginStatus(String loginStatus) {
         this.loginStatus = loginStatus;
+    }
+
+    @Bindable
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+        notifyPropertyChanged(BR.userImage);
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getResultMsg() {
+        return resultMsg;
+    }
+
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Bindable
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+        notifyPropertyChanged(BR.email);
     }
 
     public String getUserId() {
@@ -80,14 +136,6 @@ public class HttpInitBean {
 
     public void setForceUpdate(String forceUpdate) {
         this.forceUpdate = forceUpdate;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
     }
 
     public String isIsUpdate() {

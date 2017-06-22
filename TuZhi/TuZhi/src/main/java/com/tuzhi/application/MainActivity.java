@@ -14,6 +14,7 @@ import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(@Nullable HttpInitBean httpInitBean, @NotNull String text) {
-                SharedPreferencesUtilsKt.saveLongCache(MainActivity.this, ConstantKt.getUSER_TYPE(), httpInitBean.getUserType());
-                SharedPreferencesUtilsKt.saveLongCache(MainActivity.this, ConstantKt.getUSER_ID(), httpInitBean.getUserId());
-                SharedPreferencesUtilsKt.saveLongCache(MainActivity.this, ConstantKt.getLOGIN_STATUS(), httpInitBean.isLoginStatus());
+                UserInfoUtils.saveUserInfo(MainActivity.this, text, httpInitBean);
                 if (TextUtils.equals(httpInitBean.isLoginStatus(), "false"))
                     ActivitySkipUtilsKt.toActivity(MainActivity.this, LoginActivity.class);
                 else

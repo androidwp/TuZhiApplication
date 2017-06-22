@@ -23,7 +23,7 @@ import okhttp3.RequestBody;
 public class PersonalInformationPresenter extends BasePresenterImpl<PersonalInformationContract.View> implements PersonalInformationContract.Presenter {
 
     private static final String URL_IMAGE = "http://upload.guigutang.com:8082/upload.htm?app=userImage&type=json";
-    private static final String URL = "user/updateUserInfo";
+    private static final String URL = "user/updateStaffInfo";
 
     @Override
     public void uploadImage(final String name, File image) {

@@ -11,7 +11,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tuzhi.application.moudle.login.bean.HttpUserBean;
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
@@ -34,14 +34,12 @@ public class MyApplication extends Application {
     }
 
     private void initLogin() {
-        String user_information = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getLOGIN_INFO());
+        String user_information = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getUSER_INFO());
         if (!TextUtils.isEmpty(user_information)) {
             try {
-                HttpUserBean httpUserBean = JSONObject.parseObject(user_information, HttpUserBean.class);
+                HttpInitBean httpUserBean = JSONObject.parseObject(user_information, HttpInitBean.class);
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_TYPE(), httpUserBean.getUserType());
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_ID(), httpUserBean.getUserId());
-                SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getLOGIN_STATUS(), httpUserBean.isLoginStatus());
-                SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getIMAGE_HEAD(), httpUserBean.getUserImage());
             } catch (Exception e) {
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getLOGIN_STATUS(), "false");
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_TYPE(), "1");

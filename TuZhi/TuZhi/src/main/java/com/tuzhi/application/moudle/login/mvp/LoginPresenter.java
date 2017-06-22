@@ -2,13 +2,12 @@ package com.tuzhi.application.moudle.login.mvp;
 
 import android.text.TextUtils;
 
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
-import com.tuzhi.application.moudle.login.bean.HttpUserBean;
 import com.tuzhi.application.moudle.login.bean.User;
-import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,19 +28,15 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("loginname", user.getUserName());
         parameter.put("password", user.getPassWord());
-        HttpUtilsKt.post(mView.getContext(), URL, parameter, HttpUserBean.class, new HttpCallBack<HttpUserBean>() {
+        HttpUtilsKt.post(mView.getContext(), URL, parameter, HttpInitBean.class, new HttpCallBack<HttpInitBean>() {
             @Override
             public void onFinish() {
 
             }
 
             @Override
-            public void onSuccess(@Nullable HttpUserBean httpUserBean, @NotNull String text) {
-                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getLOGIN_INFO(), text);
-                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getUSER_TYPE(), httpUserBean.getUserType());
-                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getUSER_ID(), httpUserBean.getUserId());
-                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getLOGIN_STATUS(), httpUserBean.isLoginStatus());
-                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getIMAGE_HEAD(), httpUserBean.getUserImage());
+            public void onSuccess(@Nullable HttpInitBean httpUserBean, @NotNull String text) {
+                UserInfoUtils.saveUserInfo(mView.getContext(), text, httpUserBean);
                 if (TextUtils.equals(httpUserBean.isLoginStatus(), "true"))
                     mView.skip();
             }

@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.alibaba.fastjson.JSONObject;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -18,16 +17,18 @@ import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityPersonalInformationBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
-import com.tuzhi.application.moudle.login.bean.HttpUserBean;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.mvp.BindingPhoneOrEmailFirstActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.rename.mvp.RenameActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageDealUtilsKt;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.ActionSheet;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -39,13 +40,12 @@ import java.io.File;
 
 public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
 
-
     private static final String PORTRAIT_NAME = "portrait.jpg";
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ActionSheet actionSheet;
     private ActivityPersonalInformationBinding binding;
-    private HttpUserBean httpUserBean;
+    private HttpInitBean httpUserBean;
 
     @Override
     protected int getLayoutId() {
@@ -68,13 +68,9 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityPersonalInformationBinding) viewDataBinding;
-        String userInfo = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getLOGIN_INFO());
-        httpUserBean = JSONObject.parseObject(userInfo, HttpUserBean.class);
-        String headUrl = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getIMAGE_HEAD());
-        httpUserBean.setUserImage(headUrl);
+        httpUserBean = UserInfoUtils.getUserInfo(this);
         binding.setData(httpUserBean);
         binding.setActivity(this);
-        binding.executePendingBindings();
     }
 
     public void back() {
@@ -173,5 +169,7 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     public void uploadFinish(String imageUrl) {
         httpUserBean.setUserImage(imageUrl);
+        UserInfoUtils.changeUserInfo(this, "userImage", imageUrl);
+        EventBus.getDefault().post(ConstantKt.getUPDATE_USER_INFO_EVENT());
     }
 }

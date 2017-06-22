@@ -11,7 +11,7 @@
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.login.bean.HttpUserBean" />
+            type="com.tuzhi.application.bean.HttpInitBean" />
 
     </data>
 
@@ -61,6 +61,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
                 android:scaleType="centerCrop"
                 app:imageLoad="@{data.userImage}"
                 app:riv_corner_radius="15dp" />

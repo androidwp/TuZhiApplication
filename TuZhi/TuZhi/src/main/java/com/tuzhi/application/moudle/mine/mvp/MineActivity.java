@@ -2,19 +2,22 @@ package com.tuzhi.application.moudle.mine.mvp;
 
 
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityMineBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
-import com.tuzhi.application.moudle.login.bean.HttpUserBean;
 import com.tuzhi.application.moudle.login.mvp.LoginActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.mvp.PersonalInformationActivity;
 import com.tuzhi.application.moudle.mine.problemfeedback.mvp.ProblemFeedbackActivity;
 import com.tuzhi.application.moudle.mine.setting.mvp.SettingActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 
 /**
@@ -23,6 +26,8 @@ import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
 public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresenter> implements MineContract.View {
 
+    private ActivityMineBinding binding;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_mine;
@@ -30,14 +35,23 @@ public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresent
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        ActivityMineBinding binding = (ActivityMineBinding) viewDataBinding;
+        EventBus.getDefault().register(this);
+        binding = (ActivityMineBinding) viewDataBinding;
         binding.setActivity(this);
-        String userInfo = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getLOGIN_INFO());
-        HttpUserBean httpUserBean = JSONObject.parseObject(userInfo, HttpUserBean.class);
-        String headUrl = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getIMAGE_HEAD());
-        httpUserBean.setUserImage(headUrl);
-        binding.setData(httpUserBean);
-        binding.executePendingBindings();
+        binding.setData(UserInfoUtils.getUserInfo(this));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMainEvent(String event) {
+        if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
+            binding.setData(UserInfoUtils.getUserInfo(this));
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void skipPersonalInformationActivity() {

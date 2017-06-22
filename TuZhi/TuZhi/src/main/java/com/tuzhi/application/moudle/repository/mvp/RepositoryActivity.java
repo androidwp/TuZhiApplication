@@ -16,6 +16,7 @@ import com.tuzhi.application.moudle.mine.mvp.MineActivity;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.LoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,6 +56,10 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
     public void onMessageEvent(String event) {
         if (TextUtils.equals(event, MESSAGE))
             onRefresh();
+        else if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
+            binding.setData(UserInfoUtils.getUserInfo(this));
+        }
+
     }
 
     @Override
@@ -65,6 +70,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setLoadListener(this);
+        binding.setData(UserInfoUtils.getUserInfo(this));
         CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
             @NonNull
             @Override
