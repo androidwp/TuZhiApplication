@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -29,6 +30,8 @@ import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.ActionSheet;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
@@ -56,6 +59,21 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTakePhoto().onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(String event) {
+        if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
+            binding.setData(UserInfoUtils.getUserInfo(this));
+        }
+
     }
 
     public TakePhoto getTakePhoto() {
@@ -168,7 +186,6 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
 
     @Override
     public void uploadFinish(String imageUrl) {
-        httpUserBean.setUserImage(imageUrl);
         UserInfoUtils.changeUserInfo(this, "userImage", imageUrl);
         EventBus.getDefault().post(ConstantKt.getUPDATE_USER_INFO_EVENT());
     }
