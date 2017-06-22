@@ -25,8 +25,7 @@
 
             <ImageView
                 style="@style/NavigationLeftButton"
-                android:onClick="@{()->activity.back()}"
-                android:src="@mipmap/ic_launcher" />
+                android:onClick="@{()->activity.back()}" />
 
             <TextView
                 android:layout_width="wrap_content"

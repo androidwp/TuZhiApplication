@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="data"
+            type="com.tuzhi.application.moudle.login.bean.HttpUserBean" />
+
+        <variable
             name="activity"
             type="com.tuzhi.application.moudle.mine.mvp.MineActivity" />
     </data>
@@ -21,10 +25,8 @@
             android:background="@color/colorNavigationBarBackground">
 
             <ImageView
-                android:layout_width="@dimen/navigationHeight"
-                android:layout_height="@dimen/navigationHeight"
-                android:onClick="@{()->activity.back()}"
-                android:src="@mipmap/ic_launcher" />
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,16 +56,16 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="@dimen/generalSpace"
-                android:src="@mipmap/ic_launcher"
+                app:imageLoad="@{data.userImage}"
                 app:riv_corner_radius="25dp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableRight="@mipmap/ic_launcher"
+                android:drawableRight="@drawable/enter"
                 android:gravity="center_vertical"
-                android:text="妈的用"
+                android:text="@{data.nickname}"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -79,9 +81,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/generalSettingHeight"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawableLeft="@drawable/problem"
                 android:drawablePadding="@dimen/generalSpace"
-                android:drawableRight="@mipmap/ic_launcher"
+                android:drawableRight="@drawable/enter"
                 android:gravity="center_vertical"
                 android:onClick="@{()->activity.skipProblemFeedbackActivity()}"
                 android:paddingLeft="@dimen/generalSpace"
@@ -93,9 +95,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/generalSettingHeight"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawableLeft="@drawable/set"
                 android:drawablePadding="@dimen/generalSpace"
-                android:drawableRight="@mipmap/ic_launcher"
+                android:drawableRight="@drawable/enter"
                 android:gravity="center_vertical"
                 android:onClick="@{()->activity.skipSettingActivity()}"
                 android:paddingLeft="@dimen/generalSpace"

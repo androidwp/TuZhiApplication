@@ -3,15 +3,18 @@ package com.tuzhi.application.moudle.mine.mvp;
 
 import android.databinding.ViewDataBinding;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityMineBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.login.bean.HttpUserBean;
 import com.tuzhi.application.moudle.login.mvp.LoginActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.mvp.PersonalInformationActivity;
 import com.tuzhi.application.moudle.mine.problemfeedback.mvp.ProblemFeedbackActivity;
 import com.tuzhi.application.moudle.mine.setting.mvp.SettingActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
 
 /**
@@ -29,6 +32,12 @@ public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresent
     protected void init(ViewDataBinding viewDataBinding) {
         ActivityMineBinding binding = (ActivityMineBinding) viewDataBinding;
         binding.setActivity(this);
+        String userInfo = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getLOGIN_INFO());
+        HttpUserBean httpUserBean = JSONObject.parseObject(userInfo, HttpUserBean.class);
+        String headUrl = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getIMAGE_HEAD());
+        httpUserBean.setUserImage(headUrl);
+        binding.setData(httpUserBean);
+        binding.executePendingBindings();
     }
 
     public void skipPersonalInformationActivity() {

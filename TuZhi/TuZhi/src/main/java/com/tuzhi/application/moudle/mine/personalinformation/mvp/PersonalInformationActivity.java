@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -19,13 +20,16 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityPersonalInformationBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
-import com.tuzhi.application.moudle.mine.personalinformation.bean.PersonalInformationBean;
+import com.tuzhi.application.moudle.login.bean.HttpUserBean;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.mvp.BindingPhoneOrEmailFirstActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.rename.mvp.RenameActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageDealUtilsKt;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
+
+import java.io.File;
 
 
 /**
@@ -35,12 +39,13 @@ import com.tuzhi.application.view.ActionSheet;
 
 public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
 
+
     private static final String PORTRAIT_NAME = "portrait.jpg";
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ActionSheet actionSheet;
     private ActivityPersonalInformationBinding binding;
-
+    private HttpUserBean httpUserBean;
 
     @Override
     protected int getLayoutId() {
@@ -63,9 +68,13 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityPersonalInformationBinding) viewDataBinding;
-        PersonalInformationBean bean = new PersonalInformationBean();
-        binding.setData(bean);
+        String userInfo = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getLOGIN_INFO());
+        httpUserBean = JSONObject.parseObject(userInfo, HttpUserBean.class);
+        String headUrl = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getIMAGE_HEAD());
+        httpUserBean.setUserImage(headUrl);
+        binding.setData(httpUserBean);
         binding.setActivity(this);
+        binding.executePendingBindings();
     }
 
     public void back() {
@@ -113,8 +122,9 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     public void takeSuccess(TResult result) {
         String originalPath = result.getImage().getOriginalPath();
-        Bitmap bitmap = ImageDealUtilsKt.getBitmap(originalPath, binding.riv.getWidth(), binding.riv.getHeight());
-        binding.riv.setImageBitmap(bitmap);
+        final Bitmap bitmap = ImageDealUtilsKt.getBitmap(originalPath, binding.riv.getWidth(), binding.riv.getHeight());
+        File file = ImageDealUtilsKt.savePhotoToSDCard(this, bitmap, 100, PORTRAIT_NAME);
+        mPresenter.uploadImage(httpUserBean.getNickname(), file);
     }
 
     @Override
@@ -158,5 +168,10 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void uploadFinish(String imageUrl) {
+        httpUserBean.setUserImage(imageUrl);
     }
 }

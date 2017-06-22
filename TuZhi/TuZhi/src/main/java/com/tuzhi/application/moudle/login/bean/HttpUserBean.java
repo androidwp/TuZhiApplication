@@ -1,10 +1,15 @@
 package com.tuzhi.application.moudle.login.bean;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.tuzhi.application.BR;
+
 /**
  * Created by wangpeng on 2017/6/21.
  */
 
-public class HttpUserBean {
+public class HttpUserBean extends BaseObservable{
     
     private String resultMsg;
     private String phone;
@@ -81,12 +86,14 @@ public class HttpUserBean {
         this.resultCode = resultCode;
     }
 
+    @Bindable
     public String getUserImage() {
         return userImage;
     }
 
     public void setUserImage(String userImage) {
         this.userImage = userImage;
+        notifyPropertyChanged(BR.userImage);
     }
 
     public String getUserType() {

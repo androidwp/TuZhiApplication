@@ -31,7 +31,9 @@ val IMEI = "IMEI"
 val LOGIN_INFO = "LOGIN_INFO"
 val USER_TYPE = "USER_TYPE"
 val USER_ID = "USER_ID"
+//登录状态
 val LOGIN_STATUS = "LOGIN_STATUS"
+//头像连接
 val IMAGE_HEAD = "IMAGE_HEAD"
 
 //手机型号

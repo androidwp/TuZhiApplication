@@ -11,7 +11,7 @@
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.mine.personalinformation.bean.PersonalInformationBean" />
+            type="com.tuzhi.application.moudle.login.bean.HttpUserBean" />
 
     </data>
 
@@ -27,10 +27,8 @@
             android:background="@color/colorNavigationBarBackground">
 
             <ImageView
-                android:layout_width="@dimen/navigationHeight"
-                android:layout_height="@dimen/navigationHeight"
-                android:onClick="@{()->activity.back()}"
-                android:src="@mipmap/ic_launcher" />
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,8 +43,8 @@
         <LinearLayout
             style="@style/GeneralSettingStyle"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/generalSettingHeight"
             android:layout_marginTop="@dimen/generalSpace"
-            android:layout_height="wrap_content"
             android:onClick="@{()->activity.openSelectDialog()}"
             android:orientation="horizontal">
 
@@ -60,18 +58,19 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/riv"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
-                app:riv_corner_radius="25dp" />
+                app:imageLoad="@{data.userImage}"
+                app:riv_corner_radius="15dp" />
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@drawable/enter" />
 
         </LinearLayout>
 
@@ -79,8 +78,8 @@
         <LinearLayout
             style="@style/GeneralSettingStyle"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/generalSettingHeight"
             android:layout_marginTop="@dimen/generalSpace"
-            android:layout_height="wrap_content"
             android:onClick="@{()->activity.skipRename()}"
             android:orientation="horizontal">
 
@@ -96,22 +95,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:text="@{data.name}" />
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/enter"
+                android:text="@{data.nickname}" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_launcher" />
 
         </LinearLayout>
 
         <LinearLayout
             style="@style/GeneralSettingStyle"
-            android:layout_marginTop="@dimen/generalSpace"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/generalSettingHeight"
+            android:layout_marginTop="@dimen/generalSpace"
             android:onClick="@{()->activity.skipBindPhone()}"
             android:orientation="horizontal">
 
@@ -127,11 +122,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:drawablePadding="10dp"
-                android:drawableRight="@mipmap/ic_launcher"
-                android:gravity="center"
+                android:drawableRight="@drawable/enter"
                 android:hint="未绑定手机号"
-                android:text="@{data.phoneNumber}"
+                android:text="@{data.phone}"
                 android:textColor="@color/colorTextHint"
                 android:textSize="@dimen/generalLittleTextSize" />
 
@@ -139,9 +134,9 @@
 
         <LinearLayout
             style="@style/GeneralSettingStyle"
-            android:layout_marginTop="@dimen/generalSpace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generalSpace"
             android:onClick="@{()->activity.skipBindEmail()}"
             android:orientation="horizontal">
 
@@ -156,9 +151,9 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/generalSettingHeight"
                 android:drawablePadding="10dp"
-                android:drawableRight="@mipmap/ic_launcher"
+                android:drawableRight="@drawable/enter"
                 android:gravity="center"
                 android:hint="未绑定邮箱"
                 android:text="@{data.email}"
