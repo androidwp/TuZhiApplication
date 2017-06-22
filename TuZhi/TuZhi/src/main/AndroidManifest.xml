@@ -70,6 +70,7 @@
 
         <activity
             android:name=".moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity

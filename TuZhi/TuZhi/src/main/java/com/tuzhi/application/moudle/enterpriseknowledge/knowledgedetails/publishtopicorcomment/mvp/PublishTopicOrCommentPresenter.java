@@ -19,17 +19,18 @@ public class PublishTopicOrCommentPresenter extends BasePresenterImpl<PublishTop
     private static final String URL = "tzkm/publishComment";
 
     @Override
-    public void commit(String type, String id, String content) {
+    public void commit(String type, String aid,String cid, String content) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         if (type.equals(PublishTopicOrCommentActivity.TOPIC)) {
             parameter.put("oType", "1");
-            parameter.put("oId", id);
+            parameter.put("oId", aid);
             parameter.put("cId", "0");
             parameter.put("pId", "0");
             parameter.put("content", content);
         } else {
-            // parameter.put("oType","1");
-            parameter.put("cId", id);
+            parameter.put("oType", "1");
+            parameter.put("oId", aid);
+            parameter.put("cId", cid);
             parameter.put("pId", "0");
             parameter.put("content", content);
         }

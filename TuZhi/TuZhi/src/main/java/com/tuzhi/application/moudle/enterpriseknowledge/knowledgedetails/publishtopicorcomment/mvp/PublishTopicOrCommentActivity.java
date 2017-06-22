@@ -20,7 +20,7 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
     public static final String TOPIC = "TOPIC";
     public static final String COMMENT = "COMMENT";
     public static final String AID = "AID";
-    public static final String CID = "AID";
+    public static final String CID = "CID";
     private String type;
     private String aid;
     private String cid;
@@ -50,9 +50,9 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
 
     public void commit(String text) {
         if (type.equals(TOPIC))
-            mPresenter.commit(type, aid, text);
+            mPresenter.commit(type, aid, null, text);
         else {
-            mPresenter.commit(type, cid, text);
+            mPresenter.commit(type, aid, cid, text);
         }
     }
 

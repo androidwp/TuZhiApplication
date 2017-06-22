@@ -14,6 +14,6 @@ public class PublishTopicOrCommentContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void commit(String type, String id, String content);
+        void commit(String type, String aid,String cid, String content);
     }
 }

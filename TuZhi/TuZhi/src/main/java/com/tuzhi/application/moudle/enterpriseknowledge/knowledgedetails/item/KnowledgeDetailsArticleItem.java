@@ -1,6 +1,7 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item;
 
 import android.databinding.DataBindingUtil;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tuzhi.application.R;
@@ -32,6 +33,12 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
 
     @Override
     public void handleData(KnowledgeDetailsListBean knowledgeDetailsListBean, int i) {
-        binding.wv.loadDataWithBaseURL(null,knowledgeDetailsListBean.getContent(),"text/html","utf-8",null);
+        if (!TextUtils.isEmpty(knowledgeDetailsListBean.getContent())) {
+            binding.wv.setVisibility(View.VISIBLE);
+            binding.wv.loadDataWithBaseURL(null, knowledgeDetailsListBean.getContent(), "text/html", "utf-8", null);
+        } else {
+            binding.wv.setVisibility(View.GONE);
+        }
+
     }
 }

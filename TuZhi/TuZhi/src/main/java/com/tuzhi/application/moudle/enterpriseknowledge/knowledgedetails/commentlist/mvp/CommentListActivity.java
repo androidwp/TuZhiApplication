@@ -13,9 +13,11 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.bean.CommentListBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity;
+import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.view.LoadMoreListener;
 
 import java.util.ArrayList;
+
 import kale.adapter.CommonRcvAdapter;
 import kale.adapter.item.AdapterItem;
 
@@ -77,7 +79,15 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
         intent.putExtra(PublishTopicOrCommentActivity.TYPE, PublishTopicOrCommentActivity.COMMENT);
         intent.putExtra(PublishTopicOrCommentActivity.AID, aid);
         intent.putExtra(PublishTopicOrCommentActivity.CID, cid);
-        startActivity(intent);
+        startActivityForResult(intent, ConstantKt.getNEED_REFRESH_CODE());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ConstantKt.getNEED_REFRESH_CODE() && resultCode == ConstantKt.getNEED_REFRESH_CODE()) {
+            onRefresh();
+        }
     }
 
     @Override

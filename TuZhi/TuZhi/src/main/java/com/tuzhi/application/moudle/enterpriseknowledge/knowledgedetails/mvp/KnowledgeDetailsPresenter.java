@@ -29,7 +29,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
     private static final String URL = "tzkm/article";
 
     @Override
-    public void downLoadData(String id, int page) {
+    public void downLoadData(final String id, int page) {
 
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("id", id);
@@ -49,11 +49,11 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
                 //文件
                 addFiles(httpKnowledgeDetailsListBean, data);
                 //评论
-                addComment(httpKnowledgeDetailsListBean, data);
+                addComment(httpKnowledgeDetailsListBean, data, id);
 
                 HttpKnowledgeDetailsListBean.CommentPageBean commentPage = httpKnowledgeDetailsListBean.getCommentPage();
 
-                mView.downLoadFinish(data, commentPage.isNext(), commentPage.getIndex(),content);
+                mView.downLoadFinish(data, commentPage.isNext(), commentPage.getIndex(), content);
             }
 
 
@@ -65,11 +65,13 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
     }
 
-    private void addComment(HttpKnowledgeDetailsListBean httpKnowledgeDetailsListBean, ArrayList<KnowledgeDetailsListBean> data) {
+    private void addComment(HttpKnowledgeDetailsListBean httpKnowledgeDetailsListBean, ArrayList<KnowledgeDetailsListBean> data, String aid) {
         HttpKnowledgeDetailsListBean.CommentPageBean commentPage = httpKnowledgeDetailsListBean.getCommentPage();
         List<HttpKnowledgeDetailsListBean.CommentPageBean.ResultBean> comments = commentPage.getResult();
         for (HttpKnowledgeDetailsListBean.CommentPageBean.ResultBean bean : comments) {
             KnowledgeDetailsListBean commentBean = new KnowledgeDetailsListBean(KnowledgeDetailsCommentItem.TYPE);
+            commentBean.setAid(aid);
+            commentBean.setCid(bean.getId());
             commentBean.setAuthor(bean.getNickname());
             commentBean.setTime(bean.getTime());
             commentBean.setInfo(bean.getContent());

@@ -21,8 +21,7 @@
 
             <ImageView
                 style="@style/NavigationLeftButton"
-                android:onClick="@{()->activity.back()}"
-                />
+                android:onClick="@{()->activity.back()}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +33,7 @@
             <ImageView
                 style="@style/NavigationRightButton"
                 android:onClick="@{()->activity.skipPublishCommentActivity()}"
-                />
+                android:src="@drawable/comment" />
 
             <View style="@style/NavigationLine" />
 

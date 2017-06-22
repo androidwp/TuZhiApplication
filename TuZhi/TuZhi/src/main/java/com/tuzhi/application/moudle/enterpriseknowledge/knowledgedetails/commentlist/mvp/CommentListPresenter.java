@@ -2,9 +2,17 @@ package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commen
 
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.bean.CommentListBean;
+import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.bean.HttpCommentListBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListItem;
+import com.tuzhi.application.utils.HttpCallBack;
+import com.tuzhi.application.utils.HttpUtilsKt;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.WeakHashMap;
 
 /**
  * MVPPlugin
@@ -13,16 +21,52 @@ import java.util.ArrayList;
 
 public class CommentListPresenter extends BasePresenterImpl<CommentListContract.View> implements CommentListContract.Presenter {
 
+    private static final String URL = "tzkm/comment";
+
     @Override
-    public void downLoadData(String aid, String cid, int page) {
-        ArrayList<CommentListBean> data = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            CommentListBean bean = new CommentListBean(CommentListItem.TYPE);
-            bean.setInfo("杭州图知信息科技有限公司致力于打造一个互联网时代的企业智能学习工具。");
-            bean.setTime("03-13  23:45");
-            bean.setAuthor("马得勇");
-            data.add(bean);
-        }
-        mView.downLoadFinish(page, true, data);
+    public void downLoadData(String aid, final String cid, int page) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("cId", cid);
+        parameter.put("pageNo", page + "");
+        HttpUtilsKt.get(mView.getContext(), URL, parameter, HttpCommentListBean.class, new HttpCallBack<HttpCommentListBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable HttpCommentListBean httpCommentListBean, @NotNull String text) {
+                ArrayList<CommentListBean> data = new ArrayList<>();
+                HttpCommentListBean.CommentBean comment = httpCommentListBean.getComment();
+                HttpCommentListBean.CommentPageBean commentPage = httpCommentListBean.getCommentPage();
+                boolean next = commentPage.isNext();
+                int index = commentPage.getIndex();
+                if (index == 0) {
+                    CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);
+                    commentListBean.setInfo(comment.getContent());
+                    commentListBean.setTime(comment.getTime());
+                    commentListBean.setAuthor(comment.getNickname());
+                    commentListBean.setImageUrl(commentListBean.getImageUrl());
+                    data.add(commentListBean);
+                }
+                List<HttpCommentListBean.CommentPageBean.ResultBean> result = commentPage.getResult();
+                for (HttpCommentListBean.CommentPageBean.ResultBean bean : result) {
+                    CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);
+                    commentListBean.setInfo(bean.getContent());
+                    commentListBean.setTime(bean.getTime());
+                    commentListBean.setAuthor(bean.getNickname());
+                    commentListBean.setImageUrl(bean.getUserImage());
+                    data.add(commentListBean);
+                }
+                mView.downLoadFinish(index, next, data);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+
+
     }
 }
