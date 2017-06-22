@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.mine.mvp.MineActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                android:layout_width="@dimen/navigationHeight"
+                android:layout_height="@dimen/navigationHeight"
+                android:onClick="@{()->activity.back()}"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="我的"
+                android:textSize="@dimen/generalTextSize" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:background="@drawable/general_setting_background"
+            android:gravity="center_vertical"
+            android:onClick="@{()->activity.skipPersonalInformationActivity()}"
+            android:orientation="horizontal"
+            android:padding="@dimen/generalSpace">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:src="@mipmap/ic_launcher"
+                app:riv_corner_radius="25dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/ic_launcher"
+                android:gravity="center_vertical"
+                android:text="妈的用"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/GeneralSettingStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawablePadding="@dimen/generalSpace"
+                android:drawableRight="@mipmap/ic_launcher"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.skipProblemFeedbackActivity()}"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="问题反馈" />
+
+            <View style="@style/NavigationLine" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawablePadding="@dimen/generalSpace"
+                android:drawableRight="@mipmap/ic_launcher"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.skipSettingActivity()}"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="设置" />
+
+        </LinearLayout>
+
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <Button
+            style="@style/YellowButton"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/general_button_red_background"
+            android:onClick="@{()->activity.logOut()}"
+            android:text="退出登录" />
+
+    </LinearLayout>
+</layout>

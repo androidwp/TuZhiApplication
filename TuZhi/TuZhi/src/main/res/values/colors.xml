@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorText">#212121</color>
+    <color name="colorGeneralTintText">#757575</color>
+    <color name="colorGeneralMoreTintText">#bdbdbd</color>
+    <color name="colorNavigationBarBackground">#ffffff</color>
+    <color name="colorGeneralBackground">#f7f8f9</color>
+    <color name="colorLine">#e9e9e9</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorListViewPressed">#eee</color>
+    <color name="colorListViewNormal">#ffffff</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorYellowButton">#ffd460</color>
+    <color name="colorGrayButton">#e9e9e9</color>
+    <color name="colorRedButton">#ea5455</color>
+    <color name="colorBlueButton">#459ff9</color>
+    <color name="colorTextHint">#a4aab3</color>
+</resources>

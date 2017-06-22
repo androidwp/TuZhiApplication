@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.mvp.BindingPhoneOrEmailFirstActivity" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.bean.BindingPhoneOrEmailBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{data.title}"
+                android:textSize="@dimen/generalTextSize" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalEditTextHeight"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:background="@drawable/general_setting_background"
+            android:hint="@{data.hint}"
+            android:paddingLeft="@dimen/generalSpace"
+            android:text="@={data.text}" />
+
+        <Button
+            style="@style/YellowButton"
+            android:layout_marginTop="50dp"
+            android:onClick="@{()->activity.commit(data.text)}"
+            android:text="下一步" />
+
+    </LinearLayout>
+</layout>

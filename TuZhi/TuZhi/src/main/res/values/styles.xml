@@ -1,0 +1,92 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
+    </style>
+
+
+    <!-- iOS7 Style -->
+    <style name="ActionSheetStyleiOS7">
+        <item name="actionSheetBackground">@android:color/transparent</item>
+        <item name="cancelButtonBackground">@drawable/slt_as_ios7_cancel_bt</item>
+        <item name="otherButtonTopBackground">@drawable/slt_as_ios7_other_bt_top</item>
+        <item name="otherButtonMiddleBackground">@drawable/slt_as_ios7_other_bt_middle</item>
+        <item name="otherButtonBottomBackground">@drawable/slt_as_ios7_other_bt_bottom</item>
+        <item name="otherButtonSingleBackground">@drawable/slt_as_ios7_other_bt_single</item>
+        <item name="cancelButtonTextColor">#1E82FF</item>
+        <item name="otherButtonTextColor">#1E82FF</item>
+        <item name="actionSheetPadding">10dp</item>
+        <item name="otherButtonSpacing">0dp</item>
+        <item name="cancelButtonMarginTop">10dp</item>
+        <item name="actionSheetTextSize">12sp</item>
+    </style>
+
+
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/colorTransparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+    </style>
+
+
+    <style name="YellowButton">
+        <item name="android:layout_height">@dimen/generalButtonHeight</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginLeft">@dimen/generalButtonSpace</item>
+        <item name="android:layout_marginRight">@dimen/generalButtonSpace</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/generalSettingTextSize</item>
+        <item name="android:background">@drawable/general_button_yellow_background</item>
+    </style>
+
+    <style name="NavigationLine">
+        <item name="android:layout_height">@dimen/lineHeight</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/colorLine</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
+    <style name="GeneralSettingStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/generalSettingHeight</item>
+        <item name="android:layout_marginLeft">@dimen/generalSpace</item>
+        <item name="android:layout_marginRight">@dimen/generalSpace</item>
+        <item name="android:paddingLeft">@dimen/generalSpace</item>
+        <item name="android:paddingRight">@dimen/generalSpace</item>
+        <item name="android:background">@drawable/general_setting_background</item>
+    </style>
+
+    <style name="NavigationLeftButton">
+        <item name="android:layout_gravity">left</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorGeneralTintText</item>
+        <item name="android:paddingRight">@dimen/generalSpace</item>
+        <item name="android:src">@drawable/back</item>
+        <item name="android:paddingLeft">@dimen/generalSpace</item>
+        <item name="android:textSize">@dimen/generalLittleTextSize</item>
+        <item name="android:layout_height">@dimen/navigationHeight</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="NavigationRightButton">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/generalLittleTextSize</item>
+        <item name="android:textColor">@color/colorBlueButton</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:paddingLeft">@dimen/generalSpace</item>
+        <item name="android:paddingRight">@dimen/generalSpace</item>
+        <item name="android:layout_height">@dimen/navigationHeight</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+</resources>

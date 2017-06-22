@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.repository.mvp.RepositoryActivity" />
+
+        <variable
+            name="imageHeadUrl"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.skipMineActivity()}"
+                android:src="@mipmap/ic_launcher_round"
+                app:imageLoad="@{imageHeadUrl}"
+                app:riv_corner_radius="22.5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="知识库"
+                android:textSize="@dimen/generalTextSize" />
+
+            <ImageView
+                android:id="@+id/ivRight"
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
+                android:src="@drawable/add" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <com.tuzhi.application.view.RefreshRecycleView
+            android:id="@+id/rrv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

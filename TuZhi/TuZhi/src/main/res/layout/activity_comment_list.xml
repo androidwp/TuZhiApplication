@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="评论列表"
+                android:textSize="@dimen/generalTextSize" />
+
+            <ImageView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.skipPublishCommentActivity()}"
+                android:src="@mipmap/ic_launcher" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <com.tuzhi.application.view.RefreshRecycleView
+            android:id="@+id/rrv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

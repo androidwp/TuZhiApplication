@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="navigationHeight">45dp</dimen>
+    <dimen name="generalTextSize">16sp</dimen>
+    <dimen name="generalSettingTextSize">16sp</dimen>
+    <dimen name="generalSpace">15dp</dimen>
+    <dimen name="generalButtonSpace">55dp</dimen>
+    <dimen name="generalSettingHeight">59dp</dimen>
+    <dimen name="generalButtonHeight">50dp</dimen>
+    <dimen name="generalEditTextHeight">60dp</dimen>
+    <dimen name="generalSmallTextSize">12sp</dimen>
+    <dimen name="generalLittleTextSize">13sp</dimen>
+    <dimen name="lineHeight">0.5dp</dimen>
+</resources>

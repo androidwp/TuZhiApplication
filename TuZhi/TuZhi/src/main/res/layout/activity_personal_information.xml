@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.mine.personalinformation.mvp.PersonalInformationActivity" />
+
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.mine.personalinformation.bean.PersonalInformationBean" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                android:layout_width="@dimen/navigationHeight"
+                android:layout_height="@dimen/navigationHeight"
+                android:onClick="@{()->activity.back()}"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="个人资料" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            style="@style/GeneralSettingStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->activity.openSelectDialog()}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="头像"
+                android:textSize="@dimen/generalTextSize" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher"
+                app:riv_corner_radius="25dp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_launcher" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/GeneralSettingStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->activity.skipRename()}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="姓名"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:text="@{data.name}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_launcher" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/GeneralSettingStyle"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->activity.skipBindPhone()}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="手机号"
+                android:textSize="@dimen/generalTextSize" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/ic_launcher"
+                android:gravity="center"
+                android:hint="未绑定手机号"
+                android:text="@{data.phoneNumber}"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/generalLittleTextSize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/GeneralSettingStyle"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->activity.skipBindEmail()}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="邮箱"
+                android:textSize="@dimen/generalTextSize" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:drawableRight="@mipmap/ic_launcher"
+                android:gravity="center"
+                android:hint="未绑定邮箱"
+                android:text="@{data.email}"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/generalLittleTextSize" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

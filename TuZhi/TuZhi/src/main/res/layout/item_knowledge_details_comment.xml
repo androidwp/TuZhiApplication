@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsCommentItem" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/generalSpace"
+        android:layout_marginRight="@dimen/generalSpace"
+        android:layout_marginBottom="@dimen/generalSpace"
+        android:background="@drawable/general_listview_selector"
+        android:orientation="vertical"
+        android:padding="@dimen/generalSpace">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                app:imageLoad="@{data.imageUrl}"
+                app:riv_corner_radius="13dp" />
+
+
+            
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/generalSpace"
+                android:layout_weight="1"
+                android:text="@{data.author}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{data.time}"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/generalSmallTextSize" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="@{data.info}"
+            android:textColor="@color/colorGeneralTintText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:drawableLeft="@{data.praiseStatus? @drawable/admire:@drawable/admirenormal}"
+                android:drawablePadding="10dp"
+                android:text="@{data.praiseNumber}"
+                android:textColor="@color/colorGeneralTintText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/discuss"
+                android:drawablePadding="10dp"
+                android:onClick="@{()->item.skipCommentListActivity(data.aid,data.cid)}"
+                android:text="@{data.commentNumber}"
+                android:textColor="@color/colorGeneralTintText" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

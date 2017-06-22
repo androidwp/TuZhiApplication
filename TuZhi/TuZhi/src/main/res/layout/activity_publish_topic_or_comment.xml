@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="text"
+            type="String" />
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+
+            <TextView
+                android:layout_width="@dimen/navigationHeight"
+                android:layout_height="@dimen/navigationHeight"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.back()}"
+                android:paddingLeft="@dimen/generalSpace"
+                android:text="取消"
+                android:textColor="@color/colorGeneralTintText"
+                android:textSize="@dimen/generalLittleTextSize" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="@dimen/generalTextSize" />
+
+
+            <TextView
+                android:layout_width="@dimen/navigationHeight"
+                android:layout_height="@dimen/navigationHeight"
+                android:layout_gravity="right"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.commit(text)}"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="提交"
+                android:textColor="@color/colorYellowButton"
+                android:textSize="@dimen/generalLittleTextSize" />
+
+
+            <View style="@style/NavigationLine" />
+        </FrameLayout>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:gravity="start"
+            android:text="@={text}"
+            android:padding="@dimen/generalSpace" />
+
+    </LinearLayout>
+</layout>

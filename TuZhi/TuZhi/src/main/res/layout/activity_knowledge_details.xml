@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/generalTextSize" />
+
+            <ImageView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.openSelectDialog(0)}"
+                android:src="@drawable/more" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <com.tuzhi.application.view.RefreshRecycleView
+            android:id="@+id/rrv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/generalSpace"
+            android:paddingRight="@dimen/generalSpace">
+
+            <com.tuzhi.application.view.DrawableTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/editdoc"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.skipCreateDocumentActivity()}"
+                android:text="编辑文档" />
+
+            <com.tuzhi.application.view.DrawableTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/uploadfile"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.openSelectDialog(1)}"
+                android:text="上传图片" />
+
+            <com.tuzhi.application.view.DrawableTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/statement"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.skipPublishTopicActivity()}"
+                android:text="发表话题" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</layout>

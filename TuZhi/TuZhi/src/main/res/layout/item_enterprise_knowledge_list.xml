@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.item.EnterpriseKnowledgeListItem" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/generalSpace"
+        android:layout_marginRight="@dimen/generalSpace"
+        android:layout_marginTop="@dimen/generalSpace"
+        android:background="@drawable/general_listview_selector"
+        android:onClick="@{()->item.skipKnowledgeDetailsActivity(data.title,data.id)}"
+        android:orientation="vertical"
+        android:padding="@dimen/generalSpace">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:text="@{data.title}"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:text="@{data.text}"
+            android:textColor="#666" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:drawableLeft="@drawable/document"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="@{data.contextNumber}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/discussnumber"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="@{data.commentNumber}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{data.time}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

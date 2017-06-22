@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.mine.personalinformation.rename.mvp.RenameActivity" />
+
+        <variable
+            name="name"
+            type="String" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                android:layout_width="@dimen/navigationHeight"
+                android:layout_height="@dimen/navigationHeight"
+                android:onClick="@{()->activity.back()}"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="个人资料" />
+
+        </FrameLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalEditTextHeight"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorWhite"
+            android:hint="请输入姓名"
+            android:paddingLeft="@dimen/generalSpace"
+            android:text="@={name}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalButtonHeight"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:layout_marginTop="10dp"
+            android:onClick="@{()->activity.commitName(name)}"
+            android:text="保存" />
+
+    </LinearLayout>
+
+</layout>

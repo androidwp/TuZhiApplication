@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="loginActivity"
+            type="com.tuzhi.application.moudle.login.mvp.LoginActivity" />
+
+        <variable
+            name="user"
+            type="com.tuzhi.application.moudle.login.bean.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/logo" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:background="@drawable/general_setting_background"
+            android:orientation="vertical"
+            android:padding="@dimen/lineHeight"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/colorGeneralBackground"
+                android:hint="请输入手机号或邮箱"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={user.userName}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorLine" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/colorGeneralBackground"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={user.passWord}" />
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:background="@drawable/general_button_blue_background"
+            android:layout_height="50dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/generalTextSize"
+            android:onClick="@{()->loginActivity.commit(user)}"
+            android:text="登录" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="如果忘记密码，请联系企业管理员重制密码"
+            android:textColor="@color/colorTextHint"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</layout>

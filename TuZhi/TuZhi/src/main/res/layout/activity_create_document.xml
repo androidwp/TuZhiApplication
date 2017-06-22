@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="richEditor"
+            type="jp.wasabeef.richeditor.RichEditor" />
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.createdocument.mvp.CreateDocumentActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground"
+            android:orientation="horizontal">
+
+
+            <TextView
+                style="@style/NavigationLeftButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="@{()->activity.back()}"
+                android:text="取消" />
+
+            <!--删除-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="@{()->richEditor.undo()}"
+                android:paddingRight="@dimen/generalSpace"
+                android:src="@drawable/backout" />
+
+            <!--回退-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:onClick="@{()->richEditor.redo()}"
+                android:paddingRight="@dimen/generalSpace"
+                android:src="@drawable/reform" />
+
+
+            <TextView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.commit(richEditor.getHtml())}"
+                android:text="提交" />
+
+
+        </LinearLayout>
+
+        <View style="@style/NavigationLine" />
+
+        <LinearLayout
+            android:id="@+id/contentView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/generalSpace"
+            android:layout_weight="1"
+            android:background="@color/colorWhite">
+
+            <jp.wasabeef.richeditor.RichEditor
+                android:id="@+id/re"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/generalSpace"
+                android:background="@color/colorWhite" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorWhite"
+                android:orientation="horizontal">
+
+                <!--缩进-->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->richEditor.setIndent()}"
+                    android:scaleType="center"
+                    android:src="@drawable/retractright" />
+
+                <!--凸显-->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->richEditor.setOutdent()}"
+                    android:scaleType="center"
+                    android:src="@drawable/retractleft" />
+
+                <!--弹出functionBar-->
+                <ImageView
+                    android:id="@+id/ivShowBar"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@drawable/text" />
+
+                <!--有序列表-->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->richEditor.setNumbers()}"
+                    android:scaleType="center"
+                    android:src="@drawable/orderedlist" />
+
+                <!--无序列表-->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->richEditor.setBullets()}"
+                    android:scaleType="center"
+                    android:src="@drawable/unorderedlist" />
+
+                <!--添加图片-->
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="@{()->activity.openSelectDialog()}"
+                    android:scaleType="center"
+                    android:src="@drawable/picture" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/functionBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+
+                    <!--加粗-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setBold()}"
+                        android:scaleType="center"
+                        android:src="@drawable/bold" />
+
+                    <!--倾斜-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setItalic()}"
+                        android:scaleType="center"
+                        android:src="@drawable/italic" />
+
+                    <!--下划线-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setUnderline()}"
+                        android:scaleType="center"
+                        android:src="@drawable/underline" />
+
+                    <!--删除线-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setStrikeThrough()}"
+                        android:scaleType="center"
+                        android:src="@drawable/strikethrough" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!--左对齐-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setAlignLeft()}"
+                        android:scaleType="center"
+                        android:src="@drawable/leftaligned" />
+
+                    <!--剧中对齐-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setAlignCenter()}"
+                        android:scaleType="center"
+                        android:src="@drawable/aligncenter" />
+
+                    <!--右对齐-->
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{()->richEditor.setAlignRight()}"
+                        android:scaleType="center"
+                        android:src="@drawable/rightaligned" />
+
+                    <!--平铺-->
+                    <!--<ImageView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:onClick="@{()->richEditor.setStrikeThrough()}"-->
+                    <!--android:src="@mipmap/ic_launcher" />-->
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <!--一级标题-->
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{()->richEditor.setHeading(3)}"
+                        android:text="一级标题" />
+
+                    <!--二级标题-->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{()->richEditor.setHeading(2)}"
+                        android:text="二级标题" />
+
+                    <!--三级标题-->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{()->richEditor.setHeading(1)}"
+                        android:text="三级标题" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

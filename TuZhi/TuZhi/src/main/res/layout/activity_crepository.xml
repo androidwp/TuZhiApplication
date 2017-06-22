@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.crepository.mvp.CrepositoryActivity" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.crepository.bean.CreateRepositoryBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <TextView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.cancel()}"
+                android:text="取消" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{data.title}"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.commit(data.type,data.name)}"
+                android:text="确定" />
+
+            <View style="@style/NavigationLine" />
+        </FrameLayout>
+
+        <EditText
+            style="@style/GeneralSettingStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:hint="@{data.hint}"
+            android:text="@={data.name}"
+            android:textColorHint="@color/colorGeneralMoreTintText"
+            android:textSize="@dimen/generalTextSize" />
+    </LinearLayout>
+
+</layout>
