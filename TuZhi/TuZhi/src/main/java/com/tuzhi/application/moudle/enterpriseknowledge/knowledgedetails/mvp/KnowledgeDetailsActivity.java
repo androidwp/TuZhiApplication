@@ -17,6 +17,7 @@ import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
 import com.jph.takephoto.model.TContextWrap;
+import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
@@ -24,6 +25,7 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityKnowledgeDetailsBinding;
 import com.tuzhi.application.dialog.DeleteDialog;
+import com.tuzhi.application.dialog.ProgressBarDialog;
 import com.tuzhi.application.dialog.RenameDialog;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
@@ -54,7 +56,6 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     public static final String ID = "ID";
     public static final String TITLE = "TITLE";
 
-
     private ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
     private String id;
     private ActivityKnowledgeDetailsBinding binding;
@@ -63,6 +64,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private ActionSheet actionSheet;
     private String content;
     private int type;
+    private ProgressBarDialog dialog;
 
 
     @Override
@@ -160,6 +162,17 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         binding.rrv.downLoadFinish(page, haveNextPage, data, newData);
     }
 
+    @Override
+    public void updateProgress(int finishNumber, int totalNumber) {
+        dialog.changeProgress(finishNumber, totalNumber);
+    }
+
+    @Override
+    public void updateFinish() {
+        dialog.dismiss();
+        onRefresh();
+    }
+
     public void skipPublishTopicActivity() {
         Intent intent = new Intent(this, PublishTopicOrCommentActivity.class);
         intent.putExtra(PublishTopicOrCommentActivity.TYPE, PublishTopicOrCommentActivity.TOPIC);
@@ -193,7 +206,15 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     @Override
     public void takeSuccess(TResult result) {
-
+        ArrayList<TImage> images = result.getImages();
+        if (images == null || images.size() == 0) {
+            images = new ArrayList<>();
+            images.add(result.getImage());
+        }
+        mPresenter.uploadFiles(id, images);
+        dialog = new ProgressBarDialog(this);
+        dialog.setActivity(this);
+        dialog.show();
     }
 
     @Override
@@ -264,5 +285,9 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     public void setTitle(String title) {
         binding.tvTitle.setText(title);
+    }
+
+    public void cancelUpdate() {
+        mPresenter.cancelUpdate();
     }
 }

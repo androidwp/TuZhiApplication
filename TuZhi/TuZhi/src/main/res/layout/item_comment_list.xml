@@ -26,6 +26,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 app:imageLoad="@{data.imageUrl}"
+                android:scaleType="centerCrop"
                 app:riv_corner_radius="13dp" />
 
             <TextView

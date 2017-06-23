@@ -73,7 +73,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:onClick="@{()->activity.openSelectDialog(1)}"
-                android:text="上传图片" />
+                android:text="上传文件" />
 
             <com.tuzhi.application.view.DrawableTextView
                 android:layout_width="0dp"

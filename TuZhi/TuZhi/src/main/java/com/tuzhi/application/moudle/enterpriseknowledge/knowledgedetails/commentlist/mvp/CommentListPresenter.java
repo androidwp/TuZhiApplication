@@ -46,7 +46,7 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
                     commentListBean.setInfo(comment.getContent());
                     commentListBean.setTime(comment.getTime());
                     commentListBean.setAuthor(comment.getNickname());
-                    commentListBean.setImageUrl(commentListBean.getImageUrl());
+                    commentListBean.setImageUrl(comment.getUserImage());
                     data.add(commentListBean);
                 }
                 List<HttpCommentListBean.CommentPageBean.ResultBean> result = commentPage.getResult();

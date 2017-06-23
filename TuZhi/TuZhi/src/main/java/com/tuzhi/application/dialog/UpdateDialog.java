@@ -24,7 +24,7 @@ public class UpdateDialog extends AlertDialog {
     private String url;
 
     public UpdateDialog(Context context) {
-        this(context, 0);
+        this(context, R.style.dialog);
     }
 
     public UpdateDialog(Context context, @StyleRes int themeResId) {

@@ -24,7 +24,8 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private String info;
     private String downloadStatus;
     private String praiseNumber;
-
+    private String commentNumber;
+    private boolean praiseStatus;
 
     public String getContent() {
         return content;
@@ -59,9 +60,6 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
         this.downloadStatus = downloadStatus;
         notifyPropertyChanged(BR.downloadStatus);
     }
-
-    private String commentNumber;
-    private boolean praiseStatus;
 
     public KnowledgeDetailsListBean(String itemType) {
         super(itemType);
