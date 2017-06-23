@@ -36,6 +36,11 @@
         <activity
             android:name=".moudle.repository.mvp.RepositoryActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".moudle.crepository.mvp.CrepositoryActivity"
             android:screenOrientation="portrait" />

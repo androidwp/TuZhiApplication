@@ -6,6 +6,12 @@
         <variable
             name="dialog"
             type="com.tuzhi.application.dialog.ProgressBarDialog" />
+
+        <variable
+            name="title"
+            type="String" />
+
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,10 +22,10 @@
         android:padding="@dimen/generalSpace">
 
         <TextView
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_width="300dp"
-            android:text="正在下载"
+            android:text="@{title}"
             android:textSize="18sp" />
 
 
@@ -28,15 +34,16 @@
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="300dp"
             android:layout_height="4dp"
-            android:progressDrawable="@drawable/horizontal_progress_background"
-            android:paddingBottom="@dimen/generalSpace"
-            android:paddingTop="@dimen/generalSpace" />
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:progressDrawable="@drawable/horizontal_progress_background" />
 
         <TextView
             android:id="@+id/tv"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="0 %"
             android:textColor="@color/colorGeneralTintText" />
 
         <TextView
@@ -45,7 +52,7 @@
             android:gravity="center"
             android:onClick="@{()->dialog.cancel()}"
             android:paddingTop="@dimen/generalSpace"
-            android:text="取消下载"
+            android:text="取消"
             android:textColor="@color/colorGeneralMoreTintText" />
 
     </LinearLayout>

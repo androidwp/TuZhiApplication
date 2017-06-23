@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject.parseObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +39,9 @@ interface Http {
     @Multipart
     @POST
     fun updateImage(@Url url: String, @Part parts: Array<MultipartBody.Part>, @QueryMap maps: WeakHashMap<String, String>): Call<String>
+
+    @GET
+    fun downloadFile(@Url url: String, @FieldMap parameter: WeakHashMap<String, String>): Call<ResponseBody>
 
 }
 

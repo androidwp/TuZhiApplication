@@ -143,7 +143,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
             parameter.put("type", "2");
             parameter.put("name", file.getName());
             parameter.put("size", file.length() + "");
-            parameter.put("suffix", "jpg");
+            parameter.put("suffix", file.getName().substring(file.getName().lastIndexOf(".") + 1));
             parameter.put("fileUrl", filePath);
             HttpUtilsKt.post(mView.getContext(), URL_UPLOAD_FILE, parameter, String.class, new HttpCallBack<String>() {
                 @Override

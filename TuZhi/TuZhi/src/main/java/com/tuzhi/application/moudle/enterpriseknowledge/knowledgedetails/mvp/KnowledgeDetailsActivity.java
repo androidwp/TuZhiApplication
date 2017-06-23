@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -213,7 +214,13 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         }
         mPresenter.uploadFiles(id, images);
         dialog = new ProgressBarDialog(this);
-        dialog.setActivity(this);
+        dialog.setTitle("正在上传");
+        dialog.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.cancelUpdate();
+            }
+        });
         dialog.show();
     }
 
@@ -287,7 +294,4 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         binding.tvTitle.setText(title);
     }
 
-    public void cancelUpdate() {
-        mPresenter.cancelUpdate();
-    }
 }

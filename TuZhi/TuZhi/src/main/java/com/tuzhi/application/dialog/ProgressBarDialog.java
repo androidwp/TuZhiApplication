@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewProgressBarDialogBinding;
-import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 
 /**
  * Created by wangpeng on 2017/6/2.
@@ -18,10 +17,11 @@ import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp.Kno
 public class ProgressBarDialog extends AlertDialog {
 
     private ViewProgressBarDialogBinding binding;
-    private KnowledgeDetailsActivity activity;
+    private View.OnClickListener clickListener;
+    private String title;
 
-    public void setActivity(KnowledgeDetailsActivity activity) {
-        this.activity = activity;
+    public void setClickListener(View.OnClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
     public ProgressBarDialog(Context context) {
@@ -32,12 +32,17 @@ public class ProgressBarDialog extends AlertDialog {
         super(context, themeResId);
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = getLayoutInflater().inflate(R.layout.view_progress_bar_dialog, null);
         setContentView(view);
         binding = DataBindingUtil.bind(view);
+        binding.setTitle(title);
         binding.setDialog(this);
     }
 
@@ -49,7 +54,8 @@ public class ProgressBarDialog extends AlertDialog {
     }
 
     public void cancel() {
-        activity.cancelUpdate();
+        if (clickListener != null)
+            clickListener.onClick(null);
         dismiss();
     }
 }
