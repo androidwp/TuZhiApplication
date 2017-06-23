@@ -14,6 +14,6 @@ public class BindingPhoneOrEmailFirstContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void commitPhoneOrEmail(String text);
+        void commitPhoneOrEmail(String type,String text);
     }
 }

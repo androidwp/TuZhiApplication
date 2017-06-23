@@ -27,11 +27,8 @@
 
 
             <TextView
-                android:layout_width="@dimen/navigationHeight"
-                android:layout_height="@dimen/navigationHeight"
-                android:gravity="center"
+                style="@style/NavigationLeftButton"
                 android:onClick="@{()->activity.back()}"
-                android:src="@mipmap/ic_launcher"
                 android:text="取消"
                 android:textColor="@color/colorGeneralTintText"
                 android:textSize="@dimen/generalLittleTextSize" />
@@ -66,7 +63,7 @@
                 android:hint="请输入验证码"
                 android:paddingLeft="@dimen/generalSpace"
                 android:text="@={data.authCode}"
-                android:textColor="@color/colorGeneralMoreTintText" />
+                android:textColorHint="@color/colorGeneralMoreTintText" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:maxLines="1"
             android:paddingLeft="@dimen/generalSpace"
             android:text="@{data.text}"
             android:textSize="@dimen/generalLittleTextSize" />

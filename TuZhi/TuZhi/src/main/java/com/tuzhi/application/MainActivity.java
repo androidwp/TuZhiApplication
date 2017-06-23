@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                     ActivitySkipUtilsKt.toActivity(MainActivity.this, LoginActivity.class);
                 else
                     ActivitySkipUtilsKt.toActivity(MainActivity.this, RepositoryActivity.class);
+                MainActivity.this.onBackPressed();
             }
 
             @Override

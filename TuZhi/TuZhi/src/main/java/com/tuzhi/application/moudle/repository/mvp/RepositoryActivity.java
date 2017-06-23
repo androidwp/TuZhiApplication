@@ -16,6 +16,7 @@ import com.tuzhi.application.moudle.mine.mvp.MineActivity;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -36,7 +37,7 @@ import kale.adapter.item.AdapterItem;
 public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View, RepositoryPresenter> implements RepositoryContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener {
 
     public static final String MESSAGE = "RepositoryActivity_refresh";
-
+    private long currentTime;
     private ActivityRepositoryBinding binding;
     private ArrayList<RepositoryListItemBean> mData = new ArrayList<>();
 
@@ -126,6 +127,19 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
             onBackPressed();
         } else if (requestCode == ConstantKt.getCREATE_CODE() && resultCode == ConstantKt.getCREATE_CODE()) {
             onRefresh();
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        long timeMillis = System.currentTimeMillis();
+        final int anInt = 2000;
+        if (timeMillis - currentTime < anInt) {
+            finish();
+        } else {
+            currentTime = timeMillis;
+            ToastUtilsKt.toast(getContext(), "再次点击退出应用");
         }
     }
 }

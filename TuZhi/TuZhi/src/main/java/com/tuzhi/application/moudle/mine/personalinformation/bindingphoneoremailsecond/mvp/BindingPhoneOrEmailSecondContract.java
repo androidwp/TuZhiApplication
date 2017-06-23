@@ -15,6 +15,8 @@ public class BindingPhoneOrEmailSecondContract {
 
         void sendSuccess();
 
+        void bindSuccess();
+
     }
 
     interface  Presenter extends BasePresenter<View> {
@@ -23,6 +25,6 @@ public class BindingPhoneOrEmailSecondContract {
         void sendNote(String type,String text);
 
         //提交验证码
-        void commitAuthCode(String text);
+        void commitAuthCode(String type,String text,String code);
     }
 }

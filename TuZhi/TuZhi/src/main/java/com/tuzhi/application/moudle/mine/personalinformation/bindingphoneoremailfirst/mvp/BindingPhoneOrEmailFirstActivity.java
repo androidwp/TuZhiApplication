@@ -50,7 +50,7 @@ public class BindingPhoneOrEmailFirstActivity extends MVPBaseActivity<BindingPho
     }
 
     public void commit(String text) {
-        mPresenter.commitPhoneOrEmail(text);
+        mPresenter.commitPhoneOrEmail(type,text);
     }
 
     public void skipNextPage(String text) {

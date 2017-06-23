@@ -10,7 +10,11 @@ import com.tuzhi.application.databinding.ActivityBindingPhoneEmailSecondBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailsecond.bean.BindingPhoneOrEmailSecondBean;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.mvp.BindingPhoneOrEmailFirstActivity;
+import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -20,8 +24,8 @@ import com.tuzhi.application.utils.ToastUtilsKt;
 
 public class BindingPhoneOrEmailSecondActivity extends MVPBaseActivity<BindingPhoneOrEmailSecondContract.View, BindingPhoneOrEmailSecondPresenter> implements BindingPhoneOrEmailSecondContract.View {
 
-    public static final String TEXT = "TEXT";
-    public boolean canClick = true;
+    public static final String TEXT = "phoneOrEmail";
+    public boolean canClick = false;
     private CountDownTimer countDownTimer;
     private String text;
     private String type;
@@ -73,7 +77,7 @@ public class BindingPhoneOrEmailSecondActivity extends MVPBaseActivity<BindingPh
 
     public void commitAuthCode(String authCode) {
         if (!TextUtils.isEmpty(authCode)) {
-            mPresenter.commitAuthCode(authCode);
+            mPresenter.commitAuthCode(type, text, authCode);
         }
     }
 
@@ -86,5 +90,14 @@ public class BindingPhoneOrEmailSecondActivity extends MVPBaseActivity<BindingPh
         ToastUtilsKt.toast(this, "发送成功");
     }
 
-
+    @Override
+    public void bindSuccess() {
+        if (type.equals(BindingPhoneOrEmailFirstActivity.PHONE)) {
+            UserInfoUtils.changeUserInfo(this, "phone", text);
+        } else {
+            UserInfoUtils.changeUserInfo(this, "email", text);
+        }
+        EventBus.getDefault().post(ConstantKt.getUPDATE_USER_INFO_EVENT());
+        back();
+    }
 }
