@@ -21,6 +21,7 @@ import java.util.*
 /**
  * Created by wangpeng on 2017/5/18.
  */
+private val URL_IMAGE = "http://upload.guigutang.com:8082/upload.htm?app=userImage&type=json"
 
 var baseUrl = "http://192.168.0.109:9001/"
 
@@ -38,7 +39,7 @@ interface Http {
 
     @Multipart
     @POST
-    fun updateImage(@Url url: String, @Part parts: Array<MultipartBody.Part>, @QueryMap maps: WeakHashMap<String, String>): Call<String>
+    fun updateImage(@Url url: String, @Part parts: Array<MultipartBody.Part?>, @QueryMap maps: WeakHashMap<String, String>): Call<String>
 
     @GET
     fun downloadFile(@Url url: String, @FieldMap parameter: WeakHashMap<String, String>): Call<ResponseBody>
@@ -55,7 +56,7 @@ interface HttpCallBack<in T> {
 
 }
 
-fun <T> uploadFile(context: Context, url: String, parts: Array<MultipartBody.Part>, maps: WeakHashMap<String, String>, callBack: HttpCallBack<T>) {
+fun <T> uploadFile(context: Context, url: String, parts: Array<MultipartBody.Part?>, maps: WeakHashMap<String, String>, callBack: HttpCallBack<T>) {
     retrofit.updateImage(url, parts, maps).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>?, t: Throwable?) {
             onFailure(context, callBack, t)
@@ -126,14 +127,11 @@ fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>
 }
 
 //上传单张图片
-fun getRequestBody(context: Context, file: File): RequestBody {
-    //构建body
-    val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("userId", getLongCache(context, USER_ID))
-            .addFormDataPart("image", file.name, RequestBody.create(MediaType.parse("image/*"), file))
-            .build()
-
-    return requestBody
+fun uploadImage(context: Context, file: File, callBack: HttpCallBack<String>) {
+    val files = arrayOfNulls<MultipartBody.Part>(1)
+    files[0] = MultipartBody.Part.createFormData("file", file.name, RequestBody.create(MediaType.parse("multipart/form-data"), file))
+    val parameter = getParameter(context)
+    uploadFile(context, URL_IMAGE, files, parameter, callBack)
 }
 
 fun getParameter(context: Context): WeakHashMap<String, String> {

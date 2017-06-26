@@ -1,12 +1,15 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.createdocument.mvp;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
 import java.util.WeakHashMap;
 
 /**
@@ -32,6 +35,29 @@ public class CreateDocumentPresenter extends BasePresenterImpl<CreateDocumentCon
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
                 mView.commitSuccess();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void uploadImage(File imageFile) {
+        HttpUtilsKt.uploadImage(mView.getContext(), imageFile, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                JSONObject jsonObject = JSONObject.parseObject(text);
+                LogUtilsKt.showLog("TAG", text);
+                String httpUrl = jsonObject.getString("httpUrl");
+                mView.uploadImageSuccess(httpUrl);
             }
 
             @Override

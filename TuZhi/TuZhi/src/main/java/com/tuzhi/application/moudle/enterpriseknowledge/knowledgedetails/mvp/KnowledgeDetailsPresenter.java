@@ -22,10 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
@@ -37,11 +33,8 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
     private static final String URL_UPLOAD_FILE = "tzkm/addFile";
 
-    private static final String URL_IMAGE = "http://upload.guigutang.com:8082/upload.htm?app=userImage&type=json";
-
     private int index;
     private int upDateIndex;
-
     private boolean canUpdate = true;
 
     @Override
@@ -96,18 +89,14 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         if (index < images.size()) {
             TImage tImage = images.get(index);
             File image = new File(tImage.getOriginalPath());
-            MultipartBody.Part[] files = new MultipartBody.Part[1];
-            files[0] = MultipartBody.Part.createFormData("file", image.getName(), RequestBody.create(MediaType.parse("multipart/form-data"), image));
-            WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-            HttpUtilsKt.uploadFile(mView.getContext(), URL_IMAGE, files, parameter, new HttpCallBack<String>() {
+            HttpUtilsKt.uploadImage(mView.getContext(), image, new HttpCallBack<String>() {
                 @Override
                 public void onFinish() {
 
                 }
 
                 @Override
-                public void onSuccess(@org.jetbrains.annotations.Nullable String s, @NotNull String text) {
-                    //{"resultMsg":"文件上传成功","httpUrl":"http://upload.guigutang.com:8082/userImage/20170622/164839766757.jpg","thumbUrl":"http://upload.guigutang.com:8082/userImage/20170622/164839766757.jpg.png","resultCode":0}
+                public void onSuccess(@Nullable String s, @NotNull String text) {
                     if (canUpdate) {
                         JSONObject jsonObject = JSONObject.parseObject(text);
                         String httpUrl = jsonObject.getString("httpUrl");
@@ -116,7 +105,6 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
                         uploadFile(aid, images, urls);
                         mView.updateProgress(index, images.size());
                     }
-
                 }
 
                 @Override

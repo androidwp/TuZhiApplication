@@ -22,6 +22,8 @@ import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.EmotionKeyboard;
 import com.tuzhi.application.view.ActionSheet;
 
+import java.io.File;
+
 
 /**
  * MVPPlugin
@@ -32,12 +34,12 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     public static final String CONTENT = "CONTENT";
     public static final String ID = "id";
-
     private static final String PORTRAIT_NAME = "portrait.jpg";
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ActionSheet actionSheet;
     private String id;
+    private ActivityCreateDocumentBinding binding;
 
     @Override
     protected int getLayoutId() {
@@ -46,7 +48,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        ActivityCreateDocumentBinding binding = (ActivityCreateDocumentBinding) viewDataBinding;
+        binding = (ActivityCreateDocumentBinding) viewDataBinding;
         binding.setActivity(this);
         binding.setRichEditor(binding.re);
         EmotionKeyboard.with(this).bindToContent(binding.contentView).bindToEmotionButton(binding.ivShowBar).bindToWebView(binding.re).setEmotionView(binding.functionBar).build();
@@ -74,7 +76,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     public void takeSuccess(TResult result) {
-
+        mPresenter.uploadImage(new File(result.getImage().getOriginalPath()));
     }
 
     @Override
@@ -153,5 +155,8 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         back();
     }
 
-
+    @Override
+    public void uploadImageSuccess(String imageUrl) {
+        binding.re.insertImage(imageUrl, "image");
+    }
 }
