@@ -16,6 +16,6 @@ public class PersonalInformationContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-        void uploadImage(String name,File image);
+        void uploadImage(android.view.View view, String name, File image);
     }
 }

@@ -10,6 +10,8 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewProgressBarDialogBinding;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by wangpeng on 2017/6/2.
  */
@@ -49,8 +51,9 @@ public class ProgressBarDialog extends AlertDialog {
     public void changeProgress(int currentProgress, int totalProgress) {
         binding.pb.setProgress(currentProgress);
         binding.pb.setMax(totalProgress);
-        float progress = ((float) currentProgress / (float) totalProgress) * 100;
-        binding.tv.setText(progress + " %");
+        double progress = ((double) currentProgress / totalProgress) * 100;
+        DecimalFormat df = new DecimalFormat("######0.00");
+        binding.tv.setText(df.format(progress) + " %");
     }
 
     public void cancel() {

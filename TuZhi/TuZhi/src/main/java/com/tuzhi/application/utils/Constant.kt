@@ -46,6 +46,10 @@ val BRAND = android.os.Build.BRAND
 val OSVERSION = android.os.Build.VERSION.RELEASE
 
 fun getImageCache(context: Context, fileName: String): File {
-
-    return File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)
+    val directory = Environment.getExternalStorageDirectory()
+    val pDirectory = File(directory, "TZ" + Environment.DIRECTORY_PICTURES)
+    if (!pDirectory.exists()) {
+        pDirectory.mkdirs()
+    }
+    return File(pDirectory, fileName)
 }

@@ -3,6 +3,7 @@ package com.tuzhi.application.utils
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.view.View
 import com.alibaba.fastjson.JSONObject.parseObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -21,7 +22,8 @@ import java.util.*
 /**
  * Created by wangpeng on 2017/5/18.
  */
-private val URL_IMAGE = "http://upload.guigutang.com:8082/upload.htm?app=userImage&type=json"
+private val URL_IMAGE = "http://upload.guigutang.com:8082/upload.htm"
+//private val URL_IMAGE = "http://192.168.0.140:8081/upload.htm"
 
 var baseUrl = "http://192.168.0.109:9001/"
 
@@ -127,11 +129,28 @@ fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>
 }
 
 //上传单张图片
-fun uploadImage(context: Context, file: File, callBack: HttpCallBack<String>) {
+fun uploadImage(context: Context, type: String, file: File, callBack: HttpCallBack<String>) {
     val files = arrayOfNulls<MultipartBody.Part>(1)
     files[0] = MultipartBody.Part.createFormData("file", file.name, RequestBody.create(MediaType.parse("multipart/form-data"), file))
     val parameter = getParameter(context)
+    //app=userImage&type=json
+    //头像传userImage
+    //非头像传tuzhikmMobile
+    parameter.put("fileFileName", file.name)
+    parameter.put("app", type)
+    parameter.put("type", "json")
     uploadFile(context, URL_IMAGE, files, parameter, callBack)
+}
+
+
+fun uploadSummaryImage(context: Context, type: String, view: View, file: File, callBack: HttpCallBack<String>) {
+    Thread {
+        run {
+            val bitmap = getBitmap(path = file.absolutePath, reqWidth = view.width, reqHeight = view.height)
+            val imageFile = savePhotoToSDCard(context = context, photoBitmap = bitmap, quality = 100, photoName = file.name)
+            uploadImage(context, type, imageFile, callBack)
+        }
+    }.start()
 }
 
 fun getParameter(context: Context): WeakHashMap<String, String> {

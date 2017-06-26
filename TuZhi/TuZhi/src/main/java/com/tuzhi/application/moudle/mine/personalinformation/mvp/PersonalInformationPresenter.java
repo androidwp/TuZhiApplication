@@ -1,9 +1,12 @@
 package com.tuzhi.application.moudle.mine.personalinformation.mvp;
 
+import android.view.View;
+
 import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,8 +23,8 @@ public class PersonalInformationPresenter extends BasePresenterImpl<PersonalInfo
     private static final String URL = "user/updateStaffInfo";
 
     @Override
-    public void uploadImage(final String name, File image) {
-        HttpUtilsKt.uploadImage(mView.getContext(), image, new HttpCallBack<String>() {
+    public void uploadImage(View view, final String name, File image) {
+        HttpUtilsKt.uploadSummaryImage(mView.getContext(), "type", view, image, new HttpCallBack<String>() {
             @Override
             public void onFinish() {
 
@@ -29,6 +32,7 @@ public class PersonalInformationPresenter extends BasePresenterImpl<PersonalInfo
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                LogUtilsKt.showLog("TAG", text);
                 JSONObject jsonObject = JSONObject.parseObject(text);
                 String httpUrl = jsonObject.getString("httpUrl");
                 PersonalInformationPresenter.this.uploadData(name, httpUrl);

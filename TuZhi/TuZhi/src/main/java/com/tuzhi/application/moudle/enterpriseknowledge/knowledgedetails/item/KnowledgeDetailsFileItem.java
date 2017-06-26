@@ -7,6 +7,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemKnowledgeDetailsFileBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
+import com.tuzhi.application.utils.ImageUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,5 +35,7 @@ public class KnowledgeDetailsFileItem extends BaseItem<KnowledgeDetailsListBean>
     public void handleData(KnowledgeDetailsListBean knowledgeDetailsListBean, int i) {
         binding.setData(knowledgeDetailsListBean);
         binding.executePendingBindings();
+        int fileImage = ImageUtils.getFileImage(knowledgeDetailsListBean.getFileType(), 0);
+        binding.iv.setImageResource(fileImage);
     }
 }

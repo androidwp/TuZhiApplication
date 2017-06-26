@@ -326,7 +326,6 @@ public class HttpKnowledgeDetailsListBean {
     }
 
     public static class ArticleFilesMapBean {
-  
         private String fileSize;
         private String id;
         private String author;

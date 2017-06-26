@@ -34,7 +34,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     public static final String CONTENT = "CONTENT";
     public static final String ID = "id";
-    private static final String PORTRAIT_NAME = "portrait.jpg";
+    private static final String PORTRAIT_NAME = "portrait.png";
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ActionSheet actionSheet;
@@ -76,7 +76,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     public void takeSuccess(TResult result) {
-        mPresenter.uploadImage(new File(result.getImage().getOriginalPath()));
+        mPresenter.uploadImage(binding.re, new File(result.getImage().getOriginalPath()));
     }
 
     @Override
@@ -157,6 +157,6 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     public void uploadImageSuccess(String imageUrl) {
-        binding.re.insertImage(imageUrl, "image");
+        binding.re.insertImage(imageUrl + "\" style=\"width:100%;", "");
     }
 }

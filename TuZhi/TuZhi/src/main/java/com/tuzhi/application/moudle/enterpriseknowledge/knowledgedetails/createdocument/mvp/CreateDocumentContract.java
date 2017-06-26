@@ -22,6 +22,6 @@ public class CreateDocumentContract {
     interface  Presenter extends BasePresenter<View> {
         void commit(String id,String content);
 
-        void uploadImage(File imageFile);
+        void uploadImage(android.view.View view, File imageFile);
     }
 }

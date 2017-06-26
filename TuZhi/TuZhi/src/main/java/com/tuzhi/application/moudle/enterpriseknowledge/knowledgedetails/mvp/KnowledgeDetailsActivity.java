@@ -53,7 +53,7 @@ import kale.adapter.item.AdapterItem;
 
 public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsContract.View, KnowledgeDetailsPresenter> implements KnowledgeDetailsContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
 
-    private static final String PHOTO = "photo.jpg";
+    private static final String PHOTO = "photo.png";
     public static final String ID = "ID";
     public static final String TITLE = "TITLE";
 
@@ -212,7 +212,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
             images = new ArrayList<>();
             images.add(result.getImage());
         }
-        mPresenter.uploadFiles(id, images);
+        mPresenter.uploadFiles(binding.rrv, id, images);
         dialog = new ProgressBarDialog(this);
         dialog.setTitle("正在上传");
         dialog.setClickListener(new View.OnClickListener() {

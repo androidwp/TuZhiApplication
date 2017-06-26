@@ -17,6 +17,7 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private String content;
     private String articleUrl;
     private String imageUrl;
+    private String fileType;
     private String title;
     private String time;
     private String author;
@@ -26,6 +27,14 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private String praiseNumber;
     private String commentNumber;
     private boolean praiseStatus;
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
 
     public String getContent() {
         return content;

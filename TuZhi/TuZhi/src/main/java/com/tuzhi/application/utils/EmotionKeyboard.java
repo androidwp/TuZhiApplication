@@ -12,8 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
+
+import com.tencent.smtt.sdk.WebView;
 
 /**
  * Created by wangpeng on 2017/6/14.

@@ -25,7 +25,7 @@ public class KnowledgeDetailsContract {
     interface Presenter extends BasePresenter<View> {
         void downLoadData(String id, int page);
 
-        void uploadFiles(String aid, ArrayList<TImage> images);
+        void uploadFiles(android.view.View view, String aid, ArrayList<TImage> images);
 
         void cancelUpdate();
     }

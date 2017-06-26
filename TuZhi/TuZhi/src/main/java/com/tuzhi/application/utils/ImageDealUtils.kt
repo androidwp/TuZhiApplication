@@ -20,7 +20,7 @@ fun savePhotoToSDCard(context: Context, photoBitmap: Bitmap, quality: Int, photo
     try {
         fileOutputStream = FileOutputStream(photoFile)
 
-        if (photoBitmap.compress(Bitmap.CompressFormat.JPEG, quality, fileOutputStream)) {
+        if (photoBitmap.compress(Bitmap.CompressFormat.PNG, quality, fileOutputStream)) {
             fileOutputStream.flush()
         }
 
@@ -136,4 +136,16 @@ fun rotateBitmapByDegree(bm: Bitmap, degree: Int): Bitmap {
     }
     return returnBm
 }
+
+
+fun createScaleBitmap(bitmap: Bitmap, width: Int, height: Int): Bitmap {
+    // 如果是放大图片，filter决定是否平滑，如果是缩小图片，filter无影响，我们这里是缩小图片，所以直接设置为false
+    val mBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false)
+    if (bitmap != mBitmap) { // 如果没有缩放，那么不回收
+        bitmap.recycle() // 释放Bitmap的native像素数组
+    }
+    return mBitmap
+}
+
+
 

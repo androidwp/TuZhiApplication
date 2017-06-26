@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.createdocument.mvp;
 
+import android.view.View;
+
 import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.utils.HttpCallBack;
@@ -45,8 +47,8 @@ public class CreateDocumentPresenter extends BasePresenterImpl<CreateDocumentCon
     }
 
     @Override
-    public void uploadImage(File imageFile) {
-        HttpUtilsKt.uploadImage(mView.getContext(), imageFile, new HttpCallBack<String>() {
+    public void uploadImage(View view, File imageFile) {
+        HttpUtilsKt.uploadSummaryImage(mView.getContext(), "tuzhikmMobile", view, imageFile, new HttpCallBack<String>() {
             @Override
             public void onFinish() {
 

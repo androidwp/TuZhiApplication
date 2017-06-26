@@ -1,6 +1,7 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp;
 
 import android.text.Html;
+import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jph.takephoto.model.TImage;
@@ -74,10 +75,10 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
     }
 
     @Override
-    public void uploadFiles(String aid, ArrayList<TImage> images) {
+    public void uploadFiles(View view, String aid, ArrayList<TImage> images) {
         canUpdate = true;
         index = 0;
-        uploadFile(aid, images, new ArrayList<String>());
+        uploadFile(view, aid, images, new ArrayList<String>());
     }
 
     @Override
@@ -85,11 +86,11 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         canUpdate = false;
     }
 
-    private void uploadFile(final String aid, final ArrayList<TImage> images, final ArrayList<String> urls) {
+    private void uploadFile(final View view, final String aid, final ArrayList<TImage> images, final ArrayList<String> urls) {
         if (index < images.size()) {
             TImage tImage = images.get(index);
             File image = new File(tImage.getOriginalPath());
-            HttpUtilsKt.uploadImage(mView.getContext(), image, new HttpCallBack<String>() {
+            HttpUtilsKt.uploadSummaryImage(mView.getContext(), "tuzhikmMobile", view, image, new HttpCallBack<String>() {
                 @Override
                 public void onFinish() {
 
@@ -102,7 +103,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
                         String httpUrl = jsonObject.getString("httpUrl");
                         urls.add(httpUrl);
                         index++;
-                        uploadFile(aid, images, urls);
+                        uploadFile(view, aid, images, urls);
                         mView.updateProgress(index, images.size());
                     }
                 }
@@ -183,6 +184,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         for (HttpKnowledgeDetailsListBean.ArticleFilesMapBean articleFilesMapBean : articleFilesMap) {
             KnowledgeDetailsListBean fileBean = new KnowledgeDetailsListBean(KnowledgeDetailsFileItem.TYPE);
             fileBean.setTitle(articleFilesMapBean.getFileName());
+            fileBean.setFileType(articleFilesMapBean.getFileSuffix());
             fileBean.setInfo(articleFilesMapBean.getAuthor() + "  " + articleFilesMapBean.getUpdateTime() + "  " + articleFilesMapBean.getFileSize());
             fileBean.setDownloadStatus("");
             dataFiles.add(fileBean);

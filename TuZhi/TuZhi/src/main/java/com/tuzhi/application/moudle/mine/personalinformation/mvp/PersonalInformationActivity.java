@@ -3,7 +3,6 @@ package com.tuzhi.application.moudle.mine.personalinformation.mvp;
 
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,7 +24,6 @@ import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremail
 import com.tuzhi.application.moudle.mine.personalinformation.rename.mvp.RenameActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
-import com.tuzhi.application.utils.ImageDealUtilsKt;
 import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.ActionSheet;
 
@@ -43,7 +41,7 @@ import java.io.File;
 
 public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
 
-    private static final String PORTRAIT_NAME = "portrait.jpg";
+    private static final String PORTRAIT_NAME = "portrait.png";
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ActionSheet actionSheet;
@@ -73,7 +71,6 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
         if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
             binding.setData(UserInfoUtils.getUserInfo(this));
         }
-
     }
 
     public TakePhoto getTakePhoto() {
@@ -136,9 +133,7 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     public void takeSuccess(TResult result) {
         String originalPath = result.getImage().getOriginalPath();
-        final Bitmap bitmap = ImageDealUtilsKt.getBitmap(originalPath, binding.riv.getWidth(), binding.riv.getHeight());
-        File file = ImageDealUtilsKt.savePhotoToSDCard(this, bitmap, 100, PORTRAIT_NAME);
-        mPresenter.uploadImage(httpUserBean.getNickname(), file);
+        mPresenter.uploadImage(binding.riv, httpUserBean.getNickname(), new File(originalPath));
     }
 
     @Override
