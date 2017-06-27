@@ -1,6 +1,5 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp;
 
-import android.text.Html;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -12,8 +11,10 @@ import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.Kn
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsCommentItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFileItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFilesItem;
+import com.tuzhi.application.utils.FileUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -52,6 +53,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
             @Override
             public void onSuccess(@Nullable HttpKnowledgeDetailsListBean httpKnowledgeDetailsListBean, @NotNull String text) {
+                LogUtilsKt.showLog("TAG", text);
                 ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
                 //先添加文章
                 String content = addArticle(httpKnowledgeDetailsListBean, data);
@@ -183,10 +185,13 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         List<HttpKnowledgeDetailsListBean.ArticleFilesMapBean> articleFilesMap = httpKnowledgeDetailsListBean.getArticleFilesMap();
         for (HttpKnowledgeDetailsListBean.ArticleFilesMapBean articleFilesMapBean : articleFilesMap) {
             KnowledgeDetailsListBean fileBean = new KnowledgeDetailsListBean(KnowledgeDetailsFileItem.TYPE);
+            fileBean.setFileId(articleFilesMapBean.getId());
             fileBean.setTitle(articleFilesMapBean.getFileName());
+            fileBean.setFileName(articleFilesMapBean.getFileName());
             fileBean.setFileType(articleFilesMapBean.getFileSuffix());
+            fileBean.setFileStatus(articleFilesMapBean.isPreview());
             fileBean.setInfo(articleFilesMapBean.getAuthor() + "  " + articleFilesMapBean.getUpdateTime() + "  " + articleFilesMapBean.getFileSize());
-            fileBean.setDownloadStatus("");
+            fileBean.setDownloadStatus(FileUtils.fileExist(mView.getContext(), articleFilesMapBean.getId()));
             dataFiles.add(fileBean);
         }
         bean.setFiles(dataFiles);
@@ -197,7 +202,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
     private String addArticle(HttpKnowledgeDetailsListBean articleMap, ArrayList<KnowledgeDetailsListBean> data) {
         HttpKnowledgeDetailsListBean.ArticleMapBean articleMapBean = articleMap.getArticleMap();
         KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsArticleItem.TYPE);
-        bean.setContent(Html.fromHtml(articleMapBean.getContent()).toString());
+        bean.setContent(articleMapBean.getContent());
         data.add(bean);
         return bean.getContent();
     }

@@ -8,6 +8,7 @@ import com.tuzhi.application.databinding.ActivityCrepositoryBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.crepository.bean.CreateRepositoryBean;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.KeyBoardUtils;
 
 
 /**
@@ -43,6 +44,7 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
                 binding.setData(new CreateRepositoryBean(type, "新建知识模块", "请输入知识模块名称", ""));
                 break;
         }
+        KeyBoardUtils.showKeyBoard(this);
     }
 
     public void cancel() {

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout >
 
     <data>
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFileItem" />
 
         <variable
             name="data"
@@ -12,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/general_listview_selector"
+        android:onClick="@{()->item.skipOpenActivity(data)}"
         android:orientation="horizontal"
         android:padding="@dimen/generalSpace">
 
@@ -49,13 +54,11 @@
                     android:textSize="@dimen/generalSmallTextSize" />
 
                 <TextView
+                    android:id="@+id/tvDownLoadStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{data.downloadStatus}"
                     android:textColor="@color/colorGeneralMoreTintText"
                     android:textSize="@dimen/generalSmallTextSize" />
-
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

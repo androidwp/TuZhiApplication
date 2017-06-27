@@ -10,6 +10,7 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewRenameDialogBinding;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
+import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity;
 import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
 import com.tuzhi.application.utils.HttpCallBack;
@@ -32,30 +33,26 @@ public class RenameDialog extends AlertDialog {
 
     public static final String MOUDLE = "MOUDLE";
     public static final String LIB = "LIB";
+    public static final String FILE = "FILE";
 
     private String type;
     private String libId;
     private String moudleId;
-    private Context context;
+    private String fileId;
 
-    public String getLibId() {
-        return libId;
-    }
+
+    private Context context;
 
     public void setLibId(String libId) {
         this.libId = libId;
-    }
-
-    public String getMoudleId() {
-        return moudleId;
     }
 
     public void setMoudleId(String moudleId) {
         this.moudleId = moudleId;
     }
 
-    public String getType() {
-        return type;
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
     }
 
     public void setType(String type) {
@@ -63,11 +60,7 @@ public class RenameDialog extends AlertDialog {
     }
 
     public RenameDialog(Context context) {
-        super(context);
-    }
-
-    public RenameDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
+        this(context, R.style.dialog);
     }
 
     public RenameDialog(Context context, @StyleRes int themeResId) {
@@ -90,15 +83,47 @@ public class RenameDialog extends AlertDialog {
     }
 
     public void rename(String name) {
-        if (type.equals(LIB)) {
-            renameLib(name);
-        } else {
-            renameMoudle(name);
+        switch (type) {
+            case LIB:
+                renameLib(name);
+                break;
+            case MOUDLE:
+                renameMoudle(name);
+                break;
+            default:
+                renameFile(name);
+                break;
         }
     }
 
+    private void renameFile(final String name) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
+        parameter.put("operate", "2");
+        parameter.put("fileId", fileId);
+        parameter.put("title", name);
+        HttpUtilsKt.post(context, URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                OpenFileActivity activity = (OpenFileActivity) context;
+                activity.setTitle(name);
+                EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+                dismiss();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
     private void renameLib(final String name) {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(getContext());
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
         parameter.put("operate", "3");
         parameter.put("klId", libId);
         parameter.put("name", name);
@@ -125,7 +150,7 @@ public class RenameDialog extends AlertDialog {
 
 
     private void renameMoudle(final String name) {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(getContext());
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
         parameter.put("operate", "2");
         parameter.put("aId", moudleId);
         parameter.put("title", name);
@@ -140,7 +165,6 @@ public class RenameDialog extends AlertDialog {
                 KnowledgeDetailsActivity activity = (KnowledgeDetailsActivity) context;
                 activity.setTitle(name);
                 EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
-                dismiss();
                 dismiss();
             }
 

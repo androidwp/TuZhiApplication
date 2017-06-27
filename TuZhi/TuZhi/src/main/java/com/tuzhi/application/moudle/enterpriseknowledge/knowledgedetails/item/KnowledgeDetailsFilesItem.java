@@ -38,6 +38,7 @@ public class KnowledgeDetailsFilesItem extends BaseItem<KnowledgeDetailsListBean
         for (KnowledgeDetailsListBean bean : files) {
             KnowledgeDetailsFileItem item = new KnowledgeDetailsFileItem();
             View view = LayoutInflater.from(context).inflate(item.getLayoutResId(), null);
+            item.bindViews(view);
             item.bindView(view);
             item.handleData(bean, 0);
             ll.addView(view);

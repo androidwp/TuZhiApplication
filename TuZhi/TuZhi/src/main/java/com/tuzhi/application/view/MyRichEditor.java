@@ -2,8 +2,6 @@ package com.tuzhi.application.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import jp.wasabeef.richeditor.Utils;
 
 /**
  * Created by wangpeng on 2017/6/26.
@@ -208,22 +205,6 @@ public class MyRichEditor extends WebView{
         super.setBackgroundColor(color);
     }
 
-    @Override public void setBackgroundResource(int resid) {
-        Bitmap bitmap = Utils.decodeResource(getContext(), resid);
-        String base64 = Utils.toBase64(bitmap);
-        bitmap.recycle();
-
-        exec("javascript:RE.setBackgroundImage('url(data:image/png;base64," + base64 + ")');");
-    }
-
-    @Override public void setBackground(Drawable background) {
-        Bitmap bitmap = Utils.toBitmap(background);
-        String base64 = Utils.toBase64(bitmap);
-        bitmap.recycle();
-
-        exec("javascript:RE.setBackgroundImage('url(data:image/png;base64," + base64 + ")');");
-    }
-
     public void setBackground(String url) {
         exec("javascript:RE.setBackgroundImage('url(" + url + ")');");
     }
@@ -362,7 +343,7 @@ public class MyRichEditor extends WebView{
 
     public void insertTodo() {
         exec("javascript:RE.prepareInsert();");
-        exec("javascript:RE.setTodo('" + Utils.getCurrentTime() + "');");
+       // exec("javascript:RE.setTodo('" + Utils.getCurrentTime() + "');");
     }
 
     public void focusEditor() {

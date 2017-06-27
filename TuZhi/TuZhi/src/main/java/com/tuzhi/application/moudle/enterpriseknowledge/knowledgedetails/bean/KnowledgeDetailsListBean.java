@@ -23,10 +23,41 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private String author;
     private String fileSize;
     private String info;
-    private String downloadStatus;
+    //文件id
+    private String fileId;
+    //文件是否可以打开
+    private boolean fileStatus;
+    //文件是否已经下载
+    private boolean downloadStatus;
     private String praiseNumber;
     private String commentNumber;
     private boolean praiseStatus;
+    private String fileName;
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
+    public boolean isFileStatus() {
+        return fileStatus;
+    }
+
+    public void setFileStatus(boolean fileStatus) {
+        this.fileStatus = fileStatus;
+    }
+
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public String getFileType() {
         return fileType;
@@ -61,11 +92,11 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     }
 
     @Bindable
-    public String getDownloadStatus() {
+    public boolean getDownloadStatus() {
         return downloadStatus;
     }
 
-    public void setDownloadStatus(String downloadStatus) {
+    public void setDownloadStatus(boolean downloadStatus) {
         this.downloadStatus = downloadStatus;
         notifyPropertyChanged(BR.downloadStatus);
     }

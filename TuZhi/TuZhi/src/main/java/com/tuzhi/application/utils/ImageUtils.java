@@ -18,7 +18,8 @@ public class ImageUtils {
         Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv);
     }
 
-    public static int getFileImage(String fileType, int type) {
+    public static int getFileImage(String fileName, int type) {
+        String fileType = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
         int drawableId;
         if (TextUtils.isEmpty(fileType)) {
             if (type == 0)
@@ -39,7 +40,7 @@ public class ImageUtils {
                 else {
                     drawableId = R.drawable.wordbig;
                 }
-            } else if ("ppttx".contains(fileType)) {
+            } else if ("ppttx/ppt".contains(fileType)) {
                 if (type == 0)
                     drawableId = R.drawable.ppt;
                 else {
@@ -57,7 +58,7 @@ public class ImageUtils {
                 else {
                     drawableId = R.drawable.pdfbig;
                 }
-            } else if ("htmlm/html".contains(fileType)) {
+            } else if ("html".contains(fileType)) {
                 if (type == 0)
                     drawableId = R.drawable.html;
                 else {

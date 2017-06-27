@@ -29,16 +29,17 @@
                 android:onClick="@{()->activity.back()}" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:maxLines="1"
                 android:text="@{title}"
                 android:textSize="@dimen/generalTextSize" />
 
             <ImageView
                 style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.back()}"
+                android:onClick="@{()->activity.openSelectDialog()}"
                 android:src="@drawable/more" />
 
             <View

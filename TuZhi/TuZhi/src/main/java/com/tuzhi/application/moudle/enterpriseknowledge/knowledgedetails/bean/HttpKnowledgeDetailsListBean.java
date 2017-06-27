@@ -334,6 +334,15 @@ public class HttpKnowledgeDetailsListBean {
         private String fileName;
         private String fileSuffix;
         private String fileUrl;
+        private boolean isPreview;
+
+        public boolean isPreview() {
+            return isPreview;
+        }
+
+        public void setPreview(boolean preview) {
+            isPreview = preview;
+        }
 
         public String getFileSize() {
             return fileSize;

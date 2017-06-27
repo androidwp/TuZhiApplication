@@ -10,6 +10,7 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewDeleteDialogBinding;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
+import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity;
 import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
 import com.tuzhi.application.utils.HttpCallBack;
@@ -32,44 +33,37 @@ public class DeleteDialog extends AlertDialog {
 
     public static final String MOUDLE = "MOUDLE";
     public static final String LIB = "LIB";
+    public static final String FILE = "FILE";
+
 
     private String type;
     private String libId;
     private String moudleId;
+    private String fileId;
 
-    public String getType() {
-        return type;
-    }
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getLibId() {
-        return libId;
     }
 
     public void setLibId(String libId) {
         this.libId = libId;
     }
 
-    public String getMoudleId() {
-        return moudleId;
-    }
-
     public void setMoudleId(String moudleId) {
         this.moudleId = moudleId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
     }
 
     private Context context;
 
     public DeleteDialog(Context context) {
-        super(context);
+        this(context, R.style.dialog);
     }
 
-    public DeleteDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
-        super(context, cancelable, cancelListener);
-    }
 
     public DeleteDialog(Context context, @StyleRes int themeResId) {
         super(context, themeResId);
@@ -90,15 +84,46 @@ public class DeleteDialog extends AlertDialog {
     }
 
     public void delete() {
-        if (type.equals(LIB)) {
-            deleteLib();
-        } else {
-            deleteMoudle();
+        switch (type) {
+            case LIB:
+                deleteLib();
+                break;
+            case MOUDLE:
+                deleteMoudle();
+                break;
+            default:
+                deleteFile();
+                break;
         }
     }
 
+    private void deleteFile() {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
+        parameter.put("operate", "3");
+        parameter.put("fileId", fileId);
+        HttpUtilsKt.post(context, URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                OpenFileActivity activity = (OpenFileActivity) context;
+                activity.back();
+                EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+                dismiss();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
     private void deleteLib() {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(getContext());
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
         parameter.put("operate", "4");
         parameter.put("klId", libId);
         HttpUtilsKt.get(context, URL_LIB, parameter, String.class, new HttpCallBack<String>() {
@@ -124,7 +149,7 @@ public class DeleteDialog extends AlertDialog {
 
 
     private void deleteMoudle() {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(getContext());
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
         parameter.put("operate", "3");
         parameter.put("aId", moudleId);
         HttpUtilsKt.post(context, URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {

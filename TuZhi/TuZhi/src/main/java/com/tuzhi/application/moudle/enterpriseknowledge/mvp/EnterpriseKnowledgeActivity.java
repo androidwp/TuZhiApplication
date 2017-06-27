@@ -1,14 +1,11 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.mvp;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.tuzhi.application.R;
@@ -21,6 +18,7 @@ import com.tuzhi.application.moudle.crepository.mvp.CrepositoryActivity;
 import com.tuzhi.application.moudle.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.item.EnterpriseKnowledgeListItem;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -153,13 +151,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
             renameDialog.setLibId(listId);
             renameDialog.setType(RenameDialog.LIB);
             renameDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    InputMethodManager mInputManager = (InputMethodManager) EnterpriseKnowledgeActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-            }, 100);
+            KeyBoardUtils.showKeyBoard(this);
         } else {
             DeleteDialog deleteDialog = new DeleteDialog(this, R.style.dialog);
             deleteDialog.setLibId(listId);

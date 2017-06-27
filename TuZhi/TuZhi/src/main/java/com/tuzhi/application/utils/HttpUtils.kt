@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import com.alibaba.fastjson.JSONObject.parseObject
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
+import com.tuzhi.application.inter.ProgressListener
+import okhttp3.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +20,7 @@ import java.util.*
 /**
  * Created by wangpeng on 2017/5/18.
  */
-private val URL_IMAGE = "http://upload.guigutang.com:8082/upload.htm"
+private val URL_IMAGE = "http://192.168.0.132:8082/upload.htm"
 //private val URL_IMAGE = "http://192.168.0.140:8081/upload.htm"
 
 var baseUrl = "http://192.168.0.109:9001/"
@@ -44,7 +42,7 @@ interface Http {
     fun updateImage(@Url url: String, @Part parts: Array<MultipartBody.Part?>, @QueryMap maps: WeakHashMap<String, String>): Call<String>
 
     @GET
-    fun downloadFile(@Url url: String, @FieldMap parameter: WeakHashMap<String, String>): Call<ResponseBody>
+    fun downloadFile(@Url url: String): Call<ResponseBody>
 
 }
 
@@ -57,6 +55,16 @@ interface HttpCallBack<in T> {
     fun onFailure(text: String)
 
 }
+
+fun downloadFile(url: String, callBack: Callback<ResponseBody>, progressListener: ProgressListener) {
+    val builder = Retrofit.Builder().baseUrl(baseUrl)
+    val client = OkHttpClient.Builder().addNetworkInterceptor { chain -> val orginalResponse = chain.proceed(chain.request())
+        orginalResponse.newBuilder().body(ProgressResponseBody(orginalResponse.body(), progressListener)).build()
+    }.build()
+    val http = builder.client(client).build().create(Http::class.java)
+    http.downloadFile(url).enqueue(callBack)
+}
+
 
 fun <T> uploadFile(context: Context, url: String, parts: Array<MultipartBody.Part?>, maps: WeakHashMap<String, String>, callBack: HttpCallBack<T>) {
     retrofit.updateImage(url, parts, maps).enqueue(object : Callback<String> {
@@ -146,9 +154,13 @@ fun uploadImage(context: Context, type: String, file: File, callBack: HttpCallBa
 fun uploadSummaryImage(context: Context, type: String, view: View, file: File, callBack: HttpCallBack<String>) {
     Thread {
         run {
-            val bitmap = getBitmap(path = file.absolutePath, reqWidth = view.width, reqHeight = view.height)
-            val imageFile = savePhotoToSDCard(context = context, photoBitmap = bitmap, quality = 100, photoName = file.name)
-            uploadImage(context, type, imageFile, callBack)
+            try {
+                val bitmap = getBitmap(path = file.absolutePath, reqWidth = view.width, reqHeight = view.height)
+                val imageFile = savePhotoToSDCard(context = context, photoBitmap = bitmap, quality = 100, photoName = file.name)
+                uploadImage(context, type, imageFile, callBack)
+            } catch (e: Exception) {
+                showLog("TAG", e.localizedMessage)
+            }
         }
     }.start()
 }

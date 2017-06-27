@@ -1,17 +1,15 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.jph.takephoto.app.TakePhoto;
@@ -37,8 +35,13 @@ import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.Kn
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFilesItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -52,6 +55,8 @@ import kale.adapter.item.AdapterItem;
  */
 
 public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsContract.View, KnowledgeDetailsPresenter> implements KnowledgeDetailsContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
+
+    public static final String MESSAGE = "EKnowledgeDetailsActivity_refresh";
 
     private static final String PHOTO = "photo.png";
     public static final String ID = "ID";
@@ -74,10 +79,23 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(String event) {
+        if (TextUtils.equals(event, MESSAGE))
+            onRefresh();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTakePhoto().onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public TakePhoto getTakePhoto() {
@@ -154,6 +172,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     @Override
     public void onRefresh() {
+        KnowledgeDetailsArticleItem.isCreateWebview = true;
         mPresenter.downLoadData(id, 0);
     }
 
@@ -257,13 +276,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
                 renameDialog.setMoudleId(id);
                 renameDialog.setType(RenameDialog.MOUDLE);
                 renameDialog.show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        InputMethodManager mInputManager = (InputMethodManager) KnowledgeDetailsActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        mInputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                    }
-                }, 100);
+                KeyBoardUtils.showKeyBoard(this);
             } else {
                 DeleteDialog deleteDialog = new DeleteDialog(this, R.style.dialog);
                 deleteDialog.setMoudleId(id);

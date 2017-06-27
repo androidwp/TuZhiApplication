@@ -52,7 +52,7 @@ public class ProgressBarDialog extends AlertDialog {
         binding.pb.setProgress(currentProgress);
         binding.pb.setMax(totalProgress);
         double progress = ((double) currentProgress / totalProgress) * 100;
-        DecimalFormat df = new DecimalFormat("######0.00");
+        DecimalFormat df = new DecimalFormat("######0.0");
         binding.tv.setText(df.format(progress) + " %");
     }
 

@@ -6,6 +6,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
+        ndk{abiFilters "armeabi"}
         applicationId "com.tuzhi.application"
         minSdkVersion 18
         targetSdkVersion 26
@@ -36,7 +37,7 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
@@ -48,6 +49,6 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.baoyz.actionsheet:library:1.1.7'
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
-    compile 'jp.wasabeef:richeditor-android:1.2.2'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
 }
