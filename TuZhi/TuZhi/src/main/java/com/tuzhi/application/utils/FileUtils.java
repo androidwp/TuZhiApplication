@@ -7,21 +7,14 @@ import android.os.Build;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.tuzhi.application.dialog.ProgressBarDialog;
-import com.tuzhi.application.inter.ProgressListener;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by wangpeng on 2017/6/23.
@@ -34,65 +27,44 @@ public class FileUtils {
 
         final ProgressBarDialog progressBarDialog = new ProgressBarDialog(context);
         progressBarDialog.setTitle("正在下载");
-
-        HttpUtilsKt.downloadFile(url, new Callback<ResponseBody>() {
+        progressBarDialog.show();
+        FileDownloader.setup(context);
+        final String path = ConstantKt.getFileCache(fileName).getAbsolutePath();
+        FileDownloader.getImpl().create(url).setPath(path).setListener(new FileDownloadListener() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                writeFileToDisk(context, id, fileName, response.body());
+            protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+
+            }
+
+            @Override
+            protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                progressBarDialog.changeProgress(soFarBytes, totalBytes);
+            }
+
+            @Override
+            protected void completed(BaseDownloadTask task) {
+                progressBarDialog.dismiss();
+                SharedPreferencesUtilsKt.saveLongCache(context, id, path);
                 EventBus.getDefault().post(DOWNLOAD_FINISH);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
 
             }
-        }, new ProgressListener() {
+
             @Override
-            public void onProgress(long progress, long total, boolean done) {
-                if (!done) {
-                    progressBarDialog.changeProgress((int) progress, (int) total);
-                } else {
-                    progressBarDialog.dismiss();
-                }
+            protected void error(BaseDownloadTask task, Throwable e) {
+
             }
-        });
+
+            @Override
+            protected void warn(BaseDownloadTask task) {
+
+            }
+        }).start();
     }
 
-    private static File writeFileToDisk(Context context, String id, String name, ResponseBody body) {
-        try {
-            File futureStudioIconFile = ConstantKt.getFileCache(name);
-            InputStream inputStream = null;
-            OutputStream outputStream = null;
-            try {
-                byte[] fileReader = new byte[4096];
-                inputStream = body.byteStream();
-                outputStream = new FileOutputStream(futureStudioIconFile);
-
-                while (true) {
-                    int read = inputStream.read(fileReader);
-                    if (read == -1) {
-                        break;
-                    }
-                    outputStream.write(fileReader, 0, read);
-                }
-                outputStream.flush();
-                //存储文件id和地址
-                SharedPreferencesUtilsKt.saveLongCache(context, id, futureStudioIconFile.getAbsolutePath());
-                return futureStudioIconFile;
-            } catch (IOException e) {
-                return null;
-            } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            }
-        } catch (IOException e) {
-            return null;
-        }
-    }
 
     public static boolean fileExist(Context context, String id) {
         String filePath = SharedPreferencesUtilsKt.getLongCache(context, id);
@@ -100,7 +72,7 @@ public class FileUtils {
     }
 
     public static String getFile(Context context, String id) {
-       return SharedPreferencesUtilsKt.getLongCache(context,id);
+        return SharedPreferencesUtilsKt.getLongCache(context, id);
     }
 
     public static void openFile(Context context, File file) {

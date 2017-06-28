@@ -104,6 +104,12 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
     }
 
     @Override
+    public void downloadFinish() {
+        binding.rrv.isShowRefreshView(false);
+    }
+
+
+    @Override
     public void loadMoreListener(int page) {
         mPresenter.downLoadData(page);
     }

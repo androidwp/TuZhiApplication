@@ -48,7 +48,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         HttpUtilsKt.get(mView.getContext(), URL, parameter, HttpKnowledgeDetailsListBean.class, new HttpCallBack<HttpKnowledgeDetailsListBean>() {
             @Override
             public void onFinish() {
-
+                mView.downloadFinish();
             }
 
             @Override
@@ -185,10 +185,12 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         List<HttpKnowledgeDetailsListBean.ArticleFilesMapBean> articleFilesMap = httpKnowledgeDetailsListBean.getArticleFilesMap();
         for (HttpKnowledgeDetailsListBean.ArticleFilesMapBean articleFilesMapBean : articleFilesMap) {
             KnowledgeDetailsListBean fileBean = new KnowledgeDetailsListBean(KnowledgeDetailsFileItem.TYPE);
+            fileBean.setAid(httpKnowledgeDetailsListBean.getArticleMap().getId());
             fileBean.setFileId(articleFilesMapBean.getId());
             fileBean.setTitle(articleFilesMapBean.getFileName());
             fileBean.setFileName(articleFilesMapBean.getFileName());
             fileBean.setFileType(articleFilesMapBean.getFileSuffix());
+            fileBean.setPreviewUrls(articleFilesMapBean.getPreviewUrls());
             fileBean.setFileStatus(articleFilesMapBean.isPreview());
             fileBean.setInfo(articleFilesMapBean.getAuthor() + "  " + articleFilesMapBean.getUpdateTime() + "  " + articleFilesMapBean.getFileSize());
             fileBean.setDownloadStatus(FileUtils.fileExist(mView.getContext(), articleFilesMapBean.getId()));

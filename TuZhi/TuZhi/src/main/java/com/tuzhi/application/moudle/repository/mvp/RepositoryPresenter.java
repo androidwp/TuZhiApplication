@@ -31,7 +31,7 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
         HttpUtilsKt.get(mView.getContext(), URL, parameter, HttpRepositoryListBean.class, new HttpCallBack<HttpRepositoryListBean>() {
             @Override
             public void onFinish() {
-
+                mView.downloadFinish();
             }
 
             @Override

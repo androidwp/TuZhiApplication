@@ -50,9 +50,12 @@ public class KnowledgeDetailsFileItem extends BaseItem<KnowledgeDetailsListBean>
 
     public void skipOpenActivity(KnowledgeDetailsListBean bean) {
         Intent intent = new Intent(getContext(), OpenFileActivity.class);
-        intent.putExtra(OpenFileActivity.ID,bean.getFileId());
+        intent.putExtra(OpenFileActivity.ARTICLE_ID, bean.getAid());
+        intent.putExtra(OpenFileActivity.FILE_ID, bean.getFileId());
+        intent.putExtra(OpenFileActivity.FILE_PREVIEW_URLS, bean.getPreviewUrls());
         intent.putExtra(OpenFileActivity.FILE_NAME, bean.getFileName());
-        intent.putExtra(OpenFileActivity.TYPE, OpenFileActivity.TYPE_CAN_OPEN);
+        intent.putExtra(OpenFileActivity.TYPE, bean.isFileStatus());
+        intent.putExtra(OpenFileActivity.FILE_SIZE, bean.getFileSize());
         context.startActivity(intent);
     }
 }

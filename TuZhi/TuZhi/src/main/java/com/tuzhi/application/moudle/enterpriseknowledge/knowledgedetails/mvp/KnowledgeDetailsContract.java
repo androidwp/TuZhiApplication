@@ -17,6 +17,8 @@ public class KnowledgeDetailsContract {
     interface View extends BaseView {
         void downLoadFinish(ArrayList<KnowledgeDetailsListBean> data, boolean haveNextPage, int page, String content);
 
+        void downloadFinish();
+
         void updateProgress(int finishNumber, int totalNumber);
 
         void updateFinish();

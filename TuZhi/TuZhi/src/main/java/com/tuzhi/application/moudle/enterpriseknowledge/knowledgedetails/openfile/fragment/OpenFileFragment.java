@@ -39,7 +39,7 @@ public class OpenFileFragment extends Fragment implements ViewPager.OnPageChange
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        images = getArguments().getStringArrayList(OpenFileActivity.CONTENT);
+        images = getArguments().getStringArrayList(OpenFileActivity.FILE_PREVIEW_URLS);
         CommonPagerAdapter<String> adapter = new CommonPagerAdapter<String>(images) {
             @NonNull
             @Override

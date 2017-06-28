@@ -1,7 +1,5 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.mvp;
 
-import android.content.Context;
-
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
 
@@ -16,6 +14,6 @@ public class OpenFileContract {
     }
 
     interface  Presenter extends BasePresenter<View> {
-        
+        void downloadFile(String aid,String fid,String fileName);
     }
 }

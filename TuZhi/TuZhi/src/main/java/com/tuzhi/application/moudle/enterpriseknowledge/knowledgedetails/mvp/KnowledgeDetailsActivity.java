@@ -183,6 +183,11 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
     @Override
+    public void downloadFinish() {
+        binding.rrv.isShowRefreshView(false);
+    }
+
+    @Override
     public void updateProgress(int finishNumber, int totalNumber) {
         dialog.changeProgress(finishNumber, totalNumber);
     }

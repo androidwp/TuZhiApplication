@@ -57,14 +57,15 @@ public class NotOpenFileFragment extends Fragment {
             String file = FileUtils.getFile(getActivity(), bean.getFileId());
             FileUtils.openFile(getActivity(), new File(file));
         } else {
-            FileUtils.downloadFile(getActivity(), bean.getFileId(), bean.getFileName(), bean.getFileUrl());
+            OpenFileActivity activity = (OpenFileActivity) getActivity();
+            activity.downloadFile(0);
         }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         bean = new NotOpenFileBean();
-        String fileId = getArguments().getString(OpenFileActivity.ID);
+        String fileId = getArguments().getString(OpenFileActivity.FILE_ID);
         String fileName = getArguments().getString(OpenFileActivity.FILE_NAME);
         bean.setFileId(fileId);
         bean.setFileName(fileName);

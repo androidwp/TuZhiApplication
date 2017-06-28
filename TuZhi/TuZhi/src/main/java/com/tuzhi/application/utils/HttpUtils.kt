@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.view.View
 import com.alibaba.fastjson.JSONObject.parseObject
-import com.tuzhi.application.inter.ProgressListener
-import okhttp3.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,10 +41,6 @@ interface Http {
     @Multipart
     @POST
     fun updateImage(@Url url: String, @Part parts: Array<MultipartBody.Part?>, @QueryMap maps: WeakHashMap<String, String>): Call<String>
-
-    @GET
-    fun downloadFile(@Url url: String): Call<ResponseBody>
-
 }
 
 interface HttpCallBack<in T> {
@@ -55,16 +52,6 @@ interface HttpCallBack<in T> {
     fun onFailure(text: String)
 
 }
-
-fun downloadFile(url: String, callBack: Callback<ResponseBody>, progressListener: ProgressListener) {
-    val builder = Retrofit.Builder().baseUrl(baseUrl)
-    val client = OkHttpClient.Builder().addNetworkInterceptor { chain -> val orginalResponse = chain.proceed(chain.request())
-        orginalResponse.newBuilder().body(ProgressResponseBody(orginalResponse.body(), progressListener)).build()
-    }.build()
-    val http = builder.client(client).build().create(Http::class.java)
-    http.downloadFile(url).enqueue(callBack)
-}
-
 
 fun <T> uploadFile(context: Context, url: String, parts: Array<MultipartBody.Part?>, maps: WeakHashMap<String, String>, callBack: HttpCallBack<T>) {
     retrofit.updateImage(url, parts, maps).enqueue(object : Callback<String> {
@@ -111,19 +98,20 @@ fun <T> onFailure(context: Context, callBack: HttpCallBack<T>, t: Throwable?) {
     if (!activity.isDestroyed) {
         callBack.onFinish()
         callBack.onFailure(t.toString())
+        toast(activity, "请检查您的网络")
     }
 }
 
 fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>, response: Response<String>) {
     val activity = context as AppCompatActivity
     if (!activity.isDestroyed) {
+        callBack.onFinish()
         val result = response.body().toString()
         val jsonObject = parseObject(result)
         val resultCode = jsonObject.getString("resultCode")
         val resultMsg = jsonObject.getString("resultMsg")
         if (TextUtils.equals(resultCode, "0")) {
             val resultObject = parseObject(result, clazz)
-            callBack.onFinish()
             if (clazz != null) {
                 callBack.onSuccess(resultObject, result)
             } else {
@@ -131,7 +119,7 @@ fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>
             }
         } else {
             toast(activity, resultMsg)
-            onFailure(activity, callBack, Throwable(resultMsg))
+            callBack.onFailure(resultMsg)
         }
     }
 }

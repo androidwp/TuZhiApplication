@@ -1,5 +1,6 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -335,6 +336,14 @@ public class HttpKnowledgeDetailsListBean {
         private String fileSuffix;
         private String fileUrl;
         private boolean isPreview;
+        private ArrayList<String> previewUrls;
+        public ArrayList<String> getPreviewUrls() {
+            return previewUrls;
+        }
+
+        public void setPreviewUrls(ArrayList<String> previewUrls) {
+            this.previewUrls = previewUrls;
+        }
 
         public boolean isPreview() {
             return isPreview;

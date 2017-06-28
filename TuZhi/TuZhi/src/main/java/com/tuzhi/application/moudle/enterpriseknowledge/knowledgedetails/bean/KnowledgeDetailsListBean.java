@@ -29,10 +29,19 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private boolean fileStatus;
     //文件是否已经下载
     private boolean downloadStatus;
+    private ArrayList<String> previewUrls;
     private String praiseNumber;
     private String commentNumber;
     private boolean praiseStatus;
     private String fileName;
+
+    public ArrayList<String> getPreviewUrls() {
+        return previewUrls;
+    }
+
+    public void setPreviewUrls(ArrayList<String> previewUrls) {
+        this.previewUrls = previewUrls;
+    }
 
     public String getFileId() {
         return fileId;

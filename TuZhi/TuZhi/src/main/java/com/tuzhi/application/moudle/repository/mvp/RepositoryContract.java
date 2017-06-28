@@ -15,10 +15,14 @@ public class RepositoryContract {
     interface View extends BaseView {
         //下载并整理好数据
         void downLoadFinish(ArrayList<RepositoryListItemBean> data, boolean haveNextPage, int page);
+
+        void downloadFinish();
     }
 
     interface Presenter extends BasePresenter<View> {
         //下载数据
         void downLoadData(int page);
+
+
     }
 }
