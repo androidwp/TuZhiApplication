@@ -2,6 +2,7 @@ package com.tuzhi.application.moudle.mine.setting.mvp;
 
 
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tuzhi.application.R;
@@ -33,6 +34,13 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
         binding = (ActivitySettingBinding) viewDataBinding;
         binding.setActivity(this);
         binding.sv.setOnStateChangedListener(this);
+        String allow = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getKey_AllowMobileInternetDownload());
+        if (TextUtils.equals(allow,ConstantKt.getValue_true())){
+            binding.sv.setOpened(true);
+        }else{
+            binding.sv.setOpened(false);
+        }
+
     }
 
     public void back() {

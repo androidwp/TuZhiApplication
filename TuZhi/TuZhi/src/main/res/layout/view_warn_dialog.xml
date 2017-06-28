@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="dialog"
+            type="com.tuzhi.application.dialog.WarnDialog" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="info"
+            type="String" />
+
+        <variable
+            name="btnLeftText"
+            type="String" />
+
+        <variable
+            name="btnRightText"
+            type="String" />
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_background"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/generalSpace"
+        android:paddingRight="@dimen/generalSpace">
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@{title}"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="@{info}"
+            android:textColor="@color/colorGeneralTintText" />
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->dialog.cancel()}"
+                android:paddingBottom="@dimen/generalSpace"
+                android:paddingTop="@dimen/generalSpace"
+                android:text="@{btnLeftText}"
+                android:textColor="@color/colorGeneralMoreTintText" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->dialog.sure()}"
+                android:paddingBottom="@dimen/generalSpace"
+                android:paddingTop="@dimen/generalSpace"
+                android:text="@{btnRightText}"
+                android:textColor="@color/colorRedButton" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

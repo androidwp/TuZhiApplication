@@ -55,7 +55,7 @@ public class NotOpenFileFragment extends Fragment {
     public void downloadOrOpenFile(NotOpenFileBean bean) {
         if (bean.isDownload()) {
             String file = FileUtils.getFile(getActivity(), bean.getFileId());
-            FileUtils.openFile(getActivity(), new File(file));
+            FileUtils.openFile(getActivity(), new File(file), bean.getFileSffix());
         } else {
             OpenFileActivity activity = (OpenFileActivity) getActivity();
             activity.downloadFile(0);
@@ -69,6 +69,7 @@ public class NotOpenFileFragment extends Fragment {
         String fileName = getArguments().getString(OpenFileActivity.FILE_NAME);
         bean.setFileId(fileId);
         bean.setFileName(fileName);
+        bean.setFileSffix(getArguments().getString(OpenFileActivity.FILE_SUFFIX));
         bean.setFileIcon(ImageUtils.getFileImage(fileName, 1));
         bean.setFileSize(getArguments().getString(OpenFileActivity.FILE_SIZE));
         bean.setFileUrl(getArguments().getString(OpenFileActivity.FILE_URL));

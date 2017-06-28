@@ -15,5 +15,8 @@ public class OpenFileContract {
 
     interface  Presenter extends BasePresenter<View> {
         void downloadFile(String aid,String fid,String fileName);
+
+        //后台记录
+        void reviewFile(String aid,String fid);
     }
 }

@@ -75,10 +75,9 @@ public class FileUtils {
         return SharedPreferencesUtilsKt.getLongCache(context, id);
     }
 
-    public static void openFile(Context context, File file) {
+    public static void openFile(Context context, File file, String fileSuffix) {
         try {
-            String end = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length()).toLowerCase();
-            String fileType = getFileType(end);
+            String fileType = getFileType(fileSuffix);
             if (TextUtils.isEmpty(fileType))
                 return;
             Uri uri;

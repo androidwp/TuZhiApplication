@@ -52,4 +52,5 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
     compile 'com.liulishuo.filedownloader:library:1.5.7'
+    compile 'com.yanzhenjie:permission:1.0.8'
 }

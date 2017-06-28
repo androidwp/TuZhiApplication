@@ -15,10 +15,18 @@ public class NotOpenFileBean extends BaseObservable {
     private String fileName;
     private String fileUrl;
     private String fileSize;
+    private String fileSffix;
     private String textDownLoad="下载到本地";
     private String textOpen="用其他应用打开";
     private boolean isDownload;
 
+    public String getFileSffix() {
+        return fileSffix;
+    }
+
+    public void setFileSffix(String fileSffix) {
+        this.fileSffix = fileSffix;
+    }
 
     public String getTextDownLoad() {
         return textDownLoad;

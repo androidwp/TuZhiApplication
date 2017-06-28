@@ -22,6 +22,7 @@ public class OpenFilePresenter extends BasePresenterImpl<OpenFileContract.View> 
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("aId", aid);
         parameter.put("fId", fid);
+        parameter.put("operate", "2");
         HttpUtilsKt.get(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {
             @Override
             public void onFinish() {
@@ -34,6 +35,31 @@ public class OpenFilePresenter extends BasePresenterImpl<OpenFileContract.View> 
                 JSONObject jsonObject = JSONObject.parseObject(text);
                 String downloadUrl = jsonObject.getString("downloadUrl");
                 FileUtils.downloadFile(mView.getContext(), fid, fileName, downloadUrl);
+            }
+
+            @Override
+            public void onFailure(String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void reviewFile(String aid, String fid) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("aId", aid);
+        parameter.put("fId", fid);
+        parameter.put("operate", "1");
+        HttpUtilsKt.get(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(String s, String text) {
+
+
             }
 
             @Override

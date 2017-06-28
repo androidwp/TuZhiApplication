@@ -56,6 +56,7 @@ public class KnowledgeDetailsFileItem extends BaseItem<KnowledgeDetailsListBean>
         intent.putExtra(OpenFileActivity.FILE_NAME, bean.getFileName());
         intent.putExtra(OpenFileActivity.TYPE, bean.isFileStatus());
         intent.putExtra(OpenFileActivity.FILE_SIZE, bean.getFileSize());
+        intent.putExtra(OpenFileActivity.FILE_SUFFIX, bean.getFileType());
         context.startActivity(intent);
     }
 }

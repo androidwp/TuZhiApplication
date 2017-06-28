@@ -98,7 +98,7 @@ fun <T> onFailure(context: Context, callBack: HttpCallBack<T>, t: Throwable?) {
     if (!activity.isDestroyed) {
         callBack.onFinish()
         callBack.onFailure(t.toString())
-        toast(activity, "请检查您的网络")
+        toast(activity, "网络连接失败，请检查网络")
     }
 }
 

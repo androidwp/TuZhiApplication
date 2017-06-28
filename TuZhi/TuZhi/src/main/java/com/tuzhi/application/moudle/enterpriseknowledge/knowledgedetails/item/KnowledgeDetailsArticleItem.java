@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.tuzhi.application.R;
@@ -14,6 +15,7 @@ import com.tuzhi.application.databinding.ItemKnowledgeDetailsListArticleBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
 import com.tuzhi.application.utils.CommonUtils;
+import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,12 +55,14 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
                 isCreateWebview = false;
                 binding.fl.removeAllViews();
                 webView = new WebView(context);
+                WebSettings settings = webView.getSettings();
                 webView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 webView.setPadding(dimens, dimens, dimens, dimens);
                 layoutParams.setMargins(dimens, dimens, dimens, dimens);
                 binding.fl.setLayoutParams(layoutParams);
                 binding.fl.addView(webView);
             }
+            LogUtilsKt.showLog("TAG",knowledgeDetailsListBean.getContent());
             webView.loadDataWithBaseURL(null, knowledgeDetailsListBean.getContent(), "text/html", "utf-8", null);
             webView.setWebViewClient(new WebViewClient() {
                 @Override
