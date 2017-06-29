@@ -41,7 +41,7 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
                 binding.setData(new CreateRepositoryBean(type, "新建知识库", "请输入知识库名称", ""));
                 break;
             case MOUDLE:
-                binding.setData(new CreateRepositoryBean(type, "新建知识模块", "请输入知识模块名称", ""));
+                binding.setData(new CreateRepositoryBean(type, "新建频道", "请输入频道名称", ""));
                 break;
         }
         KeyBoardUtils.showKeyBoard(this);

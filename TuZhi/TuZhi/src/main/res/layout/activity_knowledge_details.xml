@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/navigationHeight"
             android:background="@color/colorNavigationBarBackground"
@@ -26,10 +26,9 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="0dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:maxLines="1"
                 android:textSize="@dimen/generalTextSize" />
@@ -39,16 +38,28 @@
                 android:onClick="@{()->activity.openSelectDialog(0)}"
                 android:src="@drawable/more" />
 
-            <!--<View style="@style/NavigationLine" />-->
+            <View style="@style/NavigationLine" />
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <com.tuzhi.application.view.RefreshRecycleView
-            android:id="@+id/rrv"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1">
 
+            <com.tuzhi.application.view.RefreshRecycleView
+                android:id="@+id/rrv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:src="@drawable/shadow_flip" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -149,7 +149,11 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     public void commit(String content) {
-        mPresenter.commit(id, content);
+        if (TextUtils.isEmpty(content)||TextUtils.equals(content,"\n\t<p style=\"line-height: 1.5;word-break: break-all;\"><br></p>")) {
+            mPresenter.commit(id, "");
+        } else {
+            mPresenter.commit(id, content);
+        }
     }
 
     @Override

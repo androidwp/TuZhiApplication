@@ -29,7 +29,6 @@ public class FileUtils {
         progressBarDialog.setTitle("正在下载");
         progressBarDialog.show();
         FileDownloader.setup(context);
-        LogUtilsKt.showLog("TAG",url);
         final String path = ConstantKt.getFileCache(fileName).getAbsolutePath();
         FileDownloader.getImpl().create(url).setPath(path).setListener(new FileDownloadListener() {
             @Override
@@ -57,14 +56,14 @@ public class FileUtils {
             @Override
             protected void error(BaseDownloadTask task, Throwable e) {
                 progressBarDialog.dismiss();
-                LogUtilsKt.showLog("TAG",e.getLocalizedMessage());
-                ToastUtilsKt.toast(context,"下载出错，请重试");
+                LogUtilsKt.showLog("TAG", e.getLocalizedMessage());
+                ToastUtilsKt.toast(context, "下载出错，请重试");
             }
 
             @Override
             protected void warn(BaseDownloadTask task) {
                 progressBarDialog.dismiss();
-                ToastUtilsKt.toast(context,"下载出错，请重试");
+                ToastUtilsKt.toast(context, "下载出错，请重试");
             }
         }).start();
     }
@@ -82,8 +81,10 @@ public class FileUtils {
     public static void openFile(Context context, File file, String fileSuffix) {
         try {
             String fileType = getFileType(fileSuffix);
-            if (TextUtils.isEmpty(fileType))
+            if (TextUtils.isEmpty(fileType)) {
+                ToastUtilsKt.toast(context, "暂不支持打开此文件");
                 return;
+            }
             Uri uri;
             if (Build.VERSION.SDK_INT >= 24) {
                 uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
@@ -104,12 +105,18 @@ public class FileUtils {
     private static String getFileType(String fileType) {
         if ("gif/jpg/png/jpeg".contains(fileType)) {
             return "image/*";
-        } else if ("doc/docx".contains(fileType)) {
+        } else if ("doc".equals(fileType)) {
             return "application/msword";
-        } else if ("ppttx/ppt".contains(fileType)) {
+        } else if ("docx".equals(fileType)) {
+            return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        } else if ("ppt".equals(fileType)) {
             return "application/vnd.ms-powerpoint";
-        } else if ("xls/xlsx".contains(fileType)) {
-            return "application/*";
+        } else if ("pptx".equals(fileType)) {
+            return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+        } else if ("xls".equals(fileType)) {
+            return "application/vnd.ms-excel";
+        } else if ("xlsx".equals(fileType)) {
+            return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         } else if ("pdf".contains(fileType)) {
             return "application/pdf";
         } else if ("html/htm".contains(fileType)) {

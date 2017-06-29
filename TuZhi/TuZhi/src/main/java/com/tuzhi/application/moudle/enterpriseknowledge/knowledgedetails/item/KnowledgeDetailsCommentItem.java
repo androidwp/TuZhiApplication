@@ -57,6 +57,7 @@ public class KnowledgeDetailsCommentItem extends BaseItem<KnowledgeDetailsListBe
             WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(context);
             parameter.put("falg", "1");
             parameter.put("oType", "1");
+            parameter.put("cType", "1");
             parameter.put("oId", knowledgeDetailsListBean.getAid());
             parameter.put("cId", knowledgeDetailsListBean.getCid());
             HttpUtilsKt.post(context, URL, parameter, String.class, new HttpCallBack<String>() {

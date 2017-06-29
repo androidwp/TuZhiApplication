@@ -3,9 +3,7 @@
     android:id="@+id/ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/generalSpace"
-    android:layout_marginRight="@dimen/generalSpace"
-    android:layout_marginBottom="@dimen/generalSpace"
+    android:layout_margin="@dimen/generalSpace"
     android:showDividers="middle"
     android:divider="@drawable/general_linearlayout_divider"
     android:orientation="vertical">

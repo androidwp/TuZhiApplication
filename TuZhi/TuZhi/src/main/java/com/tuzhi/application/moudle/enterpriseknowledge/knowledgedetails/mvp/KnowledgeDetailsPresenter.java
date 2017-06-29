@@ -1,5 +1,6 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp;
 
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -203,9 +204,12 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
     private String addArticle(HttpKnowledgeDetailsListBean articleMap, ArrayList<KnowledgeDetailsListBean> data) {
         HttpKnowledgeDetailsListBean.ArticleMapBean articleMapBean = articleMap.getArticleMap();
-        KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsArticleItem.TYPE);
-        bean.setContent(articleMapBean.getContent());
-        data.add(bean);
-        return bean.getContent();
+        if (!TextUtils.isEmpty(articleMapBean.getContent())) {
+            KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsArticleItem.TYPE);
+            bean.setContent(articleMapBean.getContent());
+            LogUtilsKt.showLog("TAG",articleMapBean.getContent());
+            data.add(bean);
+        }
+        return articleMapBean.getContent();
     }
 }
