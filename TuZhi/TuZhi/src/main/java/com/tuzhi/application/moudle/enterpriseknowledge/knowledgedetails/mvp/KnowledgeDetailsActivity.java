@@ -57,7 +57,6 @@ import kale.adapter.item.AdapterItem;
 public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsContract.View, KnowledgeDetailsPresenter> implements KnowledgeDetailsContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
 
     public static final String MESSAGE = "EKnowledgeDetailsActivity_refresh";
-
     private static final String PHOTO = "photo.png";
     public static final String ID = "ID";
     public static final String TITLE = "TITLE";

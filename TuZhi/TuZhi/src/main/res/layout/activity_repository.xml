@@ -19,17 +19,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/navigationHeight"
-            android:background="@color/colorNavigationBarBackground">
+            android:background="@drawable/shadow"
+            android:layout_height="@dimen/navigationHeight">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center_vertical"
-                android:onClick="@{()->activity.skipMineActivity()}"
                 android:layout_marginLeft="@dimen/generalSpace"
+                android:onClick="@{()->activity.skipMineActivity()}"
                 android:scaleType="centerCrop"
                 app:imageLoad="@{data.userImage}"
                 app:riv_corner_radius="13dp" />
@@ -47,7 +48,8 @@
                 android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
                 android:src="@drawable/add" />
 
-            <View style="@style/NavigationLine" />
+            <!--<View-->
+                <!--style="@style/NavigationLine" />-->
 
         </FrameLayout>
 

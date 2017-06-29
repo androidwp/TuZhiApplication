@@ -47,6 +47,8 @@
             style="@style/GeneralSettingStyle"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/generalSpace"
+            android:maxLines="1"
+            android:maxLength="20"
             android:hint="@{data.hint}"
             android:text="@={data.name}"
             android:textColorHint="@color/colorGeneralMoreTintText"

@@ -55,12 +55,14 @@ public class FileUtils {
 
             @Override
             protected void error(BaseDownloadTask task, Throwable e) {
-
+                progressBarDialog.dismiss();
+                ToastUtilsKt.toast(context,"下载出错，请重试");
             }
 
             @Override
             protected void warn(BaseDownloadTask task) {
-
+                progressBarDialog.dismiss();
+                ToastUtilsKt.toast(context,"下载出错，请重试");
             }
         }).start();
     }

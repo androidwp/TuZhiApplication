@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -54,7 +55,9 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         EmotionKeyboard.with(this).bindToContent(binding.contentView).bindToEmotionButton(binding.ivShowBar).bindToWebView(binding.re).setEmotionView(binding.functionBar).build();
         String content = getIntent().getStringExtra(CONTENT);
         id = getIntent().getStringExtra(ID);
-        binding.re.setHtml(content);
+        if (!TextUtils.isEmpty(content)) {
+            binding.re.setHtml(content);
+        }
     }
 
     @Override

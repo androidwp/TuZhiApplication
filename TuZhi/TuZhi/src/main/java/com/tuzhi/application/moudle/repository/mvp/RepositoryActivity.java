@@ -62,14 +62,13 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         else if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
             binding.setData(UserInfoUtils.getUserInfo(this));
         }
-
     }
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         AndPermission.with(this)
                 .requestCode(100)
-                .permission(Manifest.permission.ACCESS_NETWORK_STATE).start();
+                .permission(Manifest.permission.READ_PHONE_STATE).start();
         EventBus.getDefault().register(this);
         binding = (ActivityRepositoryBinding) viewDataBinding;
         binding.setActivity(this);

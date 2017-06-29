@@ -18,12 +18,12 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/iv"
             android:layout_width="100dp"
             android:layout_height="128dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
-            android:scaleType="centerCrop"
-            android:src="@{data.fileIcon}" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
             style="@style/YellowButton"
             android:layout_marginTop="37dp"
             android:onClick="@{()->fragment.downloadOrOpenFile(data)}"
-            android:text="@{data.download?data.textDownLoad:data.textOpen}" />
+            android:text="@{data.download?data.textOpen:data.textDownLoad}" />
 
     </LinearLayout>
 

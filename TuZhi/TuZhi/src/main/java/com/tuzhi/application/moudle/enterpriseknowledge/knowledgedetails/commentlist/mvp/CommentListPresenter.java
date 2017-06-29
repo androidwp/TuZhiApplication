@@ -41,14 +41,15 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
                 HttpCommentListBean.CommentPageBean commentPage = httpCommentListBean.getCommentPage();
                 boolean next = commentPage.isNext();
                 int index = commentPage.getIndex();
-                if (index == 0) {
-                    CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);
-                    commentListBean.setInfo(comment.getContent());
-                    commentListBean.setTime(comment.getTime());
-                    commentListBean.setAuthor(comment.getNickname());
-                    commentListBean.setImageUrl(comment.getUserImage());
-                    data.add(commentListBean);
-                }
+                //根部评论先不要
+//                if (index == 0) {
+//                    CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);
+//                    commentListBean.setInfo(comment.getContent());
+//                    commentListBean.setTime(comment.getTime());
+//                    commentListBean.setAuthor(comment.getNickname());
+//                    commentListBean.setImageUrl(comment.getUserImage());
+//                    data.add(commentListBean);
+//                }
                 List<HttpCommentListBean.CommentPageBean.ResultBean> result = commentPage.getResult();
                 for (HttpCommentListBean.CommentPageBean.ResultBean bean : result) {
                     CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);

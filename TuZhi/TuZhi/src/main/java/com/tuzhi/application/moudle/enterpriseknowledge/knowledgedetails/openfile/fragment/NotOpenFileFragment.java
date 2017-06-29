@@ -70,11 +70,13 @@ public class NotOpenFileFragment extends Fragment {
         bean.setFileId(fileId);
         bean.setFileName(fileName);
         bean.setFileSffix(getArguments().getString(OpenFileActivity.FILE_SUFFIX));
-        bean.setFileIcon(ImageUtils.getFileImage(fileName, 1));
         bean.setFileSize(getArguments().getString(OpenFileActivity.FILE_SIZE));
         bean.setFileUrl(getArguments().getString(OpenFileActivity.FILE_URL));
         bean.setDownload(FileUtils.fileExist(getActivity(), fileId));
+        int fileImage = ImageUtils.getFileImage(getArguments().getString(OpenFileActivity.FILE_SUFFIX), 1);
         binding.setData(bean);
+        binding.setFragment(this);
+        binding.iv.setImageResource(fileImage);
     }
 
     public void setFileName(String fileName) {
