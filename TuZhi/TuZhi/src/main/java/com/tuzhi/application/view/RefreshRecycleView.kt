@@ -11,7 +11,6 @@ import android.widget.FrameLayout
 import com.tuzhi.application.R
 import com.tuzhi.application.bean.BaseListItemBean
 import com.tuzhi.application.item.GeneralLoadFootViewItem
-import com.tuzhi.application.utils.showLog
 import kale.adapter.CommonRcvAdapter
 
 /**
@@ -96,7 +95,6 @@ class RefreshRecycleView : FrameLayout {
             if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && !haveNextPage) {
                 mData.removeAt(mData.size - 1)
                 mData.addAll(mDataSource)
-                showLog("TAG",mData.toString())
             } else if (!TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
                 val clone = itemBean.clone()
                 clone.itemType = GeneralLoadFootViewItem.TYPE

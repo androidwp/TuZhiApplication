@@ -29,6 +29,7 @@ public class FileUtils {
         progressBarDialog.setTitle("正在下载");
         progressBarDialog.show();
         FileDownloader.setup(context);
+        LogUtilsKt.showLog("TAG",url);
         final String path = ConstantKt.getFileCache(fileName).getAbsolutePath();
         FileDownloader.getImpl().create(url).setPath(path).setListener(new FileDownloadListener() {
             @Override
@@ -56,6 +57,7 @@ public class FileUtils {
             @Override
             protected void error(BaseDownloadTask task, Throwable e) {
                 progressBarDialog.dismiss();
+                LogUtilsKt.showLog("TAG",e.getLocalizedMessage());
                 ToastUtilsKt.toast(context,"下载出错，请重试");
             }
 
