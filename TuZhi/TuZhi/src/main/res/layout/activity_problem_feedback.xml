@@ -25,10 +25,8 @@
 
 
             <ImageView
-                android:layout_width="@dimen/navigationHeight"
-                android:layout_height="@dimen/navigationHeight"
-                android:onClick="@{()->activity.back()}"
-                android:src="@mipmap/ic_launcher" />
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,20 +36,12 @@
                 android:textSize="@dimen/generalTextSize" />
 
             <TextView
-                android:layout_width="@dimen/navigationHeight"
-                android:layout_height="@dimen/navigationHeight"
-                android:layout_gravity="right"
-                android:gravity="center"
+                style="@style/NavigationRightButton"
                 android:onClick="@{()->activity.commitFeedback(text)}"
                 android:text="提交"
-                android:textColor="@color/colorYellowButton"
                 android:textSize="13sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/lineHeight"
-                android:layout_gravity="bottom"
-                android:background="@color/colorLine" />
+            <View style="@style/NavigationLine" />
 
         </FrameLayout>
 
@@ -62,10 +52,10 @@
             android:background="@color/colorWhite"
             android:gravity="start"
             android:hint="请描述问题和意见"
-            android:textColorHint="@color/colorGeneralMoreTintText"
             android:paddingLeft="@dimen/generalSpace"
             android:paddingTop="@dimen/generalSpace"
-            android:text="@={text}" />
+            android:text="@={text}"
+            android:textColorHint="@color/colorGeneralMoreTintText" />
 
     </LinearLayout>
 </layout>

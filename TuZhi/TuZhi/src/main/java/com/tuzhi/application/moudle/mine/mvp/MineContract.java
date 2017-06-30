@@ -1,7 +1,5 @@
 package com.tuzhi.application.moudle.mine.mvp;
 
-import android.content.Context;
-
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
 
@@ -12,10 +10,10 @@ import com.tuzhi.application.moudle.basemvp.BaseView;
 
 public class MineContract {
     interface View extends BaseView {
-        
+        void logOut();
     }
 
     interface  Presenter extends BasePresenter<View> {
-        
+        void logOut();
     }
 }
