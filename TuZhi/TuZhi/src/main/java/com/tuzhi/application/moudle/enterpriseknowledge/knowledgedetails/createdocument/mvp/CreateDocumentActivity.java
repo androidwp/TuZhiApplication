@@ -190,7 +190,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
             public void onReceiveValue(String value) {
                 value = value.replace("\\u003C", "<").replace("&quot;", "\"").replace("\\","");
                 value = value.substring(1, value.length() - 1);
-                if (TextUtils.isEmpty(value) || TextUtils.equals(value, "<p style=\\\"line-height: 1.5;word-break: break-all;\\\"><br></p>")) {
+                if (TextUtils.isEmpty(value) || TextUtils.equals(value, "<p style=\"line-height: 1.5;word-break: break-all;\"><br></p>")) {
                     mPresenter.commit(id, "");
                 } else {
                     mPresenter.commit(id, Base64.encodeToString(value.getBytes(), Base64.DEFAULT));
