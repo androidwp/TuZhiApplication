@@ -136,7 +136,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ConstantKt.getKILL_ACTIVITY_CODE() && resultCode == ConstantKt.getKILL_ACTIVITY_CODE()) {
-            onBackPressed();
+           finish();
         } else if (requestCode == ConstantKt.getCREATE_CODE() && resultCode == ConstantKt.getCREATE_CODE()) {
             onRefresh();
         }

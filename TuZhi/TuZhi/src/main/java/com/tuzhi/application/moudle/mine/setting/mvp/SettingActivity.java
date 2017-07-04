@@ -42,7 +42,6 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
         } else {
             binding.sv.setOpened(false);
         }
-
     }
 
     public void back() {

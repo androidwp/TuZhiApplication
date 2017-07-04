@@ -68,6 +68,11 @@ public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresent
     }
 
     public void logOut() {
+        mPresenter.logOut(this);
+    }
+
+    @Override
+    public void logOutSuccess() {
         ActivitySkipUtilsKt.toActivity(getContext(), LoginActivity.class);
         setResult(ConstantKt.getKILL_ACTIVITY_CODE());
         back();

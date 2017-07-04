@@ -1,8 +1,14 @@
 package com.tuzhi.application.moudle.mine.mvp;
 
+import android.content.Context;
+
+import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
+import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.LogUtilsKt;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
 import java.util.WeakHashMap;
 
@@ -16,7 +22,7 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
     private static final String URL = "logout";
 
     @Override
-    public void logOut() {
+    public void logOut(final Context context) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         HttpUtilsKt.get(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {
             @Override
@@ -26,7 +32,12 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
 
             @Override
             public void onSuccess(String s, String text) {
-                mView.logOut();
+                LogUtilsKt.showLog("TAG",text);
+                //{"resultMsg":"正常","loginStatus":false,"userId":38,"resultCode":"0","userType":1}
+                JSONObject jsonObject = JSONObject.parseObject(text);
+                SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_TYPE(),jsonObject.getString("userType"));
+                SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_ID(),jsonObject.getString("userId"));
+                mView.logOutSuccess();
             }
 
             @Override
