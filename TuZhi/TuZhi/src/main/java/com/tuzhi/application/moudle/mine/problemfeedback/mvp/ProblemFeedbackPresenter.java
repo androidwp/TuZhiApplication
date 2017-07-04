@@ -3,6 +3,7 @@ package com.tuzhi.application.moudle.mine.problemfeedback.mvp;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 import java.util.WeakHashMap;
 
@@ -27,6 +28,7 @@ public class ProblemFeedbackPresenter extends BasePresenterImpl<ProblemFeedbackC
 
             @Override
             public void onSuccess(String s, String text) {
+                ToastUtilsKt.toast(mView.getContext(), "反馈成功");
                 mView.back();
             }
 

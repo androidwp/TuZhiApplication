@@ -75,6 +75,8 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setLoadListener(this);
+        binding.rrv.setTitle("知识库空空如也");
+        binding.rrv.setInfo("点击上方的\"+\"号，创建知识库");
         binding.setData(UserInfoUtils.getUserInfo(this));
         CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
             @NonNull

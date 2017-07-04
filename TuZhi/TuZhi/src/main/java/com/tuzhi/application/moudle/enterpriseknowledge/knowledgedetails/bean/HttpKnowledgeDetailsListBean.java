@@ -77,6 +77,24 @@ public class HttpKnowledgeDetailsListBean {
         private String readNum;
         private String updateTime;
         private String articleUrl;
+        private String editContentUrl;
+        private String viewContentUrl;
+
+        public String getEditContentUrl() {
+            return editContentUrl;
+        }
+
+        public void setEditContentUrl(String editContentUrl) {
+            this.editContentUrl = editContentUrl;
+        }
+
+        public String getViewContentUrl() {
+            return viewContentUrl;
+        }
+
+        public void setViewContentUrl(String viewContentUrl) {
+            this.viewContentUrl = viewContentUrl;
+        }
 
         public String getCommentNum() {
             return commentNum;

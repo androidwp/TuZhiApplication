@@ -28,6 +28,7 @@ public class CreateDocumentPresenter extends BasePresenterImpl<CreateDocumentCon
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("aId", id);
         parameter.put("content", content);
+        parameter.put("operate", "2");
         HttpUtilsKt.post(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {
             @Override
             public void onFinish() {
@@ -45,6 +46,30 @@ public class CreateDocumentPresenter extends BasePresenterImpl<CreateDocumentCon
             }
         });
     }
+
+    @Override
+    public void inform(String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("aId", id);
+        parameter.put("operate", "3");
+        HttpUtilsKt.post(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
 
     @Override
     public void uploadImage(View view, File imageFile) {

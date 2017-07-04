@@ -32,8 +32,10 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
         }
         mPresenter = getInstance(this, 1);
         mPresenter.attachView((V) this);
-        setStatusBarIconDark(true);
-        setStatusBarDarkMode(true, this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setStatusBarIconDark(true);
+            setStatusBarDarkMode(true, this);
+        }
         init(DataBindingUtil.setContentView(this, getLayoutId()));
     }
 

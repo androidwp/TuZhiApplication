@@ -50,7 +50,7 @@
             android:paddingLeft="@dimen/generalSpace"
             android:text="@={data.text}" />
 
-        <Button
+        <TextView
             style="@style/YellowButton"
             android:layout_marginTop="50dp"
             android:onClick="@{()->activity.commit(data.text)}"

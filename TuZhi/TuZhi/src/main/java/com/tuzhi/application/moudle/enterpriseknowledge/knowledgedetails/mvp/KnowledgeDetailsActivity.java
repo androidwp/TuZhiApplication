@@ -67,10 +67,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ActionSheet actionSheet;
-    private String content;
     private int type;
     private ProgressBarDialog dialog;
-
 
     @Override
     protected int getLayoutId() {
@@ -111,8 +109,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         String textOne;
         String textTwo;
         if (type == 0) {
-            textOne = "重命名知识模块";
-            textTwo = "删除知识模块";
+            textOne = "重命名频道";
+            textTwo = "删除频道";
         } else {
             textOne = "从相册选择";
             textTwo = "拍摄新的照片";
@@ -176,8 +174,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
     @Override
-    public void downLoadFinish(ArrayList<KnowledgeDetailsListBean> newData, boolean haveNextPage, int page, String content) {
-        this.content = content;
+    public void downLoadFinish(ArrayList<KnowledgeDetailsListBean> newData, boolean haveNextPage, int page) {
         binding.rrv.downLoadFinish(page, haveNextPage, data, newData);
     }
 
@@ -204,11 +201,19 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         startActivityForResult(intent, ConstantKt.getNEED_REFRESH_CODE());
     }
 
+
     public void skipCreateDocumentActivity() {
-        Intent intent = new Intent(this, CreateDocumentActivity.class);
-        intent.putExtra(CreateDocumentActivity.ID, id);
-        intent.putExtra(CreateDocumentActivity.CONTENT, content);
-        startActivityForResult(intent, ConstantKt.getNEED_REFRESH_CODE());
+        mPresenter.skipCreateDocumentActivity(id);
+    }
+
+
+    public void skipCreateDocumentActivity(String editContentUrl) {
+        if (!TextUtils.isEmpty(editContentUrl)) {
+            Intent intent = new Intent(this, CreateDocumentActivity.class);
+            intent.putExtra(CreateDocumentActivity.ID, id);
+            intent.putExtra(CreateDocumentActivity.CONTENT, editContentUrl);
+            startActivityForResult(intent, ConstantKt.getNEED_REFRESH_CODE());
+        }
     }
 
     @Override

@@ -44,6 +44,7 @@
             android:layout_marginTop="@dimen/generalSpace"
             android:background="@drawable/general_setting_background"
             android:hint="请输入姓名"
+            android:maxLength="5"
             android:paddingLeft="@dimen/generalSpace"
             android:text="@={name}" />
 

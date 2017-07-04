@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="@dimen/generalTextSize" />
 
             <ImageView
                 android:layout_width="@dimen/navigationHeight"

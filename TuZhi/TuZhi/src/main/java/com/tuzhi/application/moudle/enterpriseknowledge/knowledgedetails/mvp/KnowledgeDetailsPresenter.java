@@ -34,11 +34,40 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
     private static final String URL = "tzkm/article";
 
-    private static final String URL_UPLOAD_FILE = "tzkm/addFile";
+    private static final String URL_EDIT = "tzkm/editArticle";
 
+    private static final String URL_UPLOAD_FILE = "tzkm/addFile";
     private int index;
     private int upDateIndex;
+
+
     private boolean canUpdate = true;
+
+    @Override
+    public void skipCreateDocumentActivity(String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("aId", id);
+        parameter.put("operate", "1");
+        HttpUtilsKt.post(mView.getContext(), URL_EDIT, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                LogUtilsKt.showLog("TAG",text);
+                JSONObject jsonObject = JSONObject.parseObject(text);
+                mView.skipCreateDocumentActivity(jsonObject.getString("editContentUrl"));
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
 
     @Override
     public void downLoadData(final String id, int page) {
@@ -57,7 +86,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
                 LogUtilsKt.showLog("TAG", text);
                 ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
                 //先添加文章
-                String content = addArticle(httpKnowledgeDetailsListBean, data);
+                addArticle(httpKnowledgeDetailsListBean, data);
                 //文件
                 addFiles(httpKnowledgeDetailsListBean, data);
                 //评论
@@ -65,7 +94,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
                 HttpKnowledgeDetailsListBean.CommentPageBean commentPage = httpKnowledgeDetailsListBean.getCommentPage();
 
-                mView.downLoadFinish(data, commentPage.isNext(), commentPage.getIndex(), content);
+                mView.downLoadFinish(data, commentPage.isNext(), commentPage.getIndex());
             }
 
 
@@ -207,7 +236,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         if (!TextUtils.isEmpty(articleMapBean.getContent())) {
             KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsArticleItem.TYPE);
             bean.setContent(articleMapBean.getContent());
-            LogUtilsKt.showLog("TAG",articleMapBean.getContent());
+            bean.setViewContentUrl(articleMapBean.getViewContentUrl());
             data.add(bean);
         }
         return articleMapBean.getContent();

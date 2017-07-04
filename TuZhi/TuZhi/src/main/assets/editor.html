@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div id="editor" contenteditable="true">
-	</div>
+<div id="editor" contenteditable="true">
+</div>
 <script type="text/javascript" src="rich_editor.js"></script>
 <script type="text/javascript" src="jquery.min.js"></script>
 </body>
@@ -45,5 +45,13 @@
 	    editor.selection.restoreSelection();
 	}
 	});
+$("#editor p, #editor h1, #editor h2, #editor h3, #editor h4, #editor h5, #editor table, #editor pre,#editor blockquote").css({
+	'line-height': '1.5',
+	'word-break': 'break-all'
+});
+$("#editor img").css({
+	width: '100%',
+	height: '100%'
+});
 </script>
 </html>

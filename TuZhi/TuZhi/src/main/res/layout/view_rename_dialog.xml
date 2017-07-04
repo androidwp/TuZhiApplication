@@ -32,6 +32,7 @@
             android:layout_marginBottom="@dimen/generalSpace"
             android:layout_marginTop="@dimen/generalSpace"
             android:background="@drawable/dialog_rename_et_background"
+            android:maxLength="20"
             android:maxLines="1"
             android:padding="10dp"
             android:text="@={name}"

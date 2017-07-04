@@ -15,13 +15,15 @@ import java.util.ArrayList;
 public class KnowledgeDetailsContract {
 
     interface View extends BaseView {
-        void downLoadFinish(ArrayList<KnowledgeDetailsListBean> data, boolean haveNextPage, int page, String content);
+        void downLoadFinish(ArrayList<KnowledgeDetailsListBean> data, boolean haveNextPage, int page);
 
         void downloadFinish();
 
         void updateProgress(int finishNumber, int totalNumber);
 
         void updateFinish();
+
+        void skipCreateDocumentActivity(String editContentUrl);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -30,5 +32,7 @@ public class KnowledgeDetailsContract {
         void uploadFiles(android.view.View view, String aid, ArrayList<TImage> images);
 
         void cancelUpdate();
+
+        void skipCreateDocumentActivity(String id);
     }
 }

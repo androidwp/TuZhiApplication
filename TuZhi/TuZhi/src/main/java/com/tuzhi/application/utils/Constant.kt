@@ -55,10 +55,14 @@ fun getImageCache(context: Context, fileName: String): File {
 }
 
 fun getFileCache(fileName: String): File {
+    return File(getFileDoc(), fileName)
+}
+
+fun getFileDoc(): File {
     val directory = Environment.getExternalStorageDirectory()
     val pDirectory = File(directory, "TZ" + Environment.DIRECTORY_DOCUMENTS)
     if (!pDirectory.exists()) {
         pDirectory.mkdirs()
     }
-    return File(pDirectory, fileName)
+    return pDirectory
 }

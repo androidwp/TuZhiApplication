@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.mvp;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.bean.HttpKnowledgeModuleBean;
@@ -45,7 +47,7 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
                 int index = articlePage.getIndex();
                 List<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean> result = articlePage.getResult();
                 for (HttpKnowledgeModuleBean.ArticlePageBean.ResultBean bean : result) {
-                    data.add(new EnterpriseKnowledgeListItemBean(EnterpriseKnowledgeListItem.TYPE,bean.getId(), bean.getTitle(), bean.getSummary() == null ? "" : bean.getSummary(), bean.getFileNum(), bean.getCommentNum(), bean.getUpdateTime() + " 更新"));
+                    data.add(new EnterpriseKnowledgeListItemBean(EnterpriseKnowledgeListItem.TYPE, bean.getId(), bean.getTitle(), bean.getSummary() == null ? "" : bean.getSummary(), bean.getFileNum(), bean.getCommentNum(), bean.getUpdateTime() + " 更新"));
                 }
                 mView.downloadFinish(index, next, data);
 
@@ -53,7 +55,9 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                if (TextUtils.equals(text, "列表无内容显示")) {
+                    mView.downloadFinish(0, false, null);
+                }
             }
         });
 

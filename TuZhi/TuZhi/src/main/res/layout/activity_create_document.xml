@@ -4,10 +4,6 @@
     <data>
 
         <variable
-            name="richEditor"
-            type="com.tuzhi.application.view.MyRichEditor" />
-
-        <variable
             name="activity"
             type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.createdocument.mvp.CreateDocumentActivity" />
     </data>
@@ -37,7 +33,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="@{()->richEditor.undo()}"
+                android:onClick="@{()->activity.undo()}"
                 android:paddingRight="@dimen/generalSpace"
                 android:src="@drawable/backout" />
 
@@ -45,14 +41,14 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:onClick="@{()->richEditor.redo()}"
+                android:onClick="@{()->activity.redo()}"
                 android:paddingRight="@dimen/generalSpace"
                 android:src="@drawable/reform" />
 
 
             <TextView
                 style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.commit(richEditor.getHtml())}"
+                android:onClick="@{()->activity.commit()}"
                 android:text="提交" />
 
 
@@ -68,8 +64,8 @@
             android:layout_weight="1"
             android:background="@color/colorWhite">
 
-            <com.tuzhi.application.view.MyRichEditor
-                android:id="@+id/re"
+            <com.tencent.smtt.sdk.WebView
+                android:id="@+id/wv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/generalSpace"
@@ -93,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{()->richEditor.setIndent()}"
+                    android:onClick="@{()->activity.setIndent()}"
                     android:scaleType="center"
                     android:src="@drawable/retractright" />
 
@@ -102,7 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{()->richEditor.setOutdent()}"
+                    android:onClick="@{()->activity.setOutdent()}"
                     android:scaleType="center"
                     android:src="@drawable/retractleft" />
 
@@ -120,7 +116,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{()->richEditor.setNumbers()}"
+                    android:onClick="@{()->activity.setNumbers()}"
                     android:scaleType="center"
                     android:src="@drawable/orderedlist" />
 
@@ -129,7 +125,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{()->richEditor.setBullets()}"
+                    android:onClick="@{()->activity.setBullets()}"
                     android:scaleType="center"
                     android:src="@drawable/unorderedlist" />
 
@@ -165,7 +161,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setBold()}"
+                        android:onClick="@{()->activity.setBold()}"
                         android:scaleType="center"
                         android:src="@drawable/bold" />
 
@@ -174,7 +170,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setItalic()}"
+                        android:onClick="@{()->activity.setItalic()}"
                         android:scaleType="center"
                         android:src="@drawable/italic" />
 
@@ -183,7 +179,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setUnderline()}"
+                        android:onClick="@{()->activity.setUnderline()}"
                         android:scaleType="center"
                         android:src="@drawable/underline" />
 
@@ -192,7 +188,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setStrikeThrough()}"
+                        android:onClick="@{()->activity.setStrikeThrough()}"
                         android:scaleType="center"
                         android:src="@drawable/strikethrough" />
 
@@ -209,7 +205,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setAlignLeft()}"
+                        android:onClick="@{()->activity.setAlignLeft()}"
                         android:scaleType="center"
                         android:src="@drawable/leftaligned" />
 
@@ -218,7 +214,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setAlignCenter()}"
+                        android:onClick="@{()->activity.setAlignCenter()}"
                         android:scaleType="center"
                         android:src="@drawable/aligncenter" />
 
@@ -227,7 +223,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:onClick="@{()->richEditor.setAlignRight()}"
+                        android:onClick="@{()->activity.setAlignRight()}"
                         android:scaleType="center"
                         android:src="@drawable/rightaligned" />
 
@@ -254,7 +250,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:onClick="@{()->richEditor.setHeading(3)}"
+                        android:onClick="@{()->activity.setHeading(6)}"
                         android:text="一级标题" />
 
                     <!--二级标题-->
@@ -263,7 +259,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:onClick="@{()->richEditor.setHeading(2)}"
+                        android:onClick="@{()->activity.setHeading(5)}"
                         android:text="二级标题" />
 
                     <!--三级标题-->
@@ -272,7 +268,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:onClick="@{()->richEditor.setHeading(1)}"
+                        android:onClick="@{()->activity.setHeading(4)}"
                         android:text="三级标题" />
 
                 </LinearLayout>

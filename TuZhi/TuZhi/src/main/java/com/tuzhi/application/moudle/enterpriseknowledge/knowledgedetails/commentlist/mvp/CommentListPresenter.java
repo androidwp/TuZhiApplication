@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.mvp;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.bean.CommentListBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.bean.HttpCommentListBean;
@@ -64,7 +66,9 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                if (TextUtils.equals(text, "列表无内容显示")) {
+                    mView.downLoadFinish(0, false, null);
+                }
             }
         });
 

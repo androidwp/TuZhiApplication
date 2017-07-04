@@ -11,6 +11,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tencent.smtt.sdk.QbSdk;
 import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
@@ -31,6 +32,7 @@ public class MyApplication extends Application {
         getVersion();
         getImieStatus();
         initLogin();
+        QbSdk.initX5Environment(this,null);
     }
 
     private void initLogin() {

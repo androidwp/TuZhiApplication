@@ -40,13 +40,14 @@
 
 
     <style name="YellowButton">
-        <item name="android:layout_height">@dimen/generalButtonHeight</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_marginLeft">@dimen/generalButtonSpace</item>
         <item name="android:layout_marginRight">@dimen/generalButtonSpace</item>
         <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/generalSettingTextSize</item>
-        <item name="android:background">@drawable/general_button_yellow_background</item>
+        <item name="android:background">@drawable/downloadshadowfill</item>
     </style>
 
     <style name="NavigationLine">

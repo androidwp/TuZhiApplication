@@ -8,6 +8,8 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.tuzhi.application.R
 import com.tuzhi.application.bean.BaseListItemBean
 import com.tuzhi.application.item.GeneralLoadFootViewItem
@@ -24,12 +26,17 @@ interface LoadMoreListener {
 class RefreshRecycleView : FrameLayout {
     lateinit private var srl: SwipeRefreshLayout
     lateinit private var rv: RecyclerView
+    lateinit private var ll: LinearLayout
+    lateinit private var tvTitle: TextView
+    lateinit private var tvInfo: TextView
     lateinit private var adapter: RecyclerView.Adapter<CommonRcvAdapter.RcvAdapterItem>
     lateinit private var refreshListener: SwipeRefreshLayout.OnRefreshListener
     lateinit var loadListener: LoadMoreListener
     var flagHaveNextPage = false
     var flagLoading = false
     var page = 0
+    var title = ""
+    var info = ""
 
 
     constructor(context: Context) : this(context, null)
@@ -42,6 +49,9 @@ class RefreshRecycleView : FrameLayout {
         View.inflate(context, R.layout.view_refresh_recycle, this)
         srl = findViewById(R.id.srl) as SwipeRefreshLayout
         rv = findViewById(R.id.rv) as RecyclerView
+        ll = findViewById(R.id.ll) as LinearLayout
+        tvTitle=findViewById(R.id.tvTitle) as TextView
+        tvInfo=findViewById(R.id.tvInfo) as TextView
         rv.layoutManager = LinearLayoutManager(context)
         srl.setColorSchemeResources(R.color.colorAccent, R.color.colorAccent)
         rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -82,7 +92,7 @@ class RefreshRecycleView : FrameLayout {
         }
     }
 
-    fun <T : BaseListItemBean> downLoadFinish(page: Int, haveNextPage: Boolean, mData: ArrayList<T>, mDataSource: ArrayList<T>) {
+    fun <T : BaseListItemBean> downLoadFinish(page: Int, haveNextPage: Boolean, mData: ArrayList<T>, mDataSource: ArrayList<T>?) {
         this.flagHaveNextPage = haveNextPage
         flagLoading = false
         isShowRefreshView(false)
@@ -90,26 +100,36 @@ class RefreshRecycleView : FrameLayout {
         if (page == 0) {
             mData.clear()
         }
-        if (mData.size > 0) {
-            val itemBean = mData[mData.size - 1]
-            if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && !haveNextPage) {
-                mData.removeAt(mData.size - 1)
+        if (mDataSource != null) {
+            if (mData.size > 0) {
+                val itemBean = mData[mData.size - 1]
+                if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && !haveNextPage) {
+                    mData.removeAt(mData.size - 1)
+                    mData.addAll(mDataSource)
+                } else if (!TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
+                    val clone = itemBean.clone()
+                    clone.itemType = GeneralLoadFootViewItem.TYPE
+                    mData.add(clone as T)
+                } else if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
+                    mData.addAll(mData.size - 2, mDataSource)
+                }
+            } else {
                 mData.addAll(mDataSource)
-            } else if (!TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
-                val clone = itemBean.clone()
-                clone.itemType = GeneralLoadFootViewItem.TYPE
-                mData.add(clone as T)
-            } else if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
-                mData.addAll(mData.size - 2, mDataSource)
+                if (haveNextPage) {
+                    val itemBean = mData[0]
+                    val clone = itemBean.clone()
+                    clone.itemType = GeneralLoadFootViewItem.TYPE
+                    mData.add(clone as T)
+                }
             }
+        }
+
+        if (page == 0 && mDataSource == null) {
+            ll.visibility = View.VISIBLE
+            tvTitle.text = title
+            tvInfo.text = info
         } else {
-            mData.addAll(mDataSource)
-            if (haveNextPage) {
-                val itemBean = mData[0]
-                val clone = itemBean.clone()
-                clone.itemType = GeneralLoadFootViewItem.TYPE
-                mData.add(clone as T)
-            }
+            ll.visibility = View.GONE
         }
         notifyDataSetChanged()
     }

@@ -23,6 +23,8 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private String author;
     private String fileSize;
     private String info;
+    private String viewContentUrl;
+    private String editContentUrl;
     //文件id
     private String fileId;
     //文件是否可以打开
@@ -34,6 +36,22 @@ public class KnowledgeDetailsListBean extends BaseListItemBean {
     private String commentNumber;
     private boolean praiseStatus;
     private String fileName;
+
+    public String getViewContentUrl() {
+        return viewContentUrl;
+    }
+
+    public void setViewContentUrl(String viewContentUrl) {
+        this.viewContentUrl = viewContentUrl;
+    }
+
+    public String getEditContentUrl() {
+        return editContentUrl;
+    }
+
+    public void setEditContentUrl(String editContentUrl) {
+        this.editContentUrl = editContentUrl;
+    }
 
     public ArrayList<String> getPreviewUrls() {
         return previewUrls;

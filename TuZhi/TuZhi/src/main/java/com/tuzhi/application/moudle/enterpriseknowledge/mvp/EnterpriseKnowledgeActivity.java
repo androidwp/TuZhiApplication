@@ -67,6 +67,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setLoadListener(this);
+        binding.rrv.setTitle("该知识库下还没有频道哦");
+        binding.rrv.setInfo("点击上方的\"+\"号，创建频道");
         CommonRcvAdapter<EnterpriseKnowledgeListItemBean> adapter = new CommonRcvAdapter<EnterpriseKnowledgeListItemBean>(mData) {
             @NonNull
             @Override

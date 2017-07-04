@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.tencent.smtt.sdk.WebView;
 
+
 /**
  * Created by wangpeng on 2017/6/14.
  */
@@ -199,12 +200,13 @@ public class EmotionKeyboard {
      */
     private void showSoftInput() {
         mEditText.requestFocus();
-        mEditText.post(new Runnable() {
-            @Override
-            public void run() {
-                mInputManager.showSoftInput(mEditText, 0);
-            }
-        });
+        KeyBoardUtils.showKeyBoard(mEditText.getContext());
+//        mEditText.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mInputManager.showSoftInput(mEditText, 0);
+//            }
+//        });
     }
 
     /**

@@ -11,7 +11,9 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.mine.setting.changepassword.mvp.ChangePasswordActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.FileUtils;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.SwitchView;
 
 
@@ -35,9 +37,9 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
         binding.setActivity(this);
         binding.sv.setOnStateChangedListener(this);
         String allow = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getKey_AllowMobileInternetDownload());
-        if (TextUtils.equals(allow,ConstantKt.getValue_true())){
+        if (TextUtils.equals(allow, ConstantKt.getValue_true())) {
             binding.sv.setOpened(true);
-        }else{
+        } else {
             binding.sv.setOpened(false);
         }
 
@@ -48,11 +50,12 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
     }
 
 
-    public void cleanCache(){
-
+    public void cleanCache() {
+        FileUtils.deleteFile(this);
+        ToastUtilsKt.toast(this, "清除缓存成功");
     }
 
-    public void skipChangePassword(){
+    public void skipChangePassword() {
         ActivitySkipUtilsKt.toActivity(this, ChangePasswordActivity.class);
     }
 

@@ -12,7 +12,7 @@ import java.io.File;
 
 public class CreateDocumentContract {
     interface View extends BaseView {
-        void commit(String content);
+        void commit();
 
         void commitSuccess();
 
@@ -23,5 +23,7 @@ public class CreateDocumentContract {
         void commit(String id,String content);
 
         void uploadImage(android.view.View view, File imageFile);
+
+        void inform(String id);
     }
 }

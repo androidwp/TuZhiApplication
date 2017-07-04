@@ -230,8 +230,8 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
     }
 
     private void openFile() {
-        String path = SharedPreferencesUtilsKt.getLongCache(this, fileId);
-        FileUtils.openFile(this, new File(path), fileSffix);
+        String file = FileUtils.getFile(this, fileId);
+        FileUtils.openFile(this, new File(file), fileSffix);
     }
 
 }

@@ -49,6 +49,8 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setLoadListener(this);
+        binding.rrv.setTitle("还没有任何人评论哦");
+        binding.rrv.setInfo("点击右上方按钮添加评论");
         CommonRcvAdapter<CommentListBean> adapter = new CommonRcvAdapter<CommentListBean>(mData) {
             @NonNull
             @Override

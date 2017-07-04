@@ -66,8 +66,8 @@
                 android:layout_weight="1"
                 android:drawableRight="@drawable/enter"
                 android:gravity="center_vertical"
-                android:text="@{data.nickname}"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:text="@{data.nickname}" />
 
         </LinearLayout>
 
@@ -89,6 +89,7 @@
                 android:onClick="@{()->activity.skipProblemFeedbackActivity()}"
                 android:paddingLeft="@dimen/generalSpace"
                 android:paddingRight="@dimen/generalSpace"
+                android:textSize="16sp"
                 android:text="问题反馈" />
 
             <View style="@style/NavigationLine" />
@@ -99,6 +100,7 @@
                 android:drawableLeft="@drawable/set"
                 android:drawablePadding="@dimen/generalSpace"
                 android:drawableRight="@drawable/enter"
+                android:textSize="16sp"
                 android:gravity="center_vertical"
                 android:onClick="@{()->activity.skipSettingActivity()}"
                 android:paddingLeft="@dimen/generalSpace"
@@ -114,12 +116,18 @@
             android:layout_weight="1" />
 
 
-        <Button
-            style="@style/YellowButton"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/generalButtonHeight"
+            android:layout_gravity="center"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/general_button_red_background"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="#a4aab3"
+            android:gravity="center"
             android:onClick="@{()->activity.logOut()}"
-            android:text="退出登录" />
+            android:text="退出登录"
+            android:textColor="@color/colorWhite" />
 
     </LinearLayout>
 </layout>

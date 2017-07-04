@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.repository.mvp;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.bean.HttpRepositoryListBean;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
@@ -50,7 +52,9 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                if (TextUtils.equals(text, "列表无内容显示")) {
+                    mView.downLoadFinish(null, false, 0);
+                }
             }
         });
 

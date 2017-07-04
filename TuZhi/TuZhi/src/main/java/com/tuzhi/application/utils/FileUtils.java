@@ -44,7 +44,7 @@ public class FileUtils {
             @Override
             protected void completed(BaseDownloadTask task) {
                 progressBarDialog.dismiss();
-                SharedPreferencesUtilsKt.saveLongCache(context, id, path);
+                saveFile(context, id, path);
                 EventBus.getDefault().post(DOWNLOAD_FINISH);
             }
 
@@ -70,13 +70,29 @@ public class FileUtils {
 
 
     public static boolean fileExist(Context context, String id) {
-        String filePath = SharedPreferencesUtilsKt.getLongCache(context, id);
+        String filePath = SharedPreferencesUtilsKt.getFileCache(context, id);
         return !TextUtils.isEmpty(filePath);
     }
 
     public static String getFile(Context context, String id) {
-        return SharedPreferencesUtilsKt.getLongCache(context, id);
+        return SharedPreferencesUtilsKt.getFileCache(context, id);
     }
+
+    public static void saveFile(Context context, String id, String value) {
+        SharedPreferencesUtilsKt.saveFileCache(context, id, value);
+    }
+
+    public static void deleteFile(Context context) {
+        SharedPreferencesUtilsKt.deleteFileCache(context);
+        File fileDoc = ConstantKt.getFileDoc();
+        File[] files = fileDoc.listFiles();
+        for (File file : files) {
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
 
     public static void openFile(Context context, File file, String fileSuffix) {
         try {

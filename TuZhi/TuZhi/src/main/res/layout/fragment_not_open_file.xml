@@ -43,7 +43,7 @@
             android:textColor="@color/colorGeneralTintText"
             android:textSize="14sp" />
 
-        <Button
+        <TextView
             style="@style/YellowButton"
             android:layout_marginTop="37dp"
             android:onClick="@{()->fragment.downloadOrOpenFile(data)}"
