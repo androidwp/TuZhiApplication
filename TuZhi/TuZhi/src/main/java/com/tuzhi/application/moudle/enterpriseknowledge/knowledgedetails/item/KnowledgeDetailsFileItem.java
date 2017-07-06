@@ -36,6 +36,7 @@ public class KnowledgeDetailsFileItem extends BaseItem<KnowledgeDetailsListBean>
     @Override
     public void handleData(KnowledgeDetailsListBean knowledgeDetailsListBean, int i) {
         binding.setItem(this);
+        binding.setFlag(i);
         binding.setData(knowledgeDetailsListBean);
         binding.executePendingBindings();
         int fileImage = ImageUtils.getFileImage(knowledgeDetailsListBean.getFileType(), 0);

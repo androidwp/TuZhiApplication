@@ -97,6 +97,11 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
     protected void onDestroy() {
         mPresenter.inform(id);
         super.onDestroy();

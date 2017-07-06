@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/generalSpace"
         android:layout_marginRight="@dimen/generalSpace"
         android:layout_marginTop="@dimen/generalSpace"
-        android:background="@drawable/general_listview_selector"
+        android:background="@drawable/general_listview_selector_border"
         android:orientation="vertical"
         android:padding="@dimen/generalSpace">
 

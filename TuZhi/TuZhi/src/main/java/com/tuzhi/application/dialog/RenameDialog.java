@@ -76,6 +76,7 @@ public class RenameDialog extends AlertDialog {
         ViewRenameDialogBinding binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
         binding.setName("");
+        setCanceledOnTouchOutside(false);
     }
 
     public void cancel() {

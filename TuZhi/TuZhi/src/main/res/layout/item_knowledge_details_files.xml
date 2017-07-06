@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/generalSpace"
-    android:showDividers="middle"
+    android:background="@drawable/general_setting_background"
     android:divider="@drawable/general_linearlayout_divider"
-    android:orientation="vertical">
-</LinearLayout>
+    android:orientation="vertical"
+    android:padding="1dp"
+    android:showDividers="middle" />

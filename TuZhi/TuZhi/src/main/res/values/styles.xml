@@ -25,7 +25,7 @@
         <item name="actionSheetPadding">10dp</item>
         <item name="otherButtonSpacing">0dp</item>
         <item name="cancelButtonMarginTop">10dp</item>
-        <item name="actionSheetTextSize">12sp</item>
+        <item name="actionSheetTextSize">14sp</item>
     </style>
 
 

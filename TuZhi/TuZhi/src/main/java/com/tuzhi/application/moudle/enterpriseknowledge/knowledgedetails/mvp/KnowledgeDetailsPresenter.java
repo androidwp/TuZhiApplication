@@ -56,7 +56,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
-                LogUtilsKt.showLog("TAG",text);
+                LogUtilsKt.showLog("TAG", text);
                 JSONObject jsonObject = JSONObject.parseObject(text);
                 mView.skipCreateDocumentActivity(jsonObject.getString("editContentUrl"));
             }
@@ -213,25 +213,26 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsFilesItem.TYPE);
         ArrayList<KnowledgeDetailsListBean> dataFiles = new ArrayList<>();
         List<HttpKnowledgeDetailsListBean.ArticleFilesMapBean> articleFilesMap = httpKnowledgeDetailsListBean.getArticleFilesMap();
-        for (HttpKnowledgeDetailsListBean.ArticleFilesMapBean articleFilesMapBean : articleFilesMap) {
-            KnowledgeDetailsListBean fileBean = new KnowledgeDetailsListBean(KnowledgeDetailsFileItem.TYPE);
-            fileBean.setAid(httpKnowledgeDetailsListBean.getArticleMap().getId());
-            fileBean.setFileId(articleFilesMapBean.getId());
-            fileBean.setTitle(articleFilesMapBean.getFileName());
-            fileBean.setFileName(articleFilesMapBean.getFileName());
-            fileBean.setFileType(articleFilesMapBean.getFileSuffix());
-            fileBean.setPreviewUrls(articleFilesMapBean.getPreviewUrls());
-            fileBean.setFileStatus(articleFilesMapBean.isPreview());
-            fileBean.setInfo(articleFilesMapBean.getAuthor() + "  " + articleFilesMapBean.getUpdateTime() + "  " + articleFilesMapBean.getFileSize());
-            fileBean.setDownloadStatus(FileUtils.fileExist(mView.getContext(), articleFilesMapBean.getId()));
-            dataFiles.add(fileBean);
+        if (articleFilesMap != null && articleFilesMap.size() > 0) {
+            for (HttpKnowledgeDetailsListBean.ArticleFilesMapBean articleFilesMapBean : articleFilesMap) {
+                KnowledgeDetailsListBean fileBean = new KnowledgeDetailsListBean(KnowledgeDetailsFileItem.TYPE);
+                fileBean.setAid(httpKnowledgeDetailsListBean.getArticleMap().getId());
+                fileBean.setFileId(articleFilesMapBean.getId());
+                fileBean.setTitle(articleFilesMapBean.getFileName());
+                fileBean.setFileName(articleFilesMapBean.getFileName());
+                fileBean.setFileType(articleFilesMapBean.getFileSuffix());
+                fileBean.setPreviewUrls(articleFilesMapBean.getPreviewUrls());
+                fileBean.setFileStatus(articleFilesMapBean.isPreview());
+                fileBean.setInfo(articleFilesMapBean.getAuthor() + "  " + articleFilesMapBean.getUpdateTime() + "  " + articleFilesMapBean.getFileSize());
+                fileBean.setDownloadStatus(FileUtils.fileExist(mView.getContext(), articleFilesMapBean.getId()));
+                dataFiles.add(fileBean);
+            }
+            bean.setFiles(dataFiles);
+            data.add(bean);
         }
-        bean.setFiles(dataFiles);
-        data.add(bean);
-
     }
 
-    private String addArticle(HttpKnowledgeDetailsListBean articleMap, ArrayList<KnowledgeDetailsListBean> data) {
+    private void addArticle(HttpKnowledgeDetailsListBean articleMap, ArrayList<KnowledgeDetailsListBean> data) {
         HttpKnowledgeDetailsListBean.ArticleMapBean articleMapBean = articleMap.getArticleMap();
         if (!TextUtils.isEmpty(articleMapBean.getContent())) {
             KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsArticleItem.TYPE);
@@ -239,6 +240,5 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
             bean.setViewContentUrl(articleMapBean.getViewContentUrl());
             data.add(bean);
         }
-        return articleMapBean.getContent();
     }
 }

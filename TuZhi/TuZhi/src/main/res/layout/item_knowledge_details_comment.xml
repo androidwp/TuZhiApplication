@@ -19,7 +19,7 @@
         android:layout_marginLeft="@dimen/generalSpace"
         android:layout_marginRight="@dimen/generalSpace"
         android:onClick="@{()->item.skipCommentListActivity(data.aid,data.cid)}"
-        android:background="@drawable/general_listview_selector"
+        android:background="@drawable/general_listview_selector_border"
         android:orientation="vertical"
         android:padding="@dimen/generalSpace">
 

@@ -40,9 +40,13 @@ public class ProblemFeedbackActivity extends MVPBaseActivity<ProblemFeedbackCont
 
     @Override
     public void back() {
-        dialog.show();
+      onBackPressed();
     }
 
+    @Override
+    public void onBackPressed() {
+        dialog.show();
+    }
 
     public void commitFeedback(String text){
         mPresenter.commitFeedback(text);

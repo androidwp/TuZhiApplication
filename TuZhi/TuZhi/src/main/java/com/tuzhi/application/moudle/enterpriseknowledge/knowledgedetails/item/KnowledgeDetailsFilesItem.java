@@ -35,12 +35,13 @@ public class KnowledgeDetailsFilesItem extends BaseItem<KnowledgeDetailsListBean
     public void handleData(KnowledgeDetailsListBean knowledgeDetailsListBean, int i) {
         ArrayList<KnowledgeDetailsListBean> files = knowledgeDetailsListBean.getFiles();
         ll.removeAllViews();
-        for (KnowledgeDetailsListBean bean : files) {
+        for (int j = 0; j < files.size(); j++) {
+            KnowledgeDetailsListBean bean = files.get(j);
             KnowledgeDetailsFileItem item = new KnowledgeDetailsFileItem();
             View view = LayoutInflater.from(context).inflate(item.getLayoutResId(), null);
             item.bindViews(view);
             item.bindView(view);
-            item.handleData(bean, 0);
+            item.handleData(bean, j == files.size() - 1 ? -1 : 0);
             ll.addView(view);
         }
     }
