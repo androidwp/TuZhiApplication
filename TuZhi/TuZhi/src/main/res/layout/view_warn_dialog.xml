@@ -23,6 +23,14 @@
             name="btnRightText"
             type="String" />
 
+        <variable
+            name="isShow"
+            type="Boolean" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
     </data>
 
 
@@ -65,7 +73,8 @@
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
                 android:text="@{btnLeftText}"
-                android:textColor="@color/colorGeneralMoreTintText" />
+                android:textColor="@color/colorGeneralMoreTintText"
+                android:visibility="@{isShow?view.VISIBLE:view.GONE}" />
 
             <TextView
                 android:layout_width="0dp"

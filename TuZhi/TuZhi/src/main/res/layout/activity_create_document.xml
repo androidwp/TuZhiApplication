@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -112,22 +112,39 @@
                     android:src="@drawable/text" />
 
                 <!--有序列表-->
-                <ImageView
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="@{()->activity.setNumbers()}"
-                    android:scaleType="center"
-                    android:src="@drawable/orderedlist" />
+                    android:layout_weight="1">
+
+                    <com.tuzhi.application.view.DrawableCenterCheckBox
+                        android:id="@+id/cbOrder"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/orderedlist"
+                        app:setOnCheckedChangeListener="@{(view,isChecked)->activity.setNumbers(view,isChecked)}" />
+
+                </FrameLayout>
+
 
                 <!--无序列表-->
-                <ImageView
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:onClick="@{()->activity.setBullets()}"
-                    android:scaleType="center"
-                    android:src="@drawable/unorderedlist" />
+                    android:layout_weight="1">
+
+                    <com.tuzhi.application.view.DrawableCenterCheckBox
+                        android:id="@+id/cbUnorder"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/unorderedlist"
+                        app:setOnCheckedChangeListener="@{(view,isChecked)->activity.setBullets(view,isChecked)}" />
+
+                </FrameLayout>
 
                 <!--添加图片-->
                 <ImageView
@@ -155,42 +172,73 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-
                     <!--加粗-->
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="@{()->activity.setBold()}"
-                        android:scaleType="center"
-                        android:src="@drawable/bold" />
+                        android:layout_weight="1">
+
+                        <com.tuzhi.application.view.DrawableCenterCheckBox
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/bold"
+                            android:gravity="center"
+                            app:setOnCheckedChangeListener="@{(view,isChecked)->activity.setBold(view,isChecked)}" />
+
+                    </FrameLayout>
 
                     <!--倾斜-->
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="@{()->activity.setItalic()}"
-                        android:scaleType="center"
-                        android:src="@drawable/italic" />
+                        android:layout_weight="1">
+
+                        <com.tuzhi.application.view.DrawableCenterCheckBox
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/italic"
+                            android:gravity="center"
+                            app:setOnCheckedChangeListener="@{(view,isChecked)->activity.setItalic(view,isChecked)}" />
+
+                    </FrameLayout>
+
 
                     <!--下划线-->
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="@{()->activity.setUnderline()}"
-                        android:scaleType="center"
-                        android:src="@drawable/underline" />
+                        android:layout_weight="1">
+
+                        <com.tuzhi.application.view.DrawableCenterCheckBox
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/underline"
+                            android:gravity="center"
+                            app:setOnCheckedChangeListener="@{(view,isChecked)->activity.setUnderline(view,isChecked)}" />
+
+                    </FrameLayout>
 
                     <!--删除线-->
-                    <ImageView
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="@{()->activity.setStrikeThrough()}"
-                        android:scaleType="center"
-                        android:src="@drawable/strikethrough" />
+                        android:layout_weight="1">
+
+                        <com.tuzhi.application.view.DrawableCenterCheckBox
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:button="@null"
+                            android:drawableLeft="@drawable/strikethrough"
+                            app:setOnCheckedChangeListener="@{(view,isChecked)->activity.setStrikeThrough(view,isChecked)}" />
+
+                    </FrameLayout>
 
                 </LinearLayout>
 

@@ -208,6 +208,7 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
         RenameDialog renameDialog = new RenameDialog(this);
         renameDialog.setView(new EditText(this));
         renameDialog.setFileId(fileId);
+        renameDialog.setText(fileName);
         renameDialog.setType(DeleteDialog.FILE);
         renameDialog.show();
         KeyBoardUtils.showKeyBoard(this);
@@ -215,6 +216,7 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
 
 
     public void setTitle(String title) {
+        fileName = title;
         binding.setTitle(title);
         if (notOpenFileFragment != null) {
             notOpenFileFragment.setFileName(title);

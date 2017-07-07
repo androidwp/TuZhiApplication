@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.View;
 
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -72,6 +73,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
             @Override
             public void onPageFinished(WebView view, String url) {
                 isReady = url.equalsIgnoreCase(editContentUrl);
+                exec("javascript:editHeight('600px');");
             }
 
             @Override
@@ -190,15 +192,29 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     public void commit() {
-        binding.wv.evaluateJavascript("javascript:document.getElementById('editor-trigger').innerHTML", new ValueCallback<String>() {
+        binding.wv.evaluateJavascript("javascript:editTime();", new ValueCallback<String>() {
             @Override
-            public void onReceiveValue(String value) {
-                value = value.replace("\\u003C", "<").replace("&quot;", "\"").replace("\\","");
-                value = value.substring(1, value.length() - 1);
-                if (TextUtils.isEmpty(value) || TextUtils.equals(value, "<p style=\"line-height: 1.5;word-break: break-all;\"><br></p>")) {
-                    mPresenter.commit(id, "");
+            public void onReceiveValue(String s) {
+                if (s.contains("0")) {
+                    binding.wv.evaluateJavascript("javascript:document.getElementById('editor-trigger').innerHTML", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            value = value.replace("\\u003C", "<").replace("&quot;", "\"").replace("\\", "");
+                            value = value.substring(1, value.length() - 1);
+                            if (TextUtils.isEmpty(value) || TextUtils.equals(value, "<p style=\"line-height: 1.5;word-break: break-all;\"><br></p>")) {
+                                mPresenter.commit(id, "");
+                            } else {
+                                mPresenter.commit(id, Base64.encodeToString(value.getBytes(), Base64.DEFAULT));
+                            }
+                        }
+                    });
                 } else {
-                    mPresenter.commit(id, Base64.encodeToString(value.getBytes(), Base64.DEFAULT));
+                    new WarnDialog.Builder().setTitle("提示").setInfo("当前编辑页面已超时，系统已自动退出编辑状态并将已修改内容保存为草稿。为防止草稿丢失，请及时返回继续编辑并提交").setShowCancel(false).setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
+                        @Override
+                        public void makeSure(Dialog dialog) {
+                            finish();
+                        }
+                    }).builder(CreateDocumentActivity.this).show();
                 }
             }
         });
@@ -227,11 +243,13 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         exec("javascript:Redo();");
     }
 
-    public void setBold() {
+    public void setBold(View view, boolean isChecked) {
+        view.setBackgroundResource(isChecked ? R.drawable.general_editext_background : R.color.colorWhite);
         exec("javascript:Bold();");
     }
 
-    public void setItalic() {
+    public void setItalic(View view, boolean isChecked) {
+        view.setBackgroundResource(isChecked ? R.drawable.general_editext_background : R.color.colorWhite);
         exec("javascript:Italic();");
     }
 
@@ -239,11 +257,13 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         exec("javascript:ChangeSize('" + heading + "');");
     }
 
-    public void setStrikeThrough() {
+    public void setStrikeThrough(View view, boolean isChecked) {
+        view.setBackgroundResource(isChecked ? R.drawable.general_editext_background : R.color.colorWhite);
         exec("javascript:StrikeThrough();");
     }
 
-    public void setUnderline() {
+    public void setUnderline(View view, boolean isChecked) {
+        view.setBackgroundResource(isChecked ? R.drawable.general_editext_background : R.color.colorWhite);
         exec("javascript:Underline();");
     }
 
@@ -267,11 +287,17 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         exec("javascript:TextRight();");
     }
 
-    public void setBullets() {
+    public void setBullets(View view, boolean isChecked) {
+        if (isChecked)
+            binding.cbOrder.setChecked(false);
+        view.setBackgroundResource(isChecked ? R.drawable.general_editext_background : R.color.colorWhite);
         exec("javascript:List();");
     }
 
-    public void setNumbers() {
+    public void setNumbers(View view, boolean isChecked) {
+        if (isChecked)
+            binding.cbUnorder.setChecked(false);
+        view.setBackgroundResource(isChecked ? R.drawable.general_editext_background : R.color.colorWhite);
         exec("javascript:Order();");
     }
 

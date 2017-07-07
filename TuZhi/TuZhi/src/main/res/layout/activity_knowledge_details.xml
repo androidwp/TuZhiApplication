@@ -97,7 +97,7 @@
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
                 android:onClick="@{()->activity.skipPublishTopicActivity()}"
-                android:text="发表话题" />
+                android:text="发       言" />
 
         </LinearLayout>
 

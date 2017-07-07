@@ -69,6 +69,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private ActionSheet actionSheet;
     private int type;
     private ProgressBarDialog dialog;
+    private String title;
 
     @Override
     protected int getLayoutId() {
@@ -127,7 +128,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityKnowledgeDetailsBinding) viewDataBinding;
         id = getIntent().getStringExtra(ID);
-        setTitle(getIntent().getStringExtra(TITLE));
+        title = getIntent().getStringExtra(TITLE);
+        setTitle(title);
         binding.setActivity(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
@@ -284,6 +286,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
                 renameDialog.setView(new EditText(this));
                 renameDialog.setMoudleId(id);
                 renameDialog.setType(RenameDialog.MOUDLE);
+                renameDialog.setText(title);
                 renameDialog.show();
                 KeyBoardUtils.showKeyBoard(this);
             } else {
@@ -313,6 +316,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
     public void setTitle(String title) {
+        this.title = title;
         binding.tvTitle.setText(title);
     }
 

@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="如果忘记密码，请联系企业管理员重制密码"
+            android:text="如果忘记密码，请联系企业管理员重置密码"
             android:textColor="@color/colorTextHint"
             android:textSize="12sp" />
 

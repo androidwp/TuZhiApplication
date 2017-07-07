@@ -40,6 +40,7 @@ public class WarnDialog extends AlertDialog {
         setContentView(view);
         ViewWarnDialogBinding binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
+        binding.setIsShow(builder.isShowCancel);
         binding.setTitle(builder.getTitle());
         binding.setInfo(builder.getInfo());
         binding.setBtnLeftText(builder.getBtnLeftText());
@@ -58,10 +59,20 @@ public class WarnDialog extends AlertDialog {
 
     public static class Builder {
         private String title = "提示";
-        private String info="提示";
+        private String info = "提示";
         private String btnLeftText = "取消";
         private String btnRightText = "确定";
         private DialogMakeSureListener listener;
+        private boolean isShowCancel=true;
+
+        public boolean isShowCancel() {
+            return isShowCancel;
+        }
+
+        public Builder setShowCancel(boolean showCancel) {
+            isShowCancel = showCancel;
+            return this;
+        }
 
         public String getTitle() {
             return title;
@@ -82,6 +93,7 @@ public class WarnDialog extends AlertDialog {
         DialogMakeSureListener getClickListener() {
             return listener;
         }
+
 
         public Builder setTitle(String title) {
             this.title = title;

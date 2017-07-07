@@ -73,7 +73,7 @@ public class EmotionKeyboard {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP && mEmotionLayout.isShown()) {
                     lockContentHeight();//显示软件盘时，锁定内容高度，防止跳闪。
-                    hideEmotionLayout(true);//隐藏表情布局，显示软件盘
+                    hideEmotionLayout(false);//隐藏表情布局，显示软件盘
                     //软件盘显示后，释放内容高度
                     mEditText.postDelayed(new Runnable() {
                         @Override
@@ -199,7 +199,7 @@ public class EmotionKeyboard {
      * 编辑框获取焦点，并显示软件盘
      */
     private void showSoftInput() {
-        mEditText.requestFocus();
+        //mEditText.requestFocus();
         KeyBoardUtils.showKeyBoard(mEditText.getContext());
 //        mEditText.post(new Runnable() {
 //            @Override

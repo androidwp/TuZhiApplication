@@ -39,6 +39,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     private ArrayList<EnterpriseKnowledgeListItemBean> mData = new ArrayList<>();
     private ActivityEnterpriseKnowledgeBinding binding;
     private ActionSheet actionSheet;
+    private String title;
 
     @Override
     protected int getLayoutId() {
@@ -62,7 +63,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         EventBus.getDefault().register(this);
         binding = (ActivityEnterpriseKnowledgeBinding) viewDataBinding;
         listId = getIntent().getStringExtra(ID);
-        setTitle(getIntent().getStringExtra(TITLE));
+        title = getIntent().getStringExtra(TITLE);
+        setTitle(title);
         binding.setActivity(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
@@ -150,6 +152,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         if (index == 0) {
             RenameDialog renameDialog = new RenameDialog(this, R.style.dialog);
             renameDialog.setView(new EditText(this));
+            renameDialog.setText(title);
             renameDialog.setLibId(listId);
             renameDialog.setType(RenameDialog.LIB);
             renameDialog.show();
@@ -172,6 +175,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     }
 
     public void setTitle(String title) {
+        this.title = title;
         binding.tvTitle.setText(title);
     }
 }

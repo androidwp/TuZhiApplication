@@ -30,7 +30,6 @@ public class RenameDialog extends AlertDialog {
 
     private static final String URL_LIB = "tzkm/knowledgeLib";
     private static final String URL_MOUDLE = "tzkm/editTitle";
-
     public static final String MOUDLE = "MOUDLE";
     public static final String LIB = "LIB";
     public static final String FILE = "FILE";
@@ -39,7 +38,7 @@ public class RenameDialog extends AlertDialog {
     private String libId;
     private String moudleId;
     private String fileId;
-
+    private String text;
 
     private Context context;
 
@@ -59,6 +58,14 @@ public class RenameDialog extends AlertDialog {
         this.type = type;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public RenameDialog(Context context) {
         this(context, R.style.dialog);
     }
@@ -75,7 +82,7 @@ public class RenameDialog extends AlertDialog {
         setContentView(view);
         ViewRenameDialogBinding binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
-        binding.setName("");
+        binding.setName(text);
         setCanceledOnTouchOutside(false);
     }
 
