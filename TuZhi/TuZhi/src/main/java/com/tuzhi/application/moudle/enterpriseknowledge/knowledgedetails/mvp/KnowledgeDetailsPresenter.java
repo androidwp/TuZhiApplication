@@ -218,7 +218,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
                 KnowledgeDetailsListBean fileBean = new KnowledgeDetailsListBean(KnowledgeDetailsFileItem.TYPE);
                 fileBean.setAid(httpKnowledgeDetailsListBean.getArticleMap().getId());
                 fileBean.setFileId(articleFilesMapBean.getId());
-                fileBean.setTitle(articleFilesMapBean.getFileName());
+                fileBean.setTitle(articleFilesMapBean.getFileName()+ "." + articleFilesMapBean.getFileSuffix());
                 fileBean.setFileName(articleFilesMapBean.getFileName());
                 fileBean.setFileType(articleFilesMapBean.getFileSuffix());
                 fileBean.setPreviewUrls(articleFilesMapBean.getPreviewUrls());

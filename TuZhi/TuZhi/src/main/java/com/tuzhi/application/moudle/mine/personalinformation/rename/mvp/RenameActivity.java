@@ -15,6 +15,8 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 
 public class RenameActivity extends MVPBaseActivity<RenameContract.View, RenamePresenter> implements RenameContract.View {
 
+    public static final String NAME="name";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_rename;
@@ -24,7 +26,7 @@ public class RenameActivity extends MVPBaseActivity<RenameContract.View, RenameP
     protected void init(ViewDataBinding viewDataBinding) {
         ActivityRenameBinding binding = (ActivityRenameBinding) viewDataBinding;
         binding.setActivity(this);
-        binding.setName("");
+        binding.setName(getIntent().getStringExtra(NAME));
     }
 
     public void commitName(String name) {

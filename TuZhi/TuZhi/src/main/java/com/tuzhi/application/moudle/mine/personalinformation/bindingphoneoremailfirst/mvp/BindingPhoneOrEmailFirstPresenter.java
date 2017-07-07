@@ -43,7 +43,7 @@ public class BindingPhoneOrEmailFirstPresenter extends BasePresenterImpl<Binding
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                mView.error();
             }
         });
 

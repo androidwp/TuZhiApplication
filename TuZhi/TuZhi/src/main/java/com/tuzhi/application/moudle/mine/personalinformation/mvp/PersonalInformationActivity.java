@@ -156,8 +156,8 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
         ActivitySkipUtilsKt.toActivity(this, BindingPhoneOrEmailFirstActivity.class, BindingPhoneOrEmailFirstActivity.TYPE, BindingPhoneOrEmailFirstActivity.EMAIL);
     }
 
-    public void skipRename() {
-        ActivitySkipUtilsKt.toActivity(this, RenameActivity.class);
+    public void skipRename(String name) {
+        ActivitySkipUtilsKt.toActivity(this, RenameActivity.class,RenameActivity.NAME,name);
     }
 
 

@@ -3,12 +3,14 @@ package com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremai
 
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityBindingPhoneEmailFirstBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.bean.BindingPhoneOrEmailBean;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailsecond.mvp.BindingPhoneOrEmailSecondActivity;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 
 /**
@@ -22,6 +24,7 @@ public class BindingPhoneOrEmailFirstActivity extends MVPBaseActivity<BindingPho
     public static final String PHONE = "PHONE";
     public static final String EMAIL = "EMAIL";
     private String type;
+    private boolean click = true;
 
     @Override
     protected int getLayoutId() {
@@ -50,14 +53,28 @@ public class BindingPhoneOrEmailFirstActivity extends MVPBaseActivity<BindingPho
     }
 
     public void commit(String text) {
-        mPresenter.commitPhoneOrEmail(type,text);
+        if (click) {
+            if (TextUtils.isEmpty(text)) {
+                ToastUtilsKt.toast(this, type.equals(PHONE) ? "手机号不能为空" : "邮箱不能为空");
+                return;
+            }
+            click = false;
+            mPresenter.commitPhoneOrEmail(type, text);
+        }
+
     }
 
     public void skipNextPage(String text) {
+        click = true;
         Intent intent = new Intent(this, BindingPhoneOrEmailSecondActivity.class);
         intent.putExtra(TYPE, type);
         intent.putExtra(BindingPhoneOrEmailSecondActivity.TEXT, text);
         startActivity(intent);
         back();
+    }
+
+    @Override
+    public void error() {
+        click = true;
     }
 }

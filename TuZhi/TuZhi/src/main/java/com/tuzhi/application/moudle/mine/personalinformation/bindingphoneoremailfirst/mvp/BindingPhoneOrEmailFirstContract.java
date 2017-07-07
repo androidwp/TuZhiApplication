@@ -10,10 +10,13 @@ import com.tuzhi.application.moudle.basemvp.BaseView;
 
 public class BindingPhoneOrEmailFirstContract {
     interface View extends BaseView {
-         void skipNextPage(String text);
+        void skipNextPage(String text);
+
+        void error();
+
     }
 
     interface Presenter extends BasePresenter<View> {
-        void commitPhoneOrEmail(String type,String text);
+        void commitPhoneOrEmail(String type, String text);
     }
 }

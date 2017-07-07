@@ -81,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/generalSettingHeight"
             android:layout_marginTop="@dimen/generalSpace"
-            android:onClick="@{()->activity.skipRename()}"
+            android:onClick="@{()->activity.skipRename(data.nickname)}"
             android:orientation="horizontal">
 
             <TextView
