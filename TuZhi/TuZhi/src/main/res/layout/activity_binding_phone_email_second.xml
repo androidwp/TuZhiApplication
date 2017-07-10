@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -87,17 +88,25 @@
             android:text="@{data.text}"
             android:textSize="@dimen/generalLittleTextSize" />
 
-
-        <Button
+        <com.tuzhi.application.view.MyRippleView
+            app:rv_zoomDuration="@integer/rv_zoomDuration"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/generalButtonHeight"
-            android:layout_marginLeft="@dimen/generalButtonSpace"
-            android:layout_marginRight="@dimen/generalButtonSpace"
-            android:layout_marginTop="20dp"
-            android:background="@{TextUtils.isEmpty(data.authCode)? @drawable/general_button_gray_background:@drawable/general_button_yellow_background}"
-            android:onClick="@{()->activity.commitAuthCode(data.authCode)}"
-            android:text="完成"
-            android:textColor="@color/colorWhite" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:onClick="@{()->activity.commitAuthCode(data.authCode)}">
+
+            <TextView
+                style="@style/YellowButton"
+                android:layout_height="wrap_content"
+                android:background="@drawable/downloadshadowfill"
+                android:text="完成"
+                android:textColor="@color/colorWhite" />
+
+        </com.tuzhi.application.view.MyRippleView>
 
     </LinearLayout>
 </layout>

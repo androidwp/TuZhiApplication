@@ -182,7 +182,7 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
             this.downloadType = downloadType;
             String key = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getKey_AllowMobileInternetDownload());
             if (NetworkUtils.isWifi(this) || TextUtils.equals(key, ConstantKt.getValue_true())) {
-                mPresenter.downloadFile(articleId, fileId, fileName);
+                mPresenter.downloadFile(articleId, fileId, fileName + "." + fileSffix);
             } else {
                 new WarnDialog.Builder().setInfo("当前设备处于非wifi网络环境下，下载该文件会产生较大流量是否打开流量开关下载")
                         .setBtnLeftText("取消").setBtnRightText("打开流量开关").setClickListener(new DialogMakeSureListener() {

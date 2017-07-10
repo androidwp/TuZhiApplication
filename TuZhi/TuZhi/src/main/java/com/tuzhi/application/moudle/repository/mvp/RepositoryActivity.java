@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityRepositoryBinding;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
@@ -17,6 +18,7 @@ import com.tuzhi.application.moudle.mine.mvp.MineActivity;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.LoadMoreListener;
@@ -60,15 +62,15 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         if (TextUtils.equals(event, MESSAGE))
             onRefresh();
         else if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
-            binding.setData(UserInfoUtils.getUserInfo(this));
+            HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+            binding.setData(userInfo);
+            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
         }
     }
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        AndPermission.with(this)
-                .requestCode(100)
-                .permission(Manifest.permission.READ_PHONE_STATE).start();
+        AndPermission.with(this).requestCode(100).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE).start();
         EventBus.getDefault().register(this);
         binding = (ActivityRepositoryBinding) viewDataBinding;
         binding.setActivity(this);
@@ -77,7 +79,9 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         binding.rrv.setLoadListener(this);
         binding.rrv.setTitle("知识库空空如也");
         binding.rrv.setInfo("点击上方的\"+\"号，创建知识库");
-        binding.setData(UserInfoUtils.getUserInfo(this));
+        HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+        binding.setData(userInfo);
+        ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
         CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
             @NonNull
             @Override
@@ -136,7 +140,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ConstantKt.getKILL_ACTIVITY_CODE() && resultCode == ConstantKt.getKILL_ACTIVITY_CODE()) {
-           finish();
+            finish();
         } else if (requestCode == ConstantKt.getCREATE_CODE() && resultCode == ConstantKt.getCREATE_CODE()) {
             onRefresh();
         }

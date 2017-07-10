@@ -3,14 +3,13 @@ package com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremai
 
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityBindingPhoneEmailFirstBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.bean.BindingPhoneOrEmailBean;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailsecond.mvp.BindingPhoneOrEmailSecondActivity;
-import com.tuzhi.application.utils.ToastUtilsKt;
+import com.tuzhi.application.utils.CheckUtils;
 
 
 /**
@@ -54,9 +53,14 @@ public class BindingPhoneOrEmailFirstActivity extends MVPBaseActivity<BindingPho
 
     public void commit(String text) {
         if (click) {
-            if (TextUtils.isEmpty(text)) {
-                ToastUtilsKt.toast(this, type.equals(PHONE) ? "手机号不能为空" : "邮箱不能为空");
-                return;
+            if (type.equals(PHONE)) {
+                if (!CheckUtils.mobileCheck(this, text)) {
+                    return;
+                }
+            } else {
+                if (!CheckUtils.emailCheck(this, text)) {
+                    return;
+                }
             }
             click = false;
             mPresenter.commitPhoneOrEmail(type, text);

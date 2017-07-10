@@ -26,13 +26,13 @@
             android:background="@color/colorWhite">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riv"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/generalSpace"
                 android:onClick="@{()->activity.skipMineActivity()}"
                 android:scaleType="centerCrop"
-                app:imageLoad="@{data.userImage}"
                 app:riv_corner_radius="13dp" />
 
             <TextView

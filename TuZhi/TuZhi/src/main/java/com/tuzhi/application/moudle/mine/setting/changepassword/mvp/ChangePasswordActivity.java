@@ -2,12 +2,11 @@ package com.tuzhi.application.moudle.mine.setting.changepassword.mvp;
 
 
 import android.databinding.ViewDataBinding;
-import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityChangePasswordBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
-import com.tuzhi.application.utils.ToastUtilsKt;
+import com.tuzhi.application.utils.CheckUtils;
 
 
 /**
@@ -35,8 +34,11 @@ public class ChangePasswordActivity extends MVPBaseActivity<ChangePasswordContra
     }
 
     public void commitPassword(String oldPassword, String newPassword) {
-        if (TextUtils.isEmpty(oldPassword) || TextUtils.isEmpty(newPassword)) {
-            ToastUtilsKt.toast(this, "密码不能为空");
+        if (!CheckUtils.mobileCheck(this, oldPassword)) {
+            return;
+        }
+
+        if (!CheckUtils.mobileCheck(this, newPassword)) {
             return;
         }
         mPresenter.commitPassword(oldPassword, newPassword);

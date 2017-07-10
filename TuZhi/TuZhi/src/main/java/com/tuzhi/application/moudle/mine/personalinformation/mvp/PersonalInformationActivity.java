@@ -24,6 +24,7 @@ import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremail
 import com.tuzhi.application.moudle.mine.personalinformation.rename.mvp.RenameActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.ActionSheet;
 
@@ -69,7 +70,9 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String event) {
         if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
-            binding.setData(UserInfoUtils.getUserInfo(this));
+            HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+            binding.setData(userInfo);
+            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
         }
     }
 

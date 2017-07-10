@@ -11,4 +11,5 @@
     <dimen name="generalSmallTextSize">12sp</dimen>
     <dimen name="generalLittleTextSize">13sp</dimen>
     <dimen name="lineHeight">0.5dp</dimen>
+    <integer name="rv_zoomDuration">20</integer>
 </resources>

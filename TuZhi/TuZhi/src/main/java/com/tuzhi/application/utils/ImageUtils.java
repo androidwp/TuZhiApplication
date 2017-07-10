@@ -18,6 +18,13 @@ public class ImageUtils {
         Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv);
     }
 
+    public static void loadImage(ImageView iv, String url, int drawableId) {
+        if (TextUtils.isEmpty(url)) {
+            iv.setImageResource(drawableId);
+        } else
+            Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv).onLoadFailed(null, CommonUtils.getDrawable(iv.getContext(), drawableId));
+    }
+
     public static int getFileImage(String fileName, int type) {
         int drawableId;
         if (TextUtils.isEmpty(fileName)) {

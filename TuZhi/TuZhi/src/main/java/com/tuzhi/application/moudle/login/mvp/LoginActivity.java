@@ -28,7 +28,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     protected void init(ViewDataBinding viewDataBinding) {
         ActivityLoginBinding binding = (ActivityLoginBinding) viewDataBinding;
         binding.setLoginActivity(this);
-        binding.setUser(new User("18265659565",""));
+        binding.setUser(new User("",""));
     }
 
 

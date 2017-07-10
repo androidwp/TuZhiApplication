@@ -33,7 +33,6 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
             @Override
             public void onSuccess(String s, String text) {
                 LogUtilsKt.showLog("TAG",text);
-                //{"resultMsg":"正常","loginStatus":false,"userId":38,"resultCode":"0","userType":1}
                 JSONObject jsonObject = JSONObject.parseObject(text);
                 SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_TYPE(),jsonObject.getString("userType"));
                 SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_ID(),jsonObject.getString("userId"));

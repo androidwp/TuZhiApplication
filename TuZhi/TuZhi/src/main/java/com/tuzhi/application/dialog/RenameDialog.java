@@ -15,6 +15,7 @@ import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeA
 import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -41,6 +42,7 @@ public class RenameDialog extends AlertDialog {
     private String text;
 
     private Context context;
+    private ViewRenameDialogBinding binding;
 
     public void setLibId(String libId) {
         this.libId = libId;
@@ -80,9 +82,19 @@ public class RenameDialog extends AlertDialog {
         super.onCreate(savedInstanceState);
         View view = getLayoutInflater().inflate(R.layout.view_rename_dialog, null);
         setContentView(view);
-        ViewRenameDialogBinding binding = DataBindingUtil.bind(view);
+        binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
         binding.setName(text);
+        binding.et.post(new Runnable() {
+            @Override
+            public void run() {
+                if (text.length()>20){
+                    binding.et.setSelection(20);
+                }else{
+                    binding.et.setSelection(text.length());
+                }
+            }
+        });
         setCanceledOnTouchOutside(false);
     }
 
@@ -117,6 +129,7 @@ public class RenameDialog extends AlertDialog {
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                ToastUtilsKt.toast(context,"修改成功");
                 OpenFileActivity activity = (OpenFileActivity) context;
                 activity.setTitle(name);
                 EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
@@ -143,6 +156,7 @@ public class RenameDialog extends AlertDialog {
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                ToastUtilsKt.toast(context,"修改成功");
                 EnterpriseKnowledgeActivity activity = (EnterpriseKnowledgeActivity) context;
                 activity.setTitle(name);
                 EventBus.getDefault().post(RepositoryActivity.MESSAGE);
@@ -170,6 +184,7 @@ public class RenameDialog extends AlertDialog {
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                ToastUtilsKt.toast(context,"修改成功");
                 KnowledgeDetailsActivity activity = (KnowledgeDetailsActivity) context;
                 activity.setTitle(name);
                 EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);

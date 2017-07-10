@@ -53,11 +53,11 @@
             android:padding="@dimen/generalSpace">
 
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/riv"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="@dimen/generalSpace"
                 android:scaleType="centerCrop"
-                app:imageLoad="@{data.userImage}"
                 app:riv_corner_radius="25dp" />
 
             <TextView
@@ -66,8 +66,8 @@
                 android:layout_weight="1"
                 android:drawableRight="@drawable/enter"
                 android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:text="@{data.nickname}" />
+                android:text="@{data.nickname}"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -89,8 +89,8 @@
                 android:onClick="@{()->activity.skipProblemFeedbackActivity()}"
                 android:paddingLeft="@dimen/generalSpace"
                 android:paddingRight="@dimen/generalSpace"
-                android:textSize="16sp"
-                android:text="问题反馈" />
+                android:text="问题反馈"
+                android:textSize="16sp" />
 
             <View style="@style/NavigationLine" />
 
@@ -100,12 +100,12 @@
                 android:drawableLeft="@drawable/set"
                 android:drawablePadding="@dimen/generalSpace"
                 android:drawableRight="@drawable/enter"
-                android:textSize="16sp"
                 android:gravity="center_vertical"
                 android:onClick="@{()->activity.skipSettingActivity()}"
                 android:paddingLeft="@dimen/generalSpace"
                 android:paddingRight="@dimen/generalSpace"
-                android:text="设置" />
+                android:text="设置"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -115,19 +115,25 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-
-        <TextView
+        <com.tuzhi.application.view.MyRippleView
             android:layout_width="match_parent"
             android:layout_height="@dimen/generalButtonHeight"
             android:layout_gravity="center"
             android:layout_marginBottom="50dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:background="@drawable/general_logout_background"
-            android:gravity="center"
             android:onClick="@{()->activity.logOut()}"
-            android:text="退出登录"
-            android:textColor="@color/colorWhite" />
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/general_logout_background"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textColor="@color/colorWhite" />
+
+        </com.tuzhi.application.view.MyRippleView>
 
     </LinearLayout>
 </layout>

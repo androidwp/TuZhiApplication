@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -65,17 +66,26 @@
         </LinearLayout>
 
 
-        <Button
+        <com.tuzhi.application.view.MyRippleView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/loginshadowfill"
             android:onClick="@{()->loginActivity.commit(user)}"
-            android:text="登录"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/generalTextSize" />
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/loginshadowfill"
+                android:gravity="center"
+                android:text="登录"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/generalTextSize" />
+
+        </com.tuzhi.application.view.MyRippleView>
+
 
         <TextView
             android:layout_width="match_parent"

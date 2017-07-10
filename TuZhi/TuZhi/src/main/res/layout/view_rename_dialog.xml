@@ -27,6 +27,7 @@
             android:textSize="18sp" />
 
         <EditText
+            android:id="@+id/et"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/generalSpace"

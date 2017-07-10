@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -43,11 +43,23 @@
             android:textColor="@color/colorGeneralTintText"
             android:textSize="14sp" />
 
-        <TextView
-            style="@style/YellowButton"
+
+        <com.tuzhi.application.view.MyRippleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="37dp"
             android:onClick="@{()->fragment.downloadOrOpenFile(data)}"
-            android:text="@{data.download?data.textOpen:data.textDownLoad}" />
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                style="@style/YellowButton"
+                android:text="@{data.download?data.textOpen:data.textDownLoad}" />
+
+        </com.tuzhi.application.view.MyRippleView>
 
     </LinearLayout>
 

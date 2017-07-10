@@ -15,6 +15,7 @@ import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeA
 import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -109,6 +110,7 @@ public class DeleteDialog extends AlertDialog {
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                ToastUtilsKt.toast(context,"删除成功");
                 OpenFileActivity activity = (OpenFileActivity) context;
                 activity.back();
                 EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
@@ -134,6 +136,7 @@ public class DeleteDialog extends AlertDialog {
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                ToastUtilsKt.toast(context,"删除成功");
                 EnterpriseKnowledgeActivity activity = (EnterpriseKnowledgeActivity) context;
                 activity.back();
                 EventBus.getDefault().post(RepositoryActivity.MESSAGE);
@@ -160,6 +163,7 @@ public class DeleteDialog extends AlertDialog {
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
+                ToastUtilsKt.toast(context,"删除成功");
                 KnowledgeDetailsActivity activity = (KnowledgeDetailsActivity) context;
                 activity.back();
                 EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);

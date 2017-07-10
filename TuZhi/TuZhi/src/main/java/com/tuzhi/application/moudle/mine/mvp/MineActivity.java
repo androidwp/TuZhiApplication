@@ -5,6 +5,7 @@ import android.databinding.ViewDataBinding;
 import android.text.TextUtils;
 
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityMineBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.mvp.LoginActivity;
@@ -13,6 +14,7 @@ import com.tuzhi.application.moudle.mine.problemfeedback.mvp.ProblemFeedbackActi
 import com.tuzhi.application.moudle.mine.setting.mvp.SettingActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.UserInfoUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,13 +40,17 @@ public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresent
         EventBus.getDefault().register(this);
         binding = (ActivityMineBinding) viewDataBinding;
         binding.setActivity(this);
-        binding.setData(UserInfoUtils.getUserInfo(this));
+        HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+        binding.setData(userInfo);
+        ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMainEvent(String event) {
         if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
-            binding.setData(UserInfoUtils.getUserInfo(this));
+            HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+            binding.setData(userInfo);
+            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
         }
     }
 

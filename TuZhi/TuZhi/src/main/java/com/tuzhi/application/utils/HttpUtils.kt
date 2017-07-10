@@ -24,7 +24,7 @@ import java.util.*
 private val URL_IMAGE = "http://192.168.0.132:8082/upload.htm"
 //private val URL_IMAGE = "http://192.168.0.140:8081/upload.htm"
 
-var baseUrl = "http://192.168.0.109:9001/"
+var baseUrl = "http://192.168.0.132:9001/"
 
 val retrofit: Http by lazy {
     Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(ScalarsConverterFactory.create()).build().create(Http::class.java)
