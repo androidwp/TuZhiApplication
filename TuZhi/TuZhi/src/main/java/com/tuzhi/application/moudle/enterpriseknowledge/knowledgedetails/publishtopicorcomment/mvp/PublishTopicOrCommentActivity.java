@@ -40,7 +40,7 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
         type = getIntent().getStringExtra(TYPE);
         switch (type) {
             case TOPIC:
-                binding.tvTitle.setText("发表话题");
+                binding.tvTitle.setText("发言");
                 break;
             default:
                 binding.tvTitle.setText("发表评论");

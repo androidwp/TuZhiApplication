@@ -73,9 +73,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/editdoc"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
+                android:drawableTop="@drawable/editdoc"
+                android:drawablePadding="2dp"
+                android:paddingTop="5dp"
+                android:gravity="center"
+                android:textSize="10sp"
                 android:onClick="@{()->activity.skipCreateDocumentActivity()}"
                 android:text="编辑文档" />
 
@@ -83,9 +85,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/uploadfile"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
+                android:drawableTop="@drawable/uploadfile"
+                android:drawablePadding="2dp"
+                android:paddingTop="5dp"
+                android:gravity="center"
+                android:textSize="10sp"
                 android:onClick="@{()->activity.openSelectDialog(1)}"
                 android:text="上传文件" />
 
@@ -93,11 +97,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/statement"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
+                android:drawableTop="@drawable/statement"
+                android:drawablePadding="2dp"
+                android:paddingTop="5dp"
+                android:gravity="center"
+                android:textSize="10sp"
                 android:onClick="@{()->activity.skipPublishTopicActivity()}"
-                android:text="发       言" />
+                android:text="发言" />
 
         </LinearLayout>
 

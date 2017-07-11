@@ -50,10 +50,10 @@ class RefreshRecycleView : FrameLayout {
         srl = findViewById(R.id.srl) as SwipeRefreshLayout
         rv = findViewById(R.id.rv) as RecyclerView
         ll = findViewById(R.id.ll) as LinearLayout
-        tvTitle=findViewById(R.id.tvTitle) as TextView
-        tvInfo=findViewById(R.id.tvInfo) as TextView
+        tvTitle = findViewById(R.id.tvTitle) as TextView
+        tvInfo = findViewById(R.id.tvInfo) as TextView
         rv.layoutManager = LinearLayoutManager(context)
-        srl.setColorSchemeResources(R.color.colorAccent, R.color.colorAccent)
+        srl.setColorSchemeResources(R.color.colorBlueButton)
         rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val canScrollVertically = recyclerView.canScrollVertically(1)

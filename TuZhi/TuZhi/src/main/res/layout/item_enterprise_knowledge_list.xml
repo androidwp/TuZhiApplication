@@ -10,6 +10,12 @@
         <variable
             name="data"
             type="com.tuzhi.application.moudle.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
     </data>
 
     <LinearLayout
@@ -26,7 +32,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/generalSpace"
             android:text="@{data.title}"
             android:textSize="16sp" />
 
@@ -34,8 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
+            android:paddingTop="@dimen/generalSpace"
             android:text="@{data.text}"
-            android:textColor="#666" />
+            android:textColor="#666"
+            android:visibility="@{TextUtils.isEmpty(data.text)?view.GONE:view.VISIBLE}" />
 
         <LinearLayout
             android:layout_width="match_parent"

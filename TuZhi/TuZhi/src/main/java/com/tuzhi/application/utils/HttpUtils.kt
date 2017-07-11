@@ -98,7 +98,7 @@ fun <T> onFailure(context: Context, callBack: HttpCallBack<T>, t: Throwable?) {
     if (!activity.isDestroyed) {
         callBack.onFinish()
         callBack.onFailure(t.toString())
-        toast(activity, "网络连接失败，请检查网络")
+        toast(activity, "连接失败，请检查网络")
     }
 }
 
@@ -118,7 +118,8 @@ fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>
                 callBack.onSuccess(null, result)
             }
         } else {
-            toast(activity, resultMsg)
+            if (!TextUtils.equals(resultCode, "100003"))
+                toast(activity, resultMsg)
             callBack.onFailure(resultMsg)
         }
     }

@@ -12,7 +12,6 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemKnowledgeDetailsListArticleBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
-import com.tuzhi.application.utils.CommonUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,7 +42,6 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
     @Override
     public void handleData(KnowledgeDetailsListBean knowledgeDetailsListBean, int i) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int dimens = (int) CommonUtils.getDimens(context, R.dimen.generalSpace);
         if (!TextUtils.isEmpty(knowledgeDetailsListBean.getContent())) {
             binding.fl.setVisibility(View.VISIBLE);
             boolean equals = TextUtils.equals(oldContent, knowledgeDetailsListBean.getContent());
@@ -52,10 +50,6 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
                 isCreateWebview = false;
                 binding.fl.removeAllViews();
                 webView = new WebView(context);
-                //   webView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                webView.setPadding(dimens, dimens, dimens, dimens);
-                //      layoutParams.setMargins(dimens, dimens, dimens, 0);
-                // binding.fl.setLayoutParams(layoutParams);
                 binding.fl.addView(webView);
             }
             webView.loadUrl(knowledgeDetailsListBean.getViewContentUrl());

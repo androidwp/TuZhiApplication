@@ -62,7 +62,7 @@
         <item name="android:layout_marginRight">@dimen/generalSpace</item>
         <item name="android:paddingLeft">@dimen/generalSpace</item>
         <item name="android:paddingRight">@dimen/generalSpace</item>
-        <item name="android:background">@drawable/general_setting_background</item>
+        <item name="android:background">@drawable/general_listview_selector_border</item>
     </style>
 
     <style name="NavigationLeftButton">
