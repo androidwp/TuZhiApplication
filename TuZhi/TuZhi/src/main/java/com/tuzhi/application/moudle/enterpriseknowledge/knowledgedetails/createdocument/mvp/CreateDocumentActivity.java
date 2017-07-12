@@ -195,7 +195,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         binding.wv.evaluateJavascript("javascript:editTime();", new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String s) {
-                if (s.contains("0")) {
+                if (!TextUtils.isEmpty(s) && s.contains("0")) {
                     binding.wv.evaluateJavascript("javascript:document.getElementById('editor-trigger').innerHTML", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String value) {

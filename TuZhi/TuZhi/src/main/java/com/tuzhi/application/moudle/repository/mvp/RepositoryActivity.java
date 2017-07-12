@@ -44,6 +44,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
     private long currentTime;
     private ActivityRepositoryBinding binding;
     private ArrayList<RepositoryListItemBean> mData = new ArrayList<>();
+    private boolean isDelKnowledgeLib;
 
 
     @Override

@@ -10,6 +10,7 @@ public class HttpKnowledgeModuleBean {
 
     private String resultMsg;
     private String resultCode;
+    private boolean isDelArticle;
 
     private ArticlePageBean articlePage;
 
@@ -31,6 +32,14 @@ public class HttpKnowledgeModuleBean {
 
     public ArticlePageBean getArticlePage() {
         return articlePage;
+    }
+
+    public boolean isDelArticle() {
+        return isDelArticle;
+    }
+
+    public void setDelArticle(boolean delArticle) {
+        isDelArticle = delArticle;
     }
 
     public void setArticlePage(ArticlePageBean articlePage) {

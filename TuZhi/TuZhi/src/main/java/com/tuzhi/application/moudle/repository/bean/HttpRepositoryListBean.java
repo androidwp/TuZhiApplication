@@ -10,7 +10,16 @@ public class HttpRepositoryListBean {
 
     private String resultMsg;
     private String resultCode;
+    private boolean isDelKnowledgeLib;
     private List<KnowledgeLibsMapBean> knowledgeLibsMap;
+
+    public boolean isDelKnowledgeLib() {
+        return isDelKnowledgeLib;
+    }
+
+    public void setDelKnowledgeLib(boolean delKnowledgeLib) {
+        isDelKnowledgeLib = delKnowledgeLib;
+    }
 
     public String getResultMsg() {
         return resultMsg;

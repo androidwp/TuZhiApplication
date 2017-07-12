@@ -6,9 +6,11 @@ import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.bean.HttpKnowledgeModuleBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.item.EnterpriseKnowledgeListItem;
+import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.LogUtilsKt;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -49,8 +51,8 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
                 for (HttpKnowledgeModuleBean.ArticlePageBean.ResultBean bean : result) {
                     data.add(new EnterpriseKnowledgeListItemBean(EnterpriseKnowledgeListItem.TYPE, bean.getId(), bean.getTitle(), bean.getSummary() == null ? "" : bean.getSummary(), bean.getFileNum(), bean.getCommentNum(), bean.getUpdateTime() + " 更新"));
                 }
+                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getFLAG_DELETE_MOUDLE(), httpKnowledgeModuleBean.isDelArticle() ? ConstantKt.getValue_true() : ConstantKt.getValue_false());
                 mView.downloadFinish(index, next, data);
-
             }
 
             @Override

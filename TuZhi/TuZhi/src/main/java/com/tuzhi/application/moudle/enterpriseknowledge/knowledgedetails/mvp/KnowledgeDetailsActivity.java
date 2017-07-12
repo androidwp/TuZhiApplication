@@ -36,6 +36,7 @@ import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.Kn
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -70,6 +71,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private int type;
     private ProgressBarDialog dialog;
     private String title;
+    private String flagDeleteMoudle;
 
     @Override
     protected int getLayoutId() {
@@ -112,20 +114,33 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         if (type == 0) {
             textOne = "重命名频道";
             textTwo = "删除频道";
+            if (TextUtils.equals(flagDeleteMoudle, ConstantKt.getValue_true())) {
+                actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                        .setCancelButtonTitle("取消")
+                        .setOtherButtonTitles(textOne, textTwo)
+                        .setCancelableOnTouchOutside(true)
+                        .setListener(this).show();
+            } else {
+                actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                        .setCancelButtonTitle("取消")
+                        .setOtherButtonTitles(textOne)
+                        .setCancelableOnTouchOutside(true)
+                        .setListener(this).show();
+            }
         } else {
             textOne = "从相册选择";
             textTwo = "拍摄新的照片";
+            actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                    .setCancelButtonTitle("取消")
+                    .setOtherButtonTitles(textOne, textTwo)
+                    .setCancelableOnTouchOutside(true)
+                    .setListener(this).show();
         }
-
-        actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                .setCancelButtonTitle("取消")
-                .setOtherButtonTitles(textOne, textTwo)
-                .setCancelableOnTouchOutside(true)
-                .setListener(this).show();
     }
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
+        flagDeleteMoudle = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getFLAG_DELETE_MOUDLE());
         binding = (ActivityKnowledgeDetailsBinding) viewDataBinding;
         id = getIntent().getStringExtra(ID);
         title = getIntent().getStringExtra(TITLE);

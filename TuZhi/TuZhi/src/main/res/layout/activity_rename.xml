@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -34,9 +34,12 @@
                 android:layout_gravity="center"
                 android:text="个人资料" />
 
+            <view style="@style/NavigationLine" />
+
         </FrameLayout>
 
         <EditText
+            android:id="@+id/et"
             android:layout_width="match_parent"
             android:layout_height="@dimen/generalEditTextHeight"
             android:layout_marginLeft="@dimen/generalSpace"
@@ -44,15 +47,27 @@
             android:layout_marginTop="@dimen/generalSpace"
             android:background="@drawable/general_setting_background"
             android:hint="请输入姓名"
-            android:maxLength="5"
+            android:maxLength="20"
             android:paddingLeft="@dimen/generalSpace"
             android:text="@={name}" />
 
-        <Button
-            style="@style/YellowButton"
+        <com.tuzhi.application.view.MyRippleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="50dp"
             android:onClick="@{()->activity.commitName(name)}"
-            android:text="保存" />
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                style="@style/YellowButton"
+                android:onClick="@{()->activity.commitName(name)}"
+                android:text="保存" />
+
+        </com.tuzhi.application.view.MyRippleView>
 
     </LinearLayout>
 
