@@ -234,7 +234,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
     private void addArticle(HttpKnowledgeDetailsListBean articleMap, ArrayList<KnowledgeDetailsListBean> data) {
         HttpKnowledgeDetailsListBean.ArticleMapBean articleMapBean = articleMap.getArticleMap();
-        if (!TextUtils.isEmpty(articleMapBean.getContent()) && !TextUtils.equals(articleMapBean.getContent(), "<p style=\\\"line-height: 1.5; -ms-word-break: break-all;\\\"><br></p>")) {
+        if (!TextUtils.isEmpty(articleMapBean.getContent()) && !TextUtils.equals(articleMapBean.getContent(), "<p><br></p>")) {
             KnowledgeDetailsListBean bean = new KnowledgeDetailsListBean(KnowledgeDetailsArticleItem.TYPE);
             bean.setContent(articleMapBean.getContent());
             bean.setViewContentUrl(articleMapBean.getViewContentUrl());

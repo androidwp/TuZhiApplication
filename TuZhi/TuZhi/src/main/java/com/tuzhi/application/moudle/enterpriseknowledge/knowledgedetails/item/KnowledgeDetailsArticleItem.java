@@ -4,10 +4,10 @@ import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemKnowledgeDetailsListArticleBinding;
 import com.tuzhi.application.item.BaseItem;
@@ -50,6 +50,7 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
                 isCreateWebview = false;
                 binding.fl.removeAllViews();
                 webView = new WebView(context);
+                webView.getSettings().setJavaScriptEnabled(true);
                 binding.fl.addView(webView);
             }
             webView.loadUrl(knowledgeDetailsListBean.getViewContentUrl());

@@ -111,7 +111,7 @@ class RefreshRecycleView : FrameLayout {
                     clone.itemType = GeneralLoadFootViewItem.TYPE
                     mData.add(clone as T)
                 } else if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
-                    mData.addAll(mData.size - 2, mDataSource)
+                    mData.addAll(mData.size - 1, mDataSource)
                 }
             } else {
                 mData.addAll(mDataSource)

@@ -35,6 +35,7 @@
             android:background="@drawable/dialog_rename_et_background"
             android:maxLength="20"
             android:maxLines="1"
+            android:singleLine="true"
             android:padding="10dp"
             android:text="@={name}"
             android:textColor="@color/colorGeneralTintText" />

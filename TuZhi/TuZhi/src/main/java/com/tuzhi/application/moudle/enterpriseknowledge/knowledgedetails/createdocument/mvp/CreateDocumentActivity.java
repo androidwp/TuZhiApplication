@@ -201,7 +201,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
                         public void onReceiveValue(String value) {
                             value = value.replace("\\u003C", "<").replace("&quot;", "\"").replace("\\", "");
                             value = value.substring(1, value.length() - 1);
-                            if (TextUtils.isEmpty(value) || TextUtils.equals(value, "<p style=\"line-height: 1.5;word-break: break-all;\"><br></p>")) {
+                            if (TextUtils.isEmpty(value) || TextUtils.equals(value, "<p><br></p>")) {
                                 mPresenter.commit(id, "");
                             } else {
                                 mPresenter.commit(id, Base64.encodeToString(value.getBytes(), Base64.DEFAULT));
@@ -254,7 +254,20 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
     }
 
     public void setHeading(int heading) {
-        exec("javascript:ChangeSize('" + heading + "');");
+        switch (heading) {
+            case 6:
+                exec("javascript:titleH2();");
+                break;
+            case 5:
+                exec("javascript:titleH3();");
+                break;
+            case 4:
+                exec("javascript:titleH4();");
+                break;
+            case 2:
+                exec("javascript:titlep();");
+                break;
+        }
     }
 
     public void setStrikeThrough(View view, boolean isChecked) {

@@ -103,7 +103,7 @@
                 android:gravity="center"
                 android:textSize="10sp"
                 android:onClick="@{()->activity.skipPublishTopicActivity()}"
-                android:text="发言" />
+                android:text="发  言" />
 
         </LinearLayout>
 

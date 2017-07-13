@@ -50,6 +50,7 @@
             android:hint="@{data.hint}"
             android:maxLength="15"
             android:maxLines="1"
+            android:singleLine="true"
             android:text="@={data.name}"
             android:textColorHint="@color/colorGeneralMoreTintText"
             android:textSize="@dimen/generalTextSize" />
