@@ -101,7 +101,7 @@ class RefreshRecycleView : FrameLayout {
         if (page == 0) {
             mData.clear()
         }
-        if (mDataSource != null) {
+        if (mDataSource != null && mDataSource.size > 0) {
             if (mData.size > 0) {
                 val itemBean = mData[mData.size - 1]
                 if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && !haveNextPage) {
@@ -126,8 +126,10 @@ class RefreshRecycleView : FrameLayout {
                     clone.itemType = GeneralLoadFootViewItem.TYPE
                     mData.add(clone as T)
                 } else {
-                    clone.itemType = GeneralEmptyFootViewItem.TYPE
-                    mData.add(clone as T)
+                    if (addEmptyFoot) {
+                        clone.itemType = GeneralEmptyFootViewItem.TYPE
+                        mData.add(clone as T)
+                    }
                 }
             }
         }

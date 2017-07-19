@@ -79,6 +79,6 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
     @Override
     public void commitSuccess() {
         setResult(ConstantKt.getNEED_REFRESH_CODE());
-        back();
+        super.onBackPressed();
     }
 }
