@@ -251,7 +251,7 @@ public class EmotionKeyboard {
             softInputHeight = softInputHeight - getSoftButtonsBarHeight();
         }
         if (softInputHeight < 0) {
-            Log.w("TAG", "EmotionKeyboard--Warning: value of softInputHeight is below zero!");
+            Log.e("TAG", "EmotionKeyboard--Warning: value of softInputHeight is below zero!");
         }
         //存一份到本地
         if (softInputHeight > 0) {

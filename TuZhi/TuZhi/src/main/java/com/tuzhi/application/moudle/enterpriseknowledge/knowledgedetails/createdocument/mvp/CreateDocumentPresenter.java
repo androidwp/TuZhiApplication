@@ -48,9 +48,10 @@ public class CreateDocumentPresenter extends BasePresenterImpl<CreateDocumentCon
     }
 
     @Override
-    public void inform(String id) {
+    public void inform(String id, String isCancel) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("aId", id);
+        parameter.put("isCancel", isCancel);
         parameter.put("operate", "3");
         HttpUtilsKt.post(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {
             @Override

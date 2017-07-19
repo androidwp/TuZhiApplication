@@ -104,6 +104,6 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
 
     @Override
     public void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data) {
-        binding.rrv.downLoadFinish(page, haveNextPage, mData, data);
+        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
     }
 }

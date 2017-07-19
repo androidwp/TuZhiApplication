@@ -111,7 +111,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
 
     @Override
     public void downLoadFinish(ArrayList<RepositoryListItemBean> data, boolean haveNextPage, int page) {
-        binding.rrv.downLoadFinish(page, haveNextPage, mData, data);
+        binding.rrv.downLoadFinish(page, haveNextPage, mData, data,false);
     }
 
     @Override

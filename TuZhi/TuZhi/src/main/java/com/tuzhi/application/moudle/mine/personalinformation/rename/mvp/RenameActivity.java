@@ -27,8 +27,8 @@ public class RenameActivity extends MVPBaseActivity<RenameContract.View, RenameP
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityRenameBinding) viewDataBinding;
-        binding.setActivity(this);
         name = getIntent().getStringExtra(NAME);
+        binding.setActivity(this);
         binding.setName(name);
         binding.et.post(new Runnable() {
             @Override

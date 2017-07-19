@@ -24,6 +24,6 @@ public class CreateDocumentContract {
 
         void uploadImage(android.view.View view, File imageFile);
 
-        void inform(String id);
+        void inform(String id,String isCancel);
     }
 }

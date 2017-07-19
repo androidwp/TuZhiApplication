@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.tuzhi.application.R
 import com.tuzhi.application.bean.BaseListItemBean
+import com.tuzhi.application.item.GeneralEmptyFootViewItem
 import com.tuzhi.application.item.GeneralLoadFootViewItem
 import kale.adapter.CommonRcvAdapter
 
@@ -92,7 +93,7 @@ class RefreshRecycleView : FrameLayout {
         }
     }
 
-    fun <T : BaseListItemBean> downLoadFinish(page: Int, haveNextPage: Boolean, mData: ArrayList<T>, mDataSource: ArrayList<T>?) {
+    fun <T : BaseListItemBean> downLoadFinish(page: Int, haveNextPage: Boolean, mData: ArrayList<T>, mDataSource: ArrayList<T>?, addEmptyFoot: Boolean) {
         this.flagHaveNextPage = haveNextPage
         flagLoading = false
         isShowRefreshView(false)
@@ -106,6 +107,10 @@ class RefreshRecycleView : FrameLayout {
                 if (TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && !haveNextPage) {
                     mData.removeAt(mData.size - 1)
                     mData.addAll(mDataSource)
+                    if (addEmptyFoot) {
+                        itemBean.itemType = GeneralEmptyFootViewItem.TYPE
+                        mData.add(itemBean)
+                    }
                 } else if (!TextUtils.equals(itemBean.itemType, GeneralLoadFootViewItem.TYPE) && haveNextPage) {
                     val clone = itemBean.clone()
                     clone.itemType = GeneralLoadFootViewItem.TYPE
@@ -115,10 +120,13 @@ class RefreshRecycleView : FrameLayout {
                 }
             } else {
                 mData.addAll(mDataSource)
+                val itemBean = mData[0]
+                val clone = itemBean.clone()
                 if (haveNextPage) {
-                    val itemBean = mData[0]
-                    val clone = itemBean.clone()
                     clone.itemType = GeneralLoadFootViewItem.TYPE
+                    mData.add(clone as T)
+                } else {
+                    clone.itemType = GeneralEmptyFootViewItem.TYPE
                     mData.add(clone as T)
                 }
             }

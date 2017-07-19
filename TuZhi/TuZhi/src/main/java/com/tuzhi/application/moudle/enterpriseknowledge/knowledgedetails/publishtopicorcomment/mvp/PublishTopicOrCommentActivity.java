@@ -1,10 +1,13 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp;
 
 
+import android.app.Dialog;
 import android.databinding.ViewDataBinding;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityPublishTopicOrCommentBinding;
+import com.tuzhi.application.dialog.WarnDialog;
+import com.tuzhi.application.inter.DialogMakeSureListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.utils.ConstantKt;
 
@@ -24,6 +27,7 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
     private String type;
     private String aid;
     private String cid;
+    private WarnDialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -46,6 +50,18 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
                 binding.tvTitle.setText("发表评论");
                 break;
         }
+        dialog = new WarnDialog.Builder().setTitle("提示").setInfo("是否放弃保存,直接退出").setBtnLeftText("取消").setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
+            @Override
+            public void makeSure(Dialog dialog) {
+                PublishTopicOrCommentActivity.super.onBackPressed();
+            }
+        }).builder(this);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        dialog.show();
     }
 
     public void commit(String text) {

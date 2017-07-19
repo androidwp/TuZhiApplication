@@ -26,6 +26,7 @@ import com.tuzhi.application.databinding.ActivityKnowledgeDetailsBinding;
 import com.tuzhi.application.dialog.DeleteDialog;
 import com.tuzhi.application.dialog.ProgressBarDialog;
 import com.tuzhi.application.dialog.RenameDialog;
+import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
@@ -161,6 +162,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
                         return new KnowledgeDetailsFilesItem();
                     case KnowledgeDetailsCommentItem.TYPE:
                         return new KnowledgeDetailsCommentItem();
+                    case GeneralEmptyFootViewItem.TYPE:
+                        return new GeneralEmptyFootViewItem();
                     default:
                         return new GeneralLoadFootViewItem();
                 }
@@ -192,7 +195,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     @Override
     public void downLoadFinish(ArrayList<KnowledgeDetailsListBean> newData, boolean haveNextPage, int page) {
-        binding.rrv.downLoadFinish(page, haveNextPage, data, newData);
+        binding.rrv.downLoadFinish(page, haveNextPage, data, newData, true);
     }
 
     @Override

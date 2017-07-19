@@ -12,6 +12,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityEnterpriseKnowledgeBinding;
 import com.tuzhi.application.dialog.DeleteDialog;
 import com.tuzhi.application.dialog.RenameDialog;
+import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.crepository.mvp.CrepositoryActivity;
@@ -82,6 +83,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
                 switch (itemType) {
                     case GeneralLoadFootViewItem.TYPE:
                         return new GeneralLoadFootViewItem();
+                    case GeneralEmptyFootViewItem.TYPE:
+                        return new GeneralEmptyFootViewItem();
                     default:
                         return new EnterpriseKnowledgeListItem();
                 }
@@ -130,7 +133,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
 
     @Override
     public void downloadFinish(int page, boolean haveNextPage, ArrayList<EnterpriseKnowledgeListItemBean> data) {
-        binding.rrv.downLoadFinish(page, haveNextPage, mData, data);
+        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
     }
 
     @Override
