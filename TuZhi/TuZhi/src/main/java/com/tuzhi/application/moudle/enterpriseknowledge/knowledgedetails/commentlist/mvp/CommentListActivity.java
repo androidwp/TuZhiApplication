@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityCommentListBinding;
+import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.commentlist.bean.CommentListBean;
@@ -59,6 +60,8 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
                 switch (type) {
                     case GeneralLoadFootViewItem.TYPE:
                         return new GeneralLoadFootViewItem();
+                    case GeneralEmptyFootViewItem.TYPE:
+                        return new GeneralEmptyFootViewItem();
                     default:
                         return new CommentListItem();
                 }
