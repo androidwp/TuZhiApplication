@@ -1,5 +1,8 @@
 package com.tuzhi.application.moudle.repository.bean;
 
+import android.databinding.Bindable;
+
+import com.android.databinding.library.baseAdapters.BR;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
@@ -14,8 +17,6 @@ public class RepositoryListItemBean extends BaseListItemBean {
     public RepositoryListItemBean(String itemType) {
         super(itemType);
     }
-
-
 
     public String getId() {
         return id;
@@ -33,12 +34,14 @@ public class RepositoryListItemBean extends BaseListItemBean {
         this.title = title;
     }
 
+    @Bindable
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+        notifyPropertyChanged(BR.text);
     }
 
 

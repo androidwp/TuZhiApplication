@@ -35,6 +35,7 @@ import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.Kn
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsCommentItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFilesItem;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity;
+import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
@@ -211,6 +212,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     @Override
     public void updateFinish() {
         dialog.dismiss();
+        EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
         onRefresh();
     }
 
@@ -241,6 +243,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ConstantKt.getNEED_REFRESH_CODE() && resultCode == ConstantKt.getNEED_REFRESH_CODE()) {
+            EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
             onRefresh();
         }
 

@@ -2,13 +2,17 @@ package com.tuzhi.application.moudle.crepository.mvp;
 
 
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityCrepositoryBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.crepository.bean.CreateRepositoryBean;
+import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -23,6 +27,7 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     public static final String MOUDLE = "moudle";
     public static final String LibId = "LibId";
     private String libID;
+    private String type;
 
 
     @Override
@@ -34,7 +39,7 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     protected void init(ViewDataBinding viewDataBinding) {
         ActivityCrepositoryBinding binding = (ActivityCrepositoryBinding) viewDataBinding;
         binding.setActivity(this);
-        String type = getIntent().getStringExtra(TYPE);
+        type = getIntent().getStringExtra(TYPE);
         libID = getIntent().getStringExtra(LibId);
         switch (type) {
             case REPOSITORY:
@@ -57,6 +62,8 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
 
     @Override
     public void commitFinish() {
+        if (TextUtils.equals(type, MOUDLE))
+            EventBus.getDefault().post(RepositoryActivity.MESSAGE);
         setResult(ConstantKt.getCREATE_CODE());
         onBackPressed();
     }

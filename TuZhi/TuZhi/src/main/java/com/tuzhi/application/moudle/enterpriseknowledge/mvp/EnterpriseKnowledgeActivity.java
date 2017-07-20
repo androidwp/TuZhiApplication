@@ -57,8 +57,9 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String event) {
-        if (TextUtils.equals(event, MESSAGE))
+        if (TextUtils.equals(event, MESSAGE)){
             onRefresh();
+        }
     }
 
     @Override

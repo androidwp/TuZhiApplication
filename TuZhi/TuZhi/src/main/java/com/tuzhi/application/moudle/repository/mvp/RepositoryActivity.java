@@ -44,7 +44,6 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
     private long currentTime;
     private ActivityRepositoryBinding binding;
     private ArrayList<RepositoryListItemBean> mData = new ArrayList<>();
-    private boolean isDelKnowledgeLib;
 
 
     @Override
@@ -111,7 +110,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
 
     @Override
     public void downLoadFinish(ArrayList<RepositoryListItemBean> data, boolean haveNextPage, int page) {
-        binding.rrv.downLoadFinish(page, haveNextPage, mData, data,false);
+        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, false);
     }
 
     @Override
@@ -147,13 +146,12 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         }
     }
 
-
     @Override
     public void onBackPressed() {
         long timeMillis = System.currentTimeMillis();
         final int anInt = 2000;
         if (timeMillis - currentTime < anInt) {
-            finish();
+            super.onBackPressed();
         } else {
             currentTime = timeMillis;
             ToastUtilsKt.toast(getContext(), "再次点击退出应用");
