@@ -17,6 +17,7 @@ import com.tuzhi.application.moudle.crepository.mvp.CrepositoryActivity;
 import com.tuzhi.application.moudle.mine.mvp.MineActivity;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
+import com.tuzhi.application.utils.CommonUtils;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
@@ -64,7 +65,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         else if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
             HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
             binding.setData(userInfo);
-            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
+            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), CommonUtils.getDrawable(this, R.drawable.defaulthead));
         }
     }
 
@@ -81,7 +82,7 @@ public class RepositoryActivity extends MVPBaseActivity<RepositoryContract.View,
         binding.rrv.setInfo("点击上方的\"+\"号，创建知识库");
         HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
         binding.setData(userInfo);
-        ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
+        ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), CommonUtils.getDrawable(this, R.drawable.defaulthead));
         CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
             @NonNull
             @Override

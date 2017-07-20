@@ -1,6 +1,7 @@
 package com.tuzhi.application.utils;
 
 import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -13,16 +14,17 @@ import com.tuzhi.application.R;
  */
 
 public class ImageUtils {
-    @BindingAdapter("imageLoad")
+    @BindingAdapter(value = {"imageLoad"})
     public static void loadImage(ImageView iv, String url) {
         Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv);
     }
 
-    public static void loadImage(ImageView iv, String url, int drawableId) {
+    @BindingAdapter(value = {"imageLoad", "errorDrawable"})
+    public static void loadImage(ImageView iv, String url, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
-            iv.setImageResource(drawableId);
+            iv.setImageDrawable(drawable);
         } else
-            Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv).onLoadFailed(null, CommonUtils.getDrawable(iv.getContext(), drawableId));
+            Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv).onLoadFailed(null, drawable);
     }
 
     public static int getFileImage(String fileName, int type) {

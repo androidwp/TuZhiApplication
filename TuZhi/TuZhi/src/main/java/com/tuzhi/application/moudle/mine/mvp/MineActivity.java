@@ -13,6 +13,7 @@ import com.tuzhi.application.moudle.mine.personalinformation.mvp.PersonalInforma
 import com.tuzhi.application.moudle.mine.problemfeedback.mvp.ProblemFeedbackActivity;
 import com.tuzhi.application.moudle.mine.setting.mvp.SettingActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
+import com.tuzhi.application.utils.CommonUtils;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.UserInfoUtils;
@@ -42,7 +43,7 @@ public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresent
         binding.setActivity(this);
         HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
         binding.setData(userInfo);
-        ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
+        ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), CommonUtils.getDrawable(this, R.drawable.defaulthead));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -50,7 +51,7 @@ public class MineActivity extends MVPBaseActivity<MineContract.View, MinePresent
         if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
             HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
             binding.setData(userInfo);
-            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
+            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), CommonUtils.getDrawable(this, R.drawable.defaulthead));
         }
     }
 

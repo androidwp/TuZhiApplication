@@ -23,6 +23,7 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.bindingphoneoremailfirst.mvp.BindingPhoneOrEmailFirstActivity;
 import com.tuzhi.application.moudle.mine.personalinformation.rename.mvp.RenameActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
+import com.tuzhi.application.utils.CommonUtils;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.UserInfoUtils;
@@ -72,7 +73,7 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
         if (TextUtils.equals(event, ConstantKt.getUPDATE_USER_INFO_EVENT())) {
             HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
             binding.setData(userInfo);
-            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), R.drawable.defaulthead);
+            ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), CommonUtils.getDrawable(this, R.drawable.defaulthead));
         }
     }
 
