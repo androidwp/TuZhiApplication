@@ -221,6 +221,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
                 fileBean.setTitle(articleFilesMapBean.getFileName() + "." + articleFilesMapBean.getFileSuffix());
                 fileBean.setFileName(articleFilesMapBean.getFileName());
                 fileBean.setFileType(articleFilesMapBean.getFileSuffix());
+                fileBean.setFileSize(articleFilesMapBean.getFileSize());
                 fileBean.setPreviewUrls(articleFilesMapBean.getPreviewUrls());
                 fileBean.setFileStatus(articleFilesMapBean.isPreview());
                 fileBean.setInfo(articleFilesMapBean.getAuthor() + "  " + articleFilesMapBean.getUpdateTime() + "  " + articleFilesMapBean.getFileSize());

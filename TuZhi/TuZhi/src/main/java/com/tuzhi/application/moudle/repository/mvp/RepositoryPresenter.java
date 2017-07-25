@@ -30,7 +30,6 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
 
     @Override
     public void downLoadData(final int page) {
-
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("operate", "1");
         HttpUtilsKt.get(mView.getContext(), URL, parameter, HttpRepositoryListBean.class, new HttpCallBack<HttpRepositoryListBean>() {
@@ -62,6 +61,5 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
                 }
             }
         });
-
     }
 }

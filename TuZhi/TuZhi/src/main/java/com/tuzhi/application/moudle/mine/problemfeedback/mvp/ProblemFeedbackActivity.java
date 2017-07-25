@@ -40,7 +40,7 @@ public class ProblemFeedbackActivity extends MVPBaseActivity<ProblemFeedbackCont
 
     @Override
     public void back() {
-      onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ProblemFeedbackActivity extends MVPBaseActivity<ProblemFeedbackCont
         dialog.show();
     }
 
-    public void commitFeedback(String text){
+    public void commitFeedback(String text) {
         mPresenter.commitFeedback(text);
     }
 }

@@ -254,20 +254,21 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
     }
 
     public void setHeading(int heading) {
-        switch (heading) {
-            case 6:
-                exec("javascript:titleH2();");
-                break;
-            case 5:
-                exec("javascript:titleH3();");
-                break;
-            case 4:
-                exec("javascript:titleH4();");
-                break;
-            case 2:
-                exec("javascript:titlep();");
-                break;
-        }
+        exec("javascript:ChangeSize('" + heading + "');");
+//        switch (heading) {
+//            case 6:
+//                exec("javascript:titleH2();");
+//                break;
+//            case 5:
+//                exec("javascript:titleH3();");
+//                break;
+//            case 4:
+//                exec("javascript:titleH4();");
+//                break;
+//            case 2:
+//                exec("javascript:titlep();");
+//                break;
+//        }
     }
 
     public void setStrikeThrough(View view, boolean isChecked) {

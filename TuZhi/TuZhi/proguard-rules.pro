@@ -35,3 +35,31 @@
 
 -keep class rx.internal.** { *; }
 -dontwarn rx.internal.**
+
+#glide 混淆
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+#retrofit
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+
+-keep class com.tencent.** { *; }
+-dontwarn com.tencent.**
+
+-keep class retrofit2.** { *; }
+-dontwarn  retrofit2.**
+
+-keep class org.** { *; }
+-dontwarn  org.**
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+

@@ -285,50 +285,50 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <!--一级标题-->
+                    <!--&lt;!&ndash;一级标题&ndash;&gt;-->
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="@{()->activity.setHeading(6)}"
-                        android:text="大标题" />
+                    <!--<TextView-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:onClick="@{()->activity.setHeading(6)}"-->
+                        <!--android:text="大标题" />-->
 
-                    <!--二级标题-->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="@{()->activity.setHeading(5)}"
-                        android:text="中标题" />
+                    <!--&lt;!&ndash;二级标题&ndash;&gt;-->
+                    <!--<TextView-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:onClick="@{()->activity.setHeading(5)}"-->
+                        <!--android:text="中标题" />-->
 
-                    <!--三级标题-->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="@{()->activity.setHeading(4)}"
-                        android:text="小标题" />
+                    <!--&lt;!&ndash;三级标题&ndash;&gt;-->
+                    <!--<TextView-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:onClick="@{()->activity.setHeading(4)}"-->
+                        <!--android:text="小标题" />-->
 
-                    <!--正文-->
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="@{()->activity.setHeading(2)}"
-                        android:text="正文" />
+                    <!--&lt;!&ndash;正文&ndash;&gt;-->
+                    <!--<TextView-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:gravity="center"-->
+                        <!--android:onClick="@{()->activity.setHeading(2)}"-->
+                        <!--android:text="正文" />-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

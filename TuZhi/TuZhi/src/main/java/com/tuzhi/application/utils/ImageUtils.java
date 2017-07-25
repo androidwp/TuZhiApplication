@@ -1,12 +1,14 @@
 package com.tuzhi.application.utils;
 
 import android.databinding.BindingAdapter;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.tuzhi.application.R;
 
 /**
@@ -16,15 +18,21 @@ import com.tuzhi.application.R;
 public class ImageUtils {
     @BindingAdapter(value = {"imageLoad"})
     public static void loadImage(ImageView iv, String url) {
-        Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv);
+        Glide.with(iv.getContext()).load(url).asBitmap().into(iv);
     }
 
     @BindingAdapter(value = {"imageLoad", "errorDrawable"})
-    public static void loadImage(ImageView iv, String url, Drawable drawable) {
+    public static void loadImage(final ImageView iv, String url, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
             iv.setImageDrawable(drawable);
-        } else
-            Glide.with(iv.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv).onLoadFailed(null, drawable);
+        } else{
+            Glide.with(iv.getContext()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    iv.setImageBitmap(resource);
+                }
+            }).onLoadFailed(null, drawable);
+        }
     }
 
     public static int getFileImage(String fileName, int type) {
@@ -91,7 +99,11 @@ public class ImageUtils {
                     drawableId = R.drawable.packagebig;
                 }
             } else {
-                drawableId = R.drawable.unknown;
+                if (type == 0)
+                    drawableId = R.drawable.unknown;
+                else {
+                    drawableId = R.drawable.unknownbig;
+                }
             }
         }
         return drawableId;

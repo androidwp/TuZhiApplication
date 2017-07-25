@@ -68,7 +68,7 @@ public class NotOpenFileFragment extends Fragment {
         String fileId = getArguments().getString(OpenFileActivity.FILE_ID);
         String fileName = getArguments().getString(OpenFileActivity.FILE_NAME);
         bean.setFileId(fileId);
-        bean.setFileName(fileName);
+        bean.setFileName(fileName+"."+getArguments().getString(OpenFileActivity.FILE_SUFFIX));
         bean.setFileSffix(getArguments().getString(OpenFileActivity.FILE_SUFFIX));
         bean.setFileSize(getArguments().getString(OpenFileActivity.FILE_SIZE));
         bean.setFileUrl(getArguments().getString(OpenFileActivity.FILE_URL));

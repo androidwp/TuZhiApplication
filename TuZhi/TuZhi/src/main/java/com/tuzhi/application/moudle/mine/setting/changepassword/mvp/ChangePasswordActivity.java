@@ -6,7 +6,6 @@ import android.databinding.ViewDataBinding;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityChangePasswordBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
-import com.tuzhi.application.utils.CheckUtils;
 
 
 /**
@@ -34,14 +33,8 @@ public class ChangePasswordActivity extends MVPBaseActivity<ChangePasswordContra
     }
 
     public void commitPassword(String oldPassword, String newPassword) {
-        if (!CheckUtils.mobileCheck(this, oldPassword)) {
-            return;
-        }
-
-        if (!CheckUtils.mobileCheck(this, newPassword)) {
-            return;
-        }
-        mPresenter.commitPassword(oldPassword, newPassword);
+        if (oldPassword != null && newPassword != null)
+            mPresenter.commitPassword(oldPassword, newPassword);
     }
 
 }
