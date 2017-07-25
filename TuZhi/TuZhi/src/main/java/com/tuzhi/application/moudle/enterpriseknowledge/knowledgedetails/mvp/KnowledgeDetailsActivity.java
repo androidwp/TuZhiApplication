@@ -63,7 +63,6 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private static final String PHOTO = "photo.png";
     public static final String ID = "ID";
     public static final String TITLE = "TITLE";
-
     private ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
     private String id;
     private ActivityKnowledgeDetailsBinding binding;
@@ -74,6 +73,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private ProgressBarDialog dialog;
     private String title;
     private String flagDeleteMoudle;
+    private boolean flagCanClick = true;
 
     @Override
     protected int getLayoutId() {
@@ -225,18 +225,28 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
 
     public void skipCreateDocumentActivity() {
-        mPresenter.skipCreateDocumentActivity(id);
+        if (flagCanClick) {
+            flagCanClick = false;
+            mPresenter.skipCreateDocumentActivity(id);
+        }
     }
 
 
     public void skipCreateDocumentActivity(String editContentUrl) {
         if (!TextUtils.isEmpty(editContentUrl)) {
+            canClick();
             Intent intent = new Intent(this, CreateDocumentActivity.class);
             intent.putExtra(CreateDocumentActivity.ID, id);
             intent.putExtra(CreateDocumentActivity.CONTENT, editContentUrl);
             startActivityForResult(intent, ConstantKt.getNEED_REFRESH_CODE());
         }
     }
+
+    @Override
+    public void canClick() {
+        flagCanClick = true;
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

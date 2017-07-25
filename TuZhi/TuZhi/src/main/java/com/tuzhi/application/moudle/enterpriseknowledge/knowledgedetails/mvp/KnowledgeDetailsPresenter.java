@@ -51,7 +51,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         HttpUtilsKt.post(mView.getContext(), URL_EDIT, parameter, String.class, new HttpCallBack<String>() {
             @Override
             public void onFinish() {
-
+                mView.canClick();
             }
 
             @Override

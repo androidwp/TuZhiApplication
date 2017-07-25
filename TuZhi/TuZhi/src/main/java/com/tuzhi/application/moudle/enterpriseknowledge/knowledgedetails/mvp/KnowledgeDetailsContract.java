@@ -24,6 +24,8 @@ public class KnowledgeDetailsContract {
         void updateFinish();
 
         void skipCreateDocumentActivity(String editContentUrl);
+
+        void canClick();
     }
 
     interface Presenter extends BasePresenter<View> {

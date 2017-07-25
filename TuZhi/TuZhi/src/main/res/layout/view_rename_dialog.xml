@@ -18,7 +18,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_background"
         android:orientation="vertical"
-        android:padding="@dimen/generalSpace">
+        android:paddingLeft="@dimen/generalSpace"
+        android:paddingRight="@dimen/generalSpace"
+        android:paddingTop="@dimen/generalSpace">
 
         <TextView
             android:layout_width="300dp"
@@ -30,13 +32,12 @@
             android:id="@+id/et"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/generalSpace"
             android:layout_marginTop="@dimen/generalSpace"
             android:background="@drawable/dialog_rename_et_background"
             android:maxLength="20"
             android:maxLines="1"
-            android:singleLine="true"
             android:padding="10dp"
+            android:singleLine="true"
             android:text="@={name}"
             android:textColor="@color/colorGeneralTintText" />
 
@@ -49,8 +50,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/general_listview_selector"
                 android:gravity="center"
                 android:onClick="@{()->dialog.cancel()}"
+                android:paddingBottom="@dimen/generalSpace"
+                android:paddingTop="@dimen/generalSpace"
                 android:text="取消"
                 android:textColor="@color/colorGeneralMoreTintText" />
 
@@ -58,12 +62,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/general_listview_selector"
                 android:gravity="center"
                 android:onClick="@{()->dialog.rename(name)}"
+                android:paddingBottom="@dimen/generalSpace"
+                android:paddingTop="@dimen/generalSpace"
                 android:text="确认修改"
                 android:textColor="@color/colorBlueButton" />
 
         </LinearLayout>
-
     </LinearLayout>
 </layout>

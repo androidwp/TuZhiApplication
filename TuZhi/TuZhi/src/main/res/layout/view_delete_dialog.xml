@@ -43,6 +43,7 @@
                 android:onClick="@{()->dialog.cancel()}"
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
+                android:background="@drawable/general_listview_selector"
                 android:text="取消"
                 android:textColor="@color/colorGeneralMoreTintText" />
 
@@ -55,6 +56,7 @@
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
                 android:text="删除"
+                android:background="@drawable/general_listview_selector"
                 android:textColor="@color/colorRedButton" />
 
         </LinearLayout>
