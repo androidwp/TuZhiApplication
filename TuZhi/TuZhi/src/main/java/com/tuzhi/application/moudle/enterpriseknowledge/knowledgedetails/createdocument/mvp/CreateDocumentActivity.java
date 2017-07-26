@@ -20,7 +20,9 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -70,6 +72,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         settings.setJavaScriptEnabled(true);
         binding.wv.loadUrl(editContentUrl);
         binding.wv.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 isReady = url.equalsIgnoreCase(editContentUrl);
@@ -79,6 +82,22 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
                 webView.loadUrl(s);
+                return true;
+            }
+        });
+
+        binding.wv.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView webView, String url, String message, final JsResult jsResult) {
+                new WarnDialog.Builder().setTitle("提示").setInfo("当前编辑页面已超时，系统已自动退出编辑状态并将已修改内容保存为草稿。为防止草稿丢失，请及时返回继续编辑并提交").setShowCancel(false).setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
+
+                    @Override
+                    public void makeSure(Dialog dialog) {
+                        jsResult.confirm();
+                        finish();
+                    }
+                }).builder(CreateDocumentActivity.this).show();
+
                 return true;
             }
         });
@@ -209,15 +228,20 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
                         }
                     });
                 } else {
-                    new WarnDialog.Builder().setTitle("提示").setInfo("当前编辑页面已超时，系统已自动退出编辑状态并将已修改内容保存为草稿。为防止草稿丢失，请及时返回继续编辑并提交").setShowCancel(false).setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
-                        @Override
-                        public void makeSure(Dialog dialog) {
-                            finish();
-                        }
-                    }).builder(CreateDocumentActivity.this).show();
+                    showWarnDialog();
                 }
             }
         });
+    }
+
+
+    private void showWarnDialog() {
+        new WarnDialog.Builder().setTitle("提示").setInfo("当前编辑页面已超时，系统已自动退出编辑状态并将已修改内容保存为草稿。为防止草稿丢失，请及时返回继续编辑并提交").setShowCancel(false).setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
+            @Override
+            public void makeSure(Dialog dialog) {
+                finish();
+            }
+        }).builder(CreateDocumentActivity.this).show();
     }
 
     @Override

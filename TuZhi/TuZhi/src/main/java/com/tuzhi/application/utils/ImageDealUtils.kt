@@ -45,8 +45,13 @@ fun getBitmap(path: String, reqWidth: Int, reqHeight: Int): Bitmap {
     factoryOptions.inJustDecodeBounds = true
     BitmapFactory.decodeFile(path, factoryOptions)
 
-    // Determine how much to scale down the image
-    val scaleFactor = calculateInSampleSize(factoryOptions, reqWidth, reqHeight)
+    var scaleFactor = 0
+    if (reqHeight < 200 && reqWidth < 200) {
+        scaleFactor = calculateInSampleSize(factoryOptions, 200, 200)
+    } else {
+        // Determine how much to scale down the image
+        scaleFactor = calculateInSampleSize(factoryOptions, reqWidth, reqHeight)
+    }
 
     // Decode the image file into a Bitmap sized to fill the
     // View
