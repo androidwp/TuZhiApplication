@@ -1,15 +1,13 @@
 package com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.fragment;
 
-import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.FragmentNotOpenFileBinding;
+import com.tuzhi.application.moudle.basemvp.BaseFragment;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.bean.NotOpenFileBean;
 import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity;
 import com.tuzhi.application.utils.FileUtils;
@@ -25,18 +23,15 @@ import java.io.File;
  * Created by wangpeng on 2017/6/23.
  */
 
-public class NotOpenFileFragment extends Fragment {
+public class NotOpenFileFragment extends BaseFragment {
 
     private NotOpenFileBean bean;
     private FragmentNotOpenFileBinding binding;
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_not_open_file, null);
-        binding = DataBindingUtil.bind(view);
-        EventBus.getDefault().register(this);
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_not_open_file;
     }
 
     @Override
@@ -64,11 +59,13 @@ public class NotOpenFileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.bind(view);
+        EventBus.getDefault().register(this);
         bean = new NotOpenFileBean();
         String fileId = getArguments().getString(OpenFileActivity.FILE_ID);
         String fileName = getArguments().getString(OpenFileActivity.FILE_NAME);
         bean.setFileId(fileId);
-        bean.setFileName(fileName+"."+getArguments().getString(OpenFileActivity.FILE_SUFFIX));
+        bean.setFileName(fileName + "." + getArguments().getString(OpenFileActivity.FILE_SUFFIX));
         bean.setFileSffix(getArguments().getString(OpenFileActivity.FILE_SUFFIX));
         bean.setFileSize(getArguments().getString(OpenFileActivity.FILE_SIZE));
         bean.setFileUrl(getArguments().getString(OpenFileActivity.FILE_URL));

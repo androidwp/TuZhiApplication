@@ -330,7 +330,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
             if (index == 0) {
                 takePhoto.onPickMultiple(9);
             } else {
-                takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(this, PHOTO)));
+                takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(PHOTO)));
             }
         }
 

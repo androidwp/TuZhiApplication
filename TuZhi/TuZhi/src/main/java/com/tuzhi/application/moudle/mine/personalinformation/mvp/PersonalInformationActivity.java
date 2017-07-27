@@ -129,7 +129,7 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
         if (index == 0) {
             takePhoto.onPickFromGallery();
         } else {
-            takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(this, PORTRAIT_NAME)));
+            takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(PORTRAIT_NAME)));
         }
         actionSheet.dismiss();
     }

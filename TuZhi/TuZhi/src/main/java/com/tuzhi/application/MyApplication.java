@@ -43,11 +43,9 @@ public class MyApplication extends Application {
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_TYPE(), httpUserBean.getUserType());
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_ID(), httpUserBean.getUserId());
             } catch (Exception e) {
-                SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getLOGIN_STATUS(), "false");
                 SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_TYPE(), "1");
             }
         } else {
-            SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getLOGIN_STATUS(), "false");
             SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getUSER_TYPE(), "1");
         }
     }

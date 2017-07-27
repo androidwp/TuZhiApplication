@@ -23,6 +23,7 @@ public class WarnDialog extends AlertDialog {
     private String btnRightText;
     private DialogMakeSureListener listener;
     private Builder builder;
+    private boolean canceledOnTouchOutside;
 
     private WarnDialog(Context context, Builder builder) {
         this(context, R.style.dialog);
@@ -45,6 +46,7 @@ public class WarnDialog extends AlertDialog {
         binding.setInfo(builder.getInfo());
         binding.setBtnLeftText(builder.getBtnLeftText());
         binding.setBtnRightText(builder.getBtnRightText());
+        setCanceledOnTouchOutside(builder.isCanceledOnTouchOutside());
     }
 
     public void cancel() {
@@ -63,7 +65,18 @@ public class WarnDialog extends AlertDialog {
         private String btnLeftText = "取消";
         private String btnRightText = "确定";
         private DialogMakeSureListener listener;
-        private boolean isShowCancel=true;
+        private boolean isShowCancel = true;
+        private boolean canceledOnTouchOutside = false;
+
+        public boolean isCanceledOnTouchOutside() {
+            return canceledOnTouchOutside;
+        }
+
+        public Builder setCanceledOnTouchOutside(boolean canceledOnTouchOutside) {
+            this.canceledOnTouchOutside = canceledOnTouchOutside;
+            return this;
+        }
+
 
         public boolean isShowCancel() {
             return isShowCancel;

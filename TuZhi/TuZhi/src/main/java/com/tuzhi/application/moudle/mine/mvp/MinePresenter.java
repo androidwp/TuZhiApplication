@@ -9,6 +9,7 @@ import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.LogUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
 
 import java.util.WeakHashMap;
 
@@ -32,10 +33,12 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
 
             @Override
             public void onSuccess(String s, String text) {
-                LogUtilsKt.showLog("TAG",text);
+                LogUtilsKt.showLog("TAG", text);
                 JSONObject jsonObject = JSONObject.parseObject(text);
-                SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_TYPE(),jsonObject.getString("userType"));
-                SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_ID(),jsonObject.getString("userId"));
+                SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_TYPE(), jsonObject.getString("userType"));
+                SharedPreferencesUtilsKt.saveLongCache(context, ConstantKt.getUSER_ID(), jsonObject.getString("userId"));
+                UserInfoUtils.changeUserInfo(mView.getContext(), "userType", jsonObject.getString("userType"));
+                UserInfoUtils.changeUserInfo(mView.getContext(), "userId", jsonObject.getString("userId"));
                 mView.logOutSuccess();
             }
 

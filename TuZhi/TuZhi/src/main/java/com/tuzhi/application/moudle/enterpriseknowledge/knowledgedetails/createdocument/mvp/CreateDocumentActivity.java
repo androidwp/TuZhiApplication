@@ -55,6 +55,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
     private boolean isReady;
     private String editContentUrl;
     private WarnDialog dialog;
+    private String initiativeToCancel = "0";
 
     @Override
     protected int getLayoutId() {
@@ -80,8 +81,22 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
             }
 
             @Override
-            public boolean shouldOverrideUrlLoading(WebView webView, String s) {
-                webView.loadUrl(s);
+            public boolean shouldOverrideUrlLoading(WebView webView, String url) {
+                if (!url.contains("/mobile/edit/timeout.html")) {
+                    webView.loadUrl(url);
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new WarnDialog.Builder().setCanceledOnTouchOutside(false).setTitle("提示").setInfo("当前编辑页面已超时，系统已自动退出编辑状态并将已修改内容保存为草稿。为防止草稿丢失，请及时返回继续编辑并提交").setShowCancel(false).setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
+                                @Override
+                                public void makeSure(Dialog dialog) {
+                                    finish();
+                                }
+                            }).builder(CreateDocumentActivity.this).show();
+                        }
+                    });
+                }
                 return true;
             }
         });
@@ -105,6 +120,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         dialog = new WarnDialog.Builder().setTitle("提示").setInfo("是否放弃保存,直接退出").setBtnLeftText("取消").setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
             @Override
             public void makeSure(Dialog dialog) {
+                initiativeToCancel = "1";
                 CreateDocumentActivity.super.onBackPressed();
             }
         }).builder(this);
@@ -124,7 +140,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     protected void onDestroy() {
-        mPresenter.inform(id, "1");
+        mPresenter.inform(id, initiativeToCancel);
         super.onDestroy();
     }
 
@@ -195,7 +211,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         if (index == 0) {
             takePhoto.onPickFromGallery();
         } else {
-            takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(this, PORTRAIT_NAME)));
+            takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(PORTRAIT_NAME)));
         }
         actionSheet.dismiss();
     }

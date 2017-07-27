@@ -15,7 +15,7 @@ import java.io.IOException
 
 
 fun savePhotoToSDCard(context: Context, photoBitmap: Bitmap, quality: Int, photoName: String): File {
-    val photoFile = getImageCache(context, photoName)
+    val photoFile = getImageCache(photoName)
     var fileOutputStream: FileOutputStream? = null
     try {
         fileOutputStream = FileOutputStream(photoFile)
@@ -45,7 +45,7 @@ fun getBitmap(path: String, reqWidth: Int, reqHeight: Int): Bitmap {
     factoryOptions.inJustDecodeBounds = true
     BitmapFactory.decodeFile(path, factoryOptions)
 
-    var scaleFactor = 0
+    val scaleFactor : Int
     if (reqHeight < 200 && reqWidth < 200) {
         scaleFactor = calculateInSampleSize(factoryOptions, 200, 200)
     } else {

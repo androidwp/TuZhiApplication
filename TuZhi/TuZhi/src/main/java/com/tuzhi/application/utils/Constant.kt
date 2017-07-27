@@ -1,6 +1,5 @@
 package com.tuzhi.application.utils
 
-import android.content.Context
 import android.os.Environment
 import java.io.File
 
@@ -51,7 +50,7 @@ val BRAND = android.os.Build.BRAND
 //系统型号
 val OSVERSION = android.os.Build.VERSION.RELEASE
 
-fun getImageCache(context: Context, fileName: String): File {
+fun getImageCache(fileName: String): File {
     val directory = Environment.getExternalStorageDirectory()
     val pDirectory = File(directory, "TZ" + Environment.DIRECTORY_PICTURES)
     if (!pDirectory.exists()) {
