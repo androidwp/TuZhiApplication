@@ -1,10 +1,10 @@
 package com.tuzhi.application;
 
-import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     private int oldCheckedId = 0;
     private long currentTime;
-    private Map<Integer, Fragment> fragmentMap = new HashMap<>();
+    private Map<Integer,Fragment> fragmentMap = new HashMap<>();
 
 
     @Override
@@ -46,15 +46,15 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         Fragment oldFragment = fragmentMap.get(oldCheckedId);
-        Fragment fragmentById = getFragmentManager().findFragmentByTag(checkedId + "");
+        Fragment fragmentById = getSupportFragmentManager().findFragmentByTag(checkedId + "");
         if (fragmentById == null) {
-            getFragmentManager().beginTransaction().add(R.id.fl, fragmentMap.get(checkedId), checkedId + "").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fl, fragmentMap.get(checkedId), checkedId + "").commit();
         } else {
-            getFragmentManager().beginTransaction().show(fragmentById).commit();
+            getSupportFragmentManager().beginTransaction().show(fragmentById).commit();
         }
 
         if (oldCheckedId != 0) {
-            getFragmentManager().beginTransaction().hide(oldFragment).commit();
+            getSupportFragmentManager().beginTransaction().hide(oldFragment).commit();
         }
         oldCheckedId = checkedId;
     }

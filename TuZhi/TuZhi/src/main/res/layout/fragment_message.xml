@@ -1,16 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="消息" />
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="消息"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                style="@style/NavigationRightButton"
+                android:text="全部标记为已读" />
+
+            <View style="@style/NavigationLine" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/stl"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    app:tl_indicator_color="@color/colorBlueButton"
+                    app:tl_indicator_height="1dp"
+                    app:tl_indicator_width_equal_title="true"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textSelectColor="@color/colorBlueButton"
+                    app:tl_textUnselectColor="@color/colorSlidingTextColor"
+                    app:tl_textsize="15dp" />
+
+                <View style="@style/NavigationLine" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shadow" />
+
+        </FrameLayout>
 
     </LinearLayout>
 </layout>
