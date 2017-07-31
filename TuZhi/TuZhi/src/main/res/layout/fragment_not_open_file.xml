@@ -5,11 +5,11 @@
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.bean.NotOpenFileBean" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.bean.NotOpenFileBean" />
 
         <variable
             name="fragment"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.fragment.NotOpenFileFragment" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.fragment.NotOpenFileFragment" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

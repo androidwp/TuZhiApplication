@@ -10,7 +10,7 @@
 
         <variable
             name="activity"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity" />
 
     </data>
 

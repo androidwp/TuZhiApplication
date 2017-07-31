@@ -7,8 +7,8 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemRepositoryListBinding;
 import com.tuzhi.application.item.BaseItem;
-import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 
 import org.jetbrains.annotations.NotNull;
 

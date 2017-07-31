@@ -4,11 +4,11 @@ package com.tuzhi.application.moudle.login.mvp;
 import android.databinding.ViewDataBinding;
 import android.text.TextUtils;
 
+import com.tuzhi.application.MainActivity;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityLoginBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.bean.User;
-import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
@@ -44,7 +44,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @Override
     public void skip() {
-        ActivitySkipUtilsKt.toActivity(this, RepositoryActivity.class);
+        ActivitySkipUtilsKt.toActivity(this, MainActivity.class);
         onBackPressed();
     }
 }

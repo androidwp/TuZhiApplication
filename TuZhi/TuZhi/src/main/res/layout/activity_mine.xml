@@ -10,7 +10,7 @@
 
         <variable
             name="activity"
-            type="com.tuzhi.application.moudle.mine.mvp.MineActivity" />
+            type="com.tuzhi.application.moudle.mine.mvp.MineFragment" />
     </data>
 
     <LinearLayout
@@ -24,9 +24,6 @@
             android:layout_height="@dimen/navigationHeight"
             android:background="@color/colorNavigationBarBackground">
 
-            <ImageView
-                style="@style/NavigationLeftButton"
-                android:onClick="@{()->activity.back()}" />
 
             <TextView
                 android:layout_width="wrap_content"

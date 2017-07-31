@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -21,7 +20,6 @@
         android:roundIcon="@mipmap/tzicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <service android:name=".service.UpdateService" />
 
         <provider
@@ -30,15 +28,13 @@
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:exported">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-
         </provider>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".InitActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,27 +46,18 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="59798dcf717c196f70000bac" />
-
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="官网" />
 
         <activity
-            android:name=".moudle.repository.mvp.RepositoryActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".moudle.crepository.mvp.CrepositoryActivity"
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity"
+            android:name=".moudle.repository.crepository.mvp.CrepositoryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".moudle.mine.mvp.MineActivity"
+            android:name=".moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.mine.personalinformation.mvp.PersonalInformationActivity"
@@ -90,32 +77,28 @@
         <activity
             android:name=".moudle.mine.setting.changepassword.mvp.ChangePasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".moudle.mine.personalinformation.rename.mvp.RenameActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name=".moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity"
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
-            android:name=".moudle.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity"
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name=".moudle.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity"
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
-            android:name=".moudle.enterpriseknowledge.knowledgedetails.createdocument.mvp.CreateDocumentActivity"
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.createdocument.mvp.CreateDocumentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".moudle.login.mvp.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait" />
     </application>
 

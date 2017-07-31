@@ -22,7 +22,5 @@ public class RepositoryContract {
     interface Presenter extends BasePresenter<View> {
         //下载数据
         void downLoadData(int page);
-
-
     }
 }

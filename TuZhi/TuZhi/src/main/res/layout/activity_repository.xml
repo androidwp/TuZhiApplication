@@ -7,7 +7,7 @@
 
         <variable
             name="activity"
-            type="com.tuzhi.application.moudle.repository.mvp.RepositoryActivity" />
+            type="com.tuzhi.application.moudle.repository.mvp.RepositoryFragment" />
 
         <variable
             name="data"
@@ -24,16 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/navigationHeight"
             android:background="@color/colorWhite">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/riv"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/generalSpace"
-                android:onClick="@{()->activity.skipMineActivity()}"
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="13dp" />
 
             <TextView
                 android:layout_width="wrap_content"

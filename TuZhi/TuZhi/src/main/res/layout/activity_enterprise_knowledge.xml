@@ -5,7 +5,7 @@
 
         <variable
             name="activity"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity" />
     </data>
 
 

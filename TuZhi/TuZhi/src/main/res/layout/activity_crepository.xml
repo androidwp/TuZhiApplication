@@ -5,11 +5,11 @@
 
         <variable
             name="activity"
-            type="com.tuzhi.application.moudle.crepository.mvp.CrepositoryActivity" />
+            type="com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity" />
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.crepository.bean.CreateRepositoryBean" />
+            type="com.tuzhi.application.moudle.repository.crepository.bean.CreateRepositoryBean" />
     </data>
 
     <LinearLayout

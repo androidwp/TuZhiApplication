@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.item.EnterpriseKnowledgeListItem" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.item.EnterpriseKnowledgeListItem" />
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean" />
 
         <variable
             name="view"

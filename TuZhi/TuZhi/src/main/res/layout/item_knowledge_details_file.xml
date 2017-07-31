@@ -5,11 +5,11 @@
 
         <variable
             name="item"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFileItem" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFileItem" />
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean" />
 
         <variable
             name="flag"

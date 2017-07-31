@@ -9,10 +9,10 @@ import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewRenameDialogBinding;
-import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
-import com.tuzhi.application.moudle.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity;
-import com.tuzhi.application.moudle.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
-import com.tuzhi.application.moudle.repository.mvp.RepositoryActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
+import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
@@ -159,7 +159,7 @@ public class RenameDialog extends AlertDialog {
                 ToastUtilsKt.toast(context,"修改成功");
                 EnterpriseKnowledgeActivity activity = (EnterpriseKnowledgeActivity) context;
                 activity.setTitle(name);
-                EventBus.getDefault().post(RepositoryActivity.MESSAGE);
+                EventBus.getDefault().post(RepositoryFragment.MESSAGE);
                 dismiss();
             }
 
