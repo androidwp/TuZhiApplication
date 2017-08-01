@@ -12,7 +12,6 @@
             android:background="@color/colorNavigationBarBackground">
 
             <TextView
-                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -23,7 +22,6 @@
                 style="@style/NavigationRightButton"
                 android:text="全部标记为已读" />
 
-            <View style="@style/NavigationLine" />
         </FrameLayout>
 
         <FrameLayout
@@ -39,6 +37,7 @@
                     android:id="@+id/stl"
                     android:layout_width="match_parent"
                     android:layout_height="41dp"
+                    android:background="@color/colorWhite"
                     app:tl_indicator_color="@color/colorBlueButton"
                     app:tl_indicator_height="1dp"
                     app:tl_indicator_width_equal_title="true"

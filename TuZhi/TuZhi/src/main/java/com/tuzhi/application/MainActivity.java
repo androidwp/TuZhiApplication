@@ -8,19 +8,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.RadioGroup;
 
 import com.tuzhi.application.databinding.ActivityMainBinding;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
 import com.tuzhi.application.moudle.mine.mvp.MineFragment;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
 import com.tuzhi.application.moudle.search.mvp.SearchFragment;
+import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+import me.shihao.library.XRadioGroup;
+
+public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener {
 
     private int oldCheckedId = 0;
     private long currentTime;
@@ -34,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            DarkUtils.setStatusBarIconDark(this, true);
+            DarkUtils.setStatusBarDarkMode(this, true);
+        }
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.rg.setOnCheckedChangeListener(this);
         fragmentMap.put(R.id.rbHomePage, new RepositoryFragment());
@@ -41,10 +47,24 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         fragmentMap.put(R.id.rbMessage, new MessageFragment());
         fragmentMap.put(R.id.rbMine, new MineFragment());
         binding.rbHomePage.setChecked(true);
+        binding.bv.setBadgeCount(99);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        long timeMillis = System.currentTimeMillis();
+        final int anInt = 2000;
+        if (timeMillis - currentTime < anInt) {
+            super.onBackPressed();
+        } else {
+            currentTime = timeMillis;
+            ToastUtilsKt.toast(this, "再次点击退出应用");
+        }
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+    public void onCheckedChanged(XRadioGroup xRadioGroup, @IdRes int checkedId) {
         Fragment oldFragment = fragmentMap.get(oldCheckedId);
         Fragment fragmentById = getSupportFragmentManager().findFragmentByTag(checkedId + "");
         if (fragmentById == null) {
@@ -57,17 +77,5 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             getSupportFragmentManager().beginTransaction().hide(oldFragment).commit();
         }
         oldCheckedId = checkedId;
-    }
-
-    @Override
-    public void onBackPressed() {
-        long timeMillis = System.currentTimeMillis();
-        final int anInt = 2000;
-        if (timeMillis - currentTime < anInt) {
-            super.onBackPressed();
-        } else {
-            currentTime = timeMillis;
-            ToastUtilsKt.toast(this, "再次点击退出应用");
-        }
     }
 }

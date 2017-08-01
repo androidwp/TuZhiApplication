@@ -12,6 +12,7 @@ import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.moudle.login.mvp.LoginActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
@@ -32,6 +33,10 @@ public class InitActivity extends AppCompatActivity {
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            DarkUtils.setStatusBarIconDark(this, true);
+            DarkUtils.setStatusBarDarkMode(this, true);
         }
         DataBindingUtil.setContentView(this, R.layout.activity_init);
         //初始化
