@@ -8,6 +8,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityCrepositoryBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.repository.crepository.bean.CreateRepositoryBean;
+import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
@@ -25,8 +26,9 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     public static final String TYPE = "TYPE";
     public static final String REPOSITORY = "repository";
     public static final String MOUDLE = "moudle";
-    public static final String LibId = "LibId";
-    private String libID;
+    public static final String CHANNEL = "CHANNEL";
+    public static final String ID = "ID";
+    private String id;
     private String type;
 
 
@@ -40,12 +42,15 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
         ActivityCrepositoryBinding binding = (ActivityCrepositoryBinding) viewDataBinding;
         binding.setActivity(this);
         type = getIntent().getStringExtra(TYPE);
-        libID = getIntent().getStringExtra(LibId);
+        id = getIntent().getStringExtra(ID);
         switch (type) {
             case REPOSITORY:
                 binding.setData(new CreateRepositoryBean(type, "新建知识库", "请输入知识库名称", ""));
                 break;
             case MOUDLE:
+                binding.setData(new CreateRepositoryBean(type, "新建卡片", "请输入卡片名称", ""));
+                break;
+            case CHANNEL:
                 binding.setData(new CreateRepositoryBean(type, "新建频道", "请输入频道名称", ""));
                 break;
         }
@@ -57,13 +62,16 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     }
 
     public void commit(String type, String name) {
-        mPresenter.commit(type, name, libID);
+        mPresenter.commit(type, name, id);
     }
 
     @Override
     public void commitFinish() {
-        if (TextUtils.equals(type, MOUDLE))
+        if (TextUtils.equals(type, CHANNEL)) {
             EventBus.getDefault().post(RepositoryFragment.MESSAGE);
+        } else if (TextUtils.equals(type, MOUDLE)) {
+            EventBus.getDefault().post(KnowledgeChannelActivity.MESSAGE);
+        }
         setResult(ConstantKt.getCREATE_CODE());
         onBackPressed();
     }

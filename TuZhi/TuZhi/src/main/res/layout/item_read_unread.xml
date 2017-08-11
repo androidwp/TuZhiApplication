@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="item"
+            type="com.tuzhi.application.moudle.message.read.item.ReadListItem" />
+
+        <variable
             name="data"
             type="com.tuzhi.application.moudle.message.read.bean.ReadListItemBean" />
 
@@ -13,7 +17,8 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="@drawable/general_listview_selector"
+        android:onClick="@{()->item.skip(data)}">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,6 +44,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:ellipsize="end"
+                    android:maxLength="10"
+                    android:maxLines="1"
                     android:text="@{data.nickName}"
                     android:textColor="@color/colorText" />
 
@@ -47,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="@{data.commentTypeContent}"
+                    android:text="@{data.description}"
                     android:textColor="@color/colorTextHint" />
 
                 <TextView
@@ -74,7 +82,7 @@
                 android:background="#f6f6f6"
                 android:orientation="horizontal"
                 android:padding="@dimen/generalSpace"
-                android:visibility="@{data.commentType==0?View.GONE:View.VISIBLE}">
+                android:visibility="@{data.contentType==2?View.VISIBLE:View.GONE}">
 
                 <TextView
                     android:layout_width="wrap_content"

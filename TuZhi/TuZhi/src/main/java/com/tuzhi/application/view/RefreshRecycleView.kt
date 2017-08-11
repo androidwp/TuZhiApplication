@@ -93,6 +93,11 @@ class RefreshRecycleView : FrameLayout {
         }
     }
 
+    /**
+     * mData 原数据
+     * mDataSource 新数据
+     */
+
     fun <T : BaseListItemBean> downLoadFinish(page: Int, haveNextPage: Boolean, mData: ArrayList<T>, mDataSource: ArrayList<T>?, addEmptyFoot: Boolean) {
         this.flagHaveNextPage = haveNextPage
         flagLoading = false
@@ -120,15 +125,17 @@ class RefreshRecycleView : FrameLayout {
                 }
             } else {
                 mData.addAll(mDataSource)
-                val itemBean = mData[0]
-                val clone = itemBean.clone()
-                if (haveNextPage) {
-                    clone.itemType = GeneralLoadFootViewItem.TYPE
-                    mData.add(clone as T)
-                } else {
-                    if (addEmptyFoot) {
-                        clone.itemType = GeneralEmptyFootViewItem.TYPE
+                if (mData.size > 0) {
+                    val itemBean = mData[0]
+                    val clone = itemBean.clone()
+                    if (haveNextPage) {
+                        clone.itemType = GeneralLoadFootViewItem.TYPE
                         mData.add(clone as T)
+                    } else {
+                        if (addEmptyFoot) {
+                            clone.itemType = GeneralEmptyFootViewItem.TYPE
+                            mData.add(clone as T)
+                        }
                     }
                 }
             }

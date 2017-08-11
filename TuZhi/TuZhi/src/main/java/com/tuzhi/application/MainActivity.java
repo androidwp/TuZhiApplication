@@ -9,6 +9,7 @@ import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.tuzhi.application.bean.EventBusBean;
 import com.tuzhi.application.databinding.ActivityMainBinding;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
 import com.tuzhi.application.moudle.mine.mvp.MineFragment;
@@ -17,21 +18,26 @@ import com.tuzhi.application.moudle.search.mvp.SearchFragment;
 import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import me.shihao.library.XRadioGroup;
 
 public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener {
-
+    public static final String NAME = "MainActivity";
     private int oldCheckedId = 0;
     private long currentTime;
-    private Map<Integer,Fragment> fragmentMap = new HashMap<>();
-
+    private Map<Integer, Fragment> fragmentMap = new HashMap<>();
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -40,16 +46,28 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
             DarkUtils.setStatusBarIconDark(this, true);
             DarkUtils.setStatusBarDarkMode(this, true);
         }
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.rg.setOnCheckedChangeListener(this);
         fragmentMap.put(R.id.rbHomePage, new RepositoryFragment());
         fragmentMap.put(R.id.rbSearch, new SearchFragment());
         fragmentMap.put(R.id.rbMessage, new MessageFragment());
         fragmentMap.put(R.id.rbMine, new MineFragment());
         binding.rbHomePage.setChecked(true);
-        binding.bv.setBadgeCount(99);
+
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    //接收消息
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMain(EventBusBean busBean) {
+        if (busBean.getName().equals(NAME))
+            binding.bv.setBadgeCount(busBean.getiContent());
+    }
 
     @Override
     public void onBackPressed() {

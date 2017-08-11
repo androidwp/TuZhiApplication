@@ -39,24 +39,25 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/general_listview_selector"
                 android:gravity="center"
                 android:onClick="@{()->dialog.cancel()}"
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
-                android:background="@drawable/general_listview_selector"
                 android:text="取消"
                 android:textColor="@color/colorGeneralMoreTintText" />
 
             <TextView
+                android:id="@+id/tvDelete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/general_listview_selector"
                 android:gravity="center"
-                android:onClick="@{()->dialog.delete()}"
+                android:onClick="@{(view)->dialog.delete(view)}"
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
                 android:text="删除"
-                android:background="@drawable/general_listview_selector"
                 android:textColor="@color/colorRedButton" />
 
         </LinearLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.search.item.SearchHistoryItem" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.search.bean.SearchHistoryBean" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/general_listview_selector"
+        android:onClick="@{()->item.onSearch(data.searchContent)}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/generalSpace">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{data.searchContent}"
+                android:textColor="@color/colorGeneralMoreTintText" />
+
+        </LinearLayout>
+
+        <View style="@style/NavigationLine" />
+
+    </FrameLayout>
+
+</layout>

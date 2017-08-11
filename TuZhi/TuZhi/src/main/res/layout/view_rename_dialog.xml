@@ -59,12 +59,13 @@
                 android:textColor="@color/colorGeneralMoreTintText" />
 
             <TextView
+                android:id="@+id/tvRename"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/general_listview_selector"
                 android:gravity="center"
-                android:onClick="@{()->dialog.rename(name)}"
+                android:onClick="@{(view)->dialog.rename(view,name)}"
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
                 android:text="确认修改"

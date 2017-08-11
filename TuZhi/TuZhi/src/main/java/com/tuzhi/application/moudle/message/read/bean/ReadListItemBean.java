@@ -8,25 +8,50 @@ import com.tuzhi.application.bean.BaseListItemBean;
 
 public class ReadListItemBean extends BaseListItemBean{
     private String id;
+    private int contentType;
     private String portrait;
     private String nickName;
-    //0是赞，1是评论
-    private int commentType;
     private String time;
     private String Content;
     private String commentContent;
-    private String commentTypeContent;
+    private String description;
+    private String articleId;
+    private String articleTitle;
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
+    }
+
+    public String getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
+    }
+
+    public int getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(int contentType) {
+        this.contentType = contentType;
+    }
 
     public ReadListItemBean(String itemType) {
         super(itemType);
     }
 
-    public String getCommentTypeContent() {
-        return commentTypeContent;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCommentTypeContent(String commentTypeContent) {
-        this.commentTypeContent = commentTypeContent;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getId() {
@@ -51,15 +76,6 @@ public class ReadListItemBean extends BaseListItemBean{
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public int getCommentType() {
-        return commentType;
-    }
-
-    public void setCommentType(int commentType) {
-        this.commentType = commentType;
-        setCommentTypeContent(commentType == 0 ? "赞了你的:" : "评论了你的:");
     }
 
     public String getTime() {

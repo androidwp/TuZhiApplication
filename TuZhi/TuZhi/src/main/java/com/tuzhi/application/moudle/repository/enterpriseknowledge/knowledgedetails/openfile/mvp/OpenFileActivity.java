@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 
 import com.tuzhi.application.R;
@@ -15,7 +16,9 @@ import com.tuzhi.application.dialog.DeleteDialog;
 import com.tuzhi.application.dialog.RenameDialog;
 import com.tuzhi.application.dialog.WarnDialog;
 import com.tuzhi.application.inter.DialogMakeSureListener;
+import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.fragment.NotOpenFileFragment;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.fragment.OpenFileFragment;
 import com.tuzhi.application.utils.ConstantKt;
@@ -23,6 +26,7 @@ import com.tuzhi.application.utils.FileUtils;
 import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.utils.NetworkUtils;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,7 +42,7 @@ import java.util.ArrayList;
  * 邮箱 784787081@qq.com
  */
 
-public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, OpenFilePresenter> implements OpenFileContract.View, ActionSheet.ActionSheetListener {
+public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, OpenFilePresenter> implements OpenFileContract.View, ActionSheet.ActionSheetListener, OnDialogClickListener {
     //标题--也是文件名字
     public static final String FILE_NAME = "FILE_NAME";
     //告知文件可否展示
@@ -67,6 +71,8 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
     private String articleId;
     private int downloadType;
     private String fileSffix;
+    private RenameDialog renameDialog;
+    private DeleteDialog deleteDialog;
 
     @Override
     protected int getLayoutId() {
@@ -198,18 +204,16 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
     }
 
     private void delete() {
-        DeleteDialog deleteDialog = new DeleteDialog(this);
-        deleteDialog.setFileId(fileId);
-        deleteDialog.setType(DeleteDialog.FILE);
+        deleteDialog = new DeleteDialog(this);
+        deleteDialog.setClickListener(this);
         deleteDialog.show();
     }
 
     private void rename() {
-        RenameDialog renameDialog = new RenameDialog(this);
+        renameDialog = new RenameDialog(this);
         renameDialog.setView(new EditText(this));
-        renameDialog.setFileId(fileId);
+        renameDialog.setClickListener(this);
         renameDialog.setText(fileName);
-        renameDialog.setType(DeleteDialog.FILE);
         renameDialog.show();
         KeyBoardUtils.showKeyBoard(this);
     }
@@ -236,4 +240,31 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
         FileUtils.openFile(this, new File(file), fileSffix);
     }
 
+    @Override
+    public void onDialogClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvDelete:
+                mPresenter.deleteFile(fileId);
+                break;
+            case R.id.tvRename:
+                mPresenter.renameFile(fileId, (String) view.getTag());
+                break;
+        }
+    }
+
+    @Override
+    public void deleteSuccess() {
+        ToastUtilsKt.toast(this, "删除成功");
+        EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+        deleteDialog.dismiss();
+        super.onBackPressed();
+    }
+
+    @Override
+    public void renameSuccess(String name) {
+        ToastUtilsKt.toast(this, "修改成功");
+        setTitle(name);
+        EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+        renameDialog.dismiss();
+    }
 }

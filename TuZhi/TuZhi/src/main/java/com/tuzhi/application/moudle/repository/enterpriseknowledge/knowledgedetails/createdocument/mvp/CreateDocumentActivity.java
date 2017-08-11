@@ -4,22 +4,11 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedet
 import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -34,21 +23,21 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.EmotionKeyboard;
 import com.tuzhi.application.view.ActionSheet;
+import com.yanzhenjie.album.Album;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
  */
 
-public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContract.View, CreateDocumentPresenter> implements CreateDocumentContract.View, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
+public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContract.View, CreateDocumentPresenter> implements CreateDocumentContract.View, ActionSheet.ActionSheetListener {
 
     public static final String CONTENT = "CONTENT";
     public static final String ID = "id";
     private static final String PORTRAIT_NAME = "portrait.png";
-    private TakePhoto takePhoto;
-    private InvokeParam invokeParam;
     private ActionSheet actionSheet;
     private String id;
     private ActivityCreateDocumentBinding binding;
@@ -126,13 +115,6 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         }).builder(this);
     }
 
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getTakePhoto().onCreate(savedInstanceState);
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -144,52 +126,17 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
         super.onDestroy();
     }
 
-    public TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
-    }
 
     public void back() {
         onBackPressed();
     }
 
-    @Override
-    public void takeSuccess(TResult result) {
-        mPresenter.uploadImage(binding.wv, new File(result.getImage().getOriginalPath()));
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-
-    }
-
-    @Override
-    public void takeCancel() {
-
-    }
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
-    }
 
     @Override
     public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
         actionSheet.dismiss();
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     public void openSelectDialog() {
         actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
@@ -199,21 +146,34 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
                 .setListener(this).show();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
-    }
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
         if (index == 0) {
-            takePhoto.onPickFromGallery();
+            //打开单图
+            Album.albumRadio(this)
+                    .title("图库") // 配置title。
+                    .columnCount(3) // 相册展示列数，默认是2列。
+                    .camera(false) // 是否有拍照功能。
+                    .start(999); // 999是请求码，返回时onActivityResult()的第一个参数。
         } else {
-            takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(PORTRAIT_NAME)));
+            //打开相机
+            Album.camera(this).start(999);
         }
         actionSheet.dismiss();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 999) {
+            if (resultCode == RESULT_OK) { // Successfully.
+                // 这里的List的size肯定是1。
+                List<String> pathList = Album.parseResult(data); // Parse path.
+                File file = new File(pathList.get(0));
+                mPresenter.uploadImage(binding.wv, file);
+            }
+        }
     }
 
     @Override

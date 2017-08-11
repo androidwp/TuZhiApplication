@@ -6,6 +6,9 @@ import com.tuzhi.application.utils.FileUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.WeakHashMap;
 
 /**
@@ -16,6 +19,54 @@ import java.util.WeakHashMap;
 public class OpenFilePresenter extends BasePresenterImpl<OpenFileContract.View> implements OpenFileContract.Presenter {
 
     private static final String URL = "tzkm/downloadFile";
+    private static final String URL_MOUDLE = "tzkm/editTitle";
+
+    @Override
+    public void renameFile(String id, final String name) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "2");
+        parameter.put("fileId", id);
+        parameter.put("title", name);
+        HttpUtilsKt.post(mView.getContext(), URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.renameSuccess(name);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void deleteFile(String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "3");
+        parameter.put("fileId", id);
+        HttpUtilsKt.post(mView.getContext(), URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.deleteSuccess();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
 
     @Override
     public void downloadFile(String aid, final String fid, final String fileName) {

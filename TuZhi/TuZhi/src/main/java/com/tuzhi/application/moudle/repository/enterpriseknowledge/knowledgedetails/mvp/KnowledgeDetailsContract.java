@@ -1,6 +1,5 @@
 package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp;
 
-import com.jph.takephoto.model.TImage;
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
@@ -26,12 +25,21 @@ public class KnowledgeDetailsContract {
         void skipCreateDocumentActivity(String editContentUrl);
 
         void canClick();
+
+        void deleteSuccess();
+
+        void renameSuccess(String name);
     }
 
     interface Presenter extends BasePresenter<View> {
+
+        void renameCard(String id, String name);
+
+        void deleteCard(String id);
+
         void downLoadData(String id, int page);
 
-        void uploadFiles(android.view.View view, String aid, ArrayList<TImage> images);
+        void uploadFiles(android.view.View view, String aid, ArrayList<String> images);
 
         void cancelUpdate();
 

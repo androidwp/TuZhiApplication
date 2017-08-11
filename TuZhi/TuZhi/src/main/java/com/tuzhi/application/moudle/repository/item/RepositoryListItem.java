@@ -8,7 +8,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemRepositoryListBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
-import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
+import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,9 +39,9 @@ public class RepositoryListItem extends BaseItem<RepositoryListItemBean> {
     }
 
     public void skip(String id, String title) {
-        Intent intent = new Intent(context, EnterpriseKnowledgeActivity.class);
-        intent.putExtra(EnterpriseKnowledgeActivity.ID, id);
-        intent.putExtra(EnterpriseKnowledgeActivity.TITLE, title);
+        Intent intent = new Intent(context, KnowledgeChannelActivity.class);
+        intent.putExtra(KnowledgeChannelActivity.ID, id);
+        intent.putExtra(KnowledgeChannelActivity.TITLE, title);
         context.startActivity(intent);
     }
 

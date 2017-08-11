@@ -1,14 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.tuzhi.application.moudle.search.mvp.SearchFragment" />
+
+        <variable
+            name="text"
+            type="String" />
+    </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="搜索" />
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="@dimen/generalSpace"
+            android:paddingTop="8dp">
+
+            <EditText
+                android:id="@+id/et"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/general_button_gray_background"
+                android:drawableLeft="@drawable/searchbox"
+                android:drawablePadding="10dp"
+                android:paddingLeft="10dp"
+                android:text="@={text}"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="@{()->fragment.search(text)}"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="搜索"
+                android:textColor="@color/colorBlueButton"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/llSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/stl"
+                    android:layout_width="match_parent"
+                    android:layout_height="41dp"
+                    android:background="@color/colorWhite"
+                    app:tl_indicator_color="@color/colorBlueButton"
+                    app:tl_indicator_height="1dp"
+                    app:tl_indicator_width_equal_title="true"
+                    app:tl_tab_space_equal="true"
+                    app:tl_textSelectColor="@color/colorBlueButton"
+                    app:tl_textUnselectColor="@color/colorSlidingTextColor"
+                    app:tl_textsize="15dp" />
+
+                <View style="@style/NavigationLine" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorGeneralBackground" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shadow" />
+
+        </FrameLayout>
     </LinearLayout>
 </layout>

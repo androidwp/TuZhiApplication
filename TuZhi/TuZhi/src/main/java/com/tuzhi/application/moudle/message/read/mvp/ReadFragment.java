@@ -24,7 +24,6 @@ import kale.adapter.item.AdapterItem;
  */
 
 public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresenter> implements ReadContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
-
     public static final String TYPE = "TYPE";
     public static final String TYPE_READ = "TYPE_READ";
     public static final String TYPE_UNREAD = "TYPE_UNREAD";
@@ -79,5 +78,10 @@ public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresent
     @Override
     public void downloadFinish(ArrayList<ReadListItemBean> data, boolean haveNextPage, int page) {
         binding.rrv.downLoadFinish(page, haveNextPage, mData, data, false);
+    }
+
+    @Override
+    public void downloadError() {
+        binding.rrv.isShowRefreshView(false);
     }
 }

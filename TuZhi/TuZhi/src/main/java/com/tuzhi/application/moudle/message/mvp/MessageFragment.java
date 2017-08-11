@@ -40,9 +40,13 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
         //监听为了获取未读消息个数
         EventBus.getDefault().register(this);
         binding = (FragmentMessageBinding) viewDataBinding;
-        fragmentList.add(getFragment(ReadFragment.TYPE_READ));
         fragmentList.add(getFragment(ReadFragment.TYPE_UNREAD));
-        binding.vp.setAdapter(new MyFragmentAdapter(getChildFragmentManager()));
+        fragmentList.add(getFragment(ReadFragment.TYPE_READ));
+        titleList.add("未读");
+        titleList.add("已读");
+        MyFragmentAdapter myFragmentAdapter = new MyFragmentAdapter(getChildFragmentManager());
+        binding.vp.setAdapter(myFragmentAdapter);
+        binding.stl.setViewPager(binding.vp);
     }
 
     private Fragment getFragment(String type) {
@@ -56,6 +60,7 @@ public class MessageFragment extends MVPBaseFragment<MessageContract.View, Messa
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void eventBusMain(EventBusBean busBean) {
         if (TextUtils.equals(busBean.getName(), NAME)) {
+            titleList.clear();
             titleList.add("未读(" + busBean.getiContent() + ")");
             titleList.add("已读");
             binding.stl.setViewPager(binding.vp);

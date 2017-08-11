@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.recoverhistoryversion.mvp.RecoverHistoryVersionActivity" />
+
+        <variable
+            name="title"
+            type="String" />
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:text="取消" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{title}"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.recoverVersion()}"
+                android:text="恢复" />
+
+            <View style="@style/NavigationLine" />
+        </FrameLayout>
+
+        <com.tencent.smtt.sdk.WebView
+            android:id="@+id/wv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

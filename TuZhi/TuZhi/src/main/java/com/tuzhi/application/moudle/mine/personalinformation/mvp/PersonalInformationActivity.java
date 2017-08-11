@@ -1,21 +1,11 @@
 package com.tuzhi.application.moudle.mine.personalinformation.mvp;
 
-
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityPersonalInformationBinding;
@@ -28,12 +18,14 @@ import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.ActionSheet;
+import com.yanzhenjie.album.Album;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -41,11 +33,7 @@ import java.io.File;
  * 邮箱 784787081@qq.com
  */
 
-public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
-
-    private static final String PORTRAIT_NAME = "portrait.png";
-    private TakePhoto takePhoto;
-    private InvokeParam invokeParam;
+public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener {
     private ActionSheet actionSheet;
     private ActivityPersonalInformationBinding binding;
     private HttpInitBean httpUserBean;
@@ -58,7 +46,6 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getTakePhoto().onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
 
@@ -75,13 +62,6 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
             binding.setData(userInfo);
             ImageUtils.loadImage(binding.riv, userInfo.getUserImage(), CommonUtils.getDrawable(this, R.drawable.defaulthead));
         }
-    }
-
-    public TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
     }
 
     @Override
@@ -112,42 +92,31 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
-    }
-
-    @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
         if (index == 0) {
-            takePhoto.onPickFromGallery();
+            //打开单图
+            Album.albumRadio(this)
+                    .title("图库") // 配置title。
+                    .columnCount(3) // 相册展示列数，默认是2列。
+                    .camera(false) // 是否有拍照功能。
+                    .start(999); // 999是请求码，返回时onActivityResult()的第一个参数。
         } else {
-            takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(PORTRAIT_NAME)));
+            //打开相机
+            Album.camera(this).start(999);
         }
         actionSheet.dismiss();
     }
 
     @Override
-    public void takeSuccess(TResult result) {
-        String originalPath = result.getImage().getOriginalPath();
-        mPresenter.uploadImage(binding.riv, httpUserBean.getNickname(), new File(originalPath));
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-
-    }
-
-    @Override
-    public void takeCancel() {
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 999) {
+            if (resultCode == RESULT_OK) { // Successfully.
+                // 这里的List的size肯定是1。
+                List<String> pathList = Album.parseResult(data); // Parse path.
+                File file = new File(pathList.get(0));
+                mPresenter.uploadImage(binding.riv, file.getName(), file);
+            }
+        }
     }
 
 
@@ -161,18 +130,9 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     }
 
     public void skipRename(String name) {
-        ActivitySkipUtilsKt.toActivity(this, RenameActivity.class,RenameActivity.NAME,name);
+        ActivitySkipUtilsKt.toActivity(this, RenameActivity.class, RenameActivity.NAME, name);
     }
 
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
-    }
 
     @Override
     public void onBackPressed() {

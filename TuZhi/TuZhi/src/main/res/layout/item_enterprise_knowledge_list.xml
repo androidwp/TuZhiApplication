@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,7 +10,7 @@
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean" />
+            type="com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean" />
 
         <variable
             name="view"
@@ -35,13 +36,116 @@
             android:text="@{data.title}"
             android:textSize="16sp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/defaulthead"
+                app:errorDrawable="@{@drawable/defaulthead}"
+                app:imageLoad="@{data.portrait}"
+                app:riv_corner_radius="13dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="@{data.nickName}"
+                android:textColor="@color/colorGeneralTintText"
+                android:textSize="12sp" />
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivOne"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/portrait_background"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaulthead"
+                    app:riv_corner_radius="13dp" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivTwo"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/portrait_background"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaulthead"
+                    app:riv_corner_radius="13dp" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivThree"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/portrait_background"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaulthead"
+                    app:riv_corner_radius="13dp" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivFore"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/portrait_background"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaulthead"
+                    app:riv_corner_radius="13dp" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/rivFive"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="60dp"
+                    android:padding="2dp"
+                    android:background="@drawable/portrait_background"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/defaulthead"
+                    app:riv_corner_radius="13dp" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:text="最近参与"
+                android:textColor="@color/colorGeneralTintText"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="3"
             android:paddingTop="@dimen/generalSpace"
             android:text="@{data.text}"
-            android:textColor="#666"
+            android:textColor="@color/colorGeneralTintText"
+            android:textSize="12sp"
             android:visibility="@{TextUtils.isEmpty(data.text)?view.GONE:view.VISIBLE}" />
 
         <LinearLayout
@@ -52,28 +156,35 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:drawableLeft="@{data.praiseStatus? @drawable/admire:@drawable/admirenormal}"
+                android:drawablePadding="10dp"
+                android:onClick="@{()->item.clickPraise(data)}"
+                android:text="@{data.praiseNumber}"
+                android:textColor="@color/colorGeneralTintText" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/document"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="@{data.contextNumber}" />
+                android:text="@{data.fileNumber}" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/discussnumber"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="@{data.commentNumber}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{data.time}"
-                android:textColor="@color/colorTextHint"
-                android:textSize="12sp" />
 
         </LinearLayout>
 

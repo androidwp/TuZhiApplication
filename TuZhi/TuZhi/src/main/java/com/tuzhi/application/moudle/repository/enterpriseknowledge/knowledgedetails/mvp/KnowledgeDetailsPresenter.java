@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jph.takephoto.model.TImage;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.HttpKnowledgeDetailsListBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
@@ -37,6 +36,9 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
     private static final String URL_EDIT = "tzkm/editArticle";
 
     private static final String URL_UPLOAD_FILE = "tzkm/addFile";
+
+    private static final String URL_MOUDLE = "tzkm/editTitle";
+
     private int index;
     private int upDateIndex;
 
@@ -70,8 +72,54 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
 
     @Override
-    public void downLoadData(final String id, int page) {
+    public void renameCard(String id, final String name) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "2");
+        parameter.put("aId", id);
+        parameter.put("title", name);
+        HttpUtilsKt.post(mView.getContext(), URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
 
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.renameSuccess(name);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void deleteCard(String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "3");
+        parameter.put("aId", id);
+        HttpUtilsKt.post(mView.getContext(), URL_MOUDLE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.deleteSuccess();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void downLoadData(final String id, int page) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("id", id);
         parameter.put("pageNo", page + "");
@@ -107,7 +155,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
     }
 
     @Override
-    public void uploadFiles(View view, String aid, ArrayList<TImage> images) {
+    public void uploadFiles(View view, String aid, ArrayList<String> images) {
         canUpdate = true;
         index = 0;
         uploadFile(view, aid, images, new ArrayList<String>());
@@ -118,10 +166,9 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
         canUpdate = false;
     }
 
-    private void uploadFile(final View view, final String aid, final ArrayList<TImage> images, final ArrayList<String> urls) {
+    private void uploadFile(final View view, final String aid, final ArrayList<String> images, final ArrayList<String> urls) {
         if (index < images.size()) {
-            TImage tImage = images.get(index);
-            File image = new File(tImage.getOriginalPath());
+            File image = new File(images.get(index));
             HttpUtilsKt.uploadSummaryImage(mView.getContext(), "tuzhikmMobile", view, image, new HttpCallBack<String>() {
                 @Override
                 public void onFinish() {
@@ -153,12 +200,11 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
     }
 
-    private void uploadData(String aid, final ArrayList<TImage> images, final ArrayList<String> fileUrl) {
+    private void uploadData(String aid, final ArrayList<String> images, final ArrayList<String> fileUrl) {
         upDateIndex = 0;
         for (int i = 0; i < images.size(); i++) {
-            TImage tImage = images.get(i);
             String filePath = fileUrl.get(i);
-            File file = new File(tImage.getOriginalPath());
+            File file = new File(images.get(i));
             WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
             parameter.put("aId", aid);
             parameter.put("type", "2");

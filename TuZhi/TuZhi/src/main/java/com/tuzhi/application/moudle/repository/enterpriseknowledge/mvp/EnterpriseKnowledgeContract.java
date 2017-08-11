@@ -2,7 +2,7 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp;
 
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
-import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.EnterpriseKnowledgeListItemBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean;
 
 import java.util.ArrayList;
 
@@ -13,14 +13,20 @@ import java.util.ArrayList;
 
 public class EnterpriseKnowledgeContract {
     interface View extends BaseView {
-        void downloadFinish(int page, boolean haveNextPage, ArrayList<EnterpriseKnowledgeListItemBean> data);
+        void downloadFinish(int page, boolean haveNextPage, ArrayList<KnowledgeCardItemBean> data);
 
         void downloadFinishNothing();
 
-        void setTitle(String name);
+        void renameSuccess(String name);
+
+        void deleteSuccess();
     }
 
     interface Presenter extends BasePresenter<View> {
         void downLoadData(String id, int page);
+
+        void deleteChannel(String klId, String kcId);
+
+        void renameChannel(String klId, String kcId, final String name);
     }
 }

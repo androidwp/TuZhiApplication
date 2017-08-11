@@ -75,6 +75,7 @@
         <item name="android:textSize">@dimen/generalLittleTextSize</item>
         <item name="android:layout_height">@dimen/navigationHeight</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/general_listview_selector</item>
     </style>
 
     <style name="NavigationRightButton">
@@ -86,6 +87,7 @@
         <item name="android:paddingRight">@dimen/generalSpace</item>
         <item name="android:layout_height">@dimen/navigationHeight</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@drawable/general_listview_selector</item>
     </style>
 
 </resources>

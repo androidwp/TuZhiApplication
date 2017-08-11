@@ -3,7 +3,6 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedet
 
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,35 +11,31 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityKnowledgeDetailsBinding;
 import com.tuzhi.application.dialog.DeleteDialog;
 import com.tuzhi.application.dialog.ProgressBarDialog;
 import com.tuzhi.application.dialog.RenameDialog;
+import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.mvp.CheckHistoricalVersionActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.createdocument.mvp.CreateDocumentActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsArticleItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsCommentItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsFilesItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
+import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
+import com.yanzhenjie.album.Album;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,23 +52,21 @@ import kale.adapter.item.AdapterItem;
  * 邮箱 784787081@qq.com
  */
 
-public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsContract.View, KnowledgeDetailsPresenter> implements KnowledgeDetailsContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ActionSheet.ActionSheetListener, TakePhoto.TakeResultListener, InvokeListener {
-
+public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsContract.View, KnowledgeDetailsPresenter> implements KnowledgeDetailsContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ActionSheet.ActionSheetListener, OnDialogClickListener {
     public static final String MESSAGE = "EKnowledgeDetailsActivity_refresh";
-    private static final String PHOTO = "photo.png";
     public static final String ID = "ID";
     public static final String TITLE = "TITLE";
     private ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
     private String id;
     private ActivityKnowledgeDetailsBinding binding;
-    private TakePhoto takePhoto;
-    private InvokeParam invokeParam;
     private ActionSheet actionSheet;
     private int type;
     private ProgressBarDialog dialog;
     private String title;
     private String flagDeleteMoudle;
     private boolean flagCanClick = true;
+    private RenameDialog renameDialog;
+    private DeleteDialog deleteDialog;
 
     @Override
     protected int getLayoutId() {
@@ -90,7 +83,6 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getTakePhoto().onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
     }
 
@@ -98,13 +90,6 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
-
-    public TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
     }
 
 
@@ -119,13 +104,13 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
             if (TextUtils.equals(flagDeleteMoudle, ConstantKt.getValue_true())) {
                 actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
                         .setCancelButtonTitle("取消")
-                        .setOtherButtonTitles(textOne, textTwo)
+                        .setOtherButtonTitles("查看笔记历史版本", textOne, textTwo)
                         .setCancelableOnTouchOutside(true)
                         .setListener(this).show();
             } else {
                 actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
                         .setCancelButtonTitle("取消")
-                        .setOtherButtonTitles(textOne)
+                        .setOtherButtonTitles("查看笔记历史版本", textOne)
                         .setCancelableOnTouchOutside(true)
                         .setListener(this).show();
             }
@@ -142,7 +127,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        flagDeleteMoudle = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getFLAG_DELETE_MOUDLE());
+        flagDeleteMoudle = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getFLAG_DELETE_CARD());
         binding = (ActivityKnowledgeDetailsBinding) viewDataBinding;
         id = getIntent().getStringExtra(ID);
         title = getIntent().getStringExtra(TITLE);
@@ -247,61 +232,20 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         flagCanClick = true;
     }
 
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ConstantKt.getNEED_REFRESH_CODE() && resultCode == ConstantKt.getNEED_REFRESH_CODE()) {
-            EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
-            onRefresh();
-        }
-
+    public void deleteSuccess() {
+        ToastUtilsKt.toast(this, "删除成功");
+        EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
+        deleteDialog.dismiss();
+        super.onBackPressed();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
-    }
-
-    @Override
-    public void takeSuccess(TResult result) {
-        ArrayList<TImage> images = result.getImages();
-        if (images == null || images.size() == 0) {
-            images = new ArrayList<>();
-            images.add(result.getImage());
-        }
-        mPresenter.uploadFiles(binding.rrv, id, images);
-        dialog = new ProgressBarDialog(this);
-        dialog.setTitle("正在上传");
-        dialog.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.cancelUpdate();
-            }
-        });
-        dialog.show();
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-
-    }
-
-    @Override
-    public void takeCancel() {
-
-    }
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
+    public void renameSuccess(String name) {
+        ToastUtilsKt.toast(this, "修改成功");
+        EventBus.getDefault().post(EnterpriseKnowledgeActivity.MESSAGE);
+        setTitle(name);
+        renameDialog.dismiss();
     }
 
     @Override
@@ -313,29 +257,57 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
         if (type == 0) {
             if (index == 0) {
-                RenameDialog renameDialog = new RenameDialog(this, R.style.dialog);
+                //跳转到查看历史版本
+                ActivitySkipUtilsKt.toActivity(this, CheckHistoricalVersionActivity.class, CheckHistoricalVersionActivity.ID, id);
+            } else if (index == 1) {
+                renameDialog = new RenameDialog(this, R.style.dialog);
                 renameDialog.setView(new EditText(this));
-                renameDialog.setMoudleId(id);
-                renameDialog.setType(RenameDialog.MOUDLE);
+                renameDialog.setClickListener(this);
                 renameDialog.setText(title);
                 renameDialog.show();
                 KeyBoardUtils.showKeyBoard(this);
             } else {
-                DeleteDialog deleteDialog = new DeleteDialog(this, R.style.dialog);
-                deleteDialog.setMoudleId(id);
-                deleteDialog.setType(RenameDialog.MOUDLE);
+                deleteDialog = new DeleteDialog(this, R.style.dialog);
+                deleteDialog.setClickListener(this);
                 deleteDialog.show();
             }
         } else {
             if (index == 0) {
-                takePhoto.onPickMultiple(9);
+                //多选图片
+                Album.album(this)
+                        .title("图库") // 配置title。
+                        .selectCount(9) // 最多选择几张图片。
+                        .columnCount(3) // 相册展示列数，默认是2列。
+                        .camera(false) // 是否有拍照功能。
+                        .start(999); // 999是请求码，返回时onActivityResult()的第一个参数。
             } else {
-                takePhoto.onPickFromCapture(Uri.fromFile(ConstantKt.getImageCache(PHOTO)));
+                //打开相机
+                Album.camera(this).start(999);
             }
         }
 
         actionSheet.dismiss();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 999) {
+            if (resultCode == RESULT_OK) { // Successfully.
+                ArrayList<String> pathList = Album.parseResult(data); // Parse path.
+                mPresenter.uploadFiles(binding.rrv, id, pathList);
+                dialog = new ProgressBarDialog(this);
+                dialog.setTitle("正在上传");
+                dialog.setClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.cancelUpdate();
+                    }
+                });
+                dialog.show();
+            }
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -351,4 +323,15 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         binding.tvTitle.setText(title);
     }
 
+    @Override
+    public void onDialogClick(View view) {
+        switch (view.getId()) {
+            case R.id.tvDelete:
+                mPresenter.deleteCard(id);
+                break;
+            case R.id.tvRename:
+                mPresenter.renameCard(id, (String) view.getTag());
+                break;
+        }
+    }
 }

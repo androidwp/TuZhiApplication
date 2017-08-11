@@ -2,10 +2,12 @@ package com.tuzhi.application.moudle.mine.personalinformation.rename.mvp;
 
 
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityRenameBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 
 /**
@@ -48,7 +50,11 @@ public class RenameActivity extends MVPBaseActivity<RenameContract.View, RenameP
     }
 
     public void commitName(String name) {
-        mPresenter.commitName(name);
+        if (!TextUtils.isEmpty(name)) {
+            mPresenter.commitName(name);
+        } else {
+            ToastUtilsKt.toast(this, "姓名不能为空");
+        }
     }
 
     public void back() {

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class ReadContract {
     interface View extends BaseView {
         void downloadFinish(ArrayList<ReadListItemBean> data, boolean haveNextPage, int page);
+
+        void downloadError();
     }
 
     interface Presenter extends BasePresenter<View> {

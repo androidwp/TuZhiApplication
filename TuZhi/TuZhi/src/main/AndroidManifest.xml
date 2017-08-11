@@ -30,7 +30,7 @@
             tools:replace="android:exported">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/tz_file_paths" />
         </provider>
 
         <activity
@@ -99,6 +99,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.mvp.CheckHistoricalVersionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.recoverhistoryversion.mvp.RecoverHistoryVersionActivity"
             android:screenOrientation="portrait" />
     </application>
 

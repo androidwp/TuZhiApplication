@@ -10,10 +10,17 @@ import com.tuzhi.application.moudle.basemvp.BaseView;
 
 public class OpenFileContract {
     interface View extends BaseView {
-        
+        void deleteSuccess();
+
+        void renameSuccess(String name);
     }
 
     interface  Presenter extends BasePresenter<View> {
+
+        void renameFile(String id,String name);
+
+        void deleteFile(String id);
+
         void downloadFile(String aid, String fid, String fileName);
 
         //后台记录

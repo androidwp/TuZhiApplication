@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.search.item.SearchHistoryHeadItem" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.search.bean.SearchHistoryBean" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/generalSpace">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="搜索历史"
+                android:textColor="@color/colorText" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add"
+                android:background="@drawable/general_listview_selector"
+                android:onClick="@{()->item.onDeleteHistory()}"
+                android:visibility="@{data.historyNumber==0?View.GONE:View.VISIBLE}" />
+
+        </LinearLayout>
+
+        <View style="@style/NavigationLine" />
+
+    </FrameLayout>
+</layout>

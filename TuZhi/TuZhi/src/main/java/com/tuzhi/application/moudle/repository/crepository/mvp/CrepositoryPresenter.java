@@ -15,28 +15,53 @@ import java.util.WeakHashMap;
  */
 
 public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.View> implements CrepositoryContract.Presenter {
-
-
     private final String URL_LIB = "tzkm/knowledgeLib";
+    private final String URL_CHA = "tzkm/knowledgeChannel";
     private final String URL_MOU = "tzkm/editTitle";
 
     @Override
-    public void commit(String type, String name,String libId) {
+    public void commit(String type, String name, String libId) {
         switch (type) {
             case CrepositoryActivity.REPOSITORY:
                 addLib(name);
                 break;
             case CrepositoryActivity.MOUDLE:
-                addMoudle(name,libId);
+                addMoudle(name, libId);
+                break;
+            case CrepositoryActivity.CHANNEL:
+                addChannel(name, libId);
                 break;
         }
     }
 
-    private void addMoudle(String name,String libId) {
+    private void addChannel(String name, String libId) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "2");
+        parameter.put("name", name);
+        parameter.put("klId", libId);
+        HttpUtilsKt.get(mView.getContext(), URL_CHA, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.commitFinish();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    private void addMoudle(String name, String libId) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("operate", "1");
         parameter.put("title", name);
-        parameter.put("klId", libId);
+        parameter.put("kcId", libId);
         HttpUtilsKt.post(mView.getContext(), URL_MOU, parameter, String.class, new HttpCallBack<String>() {
             @Override
             public void onFinish() {

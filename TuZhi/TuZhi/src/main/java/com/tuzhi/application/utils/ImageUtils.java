@@ -25,16 +25,21 @@ public class ImageUtils {
     public static void loadImage(final ImageView iv, String url, Drawable drawable) {
         if (TextUtils.isEmpty(url)) {
             iv.setImageDrawable(drawable);
-        } else{
-            Glide.with(iv.getContext()).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
+        } else {
+            Glide.with(iv.getContext()).load(url).asBitmap().placeholder(drawable).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                     iv.setImageBitmap(resource);
                 }
-            }).onLoadFailed(null, drawable);
+            });
         }
     }
 
+    /**
+     * @param fileName 文件名称
+     * @param type     要大图标还是小图标 0为小  1为大
+     * @return
+     */
     public static int getFileImage(String fileName, int type) {
         int drawableId;
         if (TextUtils.isEmpty(fileName)) {
