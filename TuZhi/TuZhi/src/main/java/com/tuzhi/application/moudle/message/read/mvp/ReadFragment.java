@@ -4,6 +4,7 @@ package com.tuzhi.application.moudle.message.read.mvp;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.FragmentReadBinding;
@@ -12,6 +13,10 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
 import com.tuzhi.application.moudle.message.read.bean.ReadListItemBean;
 import com.tuzhi.application.moudle.message.read.item.ReadListItem;
 import com.tuzhi.application.view.LoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -27,12 +32,16 @@ public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresent
     public static final String TYPE = "TYPE";
     public static final String TYPE_READ = "TYPE_READ";
     public static final String TYPE_UNREAD = "TYPE_UNREAD";
+
+    public static final String REFRESH = "ReadFragment_refresh";
+
     private String type;
     private ArrayList<ReadListItemBean> mData = new ArrayList<>();
     private FragmentReadBinding binding;
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
+        EventBus.getDefault().register(this);
         type = getArguments().getString(TYPE);
         binding = (FragmentReadBinding) viewDataBinding;
         binding.rrv.setLoadListener(this);
@@ -45,7 +54,9 @@ public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresent
                 String itemType = (String) o;
                 switch (itemType) {
                     case GeneralLoadFootViewItem.TYPE:
-                        return new GeneralLoadFootViewItem();
+                        GeneralLoadFootViewItem generalLoadFootViewItem = new GeneralLoadFootViewItem();
+                        generalLoadFootViewItem.setColorId(R.color.colorWhite);
+                        return generalLoadFootViewItem;
                     default:
                         return new ReadListItem();
                 }
@@ -57,7 +68,19 @@ public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresent
             }
         };
         binding.rrv.setAdapter(adapter);
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMain(String text) {
+        if (TextUtils.equals(text, REFRESH)) {
+            mPresenter.downloadData(type, 0);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

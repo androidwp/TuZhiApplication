@@ -26,7 +26,7 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("pageNo", page + "");
         parameter.put("operate", "1");
-        parameter.put("rStatus", type.equals(ReadFragment.TYPE_READ) ? "1" : "0");
+        parameter.put("rStatus", type.equals(ReadFragment.TYPE_READ) ? "0" : "1");
         HttpUtilsKt.get(mView.getContext(), URL, parameter, ReadUnreadListHttpBean.class, new HttpCallBack<ReadUnreadListHttpBean>() {
             @Override
             public void onFinish() {
@@ -43,6 +43,7 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
                     ArrayList<ReadListItemBean> arrayList = new ArrayList();
                     for (ReadUnreadListHttpBean.NoticePageBean.ResultBean resultBean : noticePage.getResult()) {
                         ReadListItemBean readListItemBean = new ReadListItemBean(ReadListItem.TYPE);
+                        readListItemBean.setId(resultBean.getId());
                         readListItemBean.setPortrait(resultBean.getUserImage());
                         readListItemBean.setNickName(resultBean.getNickname());
                         readListItemBean.setContent(resultBean.getSourceContent());

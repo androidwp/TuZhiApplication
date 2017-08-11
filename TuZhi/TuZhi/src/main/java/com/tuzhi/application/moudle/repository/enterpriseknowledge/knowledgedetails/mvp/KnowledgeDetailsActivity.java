@@ -205,7 +205,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         Intent intent = new Intent(this, PublishTopicOrCommentActivity.class);
         intent.putExtra(PublishTopicOrCommentActivity.TYPE, PublishTopicOrCommentActivity.TOPIC);
         intent.putExtra(PublishTopicOrCommentActivity.AID, id);
-        startActivityForResult(intent, ConstantKt.getNEED_REFRESH_CODE());
+        startActivity(intent);
     }
 
 

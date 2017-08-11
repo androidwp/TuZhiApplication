@@ -3,13 +3,18 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedet
 
 import android.app.Dialog;
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityPublishTopicOrCommentBinding;
 import com.tuzhi.application.dialog.WarnDialog;
 import com.tuzhi.application.inter.DialogMakeSureListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.utils.ConstantKt;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -78,7 +83,12 @@ public class PublishTopicOrCommentActivity extends MVPBaseActivity<PublishTopicO
 
     @Override
     public void commitSuccess() {
-        setResult(ConstantKt.getNEED_REFRESH_CODE());
+        if (TextUtils.equals(type,TOPIC)){
+            EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+        }else {
+            EventBus.getDefault().post(ReadFragment.REFRESH);
+            setResult(ConstantKt.getNEED_REFRESH_CODE());
+        }
         super.onBackPressed();
     }
 }

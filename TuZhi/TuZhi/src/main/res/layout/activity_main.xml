@@ -12,6 +12,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <View style="@style/NavigationLine" />
 
         <me.shihao.library.XRadioGroup
             android:id="@+id/rg"

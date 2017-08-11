@@ -65,7 +65,7 @@ public class ReadUnreadListHttpBean {
 
         private boolean prev;
         private boolean next;
-        private String size;
+        private int size;
         private String total;
         private int count;
         private int index;
@@ -87,11 +87,11 @@ public class ReadUnreadListHttpBean {
             this.next = next;
         }
 
-        public String getSize() {
+        public int getSize() {
             return size;
         }
 
-        public void setSize(String size) {
+        public void setSize(int size) {
             this.size = size;
         }
 
