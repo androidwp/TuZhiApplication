@@ -58,11 +58,16 @@ public class EnterpriseKnowledgeListItem extends BaseItem<KnowledgeCardItemBean>
             imageView.setVisibility(View.GONE);
         }
         if (joinPortraits != null) {
-            for (int j = 0; j < joinPortraits.size(); j++) {
-                String url = joinPortraits.get(j);
-                ImageView imageView = imageViewList.get(j);
-                imageView.setVisibility(View.VISIBLE);
-                ImageUtils.loadImage(imageView, url);
+            if (joinPortraits.size() > 0) {
+                binding.tvRecentJoin.setVisibility(View.VISIBLE);
+                for (int j = 0; j < joinPortraits.size(); j++) {
+                    String url = joinPortraits.get(j);
+                    ImageView imageView = imageViewList.get(j);
+                    imageView.setVisibility(View.VISIBLE);
+                    ImageUtils.loadImage(imageView, url);
+                }
+            } else {
+                binding.tvRecentJoin.setVisibility(View.GONE);
             }
         }
     }

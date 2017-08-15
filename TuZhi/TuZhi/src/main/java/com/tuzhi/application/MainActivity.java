@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
                 int readCount = jsonObject.getInteger("readCount");
                 if (readCount > 0) {
                     EventBus.getDefault().post(ReadFragment.REFRESH);
+                    binding.bv.setBadgeCount(readCount);
                 }
                 if (!MainActivity.this.isDestroyed()) {
                     new Handler().postDelayed(new Runnable() {

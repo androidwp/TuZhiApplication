@@ -33,5 +33,6 @@ public class CommentListItem extends BaseItem<CommentListBean> {
     @Override
     public void handleData(CommentListBean commentListBean, int i) {
         binding.setData(commentListBean);
+        binding.executePendingBindings();
     }
 }

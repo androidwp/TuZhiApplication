@@ -44,9 +44,9 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
     public void handleData(KnowledgeDetailsListBean knowledgeDetailsListBean, int i) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (!TextUtils.isEmpty(knowledgeDetailsListBean.getContent())) {
-            binding.fl.setVisibility(View.INVISIBLE);
             boolean equals = TextUtils.equals(oldContent, knowledgeDetailsListBean.getContent());
             if ((isCreateWebview && !equals) || webView == null) {
+                binding.fl.setVisibility(View.GONE);
                 oldContent = knowledgeDetailsListBean.getContent();
                 isCreateWebview = false;
                 binding.fl.removeAllViews();
@@ -66,7 +66,7 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
-                    binding.fl.setVisibility(View.INVISIBLE);
+                   // binding.fl.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
