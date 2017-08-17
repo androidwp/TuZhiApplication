@@ -47,6 +47,8 @@ public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresent
         binding.rrv.setLoadListener(this);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.isShowRefreshView(true);
+        binding.rrv.setTitle("暂无消息");
+        binding.rrv.setDrawable(R.drawable.enptymessage);
         CommonRcvAdapter<ReadListItemBean> adapter = new CommonRcvAdapter<ReadListItemBean>(mData) {
             @NonNull
             @Override

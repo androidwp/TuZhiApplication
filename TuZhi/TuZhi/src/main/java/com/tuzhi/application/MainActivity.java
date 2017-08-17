@@ -21,7 +21,6 @@ import com.tuzhi.application.moudle.search.mvp.SearchFragment;
 import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
-import com.tuzhi.application.utils.LogUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
 import org.greenrobot.eventbus.EventBus;
@@ -117,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
 
             @Override
             public void onSuccess(String s, String text) {
-                LogUtilsKt.showLog("消息数", text);
                 JSONObject jsonObject = JSONObject.parseObject(text);
                 int readCount = jsonObject.getInteger("readCount");
                 if (readCount > 0) {

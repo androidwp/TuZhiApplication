@@ -28,9 +28,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:ellipsize="end"
                 android:textSize="@dimen/generalTextSize" />
 
             <ImageView
@@ -38,7 +38,9 @@
                 android:layout_height="@dimen/navigationHeight"
                 android:layout_gravity="right"
                 android:layout_marginRight="40dp"
+                android:background="@drawable/general_listview_selector"
                 android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
+                android:paddingRight="10dp"
                 android:scaleType="center"
                 android:src="@drawable/add" />
 

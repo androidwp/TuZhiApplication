@@ -31,7 +31,6 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.Enterpris
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
@@ -63,7 +62,6 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     private int type;
     private ProgressBarDialog dialog;
     private String title;
-    private String flagDeleteMoudle;
     private boolean flagCanClick = true;
     private RenameDialog renameDialog;
     private DeleteDialog deleteDialog;
@@ -101,19 +99,12 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         if (type == 0) {
             textOne = "重命名频道";
             textTwo = "删除频道";
-            if (TextUtils.equals(flagDeleteMoudle, ConstantKt.getValue_true())) {
-                actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                        .setCancelButtonTitle("取消")
-                        .setOtherButtonTitles("查看笔记历史版本", textOne, textTwo)
-                        .setCancelableOnTouchOutside(true)
-                        .setListener(this).show();
-            } else {
-                actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                        .setCancelButtonTitle("取消")
-                        .setOtherButtonTitles("查看笔记历史版本", textOne)
-                        .setCancelableOnTouchOutside(true)
-                        .setListener(this).show();
-            }
+            actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                    .setCancelButtonTitle("取消")
+                    .setOtherButtonTitles("查看笔记历史版本", textOne, textTwo)
+                    .setCancelableOnTouchOutside(true)
+                    .setListener(this).show();
+
         } else {
             textOne = "从相册选择";
             textTwo = "拍摄新的照片";
@@ -123,11 +114,11 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
                     .setCancelableOnTouchOutside(true)
                     .setListener(this).show();
         }
+
     }
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        flagDeleteMoudle = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getFLAG_DELETE_CARD());
         binding = (ActivityKnowledgeDetailsBinding) viewDataBinding;
         id = getIntent().getStringExtra(ID);
         title = getIntent().getStringExtra(TITLE);

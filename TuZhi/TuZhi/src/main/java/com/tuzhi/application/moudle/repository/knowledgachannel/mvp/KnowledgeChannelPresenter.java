@@ -52,20 +52,6 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
                     data.add(bean);
                 }
                 mView.downloadFinish(0, false, data);
-//                KnowledgeChannelHttpBean.ArticlePageBean articlePage = knowledgeChannelHttpBean.getArticlePage();
-//                boolean next = articlePage.isNext();
-//                int index = articlePage.getIndex();
-//                List<KnowledgeChannelHttpBean.ArticlePageBean.ResultBean> result = articlePage.getResult();
-//                ArrayList<KnowledgeChannelItemBean> data = new ArrayList<>();
-//                for (KnowledgeChannelHttpBean.ArticlePageBean.ResultBean bean : result) {
-//                    KnowledgeChannelItemBean itemBean = new KnowledgeChannelItemBean(KnowledgeChannelItem.TYPE);
-//                    itemBean.setId(bean.getId());
-//                    itemBean.setTitle(bean.getTitle());
-//                    itemBean.setText(bean.getSummary());
-//                    data.add(itemBean);
-//                }
-//                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getFLAG_DELETE_MOUDLE(), knowledgeChannelHttpBean.isDelArticle() ? ConstantKt.getValue_true() : ConstantKt.getValue_false());
-//                mView.downloadFinish(index, next, data);
             }
 
             @Override

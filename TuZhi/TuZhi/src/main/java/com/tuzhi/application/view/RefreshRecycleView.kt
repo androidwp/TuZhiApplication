@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.tuzhi.application.R
@@ -30,6 +31,7 @@ class RefreshRecycleView : FrameLayout {
     lateinit private var ll: LinearLayout
     lateinit private var tvTitle: TextView
     lateinit private var tvInfo: TextView
+    lateinit private var iv: ImageView
     lateinit private var adapter: RecyclerView.Adapter<CommonRcvAdapter.RcvAdapterItem>
     lateinit private var refreshListener: SwipeRefreshLayout.OnRefreshListener
     lateinit var loadListener: LoadMoreListener
@@ -38,7 +40,6 @@ class RefreshRecycleView : FrameLayout {
     var page = 0
     var title = ""
     var info = ""
-
 
     constructor(context: Context) : this(context, null)
 
@@ -53,6 +54,7 @@ class RefreshRecycleView : FrameLayout {
         ll = findViewById(R.id.ll) as LinearLayout
         tvTitle = findViewById(R.id.tvTitle) as TextView
         tvInfo = findViewById(R.id.tvInfo) as TextView
+        iv = findViewById(R.id.iv) as ImageView
         rv.layoutManager = LinearLayoutManager(context)
         srl.setColorSchemeResources(R.color.colorBlueButton)
         rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -64,6 +66,10 @@ class RefreshRecycleView : FrameLayout {
                 }
             }
         })
+    }
+
+    fun setDrawable(drawableId: Int) {
+        iv.setImageResource(drawableId)
     }
 
     fun setOnRefreshListener(refreshListener: SwipeRefreshLayout.OnRefreshListener) {

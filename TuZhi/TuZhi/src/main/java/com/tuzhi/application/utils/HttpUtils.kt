@@ -25,7 +25,7 @@ private val URL_IMAGE = "http://upload.guigutang.cn:8082/upload.htm"
 //private val URL_IMAGE = "http://192.168.0.140:8081/upload.htm"
 
 //var baseUrl = "http://api.guigutang.cn:9001/"
-var baseUrl = "http://192.168.0.151:9001/"
+var baseUrl = "http://192.168.0.132:9001/"
 
 val retrofit: Http by lazy {
     Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(ScalarsConverterFactory.create()).build().create(Http::class.java)
@@ -111,6 +111,7 @@ fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>
         val jsonObject = parseObject(result)
         val resultCode = jsonObject.getString("resultCode")
         val resultMsg = jsonObject.getString("resultMsg")
+        showLog(activity.localClassName,result)
         if (TextUtils.equals(resultCode, "0")) {
             val resultObject = parseObject(result, clazz)
             if (clazz != null) {

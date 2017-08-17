@@ -74,6 +74,10 @@ public class InitActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull String text) {
+                if (TextUtils.equals(text, "帐号状态异常")) {
+                    SharedPreferencesUtilsKt.saveLongCache(InitActivity.this, ConstantKt.getUSER_TYPE(), "1");
+                    SharedPreferencesUtilsKt.saveLongCache(InitActivity.this, ConstantKt.getUSER_ID(), "");
+                }
                 init();
             }
         });

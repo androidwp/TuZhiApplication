@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,7 +39,7 @@ import kale.adapter.item.AdapterItem;
  * MVPPlugin
  */
 
-public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchPresenter> implements SearchContract.View {
+public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchPresenter> implements SearchContract.View, TextWatcher {
     public static final String NAME = "SearchFragment";
     private FragmentSearchBinding binding;
     private List<SearchHistoryBean> searchHistoryBeanList = new ArrayList<>();
@@ -52,6 +54,7 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
         binding = (FragmentSearchBinding) viewDataBinding;
         binding.setFragment(this);
         binding.setText("");
+        binding.et.addTextChangedListener(this);
         initRV();
         initVP();
         dealHistory();
@@ -63,12 +66,18 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
      * @param busBean
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventBusMain(EventBusBean busBean) {
+    public void onEventBusMain(final EventBusBean busBean) {
         if (TextUtils.equals(busBean.getName(), NAME)) {
             //事件等于0是搜索，1为删除缓存
             if (busBean.getEventType() == 0) {
                 binding.et.setText(busBean.getsContent());
                 search(busBean.getsContent());
+                binding.et.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.et.setSelection(busBean.getsContent().length());
+                    }
+                });
             } else {
                 SharedPreferencesUtilsKt.deleteSearchHistoryCache(getContext());
                 dealHistory();
@@ -162,9 +171,27 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
             busBean.setName(SearchPageFragment.NAME);
             busBean.setsContent(text);
             EventBus.getDefault().post(busBean);
+            dealHistory();
         } else {
             ToastUtilsKt.toast(getContext(), "请输入搜索内容");
         }
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.length() == 0) {
+            binding.rv.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
 
     }
 

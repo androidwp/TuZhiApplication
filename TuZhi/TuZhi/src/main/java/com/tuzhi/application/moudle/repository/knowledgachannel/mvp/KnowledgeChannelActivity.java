@@ -22,7 +22,6 @@ import com.tuzhi.application.moudle.repository.knowledgachannel.item.KnowledgeCh
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
@@ -50,7 +49,6 @@ public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelCo
     private ActivityKnowledgeChannelBinding binding;
     private ActionSheet actionSheet;
     private String title;
-    private String flagDeleteLib;
     private DeleteDialog deleteDialog;
     private RenameDialog renameDialog;
 
@@ -75,7 +73,6 @@ public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelCo
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         EventBus.getDefault().register(this);
-        flagDeleteLib = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getFLAG_DELETE_LIB());
         binding = (ActivityKnowledgeChannelBinding) viewDataBinding;
         listId = getIntent().getStringExtra(ID);
         title = getIntent().getStringExtra(TITLE);
@@ -120,19 +117,11 @@ public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelCo
     }
 
     public void openMenu() {
-        if (TextUtils.equals(flagDeleteLib, ConstantKt.getValue_true())) {
-            actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                    .setCancelButtonTitle("取消")
-                    .setOtherButtonTitles("重命名知识库", "删除知识库")
-                    .setCancelableOnTouchOutside(true)
-                    .setListener(this).show();
-        } else {
-            actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                    .setCancelButtonTitle("取消")
-                    .setOtherButtonTitles("重命名知识库")
-                    .setCancelableOnTouchOutside(true)
-                    .setListener(this).show();
-        }
+        actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("重命名知识库", "删除知识库")
+                .setCancelableOnTouchOutside(true)
+                .setListener(this).show();
     }
 
     @Override

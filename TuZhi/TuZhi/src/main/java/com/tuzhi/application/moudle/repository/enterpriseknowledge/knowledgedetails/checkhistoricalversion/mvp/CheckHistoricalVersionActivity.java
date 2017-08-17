@@ -43,6 +43,8 @@ public class CheckHistoricalVersionActivity extends MVPBaseActivity<CheckHistori
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setLoadListener(this);
+        binding.rrv.setDrawable(R.drawable.emptyhistory);
+        binding.rrv.setTitle("暂无历史版本");
         CommonRcvAdapter<CheckHistoryVersionItemBean> adapter = new CommonRcvAdapter<CheckHistoryVersionItemBean>(data) {
             @NonNull
             @Override

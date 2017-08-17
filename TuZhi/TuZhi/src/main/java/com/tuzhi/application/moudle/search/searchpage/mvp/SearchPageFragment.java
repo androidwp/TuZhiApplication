@@ -48,6 +48,8 @@ public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View,
         binding = (FragmentSearchNoteFileSpeakBinding) viewDataBinding;
         binding.rrv.setLoadListener(this);
         binding.rrv.setOnRefreshListener(this);
+        binding.rrv.setTitle("搜索内容为空");
+        binding.rrv.setDrawable(R.drawable.enptysearch);
         if (!TextUtils.isEmpty(SearchFragment.searchText))
             binding.rrv.isShowRefreshView(true);
         CommonRcvAdapter<SearchResultListBean> adapter = new CommonRcvAdapter<SearchResultListBean>(mData) {

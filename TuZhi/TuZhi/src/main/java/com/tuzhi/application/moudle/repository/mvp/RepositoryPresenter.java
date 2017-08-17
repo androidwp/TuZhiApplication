@@ -6,11 +6,9 @@ import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.bean.HttpRepositoryListBean;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
-import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.LogUtilsKt;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +48,6 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
                     bean.setText(knowledgeLibsMapBean.getContentCount() + "  频道");
                     data.add(bean);
                 }
-                SharedPreferencesUtilsKt.saveLongCache(mView.getContext(), ConstantKt.getFLAG_DELETE_LIB(), httpRepositoryListBean.isDelKnowledgeLib() ? ConstantKt.getValue_true() : ConstantKt.getValue_false());
                 mView.downLoadFinish(data, false, 0);
             }
 

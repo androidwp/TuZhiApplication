@@ -55,7 +55,11 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
                         readListItemBean.setArticleTitle(resultBean.getArticleTitle());
                         arrayList.add(readListItemBean);
                     }
-                    mView.downloadFinish(arrayList, next, index);
+                    if (page == 0 && noticePage.getResult().size() == 0) {
+                        mView.downloadFinish(null, false, index);
+                    } else {
+                        mView.downloadFinish(arrayList, next, index);
+                    }
                     if (type.equals(ReadFragment.TYPE_UNREAD)) {
                         EventBusUtils.sendUnreadMessageNumber(noticePage.getCount());
                     }

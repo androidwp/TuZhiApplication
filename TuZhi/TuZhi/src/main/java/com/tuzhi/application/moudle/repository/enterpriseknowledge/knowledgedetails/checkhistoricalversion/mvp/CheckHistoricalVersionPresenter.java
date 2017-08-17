@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.mvp;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.bean.CheckHistoryVersionHttpBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.bean.CheckHistoryVersionItemBean;
@@ -52,6 +54,9 @@ public class CheckHistoricalVersionPresenter extends BasePresenterImpl<CheckHist
             @Override
             public void onFailure(String text) {
                 mView.downloadFinish();
+                if (TextUtils.equals(text, "列表无内容显示")) {
+                    mView.downloadFinish(null, false, 0);
+                }
             }
         });
     }

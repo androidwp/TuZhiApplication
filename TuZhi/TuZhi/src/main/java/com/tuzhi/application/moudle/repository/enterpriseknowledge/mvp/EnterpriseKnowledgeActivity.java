@@ -23,7 +23,6 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.item.Enterpri
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
-import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
@@ -46,7 +45,6 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     private ActivityEnterpriseKnowledgeBinding binding;
     private ActionSheet actionSheet;
     private String title;
-    private String flagDeleteLib;
     private RenameDialog renameDialog;
     private DeleteDialog deleteDialog;
     private String klId;
@@ -73,7 +71,6 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         EventBus.getDefault().register(this);
-        flagDeleteLib = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getFLAG_DELETE_LIB());
         binding = (ActivityEnterpriseKnowledgeBinding) viewDataBinding;
         title = getIntent().getStringExtra(TITLE);
         klId = getIntent().getStringExtra(KLID);
@@ -83,8 +80,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setLoadListener(this);
-        binding.rrv.setTitle("该知识库下还没有频道哦");
-        binding.rrv.setInfo("点击上方的\"+\"号，创建频道");
+        binding.rrv.setTitle("该频道下还没有卡片哦");
+        binding.rrv.setInfo("点击上方的\"+\"号，创建卡片");
         CommonRcvAdapter<KnowledgeCardItemBean> adapter = new CommonRcvAdapter<KnowledgeCardItemBean>(mData) {
             @NonNull
             @Override
@@ -121,19 +118,11 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     }
 
     public void openMenu() {
-        if (TextUtils.equals(flagDeleteLib, ConstantKt.getValue_true())) {
-            actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                    .setCancelButtonTitle("取消")
-                    .setOtherButtonTitles("重命名知识库", "删除知识库")
-                    .setCancelableOnTouchOutside(true)
-                    .setListener(this).show();
-        } else {
-            actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
-                    .setCancelButtonTitle("取消")
-                    .setOtherButtonTitles("重命名知识库")
-                    .setCancelableOnTouchOutside(true)
-                    .setListener(this).show();
-        }
+        actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("重命名知识库", "删除知识库")
+                .setCancelableOnTouchOutside(true)
+                .setListener(this).show();
     }
 
     @Override
