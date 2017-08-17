@@ -14,7 +14,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.GlideImageLoader;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumConfig;
 
 /**
  * Created by wangpeng on 2017/6/20.
@@ -32,7 +35,10 @@ public class MyApplication extends Application {
         getVersion();
         getImieStatus();
         initLogin();
-        QbSdk.initX5Environment(this,null);
+        QbSdk.initX5Environment(this, null);
+        Album.initialize(AlbumConfig.newBuilder(this)
+                .setImageLoader(new GlideImageLoader()) // Use glide loader.
+                .build());
     }
 
     private void initLogin() {

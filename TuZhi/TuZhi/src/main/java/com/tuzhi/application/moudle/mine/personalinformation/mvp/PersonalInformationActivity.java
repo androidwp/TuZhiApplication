@@ -36,7 +36,6 @@ import java.util.List;
 public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener {
     private ActionSheet actionSheet;
     private ActivityPersonalInformationBinding binding;
-    private HttpInitBean httpUserBean;
 
     @Override
     protected int getLayoutId() {
@@ -67,7 +66,7 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityPersonalInformationBinding) viewDataBinding;
-        httpUserBean = UserInfoUtils.getUserInfo(this);
+        HttpInitBean httpUserBean = UserInfoUtils.getUserInfo(this);
         binding.setData(httpUserBean);
         binding.setActivity(this);
     }
@@ -114,16 +113,15 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
                 // 这里的List的size肯定是1。
                 List<String> pathList = Album.parseResult(data); // Parse path.
                 File file = new File(pathList.get(0));
-                mPresenter.uploadImage(binding.riv, file.getName(), file);
+                HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+                mPresenter.uploadImage(binding.riv, userInfo.getNickname(), file);
             }
         }
     }
 
-
     public void skipBindPhone() {
         ActivitySkipUtilsKt.toActivity(this, BindingPhoneOrEmailFirstActivity.class, BindingPhoneOrEmailFirstActivity.TYPE, BindingPhoneOrEmailFirstActivity.PHONE);
     }
-
 
     public void skipBindEmail() {
         ActivitySkipUtilsKt.toActivity(this, BindingPhoneOrEmailFirstActivity.class, BindingPhoneOrEmailFirstActivity.TYPE, BindingPhoneOrEmailFirstActivity.EMAIL);
@@ -132,7 +130,6 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     public void skipRename(String name) {
         ActivitySkipUtilsKt.toActivity(this, RenameActivity.class, RenameActivity.NAME, name);
     }
-
 
     @Override
     public void onBackPressed() {

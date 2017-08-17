@@ -26,19 +26,37 @@
             android:paddingLeft="@dimen/generalSpace"
             android:paddingTop="8dp">
 
-            <EditText
-                android:id="@+id/et"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:maxLength="20"
-                android:background="@drawable/general_button_gray_background"
-                android:drawableLeft="@drawable/searchbox"
-                android:drawablePadding="10dp"
-                android:paddingLeft="10dp"
-                android:text="@={text}"
-                android:textSize="@dimen/generalTextSize" />
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/general_button_gray_background"
+                    android:drawableLeft="@drawable/searchbox"
+                    android:drawablePadding="10dp"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:text="@={text}"
+                    android:textSize="@dimen/generalTextSize" />
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:visibility="gone"
+                    android:paddingRight="10dp"
+                    android:onClick="@{()->fragment.deleteSearchText()}"
+                    android:src="@drawable/deletesearch" />
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"

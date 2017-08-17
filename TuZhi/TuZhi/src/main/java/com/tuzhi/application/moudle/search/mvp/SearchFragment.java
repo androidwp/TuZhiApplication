@@ -175,7 +175,10 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
         } else {
             ToastUtilsKt.toast(getContext(), "请输入搜索内容");
         }
+    }
 
+    public void deleteSearchText() {
+        binding.et.setText("");
     }
 
     @Override
@@ -187,6 +190,9 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s.length() == 0) {
             binding.rv.setVisibility(View.VISIBLE);
+            binding.ivDelete.setVisibility(View.GONE);
+        } else {
+            binding.ivDelete.setVisibility(View.VISIBLE);
         }
     }
 
