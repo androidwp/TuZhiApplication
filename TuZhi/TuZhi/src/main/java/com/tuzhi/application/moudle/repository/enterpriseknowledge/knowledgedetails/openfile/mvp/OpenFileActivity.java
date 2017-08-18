@@ -205,6 +205,7 @@ public class OpenFileActivity extends MVPBaseActivity<OpenFileContract.View, Ope
 
     private void delete() {
         deleteDialog = new DeleteDialog(this);
+        deleteDialog.setText("你确定要删除该文件吗？删除后将无法恢复。");
         deleteDialog.setClickListener(this);
         deleteDialog.show();
     }

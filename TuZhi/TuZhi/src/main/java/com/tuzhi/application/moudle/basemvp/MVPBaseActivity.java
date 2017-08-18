@@ -1,5 +1,6 @@
 package com.tuzhi.application.moudle.basemvp;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -23,6 +24,7 @@ import java.lang.reflect.ParameterizedType;
 
 public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresenterImpl<V>> extends AppCompatActivity implements BaseView {
     public T mPresenter;
+    protected ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
         }
         mPresenter = getInstance(this, 1);
         mPresenter.attachView((V) this);
+        progressDialog = new ProgressDialog(this);
         init(DataBindingUtil.setContentView(this, getLayoutId()));
     }
 

@@ -120,7 +120,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     public void openMenu() {
         actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
                 .setCancelButtonTitle("取消")
-                .setOtherButtonTitles("重命名知识库", "删除知识库")
+                .setOtherButtonTitles("重命名知识频道", "删除知识频道")
                 .setCancelableOnTouchOutside(true)
                 .setListener(this).show();
     }
@@ -188,6 +188,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
             KeyBoardUtils.showKeyBoard(this);
         } else {
             deleteDialog = new DeleteDialog(this, R.style.dialog);
+            deleteDialog.setText("你确定要删除该频道吗？删除后将无法恢复。");
             deleteDialog.setClickListener(this);
             deleteDialog.show();
         }

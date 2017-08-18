@@ -3,6 +3,7 @@ package com.tuzhi.application.moudle.mine.personalinformation.mvp;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -20,6 +21,8 @@ import java.util.WeakHashMap;
 
 public class PersonalInformationPresenter extends BasePresenterImpl<PersonalInformationContract.View> implements PersonalInformationContract.Presenter {
     private static final String URL = "user/updateStaffInfo";
+    private static final String URL_USER_INFO = "user/staffDetail";
+
 
     @Override
     public void uploadImage(View view, final String name, File image) {
@@ -42,6 +45,27 @@ public class PersonalInformationPresenter extends BasePresenterImpl<PersonalInfo
             }
         });
 
+    }
+
+    @Override
+    public void downloadUserInfo() {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        HttpUtilsKt.get(mView.getContext(), URL_USER_INFO, parameter, HttpInitBean.class, new HttpCallBack<HttpInitBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable HttpInitBean httpInitBean, @NotNull String text) {
+                mView.downloadSuccess(httpInitBean);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+                mView.downloadError();
+            }
+        });
     }
 
     private void uploadData(String name, final String fileUrl) {

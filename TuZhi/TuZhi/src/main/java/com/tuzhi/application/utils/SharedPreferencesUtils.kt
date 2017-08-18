@@ -46,9 +46,9 @@ fun saveSearchHistoryCache(context: Context, historyValue: String) {
         val historyString = sharedPreferences.getString(searchHistory, null)
         if (historyString != null) {
             //将相同的搜索历史去掉。
-            val replaceAll = historyString.replace((trim + ",").toRegex(), "")
+            val result = historyString.replace((trim + ","), "").replace(" ", "")
             //将最新的搜索内容放到历史记录最上方
-            sharedPreferences.edit().putString(searchHistory, trim + "," + replaceAll).apply()
+            sharedPreferences.edit().putString(searchHistory, trim + "," + result).apply()
         } else {
             //如果没有历史就将内容写入
             sharedPreferences.edit().putString(searchHistory, trim + ",").apply()

@@ -11,8 +11,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.EventBusBean;
@@ -39,7 +42,7 @@ import kale.adapter.item.AdapterItem;
  * MVPPlugin
  */
 
-public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchPresenter> implements SearchContract.View, TextWatcher {
+public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchPresenter> implements SearchContract.View, TextWatcher, TextView.OnEditorActionListener {
     public static final String NAME = "SearchFragment";
     private FragmentSearchBinding binding;
     private List<SearchHistoryBean> searchHistoryBeanList = new ArrayList<>();
@@ -55,6 +58,7 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
         binding.setFragment(this);
         binding.setText("");
         binding.et.addTextChangedListener(this);
+        binding.et.setOnEditorActionListener(this);
         initRV();
         initVP();
         dealHistory();
@@ -199,6 +203,14 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            search(v.getText().toString());
+        }
+        return false;
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

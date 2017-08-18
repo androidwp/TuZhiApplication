@@ -169,6 +169,7 @@ public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelCo
             KeyBoardUtils.showKeyBoard(this);
         } else {
             deleteDialog = new DeleteDialog(this, R.style.dialog);
+            deleteDialog.setText("你确定要删除该知识库吗？删除后将无法恢复。");
             deleteDialog.setClickListener(this);
             deleteDialog.show();
         }

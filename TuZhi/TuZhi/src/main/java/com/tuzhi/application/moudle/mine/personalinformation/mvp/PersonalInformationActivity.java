@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityPersonalInformationBinding;
@@ -65,10 +66,10 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
+        progressDialog.show();
         binding = (ActivityPersonalInformationBinding) viewDataBinding;
-        HttpInitBean httpUserBean = UserInfoUtils.getUserInfo(this);
-        binding.setData(httpUserBean);
         binding.setActivity(this);
+        mPresenter.downloadUserInfo();
     }
 
     public void back() {
@@ -144,5 +145,18 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
     public void uploadFinish(String imageUrl) {
         UserInfoUtils.changeUserInfo(this, "userImage", imageUrl);
         EventBus.getDefault().post(ConstantKt.getUPDATE_USER_INFO_EVENT());
+    }
+
+    @Override
+    public void downloadSuccess(HttpInitBean httpUserBean) {
+        progressDialog.dismiss();
+        String string = JSONObject.toJSONString(httpUserBean);
+        UserInfoUtils.saveUserInfo(this, string, httpUserBean);
+        binding.setData(httpUserBean);
+    }
+
+    @Override
+    public void downloadError() {
+        progressDialog.dismiss();
     }
 }

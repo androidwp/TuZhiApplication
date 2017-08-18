@@ -21,6 +21,16 @@ public class DeleteDialog extends AlertDialog {
 
     private Context context;
 
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public DeleteDialog(Context context) {
         this(context, R.style.dialog);
     }
@@ -38,6 +48,7 @@ public class DeleteDialog extends AlertDialog {
         setContentView(view);
         ViewDeleteDialogBinding binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
+        binding.setText(text);
     }
 
     public void setClickListener(OnDialogClickListener clickListener) {

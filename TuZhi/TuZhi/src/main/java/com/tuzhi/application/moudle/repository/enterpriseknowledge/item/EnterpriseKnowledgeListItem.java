@@ -10,6 +10,7 @@ import com.tuzhi.application.databinding.ItemEnterpriseKnowledgeListBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
+import com.tuzhi.application.utils.CommonUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.ImageUtils;
@@ -64,7 +65,7 @@ public class EnterpriseKnowledgeListItem extends BaseItem<KnowledgeCardItemBean>
                     String url = joinPortraits.get(j);
                     ImageView imageView = imageViewList.get(j);
                     imageView.setVisibility(View.VISIBLE);
-                    ImageUtils.loadImage(imageView, url);
+                    ImageUtils.loadImage(imageView, url, CommonUtils.getDrawable(context, R.drawable.defaulthead));
                 }
             } else {
                 binding.tvRecentJoin.setVisibility(View.GONE);

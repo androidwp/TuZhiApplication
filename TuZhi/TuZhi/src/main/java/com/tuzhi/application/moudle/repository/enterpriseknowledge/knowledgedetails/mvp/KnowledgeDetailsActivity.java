@@ -97,8 +97,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         String textOne;
         String textTwo;
         if (type == 0) {
-            textOne = "重命名频道";
-            textTwo = "删除频道";
+            textOne = "重命名卡片";
+            textTwo = "删除卡片";
             actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
                     .setCancelButtonTitle("取消")
                     .setOtherButtonTitles("查看笔记历史版本", textOne, textTwo)
@@ -259,6 +259,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
                 KeyBoardUtils.showKeyBoard(this);
             } else {
                 deleteDialog = new DeleteDialog(this, R.style.dialog);
+                deleteDialog.setText("你确定要删除该卡片吗？删除后将无法恢复。");
                 deleteDialog.setClickListener(this);
                 deleteDialog.show();
             }

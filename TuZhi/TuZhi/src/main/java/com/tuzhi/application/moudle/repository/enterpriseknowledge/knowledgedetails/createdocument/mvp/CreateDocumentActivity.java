@@ -20,10 +20,12 @@ import com.tuzhi.application.databinding.ActivityCreateDocumentBinding;
 import com.tuzhi.application.dialog.WarnDialog;
 import com.tuzhi.application.inter.DialogMakeSureListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
-import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.utils.EmotionKeyboard;
 import com.tuzhi.application.view.ActionSheet;
 import com.yanzhenjie.album.Album;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.List;
@@ -222,7 +224,7 @@ public class CreateDocumentActivity extends MVPBaseActivity<CreateDocumentContra
 
     @Override
     public void commitSuccess() {
-        setResult(ConstantKt.getNEED_REFRESH_CODE());
+        EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
         finish();
     }
 
