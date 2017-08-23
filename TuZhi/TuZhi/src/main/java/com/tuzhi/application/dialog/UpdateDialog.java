@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -23,12 +22,12 @@ public class UpdateDialog extends AlertDialog {
 
     private String url;
 
-    public UpdateDialog(Context context) {
-        this(context, R.style.dialog);
-    }
+    private String text;
 
-    public UpdateDialog(Context context, @StyleRes int themeResId) {
-        super(context, themeResId);
+    private boolean isForcedUpdate = false;
+
+    public UpdateDialog(Context context) {
+        super(context, R.style.dialog);
     }
 
     @Override
@@ -38,15 +37,23 @@ public class UpdateDialog extends AlertDialog {
         setContentView(view);
         binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
+        binding.tv.setText(text);
+        if (isForcedUpdate) {
+            forcedUpdate();
+        }
     }
 
-    public void forcedUpdate() {
+    public void setForcedUpdate(boolean forcedUpdate) {
+        isForcedUpdate = forcedUpdate;
+    }
+
+    private void forcedUpdate() {
         binding.btnCancel.setVisibility(View.GONE);
         setCanceledOnTouchOutside(false);
     }
 
     public void setText(String text) {
-        binding.tv.setText(text);
+        this.text = text;
     }
 
     public void mDismiss() {

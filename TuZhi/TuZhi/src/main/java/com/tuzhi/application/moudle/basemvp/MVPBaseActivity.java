@@ -26,6 +26,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
     public T mPresenter;
     protected ProgressDialog progressDialog;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        //super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

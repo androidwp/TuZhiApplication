@@ -23,8 +23,17 @@ public class HttpInitBean extends BaseObservable {
     private String userId;
     private String resultCode;
     private String updateReamrk;
-    private String forceUpdate;
-    private String isUpdate;
+    private String downloadUrl;
+    private boolean forceUpdate;
+    private boolean isUpdate;
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
 
     public String isShowAdfalg() {
         return showAdfalg;
@@ -130,19 +139,19 @@ public class HttpInitBean extends BaseObservable {
         this.updateReamrk = updateReamrk;
     }
 
-    public String isForceUpdate() {
+    public boolean isForceUpdate() {
         return forceUpdate;
     }
 
-    public void setForceUpdate(String forceUpdate) {
+    public void setForceUpdate(boolean forceUpdate) {
         this.forceUpdate = forceUpdate;
     }
 
-    public String isIsUpdate() {
+    public boolean isIsUpdate() {
         return isUpdate;
     }
 
-    public void setIsUpdate(String isUpdate) {
+    public void setIsUpdate(boolean isUpdate) {
         this.isUpdate = isUpdate;
     }
 }

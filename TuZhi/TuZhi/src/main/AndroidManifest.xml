@@ -70,6 +70,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.mine.problemfeedback.mvp.ProblemFeedbackActivity"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.mine.setting.mvp.SettingActivity"
@@ -86,6 +87,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity"

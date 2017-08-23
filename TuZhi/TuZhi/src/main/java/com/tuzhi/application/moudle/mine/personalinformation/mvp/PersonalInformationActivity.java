@@ -17,6 +17,7 @@ import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.CommonUtils;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.ImageUtils;
+import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.ActionSheet;
 import com.yanzhenjie.album.Album;
@@ -37,6 +38,7 @@ import java.util.List;
 public class PersonalInformationActivity extends MVPBaseActivity<PersonalInformationContract.View, PersonalInformationPresenter> implements PersonalInformationContract.View, ActionSheet.ActionSheetListener {
     private ActionSheet actionSheet;
     private ActivityPersonalInformationBinding binding;
+
 
     @Override
     protected int getLayoutId() {
@@ -114,8 +116,12 @@ public class PersonalInformationActivity extends MVPBaseActivity<PersonalInforma
                 // 这里的List的size肯定是1。
                 List<String> pathList = Album.parseResult(data); // Parse path.
                 File file = new File(pathList.get(0));
-                HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
-                mPresenter.uploadImage(binding.riv, userInfo.getNickname(), file);
+                if (file.exists()) {
+                    HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+                    mPresenter.uploadImage(binding.riv, userInfo.getNickname(), file);
+                } else {
+                    ToastUtilsKt.toast(this, "该图片不存在");
+                }
             }
         }
     }

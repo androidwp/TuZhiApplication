@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.WindowCompat;
@@ -12,7 +13,9 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.bean.EventBusBean;
+import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityMainBinding;
+import com.tuzhi.application.dialog.UpdateDialog;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
 import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
 import com.tuzhi.application.moudle.mine.mvp.MineFragment;
@@ -22,6 +25,7 @@ import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
+import com.tuzhi.application.utils.UserInfoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,7 +63,19 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         fragmentMap.put(R.id.rbMessage, new MessageFragment());
         fragmentMap.put(R.id.rbMine, new MineFragment());
         binding.rbHomePage.setChecked(true);
+        checkUpdate();
         checkUnreadMessage();
+    }
+
+    private void checkUpdate() {
+        HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
+        if (userInfo.isIsUpdate()) {
+            UpdateDialog dialog = new UpdateDialog(this);
+            dialog.setText(userInfo.getUpdateReamrk());
+            dialog.setUrl(userInfo.getDownloadUrl());
+            dialog.setForcedUpdate(userInfo.isForceUpdate());
+            dialog.show();
+        }
     }
 
     @Override
@@ -102,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         }
         oldCheckedId = checkedId;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
 
     private void checkUnreadMessage() {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(this);

@@ -30,6 +30,7 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     public static final String ID = "ID";
     private String id;
     private String type;
+    private boolean canClick = true;
 
 
     @Override
@@ -62,8 +63,13 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     }
 
     public void commit(String type, String name) {
-        mPresenter.commit(type, name, id);
+        if (canClick) {
+            canClick = false;
+            mPresenter.commit(type, name, id);
+        }
     }
+
+
 
     @Override
     public void commitFinish() {
@@ -74,5 +80,10 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
         }
         setResult(ConstantKt.getCREATE_CODE());
         onBackPressed();
+    }
+
+    @Override
+    public void commitError() {
+        canClick = true;
     }
 }

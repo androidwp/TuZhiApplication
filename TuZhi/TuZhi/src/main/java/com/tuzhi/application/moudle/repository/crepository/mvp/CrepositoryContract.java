@@ -11,6 +11,8 @@ import com.tuzhi.application.moudle.basemvp.BaseView;
 public class CrepositoryContract {
     interface View extends BaseView {
         void commitFinish();
+
+        void commitError();
     }
 
     interface Presenter extends BasePresenter<View> {

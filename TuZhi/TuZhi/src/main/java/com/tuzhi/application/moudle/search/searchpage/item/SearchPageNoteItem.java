@@ -41,7 +41,7 @@ public class SearchPageNoteItem extends BaseItem<SearchResultListBean> {
         binding.executePendingBindings();
         resultType = searchResultListBean.getResultType();
         if (resultType == 0) {
-            binding.iv.setImageResource(ImageUtils.getFileImage(searchResultListBean.getFileSuffix(), 0));
+            binding.iv.setImageResource(ImageUtils.getFileImage(searchResultListBean.getFileType(), 0));
         } else {
             binding.iv.setImageResource(R.drawable.note);
         }

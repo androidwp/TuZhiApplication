@@ -52,7 +52,7 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                mView.commitError();
             }
         });
     }
@@ -75,7 +75,7 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                mView.commitError();
             }
         });
     }
@@ -97,7 +97,7 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
 
             @Override
             public void onFailure(@NotNull String text) {
-
+                mView.commitError();
             }
         });
     }

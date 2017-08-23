@@ -33,106 +33,122 @@
                 android:text="我的"
                 android:textSize="@dimen/generalTextSize" />
 
-            <View style="@style/NavigationLine" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginLeft="@dimen/generalSpace"
+                    android:layout_marginRight="@dimen/generalSpace"
+                    android:layout_marginTop="@dimen/generalSpace"
+                    android:background="@drawable/general_listview_selector_border"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->activity.skipPersonalInformationActivity()}"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/generalSpace">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/riv"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="@dimen/generalSpace"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius="25dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableRight="@drawable/enter"
+                        android:gravity="center_vertical"
+                        android:text="@{data.nickname}"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/GeneralSettingStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/generalSpace"
+                    android:orientation="vertical"
+                    android:padding="1dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/generalSettingHeight"
+                        android:background="@drawable/general_listview_selector"
+                        android:drawableLeft="@drawable/problem"
+                        android:drawablePadding="@dimen/generalSpace"
+                        android:drawableRight="@drawable/enter"
+                        android:gravity="center_vertical"
+                        android:onClick="@{()->activity.skipProblemFeedbackActivity()}"
+                        android:paddingLeft="@dimen/generalSpace"
+                        android:paddingRight="@dimen/generalSpace"
+                        android:text="问题反馈"
+                        android:textSize="16sp" />
+
+                    <View style="@style/NavigationLine" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/generalSettingHeight"
+                        android:background="@drawable/general_listview_selector"
+                        android:drawableLeft="@drawable/set"
+                        android:drawablePadding="@dimen/generalSpace"
+                        android:drawableRight="@drawable/enter"
+                        android:gravity="center_vertical"
+                        android:onClick="@{()->activity.skipSettingActivity()}"
+                        android:paddingLeft="@dimen/generalSpace"
+                        android:paddingRight="@dimen/generalSpace"
+                        android:text="设置"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.tuzhi.application.view.MyRippleView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/generalButtonHeight"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:onClick="@{()->activity.logOut()}"
+                    app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/general_logout_background"
+                        android:gravity="center"
+                        android:text="退出登录"
+                        android:textColor="@color/colorWhite" />
+
+                </com.tuzhi.application.view.MyRippleView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shadow" />
 
         </FrameLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginLeft="@dimen/generalSpace"
-            android:layout_marginRight="@dimen/generalSpace"
-            android:layout_marginTop="@dimen/generalSpace"
-            android:background="@drawable/general_listview_selector_border"
-            android:gravity="center_vertical"
-            android:onClick="@{()->activity.skipPersonalInformationActivity()}"
-            android:orientation="horizontal"
-            android:padding="@dimen/generalSpace">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/riv"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginRight="@dimen/generalSpace"
-                android:scaleType="centerCrop"
-                app:riv_corner_radius="25dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableRight="@drawable/enter"
-                android:gravity="center_vertical"
-                android:text="@{data.nickname}"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/GeneralSettingStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/generalSpace"
-            android:orientation="vertical"
-            android:padding="1dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/generalSettingHeight"
-                android:drawableLeft="@drawable/problem"
-                android:drawablePadding="@dimen/generalSpace"
-                android:drawableRight="@drawable/enter"
-                android:gravity="center_vertical"
-                android:background="@drawable/general_listview_selector"
-                android:onClick="@{()->activity.skipProblemFeedbackActivity()}"
-                android:paddingLeft="@dimen/generalSpace"
-                android:paddingRight="@dimen/generalSpace"
-                android:text="问题反馈"
-                android:textSize="16sp" />
-
-            <View style="@style/NavigationLine" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/generalSettingHeight"
-                android:drawableLeft="@drawable/set"
-                android:drawablePadding="@dimen/generalSpace"
-                android:background="@drawable/general_listview_selector"
-                android:drawableRight="@drawable/enter"
-                android:gravity="center_vertical"
-                android:onClick="@{()->activity.skipSettingActivity()}"
-                android:paddingLeft="@dimen/generalSpace"
-                android:paddingRight="@dimen/generalSpace"
-                android:text="设置"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.tuzhi.application.view.MyRippleView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/generalButtonHeight"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:onClick="@{()->activity.logOut()}"
-            app:rv_zoomDuration="@integer/rv_zoomDuration">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/general_logout_background"
-                android:gravity="center"
-                android:text="退出登录"
-                android:textColor="@color/colorWhite" />
-
-        </com.tuzhi.application.view.MyRippleView>
 
     </LinearLayout>
 </layout>

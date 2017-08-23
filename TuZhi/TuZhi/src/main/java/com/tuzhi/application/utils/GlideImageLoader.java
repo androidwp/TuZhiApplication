@@ -14,8 +14,11 @@ import java.io.File;
 public class GlideImageLoader implements AlbumImageLoader {
     @Override
     public void loadImage(ImageView imageView, String imagePath, int width, int height) {
-        Glide.with(imageView.getContext())
-                .load(new File(imagePath))
-                .into(imageView);
+        File file = new File(imagePath);
+        if (file.exists()) {
+            Glide.with(imageView.getContext())
+                    .load(new File(imagePath))
+                    .into(imageView);
+        }
     }
 }
