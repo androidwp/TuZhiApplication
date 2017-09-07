@@ -11,6 +11,15 @@ public class CommentListBean extends BaseListItemBean {
     private String author;
     private String time;
     private String info;
+    private String commentNumber;
+
+    public String getCommentNumber() {
+        return commentNumber;
+    }
+
+    public void setCommentNumber(String commentNumber) {
+        this.commentNumber = commentNumber;
+    }
 
     public String getImageUrl() {
         return imageUrl;

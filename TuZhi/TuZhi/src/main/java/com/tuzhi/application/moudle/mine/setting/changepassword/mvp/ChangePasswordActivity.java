@@ -36,5 +36,4 @@ public class ChangePasswordActivity extends MVPBaseActivity<ChangePasswordContra
         if (oldPassword != null && newPassword != null)
             mPresenter.commitPassword(oldPassword, newPassword);
     }
-
 }

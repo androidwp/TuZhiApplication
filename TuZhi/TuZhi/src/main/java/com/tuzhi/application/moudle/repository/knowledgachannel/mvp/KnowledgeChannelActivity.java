@@ -13,10 +13,12 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityKnowledgeChannelBinding;
 import com.tuzhi.application.dialog.DeleteDialog;
 import com.tuzhi.application.dialog.RenameDialog;
+import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 import com.tuzhi.application.moudle.repository.knowledgachannel.bean.KnowledgeChannelItemBean;
 import com.tuzhi.application.moudle.repository.knowledgachannel.item.KnowledgeChannelItem;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
@@ -40,7 +42,7 @@ import kale.adapter.item.AdapterItem;
  * MVPPlugin
  */
 
-public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelContract.View, KnowledgeChannelPresenter> implements KnowledgeChannelContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener, OnDialogClickListener {
+public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelContract.View, KnowledgeChannelPresenter> implements KnowledgeChannelContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener, OnDialogClickListener, ItemClickListener {
     public static final String MESSAGE = "KnowledgeChannelActivity_refresh";
     public static final String ID = "id";
     public static final String TITLE = "TITLE";
@@ -90,7 +92,9 @@ public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelCo
                 String itemType = (String) o;
                 switch (itemType) {
                     case KnowledgeChannelItem.TYPE:
-                        return new KnowledgeChannelItem();
+                        KnowledgeChannelItem knowledgeChannelItem = new KnowledgeChannelItem();
+                        knowledgeChannelItem.setClickListener(KnowledgeChannelActivity.this);
+                        return knowledgeChannelItem;
                     default:
                         return new GeneralLoadFootViewItem();
                 }
@@ -216,5 +220,15 @@ public class KnowledgeChannelActivity extends MVPBaseActivity<KnowledgeChannelCo
                 mPresenter.rename(listId, (String) view.getTag());
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        KnowledgeChannelItemBean knowledgeChannelItemBean = (KnowledgeChannelItemBean) view.getTag();
+        Intent intent = new Intent(this, EnterpriseKnowledgeActivity.class);
+        intent.putExtra(EnterpriseKnowledgeActivity.KLID, knowledgeChannelItemBean.getKlid());
+        intent.putExtra(EnterpriseKnowledgeActivity.KCID, knowledgeChannelItemBean.getKcid());
+        intent.putExtra(EnterpriseKnowledgeActivity.TITLE, knowledgeChannelItemBean.getTitle());
+        startActivity(intent);
     }
 }

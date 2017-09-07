@@ -6,7 +6,7 @@ import android.util.Log
  * Created by wangpeng on 2017/5/19.
  */
 
-val flagTest = false
+val flagTest = true
 
 fun showLog(name: String, text: String) {
     if (flagTest)

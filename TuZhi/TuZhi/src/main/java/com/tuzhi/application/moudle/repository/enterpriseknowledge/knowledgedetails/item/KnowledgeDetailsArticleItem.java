@@ -66,7 +66,6 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
-                    // binding.fl.setVisibility(View.INVISIBLE);
                 }
 
                 @Override

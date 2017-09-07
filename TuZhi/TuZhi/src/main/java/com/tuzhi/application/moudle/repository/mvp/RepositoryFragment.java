@@ -7,17 +7,18 @@ import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.tuzhi.application.R;
-import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityRepositoryBinding;
+import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
+import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.utils.ConstantKt;
-import com.tuzhi.application.utils.UserInfoUtils;
 import com.tuzhi.application.view.LoadMoreListener;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -35,7 +36,7 @@ import kale.adapter.item.AdapterItem;
  * 知识库页面
  */
 
-public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View, RepositoryPresenter> implements RepositoryContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener {
+public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View, RepositoryPresenter> implements RepositoryContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ItemClickListener {
 
     public static final String MESSAGE = "RepositoryActivity_refresh";
     private ActivityRepositoryBinding binding;
@@ -61,7 +62,7 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        AndPermission.with(this).requestCode(100).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE).start();
+        AndPermission.with(this).requestCode(100).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SYSTEM_ALERT_WINDOW).start();
         EventBus.getDefault().register(this);
         binding = (ActivityRepositoryBinding) viewDataBinding;
         binding.setActivity(this);
@@ -70,8 +71,6 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
         binding.rrv.setLoadListener(this);
         binding.rrv.setTitle("知识库空空如也");
         binding.rrv.setInfo("点击上方的\"+\"号，创建知识库");
-        HttpInitBean userInfo = UserInfoUtils.getUserInfo(getContext());
-        binding.setData(userInfo);
         CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
             @NonNull
             @Override
@@ -81,7 +80,9 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
                     case GeneralLoadFootViewItem.TYPE:
                         return new GeneralLoadFootViewItem();
                     default:
-                        return new RepositoryListItem();
+                        RepositoryListItem item = new RepositoryListItem();
+                        item.setItemClickListener(RepositoryFragment.this);
+                        return item;
                 }
             }
 
@@ -131,5 +132,12 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
         }
     }
 
-
+    @Override
+    public void onItemClick(View view) {
+        RepositoryListItemBean tag = (RepositoryListItemBean) view.getTag();
+        Intent intent = new Intent(getContext(), KnowledgeChannelActivity.class);
+        intent.putExtra(KnowledgeChannelActivity.ID, tag.getId());
+        intent.putExtra(KnowledgeChannelActivity.TITLE, tag.getTitle());
+        getContext().startActivity(intent);
+    }
 }

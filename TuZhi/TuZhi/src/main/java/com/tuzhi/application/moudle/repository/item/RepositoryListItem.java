@@ -1,14 +1,13 @@
 package com.tuzhi.application.moudle.repository.item;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemRepositoryListBinding;
+import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
-import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +19,12 @@ public class RepositoryListItem extends BaseItem<RepositoryListItemBean> {
     public static final String TYPE = "RepositoryListItem";
 
     private ItemRepositoryListBinding binding;
+
+    private ItemClickListener itemClickListener;
+
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     @Override
     public void bindView(@NotNull View view) {
@@ -38,11 +43,10 @@ public class RepositoryListItem extends BaseItem<RepositoryListItemBean> {
         binding.executePendingBindings();//加一行，问题解决
     }
 
-    public void skip(String id, String title) {
-        Intent intent = new Intent(context, KnowledgeChannelActivity.class);
-        intent.putExtra(KnowledgeChannelActivity.ID, id);
-        intent.putExtra(KnowledgeChannelActivity.TITLE, title);
-        context.startActivity(intent);
+    public void skip(View view, RepositoryListItemBean bean) {
+        if (itemClickListener!=null){
+            view.setTag(bean);
+            itemClickListener.onItemClick(view);
+        }
     }
-
 }

@@ -14,8 +14,10 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tuzhi.application.bean.HttpInitBean;
+import com.tuzhi.application.service.ClipboardService;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.GlideImageLoader;
+import com.tuzhi.application.utils.LogUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
@@ -31,12 +33,13 @@ public class MyApplication extends Application {
     // 创建服务用于捕获崩溃异常
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
+            LogUtilsKt.showLog("bug",ex.getLocalizedMessage());
             restartApp();//发生崩溃异常时,重启应用
         }
     };
 
-    public void restartApp(){
-        Intent intent = new Intent(this,MainActivity.class);
+    public void restartApp() {
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -51,12 +54,13 @@ public class MyApplication extends Application {
     }
 
     private void init() {
-        Thread.setDefaultUncaughtExceptionHandler(restartHandler);
+       // Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         getVersion();
         getImieStatus();
         initLogin();
         QbSdk.initX5Environment(this, null);
         initAlbum();
+        startService(new Intent(this, ClipboardService.class));
     }
 
     private void initAlbum() {

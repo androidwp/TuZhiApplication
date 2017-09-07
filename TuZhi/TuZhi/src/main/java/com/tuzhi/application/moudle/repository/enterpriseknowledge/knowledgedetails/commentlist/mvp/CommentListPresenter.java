@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.bean.CommentListBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.bean.HttpCommentListBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListHeadItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListItem;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -24,6 +25,7 @@ import java.util.WeakHashMap;
 public class CommentListPresenter extends BasePresenterImpl<CommentListContract.View> implements CommentListContract.Presenter {
 
     private static final String URL = "tzkm/comment";
+    private static final String URL_PRAISE = "tzkm/praise";
 
     @Override
     public void downLoadData(String aid, final String cid, int page) {
@@ -43,15 +45,16 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
                 HttpCommentListBean.CommentPageBean commentPage = httpCommentListBean.getCommentPage();
                 boolean next = commentPage.isNext();
                 int index = commentPage.getIndex();
-                //根部评论先不要
-//                if (index == 0) {
-//                    CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);
-//                    commentListBean.setInfo(comment.getContent());
-//                    commentListBean.setTime(comment.getTime());
-//                    commentListBean.setAuthor(comment.getNickname());
-//                    commentListBean.setImageUrl(comment.getUserImage());
-//                    data.add(commentListBean);
-//                }
+                //根部评论
+                if (index == 0) {
+                    CommentListBean commentListBean = new CommentListBean(CommentListHeadItem.TYPE);
+                    commentListBean.setInfo(comment.getContent());
+                    commentListBean.setTime(comment.getTime());
+                    commentListBean.setAuthor(comment.getNickname());
+                    commentListBean.setImageUrl(comment.getUserImage());
+                    commentListBean.setCommentNumber("评论 (" + commentPage.getCount() + ")");
+                    data.add(commentListBean);
+                }
                 List<HttpCommentListBean.CommentPageBean.ResultBean> result = commentPage.getResult();
                 for (HttpCommentListBean.CommentPageBean.ResultBean bean : result) {
                     CommentListBean commentListBean = new CommentListBean(CommentListItem.TYPE);
@@ -61,17 +64,44 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
                     commentListBean.setImageUrl(bean.getUserImage());
                     data.add(commentListBean);
                 }
-                mView.downLoadFinish(index, next, data);
+                mView.downLoadFinish(index, next, data, comment.isUserPraiseStatus(), comment.getPraiseNum());
             }
 
             @Override
             public void onFailure(@NotNull String text) {
                 if (TextUtils.equals(text, "列表无内容显示")) {
-                    mView.downLoadFinish(0, false, null);
+                    mView.downLoadFinish(0, false, null, false, "0");
                 }
             }
         });
 
 
+    }
+
+    @Override
+    public void commitClickPraise(String aid, String cid, final String praiseNumber) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("falg", "1");
+        parameter.put("oType", "1");
+        parameter.put("cType", "1");
+        parameter.put("oId", aid);
+        parameter.put("cId", cid);
+        HttpUtilsKt.post(mView.getContext(), URL_PRAISE, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                int mPraiseNumber = Integer.parseInt(praiseNumber);
+                mView.clickPraiseSuccess(mPraiseNumber + 1 + "");
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
     }
 }

@@ -1,57 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="dialog"
-            type="com.tuzhi.application.dialog.RenameDialog" />
+            type="com.tuzhi.application.dialog.ClipperDialog" />
 
         <variable
-            name="name"
-            type="String" />
-
-        <variable
-            name="title"
-            type="String" />
-
-        <variable
-            name="confirmText"
+            name="info"
             type="String" />
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_background"
         android:orientation="vertical"
         android:paddingLeft="@dimen/generalSpace"
-        android:paddingRight="@dimen/generalSpace"
-        android:paddingTop="@dimen/generalSpace">
+        android:paddingRight="@dimen/generalSpace">
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="@{title}"
+            android:gravity="center"
+            android:paddingBottom="@dimen/generalSpace"
+            android:paddingTop="@dimen/generalSpace"
+            android:text="将剪藏网页添加到知识库？"
+            android:textColor="@color/colorText"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/et"
+        <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/generalSpace"
-            android:background="@drawable/dialog_rename_et_background"
-            android:maxLength="20"
+            android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:text="@={name}"
+            android:text="@{info}"
             android:textColor="@color/colorGeneralTintText" />
 
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/generalSpace"
             android:orientation="horizontal">
 
             <TextView
@@ -67,18 +60,18 @@
                 android:textColor="@color/colorGeneralMoreTintText" />
 
             <TextView
-                android:id="@+id/tvRename"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/general_listview_selector"
                 android:gravity="center"
-                android:onClick="@{(view)->dialog.rename(view,name)}"
+                android:onClick="@{()->dialog.sure()}"
                 android:paddingBottom="@dimen/generalSpace"
                 android:paddingTop="@dimen/generalSpace"
-                android:text="@{confirmText}"
+                android:text="添加"
                 android:textColor="@color/colorBlueButton" />
 
         </LinearLayout>
+
     </LinearLayout>
 </layout>

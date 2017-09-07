@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MyApplication"
@@ -18,9 +19,11 @@
         android:icon="@mipmap/tzicon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/tzicon"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".service.UpdateService" />
+        <service android:name=".service.ClipboardService" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -70,8 +73,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.mine.problemfeedback.mvp.ProblemFeedbackActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".moudle.mine.setting.mvp.SettingActivity"
             android:screenOrientation="portrait" />
@@ -87,8 +90,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity"
             android:screenOrientation="portrait" />
@@ -112,6 +115,23 @@
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.recoverhistoryversion.mvp.RecoverHistoryVersionActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".moudle.login.forgetpassword.mvp.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moudle.mine.setting.changeinitialpassword.mvp.ChangeInitialPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".moudle.clipper.clippertwo.mvp.ClipperTwoActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance" />
+
+        <activity
+            android:name=".moudle.clipper.mvp.ClipperOneActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance" />
+
     </application>
 
 </manifest>

@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="activity"
-            type="com.tuzhi.application.moudle.repository.mvp.RepositoryFragment" />
+            type="com.tuzhi.application.moudle.clipper.mvp.ClipperOneActivity" />
+
     </data>
 
     <LinearLayout
@@ -19,18 +21,18 @@
             android:background="@color/colorWhite">
 
             <TextView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:text="取消" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="知识库"
                 android:ellipsize="end"
+                android:text="剪藏到"
                 android:textSize="@dimen/generalTextSize" />
 
-            <ImageView
-                android:id="@+id/ivRight"
-                style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
-                android:src="@drawable/add" />
 
         </FrameLayout>
 

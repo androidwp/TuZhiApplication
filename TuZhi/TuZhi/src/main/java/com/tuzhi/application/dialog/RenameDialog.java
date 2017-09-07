@@ -16,9 +16,19 @@ import com.tuzhi.application.inter.OnDialogClickListener;
  */
 
 public class RenameDialog extends AlertDialog {
+    private String title = "重命名";
+    private String confirmText = "确认修改";
     private String text;
     private ViewRenameDialogBinding binding;
     private OnDialogClickListener clickListener;
+
+    public void setConfirmText(String confirmText) {
+        this.confirmText = confirmText;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public void setClickListener(OnDialogClickListener clickListener) {
         this.clickListener = clickListener;
@@ -48,14 +58,17 @@ public class RenameDialog extends AlertDialog {
         binding = DataBindingUtil.bind(view);
         binding.setDialog(this);
         binding.setName(text);
+        binding.setTitle(title);
+        binding.setConfirmText(confirmText);
         binding.et.post(new Runnable() {
             @Override
             public void run() {
-                if (text.length() > 20) {
-                    binding.et.setSelection(20);
-                } else {
-                    binding.et.setSelection(text.length());
-                }
+                if (text != null)
+                    if (text.length() > 20) {
+                        binding.et.setSelection(20);
+                    } else {
+                        binding.et.setSelection(text.length());
+                    }
             }
         });
         setCanceledOnTouchOutside(false);

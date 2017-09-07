@@ -11,6 +11,10 @@
         <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
     </style>
 
+    <style name="ActivityDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
     <!-- iOS7 Style -->
     <style name="ActionSheetStyleiOS7">

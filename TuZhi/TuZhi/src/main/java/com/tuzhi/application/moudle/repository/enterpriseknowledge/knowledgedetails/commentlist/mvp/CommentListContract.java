@@ -13,10 +13,14 @@ import java.util.ArrayList;
 
 public class CommentListContract {
     interface View extends BaseView {
-        void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data);
+        void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data, boolean praiseStatus, String praiseNumber);
+
+        void clickPraiseSuccess(String praiseNumber);
     }
 
     interface Presenter extends BasePresenter<View> {
         void downLoadData(String aid, String cid, int page);
+
+        void commitClickPraise(String aid, String cid, String praiseNumber);
     }
 }

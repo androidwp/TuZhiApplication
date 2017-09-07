@@ -12,10 +12,12 @@ import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.bean.CommentListBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListHeadItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.publishtopicorcomment.mvp.PublishTopicOrCommentActivity;
 import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,11 +33,12 @@ import kale.adapter.item.AdapterItem;
  * 邮箱 784787081@qq.com
  */
 
-public class CommentListActivity extends MVPBaseActivity<CommentListContract.View, CommentListPresenter> implements CommentListContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener {
+public class CommentListActivity extends MVPBaseActivity<CommentListContract.View, CommentListPresenter> implements CommentListContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener {
     public static final String AID = "AID";
     public static final String CID = "CID";
     private String aid;
     private String cid;
+    private ActionSheet actionSheet;
     private ActivityCommentListBinding binding;
     private ArrayList<CommentListBean> mData = new ArrayList<>();
 
@@ -65,8 +68,10 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
                         return new GeneralLoadFootViewItem();
                     case GeneralEmptyFootViewItem.TYPE:
                         return new GeneralEmptyFootViewItem();
-                    default:
+                    case CommentListItem.TYPE:
                         return new CommentListItem();
+                    default:
+                        return new CommentListHeadItem();
                 }
             }
 
@@ -80,6 +85,14 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
 
     public void back() {
         onBackPressed();
+    }
+
+    public void openSelectDialog() {
+        actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("删除")
+                .setCancelableOnTouchOutside(true)
+                .setListener(this).show();
     }
 
     public void skipPublishCommentActivity() {
@@ -110,7 +123,41 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
     }
 
     @Override
-    public void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data) {
-        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
+    public void onBackPressed() {
+        if (actionSheet != null && !actionSheet.ismDismissed()) {
+            actionSheet.dismiss();
+        } else {
+            super.onBackPressed();
+        }
     }
+
+    @Override
+    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+        actionSheet.dismiss();
+    }
+
+    @Override
+    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+
+    }
+
+    @Override
+    public void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data, boolean praiseStatus, String praiseNumber) {
+        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
+        binding.setPraiseStatus(praiseStatus);
+        binding.setPraiseNumber(praiseNumber);
+    }
+
+    @Override
+    public void clickPraiseSuccess(String praiseNumber) {
+        binding.setPraiseStatus(true);
+        binding.setPraiseNumber(praiseNumber);
+        EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+    }
+
+    public void commitPraise(boolean praiseStatus, String praiseNumber) {
+        if (!praiseStatus)
+            mPresenter.commitClickPraise(aid, cid, praiseNumber);
+    }
+
 }

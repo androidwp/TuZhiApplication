@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="loginActivity"
+            name="activity"
             type="com.tuzhi.application.moudle.login.mvp.LoginActivity" />
 
         <variable
@@ -72,7 +72,7 @@
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
             android:layout_marginTop="30dp"
-            android:onClick="@{()->loginActivity.commit(user)}"
+            android:onClick="@{()->activity.commit(user)}"
             app:rv_zoomDuration="@integer/rv_zoomDuration">
 
             <TextView
@@ -88,13 +88,24 @@
 
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="如果忘记密码，请联系企业管理员重置密码"
+            android:layout_gravity="right"
+            android:layout_marginRight="45dp"
+            android:onClick="@{()->activity.forgetPassword()}"
+            android:padding="10dp"
+            android:text="忘记密码?"
             android:textColor="@color/colorTextHint"
             android:textSize="12sp" />
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="如果忘记密码，请联系企业管理员重置密码"-->
+        <!--android:textColor="@color/colorTextHint"-->
+        <!--android:textSize="12sp" />-->
 
     </LinearLayout>
 </layout>

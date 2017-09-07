@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/general_listview_selector"
-        android:onClick="@{()->item.skip(data.klid,data.kcid,data.title)}">
+        android:onClick="@{(view)->item.skip(view,data)}">
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -7,13 +7,11 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemKnowledgeDetailsCommentBinding;
 import com.tuzhi.application.item.BaseItem;
-import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 
-import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -73,7 +71,6 @@ public class KnowledgeDetailsCommentItem extends BaseItem<KnowledgeDetailsListBe
                     knowledgeDetailsListBean.setPraiseStatus(true);
                     int praiseNumber = Integer.parseInt(knowledgeDetailsListBean.getPraiseNumber());
                     knowledgeDetailsListBean.setPraiseNumber((praiseNumber + 1) + "");
-                    EventBus.getDefault().post(ReadFragment.REFRESH);
                 }
 
                 @Override
@@ -83,6 +80,4 @@ public class KnowledgeDetailsCommentItem extends BaseItem<KnowledgeDetailsListBe
             });
         }
     }
-
-
 }

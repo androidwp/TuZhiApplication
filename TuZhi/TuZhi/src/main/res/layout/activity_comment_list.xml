@@ -6,6 +6,15 @@
         <variable
             name="activity"
             type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity" />
+
+        <variable
+            name="praiseStatus"
+            type="Boolean" />
+
+        <variable
+            name="praiseNumber"
+            type="String" />
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,13 +36,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="评论列表"
+                android:text="发言详情"
                 android:textSize="@dimen/generalTextSize" />
 
             <ImageView
                 style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.skipPublishCommentActivity()}"
-                android:src="@drawable/comment" />
+                android:onClick="@{()->activity.openSelectDialog()}"
+                android:src="@drawable/more" />
 
             <View style="@style/NavigationLine" />
 
@@ -42,7 +51,45 @@
         <com.tuzhi.application.view.RefreshRecycleView
             android:id="@+id/rrv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+            <com.tuzhi.application.view.DrawableTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/general_listview_selector"
+                android:drawableLeft="@{praiseStatus? @drawable/admire:@drawable/admirenormal}"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="@{praiseNumber}"
+                android:onClick="@{()->activity.commitPraise(praiseStatus,praiseNumber)}"
+                android:textColor="@{praiseStatus? @color/colorYellowButton:@color/colorGeneralTintText}" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorLine" />
+
+            <com.tuzhi.application.view.DrawableTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/general_listview_selector"
+                android:drawableLeft="@drawable/comment"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:onClick="@{()->activity.skipPublishCommentActivity()}"
+                android:text="评论" />
+
+        </LinearLayout>
     </LinearLayout>
 </layout>

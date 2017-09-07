@@ -9,6 +9,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityLoginBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.bean.User;
+import com.tuzhi.application.moudle.login.forgetpassword.mvp.ForgetPasswordActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
@@ -27,8 +28,8 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         ActivityLoginBinding binding = (ActivityLoginBinding) viewDataBinding;
-        binding.setLoginActivity(this);
-        binding.setUser(new User("",""));
+        binding.setActivity(this);
+        binding.setUser(new User("", ""));
     }
 
 
@@ -40,6 +41,10 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         } else {
             mPresenter.commitUser(user);
         }
+    }
+
+    public void forgetPassword() {
+        ActivitySkipUtilsKt.toActivity(this, ForgetPasswordActivity.class);
     }
 
     @Override
