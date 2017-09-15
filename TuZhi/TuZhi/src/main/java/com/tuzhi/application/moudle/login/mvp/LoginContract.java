@@ -14,6 +14,8 @@ public class LoginContract {
     public interface View extends BaseView {
         //登录成功跳转到知识库
         void skip();
+
+        void skipChangeInitPassword();
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -14,6 +14,7 @@ public class EventBusUtils {
     public static void sendUnreadMessageNumber(int number) {
         EventBusBean eventBusBean = new EventBusBean();
         eventBusBean.setName(MainActivity.NAME);
+        eventBusBean.setEventType(MainActivity.TYPE_NOTIFICATION);
         eventBusBean.setiContent(number);
         EventBus.getDefault().post(eventBusBean);
 

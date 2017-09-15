@@ -16,11 +16,19 @@ public class CommentListContract {
         void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data, boolean praiseStatus, String praiseNumber);
 
         void clickPraiseSuccess(String praiseNumber);
+
+        void deleteCommentListSuccess();
+
+        void deleteCommentSuccess();
     }
 
     interface Presenter extends BasePresenter<View> {
         void downLoadData(String aid, String cid, int page);
 
         void commitClickPraise(String aid, String cid, String praiseNumber);
+
+        void deleteCommentList(String cid);
+
+        void deleteComment(String cid);
     }
 }

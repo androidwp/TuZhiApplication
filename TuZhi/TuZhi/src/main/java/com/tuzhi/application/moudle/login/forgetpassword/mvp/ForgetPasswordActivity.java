@@ -19,6 +19,8 @@ public class ForgetPasswordActivity extends MVPBaseActivity<ForgetPasswordContra
 
     private CountDownTimer countDownTimer;
     private boolean canClick = true;
+    public static final String PHONE = "PHONE";
+    public static final String EMAIL = "EMAIL";
 
     @Override
     protected int getLayoutId() {
@@ -55,11 +57,34 @@ public class ForgetPasswordActivity extends MVPBaseActivity<ForgetPasswordContra
     public void getAuthCode(ForgetPasswordBean bean) {
         if (canClick) {
             canClick = false;
-            countDownTimer.start();
+            if (bean.isPhoneStatus())
+                mPresenter.getVerificationCode(PHONE, bean.getPhoneOrEmailText());
+            else
+                mPresenter.getVerificationCode(EMAIL, bean.getPhoneOrEmailText());
+
         }
     }
 
     public void commit(ForgetPasswordBean bean) {
+        if (bean.isPhoneStatus()){
+            mPresenter.changePassword(PHONE,bean.getPhoneOrEmailText(),bean.getAuthCodeText(),bean.getPasswordText());
+        }else{
+            mPresenter.changePassword(EMAIL,bean.getPhoneOrEmailText(),bean.getAuthCodeText(),bean.getPasswordText());
+        }
+    }
 
+    @Override
+    public void getVerificationCodeSuccess(String phoneOrEmail) {
+        countDownTimer.start();
+    }
+
+    @Override
+    public void getVerificationCodeError() {
+        canClick = true;
+    }
+
+    @Override
+    public void changePasswordSuccess() {
+        onBackPressed();
     }
 }

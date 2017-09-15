@@ -25,6 +25,7 @@ import java.util.WeakHashMap;
 public class ClipperTwoPresenter extends BasePresenterImpl<ClipperTwoContract.View> implements ClipperTwoContract.Presenter {
 
     private final String URL = "tzkm/knowledgeChannel";
+    private final String URL_CLIPPER = "tzkm/collection/article";
 
     @Override
     public void downLoadData(final String id, int page) {
@@ -65,7 +66,26 @@ public class ClipperTwoPresenter extends BasePresenterImpl<ClipperTwoContract.Vi
     }
 
     @Override
-    public void createCard(String klid, String kcid, String articleUrl) {
-        mView.createCardSuccess();
+    public void createCard(String klid, String kcid, String title, String articleUrl) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("kcId", kcid);
+        parameter.put("title", title);
+        parameter.put("sourceUrl", articleUrl);
+        HttpUtilsKt.get(mView.getContext(), URL_CLIPPER, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(String s, String text) {
+                mView.createCardSuccess();
+            }
+
+            @Override
+            public void onFailure(String text) {
+
+            }
+        });
     }
 }

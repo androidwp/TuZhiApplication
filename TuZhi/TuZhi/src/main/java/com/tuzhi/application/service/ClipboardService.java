@@ -7,9 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.tuzhi.application.dialog.ClipperDialog;
+import com.tuzhi.application.utils.ConstantKt;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 
 /**
  * Created by wangpeng on 2017/9/6.
@@ -43,15 +46,30 @@ public class ClipboardService extends Service implements ClipboardManager.OnPrim
     public void onPrimaryClipChanged() {
         ClipData.Item itemAt = clipboardManager.getPrimaryClip().getItemAt(0);
         CharSequence text = itemAt.getText();
-        if (dialog == null) {
-            dialog = new ClipperDialog(getApplicationContext());
-        }
-        if (!dialog.isShowing()) {
-            if (text != null) {
-                dialog.setInfo(text.toString());
-                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                dialog.show();
+        if (text != null) {
+            String allow = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getKey_AllowClipper());
+            if (TextUtils.equals(allow, ConstantKt.getValue_true())) {
+                if (isClipperUrl(text.toString())) {
+                    if (dialog == null) {
+                        dialog = new ClipperDialog(getApplicationContext());
+                    }
+                    if (!dialog.isShowing()) {
+                        dialog.setInfo(text.toString());
+                        dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                        dialog.show();
+
+                    }
+                }
             }
         }
+    }
+
+    private boolean isClipperUrl(String url) {
+        if (url.contains("http")) {
+            if (url.contains("weixin")) {
+                return true;
+            }
+        }
+        return false;
     }
 }

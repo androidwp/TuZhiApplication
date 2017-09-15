@@ -21,8 +21,6 @@ public class BindingPhoneOrEmailFirstPresenter extends BasePresenterImpl<Binding
     //提交检查号码正确性。获取验证码
     @Override
     public void commitPhoneOrEmail(String type, final String phoneOrEmail) {
-
-
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("type", "4");
         if (type.equals(BindingPhoneOrEmailFirstActivity.PHONE))
@@ -46,7 +44,5 @@ public class BindingPhoneOrEmailFirstPresenter extends BasePresenterImpl<Binding
                 mView.error();
             }
         });
-
-
     }
 }

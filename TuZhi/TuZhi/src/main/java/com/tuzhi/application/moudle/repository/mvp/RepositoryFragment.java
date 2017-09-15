@@ -1,7 +1,6 @@
 package com.tuzhi.application.moudle.repository.mvp;
 
 
-import android.Manifest;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
@@ -20,7 +19,6 @@ import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.view.LoadMoreListener;
-import com.yanzhenjie.permission.AndPermission;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -62,7 +60,6 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
-        AndPermission.with(this).requestCode(100).permission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SYSTEM_ALERT_WINDOW).start();
         EventBus.getDefault().register(this);
         binding = (ActivityRepositoryBinding) viewDataBinding;
         binding.setActivity(this);

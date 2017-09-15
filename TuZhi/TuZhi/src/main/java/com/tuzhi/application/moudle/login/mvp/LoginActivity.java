@@ -10,6 +10,7 @@ import com.tuzhi.application.databinding.ActivityLoginBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.bean.User;
 import com.tuzhi.application.moudle.login.forgetpassword.mvp.ForgetPasswordActivity;
+import com.tuzhi.application.moudle.mine.setting.changeinitialpassword.mvp.ChangeInitialPasswordActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
@@ -50,6 +51,12 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     @Override
     public void skip() {
         ActivitySkipUtilsKt.toActivity(this, MainActivity.class);
+        onBackPressed();
+    }
+
+    @Override
+    public void skipChangeInitPassword() {
+        ActivitySkipUtilsKt.toActivity(this, ChangeInitialPasswordActivity.class);
         onBackPressed();
     }
 }

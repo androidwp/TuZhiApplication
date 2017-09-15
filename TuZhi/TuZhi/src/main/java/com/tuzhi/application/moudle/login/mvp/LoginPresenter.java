@@ -38,7 +38,11 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             public void onSuccess(@Nullable HttpInitBean httpUserBean, @NotNull String text) {
                 UserInfoUtils.saveUserInfo(mView.getContext(), text, httpUserBean);
                 if (TextUtils.equals(httpUserBean.isLoginStatus(), "true"))
-                    mView.skip();
+                    if (httpUserBean.isFirstUse()) {
+                        mView.skipChangeInitPassword();
+                    } else {
+                        mView.skip();
+                    }
             }
 
             @Override

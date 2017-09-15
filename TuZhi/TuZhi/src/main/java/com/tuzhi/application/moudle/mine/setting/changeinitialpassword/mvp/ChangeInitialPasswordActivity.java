@@ -49,6 +49,7 @@ public class ChangeInitialPasswordActivity extends MVPBaseActivity<ChangeInitial
     @Override
     public void changeSuccess() {
         ActivitySkipUtilsKt.toActivity(this, MainActivity.class);
+        ToastUtilsKt.toast(this, "修改成功");
         onBackPressed();
     }
 }

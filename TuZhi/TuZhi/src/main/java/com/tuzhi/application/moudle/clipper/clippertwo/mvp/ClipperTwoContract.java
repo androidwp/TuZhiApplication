@@ -23,6 +23,6 @@ public class ClipperTwoContract {
     interface Presenter extends BasePresenter<View> {
         void downLoadData(String id, int page);
 
-        void createCard(String klid, String kcid, String articleUrl);
+        void createCard(String klid, String kcid,String title, String articleUrl);
     }
 }

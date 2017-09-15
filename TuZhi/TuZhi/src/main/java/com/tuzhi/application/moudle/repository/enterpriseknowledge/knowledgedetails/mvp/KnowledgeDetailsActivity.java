@@ -22,6 +22,7 @@ import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.bean.KnowledgeDetailsListBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.checkhistoricalversion.mvp.CheckHistoricalVersionActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.mvp.ChooseColleagueActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.createdocument.mvp.CreateDocumentActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsArticleItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.item.KnowledgeDetailsCommentItem;
@@ -196,6 +197,14 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         Intent intent = new Intent(this, PublishTopicOrCommentActivity.class);
         intent.putExtra(PublishTopicOrCommentActivity.TYPE, PublishTopicOrCommentActivity.TOPIC);
         intent.putExtra(PublishTopicOrCommentActivity.AID, id);
+        startActivity(intent);
+    }
+
+
+    public void skipChooseColleagueActivity() {
+        Intent intent = new Intent(this, ChooseColleagueActivity.class);
+        intent.putExtra(ChooseColleagueActivity.CID, id);
+        intent.putExtra(ChooseColleagueActivity.CTITLE, title);
         startActivity(intent);
     }
 

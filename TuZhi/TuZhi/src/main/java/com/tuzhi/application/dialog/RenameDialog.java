@@ -5,11 +5,13 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.StyleRes;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewRenameDialogBinding;
 import com.tuzhi.application.inter.OnDialogClickListener;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 /**
  * Created by wangpeng on 2017/6/2.
@@ -79,9 +81,11 @@ public class RenameDialog extends AlertDialog {
     }
 
     public void rename(View view, String name) {
-        if (clickListener != null) {
+        if (clickListener != null && !TextUtils.isEmpty(name)) {
             view.setTag(name);
             clickListener.onDialogClick(view);
+        } else {
+            ToastUtilsKt.toast(getContext(), "名称不能为空");
         }
     }
 }

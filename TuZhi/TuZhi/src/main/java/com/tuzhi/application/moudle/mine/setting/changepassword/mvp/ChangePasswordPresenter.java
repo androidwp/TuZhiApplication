@@ -21,6 +21,7 @@ public class ChangePasswordPresenter extends BasePresenterImpl<ChangePasswordCon
     @Override
     public void commitPassword(String oldPassword, String newPassword) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate","2");
         parameter.put("newpwd",newPassword);
         parameter.put("oldpwd",oldPassword);
         HttpUtilsKt.post(mView.getContext(), URL, parameter, String.class, new HttpCallBack<String>() {

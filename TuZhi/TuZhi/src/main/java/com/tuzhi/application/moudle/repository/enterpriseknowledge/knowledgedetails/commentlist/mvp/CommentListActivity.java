@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityCommentListBinding;
+import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
@@ -33,7 +35,7 @@ import kale.adapter.item.AdapterItem;
  * 邮箱 784787081@qq.com
  */
 
-public class CommentListActivity extends MVPBaseActivity<CommentListContract.View, CommentListPresenter> implements CommentListContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener {
+public class CommentListActivity extends MVPBaseActivity<CommentListContract.View, CommentListPresenter> implements CommentListContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener, ItemClickListener {
     public static final String AID = "AID";
     public static final String CID = "CID";
     private String aid;
@@ -69,7 +71,9 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
                     case GeneralEmptyFootViewItem.TYPE:
                         return new GeneralEmptyFootViewItem();
                     case CommentListItem.TYPE:
-                        return new CommentListItem();
+                        CommentListItem commentListItem = new CommentListItem();
+                        commentListItem.setClickListener(CommentListActivity.this);
+                        return commentListItem;
                     default:
                         return new CommentListHeadItem();
                 }
@@ -138,8 +142,9 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-
+        mPresenter.deleteCommentList(cid);
     }
+
 
     @Override
     public void downLoadFinish(int page, boolean haveNextPage, ArrayList<CommentListBean> data, boolean praiseStatus, String praiseNumber) {
@@ -155,9 +160,25 @@ public class CommentListActivity extends MVPBaseActivity<CommentListContract.Vie
         EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
     }
 
+    @Override
+    public void deleteCommentListSuccess() {
+        EventBus.getDefault().post(KnowledgeDetailsActivity.MESSAGE);
+        onBackPressed();
+    }
+
+    @Override
+    public void deleteCommentSuccess() {
+        onRefresh();
+    }
+
     public void commitPraise(boolean praiseStatus, String praiseNumber) {
         if (!praiseStatus)
             mPresenter.commitClickPraise(aid, cid, praiseNumber);
     }
 
+    @Override
+    public void onItemClick(View view) {
+        String id = (String) view.getTag();
+        mPresenter.deleteComment(id);
+    }
 }

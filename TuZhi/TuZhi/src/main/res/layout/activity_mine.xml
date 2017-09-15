@@ -83,6 +83,34 @@
                     android:orientation="vertical"
                     android:padding="1dp">
 
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/generalSettingHeight"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingRight="@dimen/generalSpace">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/problem"
+                            android:drawablePadding="@dimen/generalSpace"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/generalSpace"
+                            android:text="剪藏开关"
+                            android:textSize="16sp" />
+
+                        <com.tuzhi.application.view.SwitchView
+                            android:id="@+id/sv"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent" />
+
+                    </LinearLayout>
+
+                    <View style="@style/NavigationLine" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/generalSettingHeight"

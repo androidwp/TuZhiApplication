@@ -15,7 +15,11 @@ val NEED_REFRESH_CODE = 100
 
 val Key_AllowMobileInternetDownload = "Key_AllowMobileInternetDownload"
 
+val Key_AllowClipper = "Key_AllowClipper"
+
 val Key_ChangePersionalInfo = "Key_ChangePersonalInfo"
+
+val Key_IsFirstLogin = "Key_IsFirstLogin"
 
 val Value_false = "0"
 

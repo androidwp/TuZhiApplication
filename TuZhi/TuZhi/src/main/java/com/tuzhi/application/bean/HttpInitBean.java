@@ -26,6 +26,15 @@ public class HttpInitBean extends BaseObservable {
     private String downloadUrl;
     private boolean forceUpdate;
     private boolean isUpdate;
+    private boolean isFirstUse;
+
+    public boolean isFirstUse() {
+        return isFirstUse;
+    }
+
+    public void setFirstUse(boolean firstUse) {
+        isFirstUse = firstUse;
+    }
 
     public String getDownloadUrl() {
         return downloadUrl;

@@ -129,7 +129,7 @@ public class ClipperTwoActivity extends MVPBaseActivity<ClipperTwoContract.View,
     public void onDialogClick(View view) {
         switch (view.getId()) {
             case R.id.tvRename:
-                mPresenter.createCard(knowledgeChannelItemBean.getKlid(), knowledgeChannelItemBean.getKcid(), articleUrl);
+                mPresenter.createCard(knowledgeChannelItemBean.getKlid(), knowledgeChannelItemBean.getKcid(), (String) view.getTag(), articleUrl);
                 break;
         }
     }

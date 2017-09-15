@@ -7,11 +7,20 @@ import com.tuzhi.application.bean.BaseListItemBean;
  */
 
 public class CommentListBean extends BaseListItemBean {
+    private String id;
     private String imageUrl;
     private String author;
     private String time;
     private String info;
     private String commentNumber;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCommentNumber() {
         return commentNumber;

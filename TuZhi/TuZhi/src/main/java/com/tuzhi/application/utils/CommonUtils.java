@@ -70,7 +70,7 @@ public class CommonUtils {
     /**
      * 获取dimens资源
      */
-    public static float getDimens(Context context,int resId) {
+    public static float getDimens(Context context, int resId) {
         return getResources(context).getDimension(resId);
     }
 
@@ -84,6 +84,11 @@ public class CommonUtils {
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getWidth();
+    }
+
+    public static int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        return wm.getDefaultDisplay().getHeight();
     }
 }
 

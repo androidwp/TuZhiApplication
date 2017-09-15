@@ -110,8 +110,6 @@ public class HttpCommentListBean {
         }
 
         public static class ResultBean {
-          
-
             private boolean userPraiseStatus;
             private String praiseNum;
             private String content;
