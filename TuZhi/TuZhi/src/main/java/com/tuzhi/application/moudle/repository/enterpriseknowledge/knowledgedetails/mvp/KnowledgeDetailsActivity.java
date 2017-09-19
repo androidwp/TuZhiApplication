@@ -123,7 +123,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
         binding = (ActivityKnowledgeDetailsBinding) viewDataBinding;
         id = getIntent().getStringExtra(ID);
         title = getIntent().getStringExtra(TITLE);
-        setTitle(title);
+        if (!TextUtils.isEmpty(title))
+            setTitle(title);
         binding.setActivity(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
@@ -172,8 +173,9 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
     @Override
-    public void downLoadFinish(ArrayList<KnowledgeDetailsListBean> newData, boolean haveNextPage, int page) {
+    public void downLoadFinish(ArrayList<KnowledgeDetailsListBean> newData, boolean haveNextPage, int page, String title) {
         binding.rrv.downLoadFinish(page, haveNextPage, data, newData, true);
+        setTitle(title);
     }
 
     @Override

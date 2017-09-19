@@ -16,7 +16,16 @@ public class ReadListItemBean extends BaseListItemBean{
     private String commentContent;
     private String description;
     private String articleId;
+    private String commentId;
     private String articleTitle;
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
 
     public String getArticleTitle() {
         return articleTitle;

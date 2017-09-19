@@ -53,6 +53,7 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
                         readListItemBean.setContentType(resultBean.getType());
                         readListItemBean.setArticleId(resultBean.getArticleId());
                         readListItemBean.setArticleTitle(resultBean.getArticleTitle());
+                        readListItemBean.setCommentId(resultBean.getCommentId());
                         arrayList.add(readListItemBean);
                     }
                     if (page == 0 && noticePage.getResult().size() == 0) {

@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@{data.chooseStatus?@drawable/enter:@drawable/add}" />
+                android:src="@{data.chooseStatus?@drawable/selected:@drawable/unselected}" />
 
         </LinearLayout>
 

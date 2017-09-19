@@ -21,6 +21,10 @@ val Key_ChangePersionalInfo = "Key_ChangePersonalInfo"
 
 val Key_IsFirstLogin = "Key_IsFirstLogin"
 
+val Key_Push_Share = "Key_Push_Share"
+val Key_Push_Comment = "Key_Push_Comment"
+val Key_Push_Praise = "Key_Push_Praise"
+
 val Value_false = "0"
 
 val Value_true = "1"

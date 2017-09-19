@@ -9,6 +9,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivitySettingBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.mine.setting.changepassword.mvp.ChangePasswordActivity;
+import com.tuzhi.application.moudle.mine.setting.settingpush.mvp.SettingPushActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.FileUtils;
@@ -56,6 +57,10 @@ public class SettingActivity extends MVPBaseActivity<SettingContract.View, Setti
 
     public void skipChangePassword() {
         ActivitySkipUtilsKt.toActivity(this, ChangePasswordActivity.class);
+    }
+
+    public void skipSettingPush() {
+        ActivitySkipUtilsKt.toActivity(this, SettingPushActivity.class);
     }
 
     @Override

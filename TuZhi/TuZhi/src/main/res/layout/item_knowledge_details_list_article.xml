@@ -26,29 +26,40 @@
         <View
             android:id="@+id/lineOne"
             style="@style/NavigationLine"
-            android:visibility="gone"
-            android:layout_marginLeft="@dimen/generalSpace"
-            android:layout_marginRight="@dimen/generalSpace" />
-
-        <TextView
-            android:id="@+id/tvUnfold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/generalSpace"
             android:layout_marginRight="@dimen/generalSpace"
-            android:background="@drawable/general_listview_selector"
-            android:gravity="center_horizontal"
-            android:onClick="@{(view)->item.unfold(view)}"
-            android:padding="@dimen/generalSpace"
-            android:text="展开全文"
             android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/tvUnfold"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_height="wrap_content"
+            android:background="@drawable/general_listview_selector"
+            android:onClick="@{(view)->item.unfold(view)}"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/unfold"
+                android:gravity="center"
+                android:padding="@dimen/generalSpace"
+                android:textColor="@color/colorBlueButton"
+                android:text="展开全文" />
+
+        </FrameLayout>
+
 
         <View
             android:id="@+id/lineTwo"
             style="@style/NavigationLine"
-            android:visibility="gone"
             android:layout_marginLeft="@dimen/generalSpace"
-            android:layout_marginRight="@dimen/generalSpace" />
+            android:layout_marginRight="@dimen/generalSpace"
+            android:visibility="gone" />
 
 
     </LinearLayout>

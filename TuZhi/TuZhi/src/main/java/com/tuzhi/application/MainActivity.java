@@ -37,9 +37,12 @@ import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.LogUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.utils.UserInfoUtils;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 import com.yanzhenjie.permission.AndPermission;
 
 import org.greenrobot.eventbus.EventBus;
@@ -85,12 +88,24 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         binding.rbHomePage.setChecked(true);
         checkUpdate();
         checkUnreadMessage();
+        initPush();
         String firstLogin = SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getKey_IsFirstLogin());
         //为空的话就是第一次安装登录
         if (TextUtils.isEmpty(firstLogin)) {
             SharedPreferencesUtilsKt.saveLongCache(this, ConstantKt.getKey_IsFirstLogin(), ConstantKt.getValue_false());
             requestPermission();
         }
+    }
+
+    private void initPush() {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        //登录绑定，用于单推
+        mPushAgent.addAlias("2_" + SharedPreferencesUtilsKt.getLongCache(this, ConstantKt.getUSER_ID()), "user", new UTrack.ICallBack() {
+            @Override
+            public void onMessage(boolean isSuccess, String message) {
+                LogUtilsKt.showLog("绑定用户", "2_" + SharedPreferencesUtilsKt.getLongCache(MainActivity.this, ConstantKt.getUSER_ID()));
+            }
+        });
     }
 
     private void showDialogForRequetPermission() {

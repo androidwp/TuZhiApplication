@@ -63,6 +63,14 @@
 
         </LinearLayout>
 
+        <TextView
+            style="@style/GeneralSettingStyle"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:drawableRight="@drawable/enter"
+            android:gravity="center_vertical"
+            android:onClick="@{()->activity.skipSettingPush()}"
+            android:text="推送消息设置"
+            android:textSize="@dimen/generalSettingTextSize" />
 
         <TextView
             style="@style/GeneralSettingStyle"

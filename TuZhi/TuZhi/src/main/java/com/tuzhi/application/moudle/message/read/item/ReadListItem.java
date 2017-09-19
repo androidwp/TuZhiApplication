@@ -9,6 +9,7 @@ import com.tuzhi.application.databinding.ItemReadUnreadBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.message.read.bean.ReadListItemBean;
 import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -45,9 +46,21 @@ public class ReadListItem extends BaseItem<ReadListItemBean> {
     }
 
     public void skip(ReadListItemBean readListItemBean) {
-        Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
-        intent.putExtra(KnowledgeDetailsActivity.ID, readListItemBean.getArticleId());
-        intent.putExtra(KnowledgeDetailsActivity.TITLE, readListItemBean.getArticleTitle());
+
+        Intent intent;
+        switch (readListItemBean.getContentType()) {
+            case 2: {
+                intent = new Intent(context, CommentListActivity.class);
+                intent.putExtra(CommentListActivity.AID, readListItemBean.getArticleId());
+                intent.putExtra(CommentListActivity.CID, readListItemBean.getCommentId());
+                break;
+            }
+            default:
+                intent = new Intent(context, KnowledgeDetailsActivity.class);
+                intent.putExtra(KnowledgeDetailsActivity.ID, readListItemBean.getArticleId());
+                intent.putExtra(KnowledgeDetailsActivity.TITLE, readListItemBean.getArticleTitle());
+                break;
+        }
         context.startActivity(intent);
         readMessage(readListItemBean.getId());
     }

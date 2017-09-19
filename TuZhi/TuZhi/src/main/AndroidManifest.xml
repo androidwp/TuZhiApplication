@@ -136,6 +136,11 @@
             android:screenOrientation="portrait"
             />
 
+        <activity
+            android:name=".moudle.mine.setting.settingpush.mvp.SettingPushActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

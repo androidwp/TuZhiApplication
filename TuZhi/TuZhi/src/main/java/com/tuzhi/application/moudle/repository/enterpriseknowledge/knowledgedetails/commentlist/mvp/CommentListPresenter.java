@@ -9,6 +9,7 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedeta
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.item.CommentListItem;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,6 +42,7 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
 
             @Override
             public void onSuccess(@Nullable HttpCommentListBean httpCommentListBean, @NotNull String text) {
+                LogUtilsKt.showLog("评论列表",text);
                 ArrayList<CommentListBean> data = new ArrayList<>();
                 HttpCommentListBean.CommentBean comment = httpCommentListBean.getComment();
                 HttpCommentListBean.CommentPageBean commentPage = httpCommentListBean.getCommentPage();

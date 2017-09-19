@@ -40,8 +40,8 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
     private static final String URL_MOUDLE = "tzkm/editTitle";
 
     private int index;
-    private int upDateIndex;
 
+    private int upDateIndex;
 
     private boolean canUpdate = true;
 
@@ -142,7 +142,7 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
                 HttpKnowledgeDetailsListBean.CommentPageBean commentPage = httpKnowledgeDetailsListBean.getCommentPage();
 
-                mView.downLoadFinish(data, commentPage.isNext(), commentPage.getIndex());
+                mView.downLoadFinish(data, commentPage.isNext(), commentPage.getIndex(),httpKnowledgeDetailsListBean.getArticleMap().getTitle());
             }
 
 

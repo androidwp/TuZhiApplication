@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class KnowledgeDetailsContract {
 
     interface View extends BaseView {
-        void downLoadFinish(ArrayList<KnowledgeDetailsListBean> data, boolean haveNextPage, int page);
+        void downLoadFinish(ArrayList<KnowledgeDetailsListBean> data, boolean haveNextPage, int page,String title);
 
         void downloadFinish();
 
