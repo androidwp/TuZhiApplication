@@ -11,6 +11,7 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedeta
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.openfile.mvp.OpenFileActivity;
 import com.tuzhi.application.moudle.search.searchpage.bean.SearchResultListBean;
 import com.tuzhi.application.utils.ImageUtils;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 /**
  * Created by wangpeng on 2017/8/2.
@@ -48,21 +49,26 @@ public class SearchPageNoteItem extends BaseItem<SearchResultListBean> {
     }
 
     public void skipActivity(SearchResultListBean bean) {
-        if (resultType==0){
-            Intent intent = new Intent(getContext(), OpenFileActivity.class);
-            intent.putExtra(OpenFileActivity.ARTICLE_ID, bean.getAid());
-            intent.putExtra(OpenFileActivity.FILE_ID, bean.getFileId());
-            intent.putExtra(OpenFileActivity.FILE_PREVIEW_URLS, bean.getPreviewUrls());
-            intent.putExtra(OpenFileActivity.FILE_NAME, bean.getFileName());
-            intent.putExtra(OpenFileActivity.TYPE, bean.isFileStatus());
-            intent.putExtra(OpenFileActivity.FILE_SIZE, bean.getFileSize());
-            intent.putExtra(OpenFileActivity.FILE_SUFFIX, bean.getFileType());
-            context.startActivity(intent);
+        if (bean.isLimit()){
+            if (resultType==0){
+                Intent intent = new Intent(getContext(), OpenFileActivity.class);
+                intent.putExtra(OpenFileActivity.ARTICLE_ID, bean.getAid());
+                intent.putExtra(OpenFileActivity.FILE_ID, bean.getFileId());
+                intent.putExtra(OpenFileActivity.FILE_PREVIEW_URLS, bean.getPreviewUrls());
+                intent.putExtra(OpenFileActivity.FILE_NAME, bean.getFileName());
+                intent.putExtra(OpenFileActivity.TYPE, bean.isFileStatus());
+                intent.putExtra(OpenFileActivity.FILE_SIZE, bean.getFileSize());
+                intent.putExtra(OpenFileActivity.FILE_SUFFIX, bean.getFileType());
+                context.startActivity(intent);
+            }else{
+                Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
+                intent.putExtra(KnowledgeDetailsActivity.ID, bean.getAid());
+                intent.putExtra(KnowledgeDetailsActivity.TITLE, bean.getArticleTitle());
+                context.startActivity(intent);
+            }
         }else{
-            Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
-            intent.putExtra(KnowledgeDetailsActivity.ID, bean.getAid());
-            intent.putExtra(KnowledgeDetailsActivity.TITLE, bean.getArticleTitle());
-            context.startActivity(intent);
+            ToastUtilsKt.toast(context,"无查看权限");
         }
+
     }
 }

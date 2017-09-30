@@ -84,11 +84,12 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onSuccess(String deviceToken) {
                 //注册成功会返回device token
+                LogUtilsKt.showLog("umpush", deviceToken);
             }
 
             @Override
             public void onFailure(String s, String s1) {
-
+                LogUtilsKt.showLog("umpush", s + s1);
             }
         });
         customNotification();
@@ -106,6 +107,7 @@ public class MyApplication extends MultiDexApplication {
                     String type = jsonObject.getString("type");
                     Intent intent;
                     switch (type) {
+                        case "3":
                         case "2": {
                             String id = jsonObject.getString("id");
                             String aid = jsonObject.getString("aid");

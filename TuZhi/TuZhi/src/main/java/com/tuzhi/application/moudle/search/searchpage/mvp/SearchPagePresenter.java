@@ -9,7 +9,6 @@ import com.tuzhi.application.moudle.search.searchpage.item.SearchPageSpeakItem;
 import com.tuzhi.application.utils.FileUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
-import com.tuzhi.application.utils.LogUtilsKt;
 
 import java.util.ArrayList;
 import java.util.WeakHashMap;
@@ -48,7 +47,6 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
 
             @Override
             public void onSuccess(SearchResultHttpBean resultHttpBean, String text) {
-                LogUtilsKt.showLog(type, text);
                 SearchResultHttpBean.ArticlePageBean articlePage = resultHttpBean.getArticlePage();
                 int index = articlePage.getIndex();
                 boolean next = articlePage.isNext();
@@ -94,6 +92,7 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
     private SearchResultListBean dealDataForFile(SearchResultHttpBean.ArticlePageBean.ResultBean resultBean) {
         SearchResultListBean fileBean = new SearchResultListBean(SearchPageNoteItem.TYPE);
         fileBean.setResultType(0);
+        fileBean.setLimit(resultBean.isLimit());
         fileBean.setAid(resultBean.getArticleId());
         fileBean.setFileId(resultBean.getId());
         fileBean.setTitle(resultBean.getFileName() + "." + resultBean.getFileSuffix());

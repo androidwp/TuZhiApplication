@@ -27,6 +27,7 @@ import com.tuzhi.application.bean.HttpInitBean;
 import com.tuzhi.application.databinding.ActivityMainBinding;
 import com.tuzhi.application.dialog.UpdateDialog;
 import com.tuzhi.application.dialog.WarnDialog;
+import com.tuzhi.application.inter.DialogMakeCancelListener;
 import com.tuzhi.application.inter.DialogMakeSureListener;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
 import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
@@ -56,11 +57,10 @@ import java.util.WeakHashMap;
 
 import me.shihao.library.XRadioGroup;
 
-public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener, DialogMakeSureListener {
+public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener, DialogMakeSureListener, DialogMakeCancelListener {
     public static final String NAME = "MainActivity";
     public static final int TYPE_NOTIFICATION = 0;
     public static final int TYPE_PERMISSION = 1;
-
     private int oldCheckedId = 0;
     private long currentTime;
     private Map<Integer, Fragment> fragmentMap = new HashMap<>();
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
                 .setBtnLeftText("暂不设置")
                 .setInfo("开启微信文章剪藏功能，需要获取系统的显示悬浮窗权限，是否立即去设置？")
                 .setClickListener(this)
+                .setCancelListener(this)
                 .builder(this).show();
 
     }
@@ -248,10 +249,8 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
      */
     public void openSetting() {
         try {
-            Intent localIntent = new Intent(
-                    "miui.intent.action.APP_PERM_EDITOR");
-            localIntent.setClassName("com.miui.securitycenter",
-                    "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
+            Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
+            localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
             localIntent.putExtra("extra_pkgname", getPackageName());
             startActivityForResult(localIntent, 11);
         } catch (ActivityNotFoundException localActivityNotFoundException) {
@@ -269,7 +268,6 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 11) {
             if (!isFloatWindowOpAllowed(this)) {//未开启
-//                ToastUtilsKt.toast(this, "开启悬浮窗失败");
                 openOrCloseClipper(false);
             } else {
                 ToastUtilsKt.toast(this, "成功开启悬浮窗");
@@ -327,7 +325,6 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
 
     @Override
     public void makeSure(Dialog dialog) {
-        dialog.dismiss();
         if ("Xiaomi".equals(Build.MANUFACTURER)) {//小米手机
             openSetting();
         } else if ("Meizu".equals(Build.MANUFACTURER)) {//魅族手机
@@ -340,5 +337,10 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
                 }
             }
         }
+    }
+
+    @Override
+    public void makeCancel(Dialog dialog) {
+        openOrCloseClipper(false);
     }
 }

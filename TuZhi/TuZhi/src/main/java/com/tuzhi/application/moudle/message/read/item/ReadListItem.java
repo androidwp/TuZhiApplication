@@ -49,6 +49,7 @@ public class ReadListItem extends BaseItem<ReadListItemBean> {
 
         Intent intent;
         switch (readListItemBean.getContentType()) {
+            case 3:
             case 2: {
                 intent = new Intent(context, CommentListActivity.class);
                 intent.putExtra(CommentListActivity.AID, readListItemBean.getArticleId());

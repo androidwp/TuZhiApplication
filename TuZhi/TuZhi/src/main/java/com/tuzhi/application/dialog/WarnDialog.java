@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ViewWarnDialogBinding;
+import com.tuzhi.application.inter.DialogMakeCancelListener;
 import com.tuzhi.application.inter.DialogMakeSureListener;
 
 /**
@@ -22,6 +23,7 @@ public class WarnDialog extends AlertDialog {
     private String btnLeftText;
     private String btnRightText;
     private DialogMakeSureListener listener;
+    private DialogMakeCancelListener cancelListener;
     private Builder builder;
     private boolean canceledOnTouchOutside;
 
@@ -47,15 +49,21 @@ public class WarnDialog extends AlertDialog {
         binding.setBtnLeftText(builder.getBtnLeftText());
         binding.setBtnRightText(builder.getBtnRightText());
         setCanceledOnTouchOutside(builder.isCanceledOnTouchOutside());
+        listener = builder.getClickListener();
+        cancelListener = builder.getCancelListener();
+
     }
 
     public void cancel() {
+        if (cancelListener != null) {
+            cancelListener.makeCancel(this);
+        }
         dismiss();
     }
 
     public void sure() {
-        DialogMakeSureListener clickListener = builder.getClickListener();
-        clickListener.makeSure(this);
+        if (listener != null)
+            listener.makeSure(this);
         dismiss();
     }
 
@@ -65,8 +73,18 @@ public class WarnDialog extends AlertDialog {
         private String btnLeftText = "取消";
         private String btnRightText = "确定";
         private DialogMakeSureListener listener;
+        private DialogMakeCancelListener cancelListener;
         private boolean isShowCancel = true;
         private boolean canceledOnTouchOutside = false;
+
+        public DialogMakeCancelListener getCancelListener() {
+            return cancelListener;
+        }
+
+        public Builder setCancelListener(DialogMakeCancelListener cancelListener) {
+            this.cancelListener = cancelListener;
+            return this;
+        }
 
         public boolean isCanceledOnTouchOutside() {
             return canceledOnTouchOutside;

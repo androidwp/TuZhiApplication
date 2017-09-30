@@ -185,7 +185,16 @@ public class SearchResultHttpBean {
             private String author;
             private String fileName;
             private boolean isPreview;
+            private boolean isLimit;
             private ArrayList<String> previewUrls;
+
+            public boolean isLimit() {
+                return isLimit;
+            }
+
+            public void setLimit(boolean limit) {
+                isLimit = limit;
+            }
 
             public String getTitle() {
                 return title;

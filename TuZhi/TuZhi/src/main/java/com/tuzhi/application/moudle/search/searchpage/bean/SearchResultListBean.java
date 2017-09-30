@@ -12,6 +12,7 @@ public class SearchResultListBean extends BaseListItemBean {
     private String id;
     private String portrait;
     private String nickName;
+    private boolean isLimit;
     //用于判断是笔记还是文件的item,0是文件1是笔记
     private int resultType;
     private String fileSuffix;
@@ -40,6 +41,14 @@ public class SearchResultListBean extends BaseListItemBean {
     private String commentNumber;
     private boolean praiseStatus;
     private String fileName;
+
+    public boolean isLimit() {
+        return isLimit;
+    }
+
+    public void setLimit(boolean limit) {
+        isLimit = limit;
+    }
 
     public String getArticleTitle() {
         return articleTitle;
