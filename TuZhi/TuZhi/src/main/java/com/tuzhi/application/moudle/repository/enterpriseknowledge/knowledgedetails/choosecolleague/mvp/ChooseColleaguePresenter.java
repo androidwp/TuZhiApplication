@@ -38,14 +38,14 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
 
             @Override
             public void onSuccess(ChooseColleagueHttpBean colleagueHttpBean, String text) {
-                ChooseColleagueHttpBean.CommentPageBean commentPage = colleagueHttpBean.getCommentPage();
+                ChooseColleagueHttpBean.CommentPageBean commentPage = colleagueHttpBean.getStaffPage();
                 int index = commentPage.getIndex();
                 boolean next = commentPage.isNext();
                 ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
                 for (ChooseColleagueHttpBean.CommentPageBean.ResultBean resultBean : commentPage.getResult()) {
                     ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
                     chooseColleagueItemBean.setId(resultBean.getId());
-                    chooseColleagueItemBean.setNickName(resultBean.getUsername());
+                    chooseColleagueItemBean.setNickName(resultBean.getNickname());
                     chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
                     chooseColleagueItemBean.setChooseStatus(false);
                     arrayList.add(chooseColleagueItemBean);

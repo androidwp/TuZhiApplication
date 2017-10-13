@@ -5,6 +5,7 @@ import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.EditText;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityChooseColleagueBinding;
@@ -15,6 +16,7 @@ import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.ChooseColleagueItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseColleagueItem;
+import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.view.LoadMoreListener;
 
 import java.util.ArrayList;
@@ -81,6 +83,8 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
 
     @Override
     public void onRefresh() {
+        chooseData.clear();
+        binding.setPeople("");
         mPresenter.downloadData(cId, 0);
     }
 
@@ -102,6 +106,7 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
     @Override
     public void shareCardSuccess() {
         dialog.dismiss();
+        onBackPressed();
     }
 
     public void back() {
@@ -111,10 +116,12 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
     public void sure() {
         if (chooseData.size() > 0) {
             dialog = new SendCardDialog(this);
+            dialog.setView(new EditText(this));
             dialog.setClickListener(this);
             dialog.setTitle(cTitle);
             dialog.setArrayList(chooseData);
             dialog.show();
+            KeyBoardUtils.showKeyBoard(this);
         }
     }
 

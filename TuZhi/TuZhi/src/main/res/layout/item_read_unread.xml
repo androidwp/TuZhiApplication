@@ -12,6 +12,8 @@
             type="com.tuzhi.application.moudle.message.read.bean.ReadListItemBean" />
 
         <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -82,12 +84,12 @@
                 android:background="#f6f6f6"
                 android:orientation="horizontal"
                 android:padding="@dimen/generalSpace"
-                android:visibility="@{data.contentType==2?View.VISIBLE:View.GONE}">
+                android:visibility="@{TextUtils.isEmpty(data.commentContent)?View.GONE:View.VISIBLE}">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="评论内容:"
+                    android:text="@{data.contentType==4?@string/sharePrefix:@string/commentPrefix}"
                     android:textColor="@color/colorText" />
 
                 <TextView

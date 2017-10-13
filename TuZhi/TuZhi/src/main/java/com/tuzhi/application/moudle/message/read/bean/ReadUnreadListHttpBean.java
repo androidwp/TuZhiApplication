@@ -154,6 +154,15 @@ public class ReadUnreadListHttpBean {
             private String commentId;
             private String articleId;
             private String articleTitle;
+            private boolean isLimit;
+
+            public boolean isLimit() {
+                return isLimit;
+            }
+
+            public void setLimit(boolean limit) {
+                isLimit = limit;
+            }
 
             public String getArticleTitle() {
                 return articleTitle;

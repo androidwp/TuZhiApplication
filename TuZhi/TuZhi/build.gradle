@@ -69,4 +69,5 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'com.tubb.smrv:swipemenu-recyclerview:5.4.0'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.github.czy1121:settingscompat:1.1.4'
 }

@@ -9,6 +9,7 @@ import com.tuzhi.application.databinding.ItemSearchPageSpeakBinding;
 import com.tuzhi.application.item.BaseItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.moudle.search.searchpage.bean.SearchResultListBean;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 /**
  * Created by wangpeng on 2017/8/2.
@@ -38,9 +39,13 @@ public class SearchPageSpeakItem extends BaseItem<SearchResultListBean> {
     }
 
     public void skip(SearchResultListBean searchResultListBean) {
-        Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
-        intent.putExtra(KnowledgeDetailsActivity.ID, searchResultListBean.getAid());
-        intent.putExtra(KnowledgeDetailsActivity.TITLE, searchResultListBean.getArticleTitle());
-        context.startActivity(intent);
+        if (searchResultListBean.isLimit()) {
+            Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
+            intent.putExtra(KnowledgeDetailsActivity.ID, searchResultListBean.getAid());
+            intent.putExtra(KnowledgeDetailsActivity.TITLE, searchResultListBean.getArticleTitle());
+            context.startActivity(intent);
+        } else {
+            ToastUtilsKt.toast(context, "无查看权限");
+        }
     }
 }

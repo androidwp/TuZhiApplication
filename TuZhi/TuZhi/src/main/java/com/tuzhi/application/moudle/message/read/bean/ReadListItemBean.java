@@ -18,6 +18,15 @@ public class ReadListItemBean extends BaseListItemBean{
     private String articleId;
     private String commentId;
     private String articleTitle;
+    private boolean isLimit;
+
+    public boolean isLimit() {
+        return isLimit;
+    }
+
+    public void setLimit(boolean limit) {
+        isLimit = limit;
+    }
 
     public String getCommentId() {
         return commentId;

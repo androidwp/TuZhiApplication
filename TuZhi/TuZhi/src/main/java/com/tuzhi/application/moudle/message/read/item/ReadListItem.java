@@ -2,6 +2,8 @@ package com.tuzhi.application.moudle.message.read.item;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tuzhi.application.R;
@@ -13,6 +15,7 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedeta
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,24 +49,46 @@ public class ReadListItem extends BaseItem<ReadListItemBean> {
     }
 
     public void skip(ReadListItemBean readListItemBean) {
-
-        Intent intent;
-        switch (readListItemBean.getContentType()) {
-            case 3:
-            case 2: {
-                intent = new Intent(context, CommentListActivity.class);
-                intent.putExtra(CommentListActivity.AID, readListItemBean.getArticleId());
-                intent.putExtra(CommentListActivity.CID, readListItemBean.getCommentId());
-                break;
+        if (readListItemBean.isLimit()) {
+            Intent intent;
+            switch (readListItemBean.getContentType()) {
+                case 3:
+                    if (TextUtils.equals(readListItemBean.getCommentId(), "0")) {
+                        intent = toKnowledgeDetails(readListItemBean);
+                    } else {
+                        intent = toCommentList(readListItemBean);
+                    }
+                    break;
+                case 2:
+                    intent = toCommentList(readListItemBean);
+                    break;
+                default:
+                    intent = toKnowledgeDetails(readListItemBean);
+                    break;
             }
-            default:
-                intent = new Intent(context, KnowledgeDetailsActivity.class);
-                intent.putExtra(KnowledgeDetailsActivity.ID, readListItemBean.getArticleId());
-                intent.putExtra(KnowledgeDetailsActivity.TITLE, readListItemBean.getArticleTitle());
-                break;
+            context.startActivity(intent);
+            readMessage(readListItemBean.getId());
+        } else {
+            ToastUtilsKt.toast(context, "无查看权限");
         }
-        context.startActivity(intent);
-        readMessage(readListItemBean.getId());
+    }
+
+    @NonNull
+    private Intent toKnowledgeDetails(ReadListItemBean readListItemBean) {
+        Intent intent;
+        intent = new Intent(context, KnowledgeDetailsActivity.class);
+        intent.putExtra(KnowledgeDetailsActivity.ID, readListItemBean.getArticleId());
+        intent.putExtra(KnowledgeDetailsActivity.TITLE, readListItemBean.getArticleTitle());
+        return intent;
+    }
+
+    @NonNull
+    private Intent toCommentList(ReadListItemBean readListItemBean) {
+        Intent intent;
+        intent = new Intent(context, CommentListActivity.class);
+        intent.putExtra(CommentListActivity.AID, readListItemBean.getArticleId());
+        intent.putExtra(CommentListActivity.CID, readListItemBean.getCommentId());
+        return intent;
     }
 
     private void readMessage(String id) {

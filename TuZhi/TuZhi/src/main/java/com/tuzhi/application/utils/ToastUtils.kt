@@ -21,6 +21,6 @@ fun toast(context: Context, text: String) {
     if (flagShowToast) {
         flagShowToast = false
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-        handler.sendEmptyMessageDelayed(0, 3000)
+        handler.sendEmptyMessageDelayed(0, 2000)
     }
 }

@@ -16,7 +16,7 @@ public class ChooseColleagueHttpBean {
 
     private String resultMsg;
     private String resultCode;
-    private CommentPageBean commentPage;
+    private CommentPageBean staffPage;
 
     public String getResultMsg() {
         return resultMsg;
@@ -34,12 +34,12 @@ public class ChooseColleagueHttpBean {
         this.resultCode = resultCode;
     }
 
-    public CommentPageBean getCommentPage() {
-        return commentPage;
+    public CommentPageBean getStaffPage() {
+        return staffPage;
     }
 
-    public void setCommentPage(CommentPageBean commentPage) {
-        this.commentPage = commentPage;
+    public void setStaffPage(CommentPageBean staffPage) {
+        this.staffPage = staffPage;
     }
 
     public static class CommentPageBean {
@@ -125,7 +125,7 @@ public class ChooseColleagueHttpBean {
              */
 
             private String id;
-            private String username;
+            private String nickname;
             private String userImage;
 
             public String getId() {
@@ -136,12 +136,12 @@ public class ChooseColleagueHttpBean {
                 this.id = id;
             }
 
-            public String getUsername() {
-                return username;
+            public String getNickname() {
+                return nickname;
             }
 
-            public void setUsername(String username) {
-                this.username = username;
+            public void setNickname(String nickname) {
+                this.nickname = nickname;
             }
 
             public String getUserImage() {

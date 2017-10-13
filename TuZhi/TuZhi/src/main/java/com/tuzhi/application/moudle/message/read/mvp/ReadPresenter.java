@@ -7,7 +7,6 @@ import com.tuzhi.application.moudle.message.read.item.ReadListItem;
 import com.tuzhi.application.utils.EventBusUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
-import com.tuzhi.application.utils.LogUtilsKt;
 
 import java.util.ArrayList;
 import java.util.WeakHashMap;
@@ -35,7 +34,6 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
 
             @Override
             public void onSuccess(ReadUnreadListHttpBean readUnreadListHttpBean, String text) {
-                LogUtilsKt.showLog(type, text);
                 ReadUnreadListHttpBean.NoticePageBean noticePage = readUnreadListHttpBean.getNoticePage();
                 if (noticePage != null) {
                     int index = noticePage.getIndex();
@@ -54,6 +52,7 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
                         readListItemBean.setArticleId(resultBean.getArticleId());
                         readListItemBean.setArticleTitle(resultBean.getArticleTitle());
                         readListItemBean.setCommentId(resultBean.getCommentId());
+                        readListItemBean.setLimit(resultBean.isLimit());
                         arrayList.add(readListItemBean);
                     }
                     if (page == 0 && noticePage.getResult().size() == 0) {

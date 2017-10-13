@@ -8,6 +8,7 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityForgetPasswordBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.forgetpassword.bean.ForgetPasswordBean;
+import com.tuzhi.application.utils.ToastUtilsKt;
 
 
 /**
@@ -85,6 +86,7 @@ public class ForgetPasswordActivity extends MVPBaseActivity<ForgetPasswordContra
 
     @Override
     public void changePasswordSuccess() {
+        ToastUtilsKt.toast(this,"修改成功");
         onBackPressed();
     }
 }

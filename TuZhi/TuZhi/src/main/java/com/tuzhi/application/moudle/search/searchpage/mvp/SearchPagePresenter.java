@@ -77,6 +77,7 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
     private SearchResultListBean dealDataForSpeak(SearchResultHttpBean.ArticlePageBean.ResultBean resultBean) {
         SearchResultListBean commentBean = new SearchResultListBean(SearchPageSpeakItem.TYPE);
         commentBean.setAid(resultBean.getArticleId());
+        commentBean.setLimit(resultBean.isLimit());
         commentBean.setCid(resultBean.getId());
         commentBean.setPortrait(resultBean.getUserImage());
         commentBean.setNickName(resultBean.getNickname());
@@ -109,6 +110,7 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
     private SearchResultListBean dealDataForNote(SearchResultHttpBean.ArticlePageBean.ResultBean resultBean) {
         SearchResultListBean noteBean = new SearchResultListBean(SearchPageNoteItem.TYPE);
         noteBean.setResultType(1);
+        noteBean.setLimit(resultBean.isLimit());
         noteBean.setAid(resultBean.getId());
         noteBean.setTitle(resultBean.getTitle());
         noteBean.setArticleTitle(resultBean.getTitle());

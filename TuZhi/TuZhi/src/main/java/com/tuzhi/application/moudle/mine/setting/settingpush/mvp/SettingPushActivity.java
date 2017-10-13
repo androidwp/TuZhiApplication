@@ -35,14 +35,13 @@ public class SettingPushActivity extends MVPBaseActivity<SettingPushContract.Vie
         binding.svShare.setOpened(trueOrFalse(pushShare));
         binding.svComment.setOpened(trueOrFalse(pushComment));
         binding.svPraise.setOpened(trueOrFalse(pushPraise));
-
         binding.svShare.setOnStateChangedListener(this);
         binding.svComment.setOnStateChangedListener(this);
         binding.svPraise.setOnStateChangedListener(this);
     }
 
     private boolean trueOrFalse(String type) {
-        return TextUtils.equals(type, ConstantKt.getValue_true());
+        return TextUtils.isEmpty(type) || TextUtils.equals(type, ConstantKt.getValue_true());
     }
 
     public void back() {

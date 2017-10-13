@@ -105,8 +105,8 @@ public class KnowledgeDetailsArticleItem extends BaseItem<KnowledgeDetailsListBe
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (Integer.parseInt(height) > CommonUtils.getScreenHeight(context)) {
-                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, CommonUtils.getScreenHeight(context) - 200);
+                    if (Integer.parseInt(height) > CommonUtils.getScreenHeight(context)*0.6) {
+                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)(CommonUtils.getScreenHeight(context) * 0.6));
                         webView.setLayoutParams(layoutParams);
                         binding.tvUnfold.setVisibility(View.VISIBLE);
                         binding.lineOne.setVisibility(View.VISIBLE);

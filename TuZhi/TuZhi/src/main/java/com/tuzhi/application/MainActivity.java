@@ -1,14 +1,10 @@
 package com.tuzhi.application;
 
 import android.annotation.TargetApi;
-import android.app.AppOpsManager;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,11 +46,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import ezy.assist.compat.SettingsCompat;
 import me.shihao.library.XRadioGroup;
 
 public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener, DialogMakeSureListener, DialogMakeCancelListener {
@@ -65,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
     private long currentTime;
     private Map<Integer, Fragment> fragmentMap = new HashMap<>();
     private ActivityMainBinding binding;
+    private static boolean goSettingPage=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +185,11 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         super.onResume();
         if (!isFloatWindowOpAllowed(this)) {//未开启
             openOrCloseClipper(false);
+        }else {
+            if (goSettingPage){
+                goSettingPage=false;
+                openOrCloseClipper(true);
+            }
         }
     }
 
@@ -195,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
      * 请求用户给予悬浮窗的权限
      */
     public void requestPermission() {
-        if (!isFloatWindowOpAllowed(this)) {//未开启
+        if (!SettingsCompat.canDrawOverlays(this)) {//未开启
             showDialogForRequetPermission();
         } else {
             openOrCloseClipper(true);
@@ -221,45 +223,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static boolean isFloatWindowOpAllowed(Context context) {
-        final int version = Build.VERSION.SDK_INT;
-        if (version >= 19) {
-            return checkOp(context, 24);  // AppOpsManager.OP_SYSTEM_ALERT_WINDOW
-        } else {
-            return (context.getApplicationInfo().flags & 1 << 27) == 1 << 27;
-        }
-    }
-
-    public static boolean checkOp(Context context, int op) {
-        final int version = Build.VERSION.SDK_INT;
-        if (version >= 19) {
-            AppOpsManager manager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            try {
-                Method method = manager.getClass().getDeclaredMethod("checkOp", int.class, int.class, String.class);
-                int property = (Integer) method.invoke(manager, op, Binder.getCallingUid(), context.getPackageName());
-                return AppOpsManager.MODE_ALLOWED == property;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 打开权限设置界面
-     */
-    public void openSetting() {
-        try {
-            Intent localIntent = new Intent("miui.intent.action.APP_PERM_EDITOR");
-            localIntent.setClassName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity");
-            localIntent.putExtra("extra_pkgname", getPackageName());
-            startActivityForResult(localIntent, 11);
-        } catch (ActivityNotFoundException localActivityNotFoundException) {
-            Intent intent1 = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", getPackageName(), null);
-            intent1.setData(uri);
-            startActivityForResult(intent1, 11);
-        }
-
+       return SettingsCompat.canDrawOverlays(context);
     }
 
 
@@ -325,18 +289,8 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
 
     @Override
     public void makeSure(Dialog dialog) {
-        if ("Xiaomi".equals(Build.MANUFACTURER)) {//小米手机
-            openSetting();
-        } else if ("Meizu".equals(Build.MANUFACTURER)) {//魅族手机
-            openSetting();
-        } else {//其他手机
-            if (Build.VERSION.SDK_INT >= 23) {
-                if (!Settings.canDrawOverlays(this)) {
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                    startActivityForResult(intent, 12);
-                }
-            }
-        }
+        goSettingPage=true;
+        SettingsCompat.manageDrawOverlays(this);
     }
 
     @Override

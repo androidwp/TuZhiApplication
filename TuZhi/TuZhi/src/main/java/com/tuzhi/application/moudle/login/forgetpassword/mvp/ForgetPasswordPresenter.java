@@ -24,7 +24,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPasswordCon
     @Override
     public void getVerificationCode(String type, final String phoneOrEmail) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-        parameter.put("type", "4");
+        parameter.put("type", "2");
         if (type.equals(ForgetPasswordActivity.PHONE))
             parameter.put("phone", phoneOrEmail);
         else
@@ -87,7 +87,7 @@ public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPasswordCon
             parameter.put("phone", phoneOrEmail);
         else
             parameter.put("email", phoneOrEmail);
-        parameter.put("newpwdString", password);
+        parameter.put("newpwd", password);
         HttpUtilsKt.post(mView.getContext(), URL_FORGET, parameter, String.class, new HttpCallBack<String>() {
             @Override
             public void onFinish() {

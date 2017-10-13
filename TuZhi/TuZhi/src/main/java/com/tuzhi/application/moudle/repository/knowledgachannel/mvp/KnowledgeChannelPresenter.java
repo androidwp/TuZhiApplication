@@ -8,7 +8,6 @@ import com.tuzhi.application.moudle.repository.knowledgachannel.bean.KnowledgeCh
 import com.tuzhi.application.moudle.repository.knowledgachannel.item.KnowledgeChannelItem;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
-import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,7 +39,6 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
 
             @Override
             public void onSuccess(@Nullable KnowledgeChannelHttpBean knowledgeChannelHttpBean, @NotNull String text) {
-                LogUtilsKt.showLog("TAG", text);
                 List<KnowledgeChannelHttpBean.KnowledgeChannelsMapBean> knowledgeChannelsMap = knowledgeChannelHttpBean.getKnowledgeChannelsMap();
                 ArrayList<KnowledgeChannelItemBean> data = new ArrayList<>();
                 for (KnowledgeChannelHttpBean.KnowledgeChannelsMapBean knowledgeChannelsMapBean : knowledgeChannelsMap) {
