@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.completedtasks.CompletedTasksActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="我的任务"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/generalTextSize" />
+
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGeneralBackground"
+            android:padding="@dimen/generalSpace"
+            android:text="我负责的任务"
+            android:textColor="@color/colorGeneralTintText"
+            android:textSize="13sp" />
+
+        <com.tuzhi.application.view.RefreshRecycleView
+            android:id="@+id/rrv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</layout>

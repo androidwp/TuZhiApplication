@@ -131,7 +131,6 @@ public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetail
 
             @Override
             public void onSuccess(@Nullable HttpKnowledgeDetailsListBean httpKnowledgeDetailsListBean, @NotNull String text) {
-                LogUtilsKt.showLog("TAG", text);
                 ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
                 //先添加文章
                 addArticle(httpKnowledgeDetailsListBean, data);

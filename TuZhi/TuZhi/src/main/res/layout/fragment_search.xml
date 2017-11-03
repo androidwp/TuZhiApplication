@@ -37,7 +37,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@drawable/general_button_gray_background"
+                    android:background="@drawable/drawable_search_background"
                     android:drawableLeft="@drawable/searchbox"
                     android:drawablePadding="10dp"
                     android:maxLength="10"
@@ -68,7 +68,7 @@
                 android:paddingLeft="@dimen/generalSpace"
                 android:paddingRight="@dimen/generalSpace"
                 android:text="搜索"
-                android:textColor="@color/colorBlueButton"
+                android:textColor="@color/colorWhite"
                 android:textSize="18sp" />
 
         </LinearLayout>

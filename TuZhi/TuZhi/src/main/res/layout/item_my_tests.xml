@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.mytasks.MyTestsItemBean" />
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.mytasks.MyTestsItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:paddingLeft="@dimen/generalSpace"
+        android:paddingRight="@dimen/generalSpace">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{data.checkStatue}"
+            android:onCheckedChangeListener="@{(buttonView,isChecked)->item.onCheckedChanged(buttonView,isChecked)}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@{data.content}" />
+
+    </LinearLayout>
+</layout>

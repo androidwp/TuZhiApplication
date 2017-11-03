@@ -32,7 +32,6 @@ public class ReadFragment extends MVPBaseFragment<ReadContract.View, ReadPresent
     public static final String TYPE = "TYPE";
     public static final String TYPE_READ = "TYPE_READ";
     public static final String TYPE_UNREAD = "TYPE_UNREAD";
-
     public static final String REFRESH = "ReadFragment_refresh";
 
     private String type;

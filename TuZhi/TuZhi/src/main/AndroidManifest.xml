@@ -143,6 +143,14 @@
             android:name=".moudle.mine.setting.settingpush.mvp.SettingPushActivity"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".moudle.completedtasks.CompletedTasksActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".moudle.search.mvp.SearchFragment"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 

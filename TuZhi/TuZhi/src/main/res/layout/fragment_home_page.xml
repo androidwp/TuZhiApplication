@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="com.tuzhi.application.moudle.homepage.mvc.HomePageFragment" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="32dp"
+                android:layout_marginLeft="@dimen/generalSpace"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:background="@drawable/drawable_search_background"
+                android:drawableLeft="@drawable/searchon"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:onClick="@{()->fragment.onSearchClick()}"
+                android:text="搜索"
+                android:textColor="@color/colorGeneralMoreTintText" />
+
+        </FrameLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/stl"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:background="@color/colorNavigationBarBackground"
+            app:tl_indicator_color="@color/colorWhite"
+            app:tl_indicator_height="3dp"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/colorWhite"
+            app:tl_textUnselectColor="@color/colorWhite"
+            app:tl_textsize="15dp" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+</layout>

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.EventBusBean;
 import com.tuzhi.application.databinding.FragmentSearchBinding;
-import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
+import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.search.bean.SearchHistoryBean;
 import com.tuzhi.application.moudle.search.item.SearchHistoryHeadItem;
 import com.tuzhi.application.moudle.search.item.SearchHistoryItem;
@@ -42,7 +42,7 @@ import kale.adapter.item.AdapterItem;
  * MVPPlugin
  */
 
-public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchPresenter> implements SearchContract.View, TextWatcher, TextView.OnEditorActionListener {
+public class SearchFragment extends MVPBaseActivity<SearchContract.View, SearchPresenter> implements SearchContract.View, TextWatcher, TextView.OnEditorActionListener {
     public static final String NAME = "SearchFragment";
     private FragmentSearchBinding binding;
     private List<SearchHistoryBean> searchHistoryBeanList = new ArrayList<>();
@@ -102,7 +102,7 @@ public class SearchFragment extends MVPBaseFragment<SearchContract.View, SearchP
         fragmentList.add(getFragment(SearchPageFragment.TYPE_NOTE));
         fragmentList.add(getFragment(SearchPageFragment.TYPE_FILE));
         fragmentList.add(getFragment(SearchPageFragment.TYPE_SPEAK));
-        binding.vp.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
+        binding.vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         binding.stl.setViewPager(binding.vp);
     }
 

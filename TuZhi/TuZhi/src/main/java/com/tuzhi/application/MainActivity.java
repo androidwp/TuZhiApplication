@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tuzhi.application.bean.EventBusBean;
@@ -25,13 +24,12 @@ import com.tuzhi.application.dialog.UpdateDialog;
 import com.tuzhi.application.dialog.WarnDialog;
 import com.tuzhi.application.inter.DialogMakeCancelListener;
 import com.tuzhi.application.inter.DialogMakeSureListener;
+import com.tuzhi.application.moudle.homepage.mvc.HomePageFragment;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
 import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
 import com.tuzhi.application.moudle.mine.mvp.MineFragment;
-import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
-import com.tuzhi.application.moudle.search.mvp.SearchFragment;
+import com.tuzhi.application.moudle.mytasks.MyTasksFragment;
 import com.tuzhi.application.utils.ConstantKt;
-import com.tuzhi.application.utils.DarkUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.LogUtilsKt;
@@ -64,22 +62,29 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
     private static boolean goSettingPage=false;
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //权限申请
         AndPermission.with(this).requestCode(100).permission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.SYSTEM_ALERT_WINDOW).start();
         EventBus.getDefault().register(this);
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            DarkUtils.setStatusBarIconDark(this, true);
-            DarkUtils.setStatusBarDarkMode(this, true);
-        }
+        //设置状态栏为黑色
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            DarkUtils.setStatusBarIconDark(this, true);
+//            DarkUtils.setStatusBarDarkMode(this, true);
+//        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.rg.setOnCheckedChangeListener(this);
-        fragmentMap.put(R.id.rbHomePage, new RepositoryFragment());
-        fragmentMap.put(R.id.rbSearch, new SearchFragment());
+        fragmentMap.put(R.id.rbHomePage, new HomePageFragment());
+        fragmentMap.put(R.id.rbSearch, new MyTasksFragment());
         fragmentMap.put(R.id.rbMessage, new MessageFragment());
         fragmentMap.put(R.id.rbMine, new MineFragment());
         binding.rbHomePage.setChecked(true);

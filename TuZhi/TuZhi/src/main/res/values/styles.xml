@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorWhite</item>
-        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <item name="colorPrimary">@color/colorNavigationBarBackground</item>
+        <item name="colorPrimaryDark">@color/colorNavigationBarBackground</item>
         <item name="colorAccent">@color/colorBlueButton</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorText</item>
@@ -79,19 +79,19 @@
         <item name="android:textSize">@dimen/generalLittleTextSize</item>
         <item name="android:layout_height">@dimen/navigationHeight</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:background">@drawable/general_listview_selector</item>
+        <item name="android:background">@drawable/navigation_bar_click_effect</item>
     </style>
 
     <style name="NavigationRightButton">
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">@dimen/generalLittleTextSize</item>
-        <item name="android:textColor">@color/colorBlueButton</item>
+        <item name="android:textColor">@color/colorNavigationBarText</item>
         <item name="android:layout_gravity">right</item>
         <item name="android:paddingLeft">@dimen/generalSpace</item>
         <item name="android:paddingRight">@dimen/generalSpace</item>
         <item name="android:layout_height">@dimen/navigationHeight</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:background">@drawable/general_listview_selector</item>
+        <item name="android:background">@drawable/navigation_bar_click_effect</item>
     </style>
 
 </resources>

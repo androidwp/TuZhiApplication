@@ -27,7 +27,7 @@ interface LoadMoreListener {
 
 class RefreshRecycleView : FrameLayout {
     lateinit private var srl: SwipeRefreshLayout
-    lateinit private var rv: RecyclerView
+    lateinit var rv: RecyclerView
     lateinit private var ll: LinearLayout
     lateinit private var tvTitle: TextView
     lateinit private var tvInfo: TextView
@@ -42,6 +42,8 @@ class RefreshRecycleView : FrameLayout {
     var info = ""
 
     constructor(context: Context) : this(context, null)
+
+
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init()
