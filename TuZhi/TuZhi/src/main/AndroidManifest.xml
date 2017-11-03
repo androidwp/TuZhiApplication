@@ -51,7 +51,7 @@
             android:value="59c09778cae7e77854000040" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="3a769e7d7fbcf8fb5a8aecb3dd5a0798"/>
+            android:value="3a769e7d7fbcf8fb5a8aecb3dd5a0798" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="官网" />
@@ -127,22 +127,28 @@
 
         <activity
             android:name=".moudle.clipper.clippertwo.mvp.ClipperTwoActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".moudle.clipper.mvp.ClipperOneActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.mvp.ChooseColleagueActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".moudle.mine.setting.settingpush.mvp.SettingPushActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".moudle.applyfortrial.ApplyForTrialActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".moudle.applyfortrialcompletion.ApplyForTrialCompletionActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

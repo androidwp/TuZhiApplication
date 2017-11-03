@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.applyfortrial.ApplyForTrialActivity" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.applyfortrial.ApplyForTrialBean" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="试用申请" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:text="请留下联系方式，我们会在一个工作日内与您联系"
+            android:textColor="@color/colorGeneralTintText"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_setting_background"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:background="@null"
+                android:hint="姓名"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={data.name}"
+                android:textColorHint="@color/colorGeneralMoreTintText" />
+
+            <View style="@style/NavigationLine" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:background="@null"
+                android:hint="手机号或邮箱"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={data.phoneOrEmail}"
+                android:textColorHint="@color/colorGeneralMoreTintText" />
+
+            <View style="@style/NavigationLine" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:background="@null"
+                android:hint="公司或团队名称"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={data.company}"
+                android:textColorHint="@color/colorGeneralMoreTintText" />
+
+        </LinearLayout>
+
+        <com.tuzhi.application.view.MyRippleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="30dp"
+            android:onClick="@{()->activity.commit(data)}"
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/loginshadowfill"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/generalTextSize" />
+
+        </com.tuzhi.application.view.MyRippleView>
+
+
+    </LinearLayout>
+</layout>
