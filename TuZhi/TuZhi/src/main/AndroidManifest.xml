@@ -140,7 +140,6 @@
 
         <activity
             android:name=".moudle.mine.setting.settingpush.mvp.SettingPushActivity"
-<<<<<<< HEAD
             android:screenOrientation="portrait"
             />
         <activity
@@ -151,8 +150,6 @@
             android:name=".moudle.search.mvp.SearchFragment"
             android:screenOrientation="portrait"
             />
-=======
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".moudle.applyfortrial.ApplyForTrialActivity"
@@ -161,7 +158,6 @@
         <activity
             android:name=".moudle.applyfortrialcompletion.ApplyForTrialCompletionActivity"
             android:screenOrientation="portrait" />
->>>>>>> master
 
     </application>
 
