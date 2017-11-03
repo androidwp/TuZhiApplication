@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.applyfortrialcompletion.ApplyForTrialCompletionActivity" />
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="试用申请" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/applycompletion" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="感谢您的信任"
+            android:textColor="@color/colorGeneralTintText"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="我们会在一个工作日内与您联系"
+            android:textColor="@color/colorGeneralMoreTintText"
+            android:textSize="12sp" />
+
+
+        <com.tuzhi.application.view.MyRippleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="70dp"
+            android:onClick="@{()->activity.determine()}"
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/loginshadowfill"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/generalTextSize" />
+
+        </com.tuzhi.application.view.MyRippleView>
+
+
+    </LinearLayout>
+</layout>

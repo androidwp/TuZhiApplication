@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.tuzhi.application.MainActivity;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityLoginBinding;
+import com.tuzhi.application.moudle.applyfortrial.ApplyForTrialActivity;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.bean.User;
 import com.tuzhi.application.moudle.login.forgetpassword.mvp.ForgetPasswordActivity;
@@ -47,6 +48,11 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     public void forgetPassword() {
         ActivitySkipUtilsKt.toActivity(this, ForgetPasswordActivity.class);
     }
+
+    public void applyForTrial() {
+        ActivitySkipUtilsKt.toActivity(this, ApplyForTrialActivity.class);
+    }
+
 
     @Override
     public void skip() {

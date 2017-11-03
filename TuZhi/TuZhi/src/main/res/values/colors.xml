@@ -20,5 +20,9 @@
     <color name="colorBlueButton">#459ff9</color>
     <color name="colorTextHint">#a4aab3</color>
     <color name="colorSlidingTextColor">#333333</color>
+<<<<<<< HEAD
     <color name="color71b7fd">#71b7fd</color>
+=======
+    <color name="colorBlue71b7fd">#71b7fd</color>
+>>>>>>> master
 </resources>
