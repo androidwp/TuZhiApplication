@@ -13,12 +13,14 @@ public class MyTasksPresenter extends BasePresenterImpl<MyTasksContract.View> im
 
     @Override
     public void downloadData(int page) {
-        ArrayList<MyTestsItemBean> data = new ArrayList<>();
+        ArrayList<MyTasksItemBean> data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            MyTestsItemBean bean = new MyTestsItemBean(MyTestsItem.TYPE);
+            MyTasksItemBean bean = new MyTasksItemBean(MyTasksItem.TYPE);
             bean.setContent("对12387号客户电话回访，确认其反馈的问题被解对12387号客户电话回访，确认其反馈的问题被解");
             data.add(bean);
         }
+        MyTasksItemBean bean = new MyTasksItemBean(CompletedTaskItem.TYPE);
+        data.add(bean);
         mView.downloadFinish(data, false, page);
     }
 }

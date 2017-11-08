@@ -13,7 +13,7 @@ import com.tuzhi.application.item.BaseItem;
  * Created by wangpeng on 2017/10/30.
  */
 
-public class MyTestsItem extends BaseItem<MyTestsItemBean> {
+public class MyTasksItem extends BaseItem<MyTasksItemBean> {
 
     public static final String TYPE = "MyTestsItem";
 
@@ -21,7 +21,7 @@ public class MyTestsItem extends BaseItem<MyTestsItemBean> {
 
     private ItemMyTestsBinding binding;
 
-    private MyTestsItemBean myTestsItemBean;
+    private MyTasksItemBean myTestsItemBean;
 
     private int position;
 
@@ -41,7 +41,7 @@ public class MyTestsItem extends BaseItem<MyTestsItemBean> {
     }
 
     @Override
-    public void handleData(MyTestsItemBean myTestsItemBean, int i) {
+    public void handleData(MyTasksItemBean myTestsItemBean, int i) {
         this.myTestsItemBean = myTestsItemBean;
         binding.setData(myTestsItemBean);
         binding.executePendingBindings();

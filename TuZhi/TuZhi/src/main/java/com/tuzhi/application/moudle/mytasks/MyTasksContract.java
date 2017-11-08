@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MyTasksContract {
     interface View extends BaseView {
-        void downloadFinish(ArrayList<MyTestsItemBean> data, boolean haveNextPage, int page);
+        void downloadFinish(ArrayList<MyTasksItemBean> data, boolean haveNextPage, int page);
 
         void downloadError();
     }

@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityCompletedTasksBinding;
-import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -23,7 +22,6 @@ import kale.adapter.item.AdapterItem;
  */
 
 public class CompletedTasksActivity extends MVPBaseActivity<CompletedTasksContract.View, CompletedTasksPresenter> implements CompletedTasksContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
-
     private ArrayList<CompletedTasksItemBean> mData = new ArrayList<>();
     private ActivityCompletedTasksBinding binding;
 
@@ -35,6 +33,7 @@ public class CompletedTasksActivity extends MVPBaseActivity<CompletedTasksContra
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityCompletedTasksBinding) viewDataBinding;
+        binding.setActivity(this);
         binding.rrv.setLoadListener(this);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.isShowRefreshView(true);
@@ -44,13 +43,8 @@ public class CompletedTasksActivity extends MVPBaseActivity<CompletedTasksContra
             @NonNull
             @Override
             public AdapterItem createItem(Object o) {
-                String itemType = (String) o;
-                switch (itemType) {
-                    case GeneralLoadFootViewItem.TYPE:
-                        return new GeneralLoadFootViewItem();
-                    default:
-                        return new CompletedTasksItem();
-                }
+                return new CompletedTasksItem();
+
             }
 
             @Override
@@ -81,7 +75,7 @@ public class CompletedTasksActivity extends MVPBaseActivity<CompletedTasksContra
         mPresenter.downloadData(0);
     }
 
-    public void back(){
+    public void back() {
         onBackPressed();
     }
 }

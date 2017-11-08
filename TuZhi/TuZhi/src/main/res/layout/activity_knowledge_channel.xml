@@ -13,44 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/navigationHeight"
-            android:background="@color/colorNavigationBarBackground">
 
-            <ImageView
-                style="@style/NavigationLeftButton"
-                android:onClick="@{()->activity.back()}" />
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textSize="@dimen/generalTextSize" />
-
-            <ImageView
-                android:layout_width="@dimen/navigationHeight"
-                android:layout_height="@dimen/navigationHeight"
-                android:layout_gravity="right"
-                android:layout_marginRight="40dp"
-                android:paddingRight="10dp"
-                android:background="@drawable/general_listview_selector"
-                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
-                android:scaleType="center"
-                android:src="@drawable/add" />
-
-            <ImageView
-                style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.openMenu()}"
-                android:src="@drawable/more" />
-
-            <View style="@style/NavigationLine" />
-
-        </FrameLayout>
 
         <com.tuzhi.application.view.RefreshRecycleView
             android:id="@+id/rrv"

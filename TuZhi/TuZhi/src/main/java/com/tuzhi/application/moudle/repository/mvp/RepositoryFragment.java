@@ -13,10 +13,10 @@ import com.tuzhi.application.databinding.ActivityRepositoryBinding;
 import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
+import com.tuzhi.application.moudle.knowledgelib.KnowledgeLibActivity;
 import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
-import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -132,9 +132,9 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
     @Override
     public void onItemClick(View view) {
         RepositoryListItemBean tag = (RepositoryListItemBean) view.getTag();
-        Intent intent = new Intent(getContext(), KnowledgeChannelActivity.class);
-        intent.putExtra(KnowledgeChannelActivity.ID, tag.getId());
-        intent.putExtra(KnowledgeChannelActivity.TITLE, tag.getTitle());
+        Intent intent = new Intent(getContext(), KnowledgeLibActivity.class);
+        intent.putExtra(KnowledgeLibActivity.ID, tag.getId());
+        intent.putExtra(KnowledgeLibActivity.TITLE, tag.getTitle());
         getContext().startActivity(intent);
     }
 }

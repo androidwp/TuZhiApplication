@@ -2,4 +2,6 @@
     <string name="app_name">图知</string>
     <string name="commentPrefix">评论内容:</string>
     <string name="sharePrefix">备注信息:</string>
+    <string name="allTasks">全部任务</string>
+    <string name="myTasks">我的任务</string>
 </resources>

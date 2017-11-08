@@ -17,18 +17,11 @@ public class KnowledgeChannelContract {
 
         void downloadFinishNothing();
 
-        void setTitle(String name);
-
-        void deleteLibSuccess();
-
-        void renameSuccess(String name);
     }
 
     interface Presenter extends BasePresenter<View> {
         void downLoadData(String id, int page);
 
-        void deleteLib(String id);
 
-        void rename(String id, String name);
     }
 }

@@ -140,16 +140,13 @@
 
         <activity
             android:name=".moudle.mine.setting.settingpush.mvp.SettingPushActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.completedtasks.CompletedTasksActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.search.mvp.SearchFragment"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".moudle.applyfortrial.ApplyForTrialActivity"
@@ -158,6 +155,10 @@
         <activity
             android:name=".moudle.applyfortrialcompletion.ApplyForTrialCompletionActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".moudle.knowledgelib.KnowledgeLibActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".moudle.createtask.CreateTaskActivity" />
 
     </application>
 

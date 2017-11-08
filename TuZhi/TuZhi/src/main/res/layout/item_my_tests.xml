@@ -5,11 +5,11 @@
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.mytasks.MyTestsItemBean" />
+            type="com.tuzhi.application.moudle.mytasks.MyTasksItemBean" />
 
         <variable
             name="item"
-            type="com.tuzhi.application.moudle.mytasks.MyTestsItem" />
+            type="com.tuzhi.application.moudle.mytasks.MyTasksItem" />
     </data>
 
     <LinearLayout
@@ -23,6 +23,7 @@
         android:paddingRight="@dimen/generalSpace">
 
         <CheckBox
+            android:id="@+id/cbFinishTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@{data.checkStatue}"

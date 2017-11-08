@@ -72,7 +72,7 @@
     <style name="NavigationLeftButton">
         <item name="android:layout_gravity">left</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/colorGeneralTintText</item>
+        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:paddingRight">@dimen/generalSpace</item>
         <item name="android:src">@drawable/back</item>
         <item name="android:paddingLeft">@dimen/generalSpace</item>

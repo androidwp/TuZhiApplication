@@ -19,6 +19,6 @@ public class CompletedTasksPresenter extends BasePresenterImpl<CompletedTasksCon
             com.setTitle("对12387号客户电话回访，确认其反馈的问题被解觉打发生地方是的");
             mData.add(com);
         }
-        mView.downloadFinish(mData, true, page);
+        mView.downloadFinish(mData, false, page);
     }
 }

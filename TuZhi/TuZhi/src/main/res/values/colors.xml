@@ -8,6 +8,7 @@
     <color name="colorGeneralMoreTintText">#bdbdbd</color>
     <color name="colorNavigationBarBackground">@color/color71b7fd</color>
     <color name="colorNavigationBarText">@color/colorWhite</color>
+    <color name="colorNavigationBarTitleText">@color/colorWhite</color>
     <color name="colorGeneralBackground">#f7f8f9</color>
     <color name="colorLine">#e9e9e9</color>
     <color name="colorWhite">#ffffff</color>

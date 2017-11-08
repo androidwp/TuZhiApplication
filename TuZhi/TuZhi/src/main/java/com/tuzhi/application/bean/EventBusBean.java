@@ -13,6 +13,16 @@ public class EventBusBean {
     private String sContent;
     //数字内容传递
     private int iContent;
+    //传递任意类
+    private Object object;
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
 
     public int getEventType() {
         return eventType;

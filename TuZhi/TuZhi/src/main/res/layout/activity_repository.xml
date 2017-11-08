@@ -13,26 +13,26 @@
         android:orientation="vertical">
 
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/navigationHeight"
-            android:background="@color/colorWhite">
+        <!--<FrameLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/navigationHeight"-->
+            <!--android:background="@color/colorWhite">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="知识库"
-                android:ellipsize="end"
-                android:textSize="@dimen/generalTextSize" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:text="知识库"-->
+                <!--android:ellipsize="end"-->
+                <!--android:textSize="@dimen/generalTextSize" />-->
 
-            <ImageView
-                android:id="@+id/ivRight"
-                style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
-                android:src="@drawable/add" />
+            <!--<ImageView-->
+                <!--android:id="@+id/ivRight"-->
+                <!--style="@style/NavigationRightButton"-->
+                <!--android:onClick="@{()->activity.skipCreateRepositoryActivity()}"-->
+                <!--android:src="@drawable/add" />-->
 
-        </FrameLayout>
+        <!--</FrameLayout>-->
 
         <FrameLayout
             android:layout_width="match_parent"

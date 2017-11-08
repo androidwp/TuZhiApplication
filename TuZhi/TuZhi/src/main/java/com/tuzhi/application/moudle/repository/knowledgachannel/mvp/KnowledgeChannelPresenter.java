@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.knowledgachannel.bean.KnowledgeChannelHttpBean;
 import com.tuzhi.application.moudle.repository.knowledgachannel.bean.KnowledgeChannelItemBean;
+import com.tuzhi.application.moudle.repository.knowledgachannel.item.CreateChannelItem;
 import com.tuzhi.application.moudle.repository.knowledgachannel.item.KnowledgeChannelItem;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -22,11 +23,11 @@ import java.util.WeakHashMap;
  */
 
 public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChannelContract.View> implements KnowledgeChannelContract.Presenter {
-    private final String URL_LIB = "tzkm/knowledgeLib";
+
     private final String URL = "tzkm/knowledgeChannel";
 
     @Override
-    public void downLoadData(final String id, int page) {
+    public void downLoadData(final String id, final int page) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("klId", id);
         parameter.put("operate", "1");
@@ -41,6 +42,11 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
             public void onSuccess(@Nullable KnowledgeChannelHttpBean knowledgeChannelHttpBean, @NotNull String text) {
                 List<KnowledgeChannelHttpBean.KnowledgeChannelsMapBean> knowledgeChannelsMap = knowledgeChannelHttpBean.getKnowledgeChannelsMap();
                 ArrayList<KnowledgeChannelItemBean> data = new ArrayList<>();
+                if (page==0){
+                    KnowledgeChannelItemBean bean = new KnowledgeChannelItemBean(CreateChannelItem.TYPE);
+                    bean.setKlid(id);
+                    data.add(bean);
+                }
                 for (KnowledgeChannelHttpBean.KnowledgeChannelsMapBean knowledgeChannelsMapBean : knowledgeChannelsMap) {
                     KnowledgeChannelItemBean bean = new KnowledgeChannelItemBean(KnowledgeChannelItem.TYPE);
                     bean.setKlid(id);
@@ -62,50 +68,5 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
 
     }
 
-    @Override
-    public void deleteLib(String id) {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-        parameter.put("operate", "4");
-        parameter.put("klId", id);
-        HttpUtilsKt.get(mView.getContext(), URL_LIB, parameter, String.class, new HttpCallBack<String>() {
-            @Override
-            public void onFinish() {
 
-            }
-
-            @Override
-            public void onSuccess(@Nullable String s, @NotNull String text) {
-                mView.deleteLibSuccess();
-            }
-
-            @Override
-            public void onFailure(@NotNull String text) {
-
-            }
-        });
-    }
-
-    @Override
-    public void rename(String id, final String name) {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-        parameter.put("operate", "3");
-        parameter.put("klId", id);
-        parameter.put("name", name);
-        HttpUtilsKt.get(mView.getContext(), URL_LIB, parameter, String.class, new HttpCallBack<String>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onSuccess(@Nullable String s, @NotNull String text) {
-                mView.renameSuccess(name);
-            }
-
-            @Override
-            public void onFailure(@NotNull String text) {
-
-            }
-        });
-    }
 }

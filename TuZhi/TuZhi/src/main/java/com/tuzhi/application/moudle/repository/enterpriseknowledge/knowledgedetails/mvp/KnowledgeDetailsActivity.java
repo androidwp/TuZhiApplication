@@ -205,6 +205,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     public void skipChooseColleagueActivity() {
         Intent intent = new Intent(this, ChooseColleagueActivity.class);
+        intent.putExtra(ChooseColleagueActivity.TYPE,ChooseColleagueActivity.TYPE_CARD_DETAIL);
         intent.putExtra(ChooseColleagueActivity.CID, id);
         intent.putExtra(ChooseColleagueActivity.CTITLE, title);
         startActivity(intent);

@@ -15,6 +15,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/generalSpace"
+        android:layout_marginRight="@dimen/generalSpace"
+        android:layout_marginBottom="@dimen/generalSpace"
         android:background="@drawable/general_listview_selector"
         android:onClick="@{(view)->item.skip(view,data)}">
 
@@ -39,18 +42,18 @@
                 android:textColor="@color/colorGeneralTintText" />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="@dimen/generalSpace"
-            android:src="@drawable/enter" />
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right|center_vertical"-->
+            <!--android:layout_marginRight="@dimen/generalSpace"-->
+            <!--android:src="@drawable/enter" />-->
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lineHeight"
-            android:layout_gravity="bottom"
-            android:background="@color/colorLine" />
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/lineHeight"-->
+            <!--android:layout_gravity="bottom"-->
+            <!--android:background="@color/colorLine" />-->
 
     </FrameLayout>
 </layout>

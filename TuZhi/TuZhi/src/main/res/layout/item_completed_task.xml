@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.mytasks.CompletedTaskItem" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/llShipFinishTasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{(view)->item.itemClick(view)}"
+        android:layout_marginTop="@dimen/generalSpace"
+        android:background="@drawable/general_listview_selector"
+        android:orientation="horizontal"
+        android:padding="@dimen/generalSpace">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="已完成任务" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/searchon" />
+
+    </LinearLayout>
+</layout>

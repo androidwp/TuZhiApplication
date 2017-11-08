@@ -8,13 +8,26 @@
             type="com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.mvp.ChooseColleagueActivity" />
 
         <variable
-            name="people"
+            name="chooseNumber"
             type="String" />
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="littleTitle"
+            type="String" />
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
         android:orientation="vertical">
 
         <FrameLayout
@@ -32,33 +45,56 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="发送给"
+                android:text="@{title}"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:textSize="@dimen/generalTextSize" />
 
             <TextView
                 style="@style/NavigationRightButton"
                 android:onClick="@{()->activity.sure()}"
-                android:text="@{people}" />
+                android:visibility="@{TextUtils.isEmpty(chooseNumber)?View.GONE:View.VISIBLE}"
+                android:text="@{chooseNumber}" />
 
             <View style="@style/NavigationLine" />
 
         </FrameLayout>
 
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite">
 
-            <com.tuzhi.application.view.RefreshRecycleView
-                android:id="@+id/rrv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ImageView
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shadow" />
-
+                android:layout_margin="@dimen/generalSpace"
+                android:background="@drawable/semicircle_gray"
+                android:drawableLeft="@drawable/searchbox"
+                android:drawablePadding="10dp"
+                android:hint="搜索成员"
+                android:onTextChanged="@{(text,a,b,c)->activity.onTextChange(text)}"
+                android:padding="10dp"
+                android:textColor="#bdbdbd"
+                android:textColorHint="#bdbdbd" />
         </FrameLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginTop="10dp"
+            android:text="@{littleTitle}"
+            android:textColor="#757575"
+            android:textSize="13sp"
+            android:visibility="@{littleTitle!=null?View.VISIBLE:View.GONE}" />
+
+        <com.tuzhi.application.view.RefreshRecycleView
+            android:id="@+id/rrv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </layout>

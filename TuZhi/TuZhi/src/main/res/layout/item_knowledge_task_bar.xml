@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.mytasks.MyTasksItemBean" />
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.knowledgelibtask.KnowledgeLibTaskBarItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/generalSpace"
+        android:layout_marginBottom="@dimen/generalSpace"
+        android:paddingRight="@dimen/generalSpace">
+
+        <TextView
+            android:id="@+id/tvTasksChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{(view)->item.viewClick(view,data)}"
+            android:paddingBottom="13dp"
+            android:paddingTop="13dp"
+            android:text="@{data.flagAllTaskOrMyTask?@string/allTasks:@string/myTasks}"
+            android:textColor="@color/color71b7fd"
+            android:textSize="13sp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvCreateTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:onClick="@{(view)->item.viewClick(view,data)}"
+            android:paddingBottom="13dp"
+            android:paddingTop="13dp"
+            android:text="新建任务"
+            android:textColor="@color/color71b7fd"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>
