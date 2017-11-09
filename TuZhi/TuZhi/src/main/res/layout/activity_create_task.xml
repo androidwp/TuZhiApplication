@@ -300,6 +300,7 @@
                             android:background="@drawable/createchannelbackground"
                             android:drawablePadding="6dp"
                             android:paddingBottom="6dp"
+                            android:onClick="@{()->activity.chooseCard()}"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:paddingTop="6dp"
@@ -331,6 +332,7 @@
                     android:layout_height="46dp"
                     android:layout_marginBottom="@dimen/generalSpace"
                     android:layout_marginLeft="@dimen/generalSpace"
+                    android:onClick="@{()->activity.chooseLib()}"
                     android:layout_marginRight="@dimen/generalSpace"
                     android:background="@drawable/general_listview_selector"
                     android:padding="10dp">
@@ -340,13 +342,13 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="选择所属知识库"
+                        android:visibility="@{data.taskLib==null?View.VISIBLE:View.GONE}"
                         android:textColor="#bdbdbd"
                         android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/colorWhite"
                         android:gravity="center_vertical"
                         android:text="@{data.taskLib}"
                         android:textColor="#212121"

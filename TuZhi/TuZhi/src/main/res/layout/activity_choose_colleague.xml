@@ -19,6 +19,10 @@
             name="littleTitle"
             type="String" />
 
+        <variable
+            name="type"
+            type="String" />
+
         <import type="android.view.View" />
 
         <import type="android.text.TextUtils" />
@@ -38,7 +42,14 @@
             <TextView
                 style="@style/NavigationLeftButton"
                 android:onClick="@{()->activity.back()}"
-                android:text="取消" />
+                android:text="取消"
+                android:visibility="@{type.equals(activity.TYPE_CHOOSE_CARD)?View.GONE:View.VISIBLE}" />
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:visibility="@{type.equals(activity.TYPE_CHOOSE_CARD)?View.VISIBLE:View.GONE}" />
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,8 +63,8 @@
             <TextView
                 style="@style/NavigationRightButton"
                 android:onClick="@{()->activity.sure()}"
-                android:visibility="@{TextUtils.isEmpty(chooseNumber)?View.GONE:View.VISIBLE}"
-                android:text="@{chooseNumber}" />
+                android:text="@{chooseNumber}"
+                android:visibility="@{TextUtils.isEmpty(chooseNumber)?View.GONE:View.VISIBLE}" />
 
             <View style="@style/NavigationLine" />
 
@@ -94,7 +105,8 @@
         <com.tuzhi.application.view.RefreshRecycleView
             android:id="@+id/rrv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="@{littleTitle!=null?@dimen/zero:@dimen/generalSpace}" />
 
     </LinearLayout>
 </layout>

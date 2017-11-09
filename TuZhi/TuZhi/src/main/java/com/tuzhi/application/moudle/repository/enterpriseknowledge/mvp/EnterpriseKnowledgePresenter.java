@@ -8,7 +8,6 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.Knowledg
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.item.EnterpriseKnowledgeListItem;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
-import com.tuzhi.application.utils.LogUtilsKt;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +44,6 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
 
             @Override
             public void onSuccess(@Nullable final HttpKnowledgeModuleBean httpKnowledgeModuleBean, @NotNull String text) {
-                LogUtilsKt.showLog("TAG", text);
                 final ArrayList<KnowledgeCardItemBean> data = new ArrayList<>();
                 HttpKnowledgeModuleBean.ArticlePageBean articlePage = httpKnowledgeModuleBean.getArticlePage();
                 final boolean next = articlePage.isNext();

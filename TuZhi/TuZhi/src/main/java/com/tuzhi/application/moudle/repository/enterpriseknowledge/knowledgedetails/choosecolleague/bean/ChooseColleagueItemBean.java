@@ -14,6 +14,53 @@ public class ChooseColleagueItemBean extends BaseListItemBean {
     private String portrait;
     private String nickName;
     private boolean chooseStatus;
+    private String kcid;
+    private String klid;
+    private String title;
+    private String text;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getKcid() {
+        return kcid;
+    }
+
+    public void setKcid(String kcid) {
+        this.kcid = kcid;
+    }
+
+    public String getKlid() {
+        return klid;
+    }
+
+    public void setKlid(String klid) {
+        this.klid = klid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Bindable
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        notifyPropertyChanged(com.android.databinding.library.baseAdapters.BR.text);
+    }
 
     @Bindable
     public boolean isChooseStatus() {

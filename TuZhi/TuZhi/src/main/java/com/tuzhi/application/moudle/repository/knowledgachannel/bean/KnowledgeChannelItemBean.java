@@ -52,6 +52,4 @@ public class KnowledgeChannelItemBean extends BaseListItemBean {
         this.text = text;
         notifyPropertyChanged(BR.text);
     }
-
-
 }

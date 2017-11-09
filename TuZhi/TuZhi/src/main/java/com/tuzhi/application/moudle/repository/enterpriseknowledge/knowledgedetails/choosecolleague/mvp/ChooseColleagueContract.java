@@ -21,7 +21,11 @@ public class ChooseColleagueContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void downloadData(String cId, int page);
+        void downloadDataColleague(String cId, int page);
+
+        void downloadDataChannel(String lId, int page);
+
+        void downloadDataCare(String channelId, int page);
 
         void shareCard(String cid, String staffIds, String content);
     }
