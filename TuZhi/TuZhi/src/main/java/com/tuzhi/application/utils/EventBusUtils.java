@@ -2,15 +2,24 @@ package com.tuzhi.application.utils;
 
 import com.tuzhi.application.MainActivity;
 import com.tuzhi.application.bean.EventBusBean;
+import com.tuzhi.application.moudle.completedtasks.CompletedTasksActivity;
+import com.tuzhi.application.moudle.knowledgelibtask.KnowledgeLibTaskFragment;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
+import com.tuzhi.application.moudle.mytasks.MyTasksFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * Created by wangpeng on 2017/8/9.
+ * @author wangpeng
+ * @date 2017/8/9
  */
 
 public class EventBusUtils {
+    /**
+     * 消息数变更通知
+     *
+     * @param number
+     */
     public static void sendUnreadMessageNumber(int number) {
         EventBusBean eventBusBean = new EventBusBean();
         eventBusBean.setName(MainActivity.NAME);
@@ -22,5 +31,11 @@ public class EventBusUtils {
         busBean.setName(MessageFragment.NAME);
         busBean.setiContent(number);
         EventBus.getDefault().post(busBean);
+    }
+
+    public static void taskStatueChange() {
+        EventBus.getDefault().post(KnowledgeLibTaskFragment.EVENT_REFRESH);
+        EventBus.getDefault().post(CompletedTasksActivity.EVENT_REFRESH);
+        EventBus.getDefault().post(MyTasksFragment.EVENT_REFRESH);
     }
 }

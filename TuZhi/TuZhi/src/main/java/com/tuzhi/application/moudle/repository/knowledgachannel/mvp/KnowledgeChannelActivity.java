@@ -13,6 +13,7 @@ import com.tuzhi.application.databinding.ActivityKnowledgeChannelBinding;
 import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
+import com.tuzhi.application.moudle.createchannel.CreateChannelActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity;
 import com.tuzhi.application.moudle.repository.knowledgachannel.bean.KnowledgeChannelItemBean;
 import com.tuzhi.application.moudle.repository.knowledgachannel.item.CreateChannelItem;
@@ -32,6 +33,7 @@ import kale.adapter.item.AdapterItem;
 
 /**
  * MVPPlugin
+ * @author wangpeng
  */
 
 public class KnowledgeChannelActivity extends MVPBaseFragment<KnowledgeChannelContract.View, KnowledgeChannelPresenter> implements KnowledgeChannelContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ItemClickListener {
@@ -134,7 +136,9 @@ public class KnowledgeChannelActivity extends MVPBaseFragment<KnowledgeChannelCo
     @Override
     public void onItemClick(View view) {
         if (view == null) {
-
+            Intent intent = new Intent(getContext(), CreateChannelActivity.class);
+            intent.putExtra(CreateChannelActivity.ID, listId);
+            startActivity(intent);
         } else {
             KnowledgeChannelItemBean knowledgeChannelItemBean = (KnowledgeChannelItemBean) view.getTag();
             Intent intent = new Intent(getContext(), EnterpriseKnowledgeActivity.class);

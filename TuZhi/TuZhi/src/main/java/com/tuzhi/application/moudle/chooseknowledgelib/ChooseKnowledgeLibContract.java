@@ -9,15 +9,27 @@ import java.util.ArrayList;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class ChooseKnowledgeLibContract {
     interface View extends BaseView {
-        //下载并整理好数据
+
+        /**
+         * 下载完成回掉
+         *
+         * @param data 下载好传入封装好的数据
+         */
         void downLoadFinish(ArrayList<ItemBean> data);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void downLoadData();
+        /**
+         * 获取数据
+         *
+         * @param type 传入类型判断是否下载模版
+         */
+        void downLoadData(String type);
     }
 }

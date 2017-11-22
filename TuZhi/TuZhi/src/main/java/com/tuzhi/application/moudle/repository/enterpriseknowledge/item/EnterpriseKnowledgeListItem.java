@@ -76,7 +76,6 @@ public class EnterpriseKnowledgeListItem extends BaseItem<KnowledgeCardItemBean>
     public void skipKnowledgeDetailsActivity(String title, String id) {
         Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
         intent.putExtra(KnowledgeDetailsActivity.ID, id);
-        intent.putExtra(KnowledgeDetailsActivity.TITLE, title);
         context.startActivity(intent);
     }
 

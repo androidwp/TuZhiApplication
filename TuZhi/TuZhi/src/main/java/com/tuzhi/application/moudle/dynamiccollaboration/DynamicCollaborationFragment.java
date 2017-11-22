@@ -4,11 +4,15 @@ package com.tuzhi.application.moudle.dynamiccollaboration;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.FragmentDynamicCollaborationBinding;
+import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
+import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.view.LoadMoreListener;
 
 import java.util.ArrayList;
@@ -17,13 +21,14 @@ import kale.adapter.CommonRcvAdapter;
 import kale.adapter.item.AdapterItem;
 
 /**
- * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 动态协作页面
+ *
+ * @author wangpeng
  */
 
-public class DynamicCollaborationFragment extends MVPBaseFragment<DynamicCollaborationContract.View, DynamicCollaborationPresenter> implements DynamicCollaborationContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class DynamicCollaborationFragment extends MVPBaseFragment<DynamicCollaborationContract.View, DynamicCollaborationPresenter> implements DynamicCollaborationContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ItemClickListener {
 
-    private ArrayList<DynamicCollaborationItemBean> mData=new ArrayList<>();
+    private ArrayList<DynamicCollaborationItemBean> mData = new ArrayList<>();
     private FragmentDynamicCollaborationBinding binding;
 
     @Override
@@ -45,7 +50,9 @@ public class DynamicCollaborationFragment extends MVPBaseFragment<DynamicCollabo
                         generalLoadFootViewItem.setColorId(R.color.colorWhite);
                         return generalLoadFootViewItem;
                     default:
-                        return new DynamicCollaborationItem();
+                        DynamicCollaborationItem dynamicCollaborationItem = new DynamicCollaborationItem();
+                        dynamicCollaborationItem.setClickListener(DynamicCollaborationFragment.this);
+                        return dynamicCollaborationItem;
                 }
             }
 
@@ -80,5 +87,11 @@ public class DynamicCollaborationFragment extends MVPBaseFragment<DynamicCollabo
     @Override
     public void downloadError() {
 
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        DynamicCollaborationItemBean bean = (DynamicCollaborationItemBean) view.getTag();
+        ActivitySkipUtilsKt.toActivity(getContext(), KnowledgeDetailsActivity.class, KnowledgeDetailsActivity.ID, bean.getId());
     }
 }

@@ -50,12 +50,13 @@ import kale.adapter.item.AdapterItem;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsContract.View, KnowledgeDetailsPresenter> implements KnowledgeDetailsContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ActionSheet.ActionSheetListener, OnDialogClickListener {
     public static final String MESSAGE = "EKnowledgeDetailsActivity_refresh";
     public static final String ID = "ID";
-    public static final String TITLE = "TITLE";
     private ArrayList<KnowledgeDetailsListBean> data = new ArrayList<>();
     private String id;
     private ActivityKnowledgeDetailsBinding binding;
@@ -75,8 +76,9 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String event) {
-        if (TextUtils.equals(event, MESSAGE))
+        if (TextUtils.equals(event, MESSAGE)) {
             onRefresh();
+        }
     }
 
     @Override
@@ -92,7 +94,11 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
 
-    //type=0  为删除  重命名，type=1  为选择图库
+    /**
+     * type=0  为删除  重命名，type=1  为选择图库
+     *
+     * @param type
+     */
     public void openSelectDialog(int type) {
         this.type = type;
         String textOne;
@@ -122,9 +128,6 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     protected void init(ViewDataBinding viewDataBinding) {
         binding = (ActivityKnowledgeDetailsBinding) viewDataBinding;
         id = getIntent().getStringExtra(ID);
-        title = getIntent().getStringExtra(TITLE);
-        if (!TextUtils.isEmpty(title))
-            setTitle(title);
         binding.setActivity(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
@@ -205,7 +208,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
 
     public void skipChooseColleagueActivity() {
         Intent intent = new Intent(this, ChooseColleagueActivity.class);
-        intent.putExtra(ChooseColleagueActivity.TYPE,ChooseColleagueActivity.TYPE_CARD_DETAIL);
+        intent.putExtra(ChooseColleagueActivity.TYPE, ChooseColleagueActivity.TYPE_CARD_DETAIL);
         intent.putExtra(ChooseColleagueActivity.CID, id);
         intent.putExtra(ChooseColleagueActivity.CTITLE, title);
         startActivity(intent);
@@ -220,6 +223,7 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     }
 
 
+    @Override
     public void skipCreateDocumentActivity(String editContentUrl) {
         if (!TextUtils.isEmpty(editContentUrl)) {
             canClick();
@@ -279,11 +283,11 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
             if (index == 0) {
                 //多选图片
                 Album.album(this)
-                        .title("图库") // 配置title。
-                        .selectCount(9) // 最多选择几张图片。
-                        .columnCount(3) // 相册展示列数，默认是2列。
-                        .camera(false) // 是否有拍照功能。
-                        .start(999); // 999是请求码，返回时onActivityResult()的第一个参数。
+                        .title("图库")
+                        .selectCount(9)
+                        .columnCount(3)
+                        .camera(false)
+                        .start(999);
             } else {
                 //打开相机
                 Album.camera(this).start(999);
@@ -296,8 +300,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 999) {
-            if (resultCode == RESULT_OK) { // Successfully.
-                ArrayList<String> pathList = Album.parseResult(data); // Parse path.
+            if (resultCode == RESULT_OK) {
+                ArrayList<String> pathList = Album.parseResult(data);
                 mPresenter.uploadFiles(binding.rrv, id, pathList);
                 dialog = new ProgressBarDialog(this);
                 dialog.setTitle("正在上传");
@@ -335,6 +339,8 @@ public class KnowledgeDetailsActivity extends MVPBaseActivity<KnowledgeDetailsCo
                 break;
             case R.id.tvRename:
                 mPresenter.renameCard(id, (String) view.getTag());
+                break;
+            default:
                 break;
         }
     }

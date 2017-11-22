@@ -9,6 +9,7 @@ import java.util.ArrayList;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class KnowledgeDetailsContract {

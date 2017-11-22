@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.createknowledgelib.CreateKnowledgeLibActivity" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.createknowledgelib.CreateKnowledgeLibBean" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <TextView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:text="取消" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="新建知识库"
+                android:textColor="@color/colorNavigationBarTitleText"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.commit()}"
+                android:text="完成" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_gravity="bottom"
+                android:background="@color/colorLine" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="知识库名称"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@color/colorWhite"
+            android:hint="请输入知识库名称"
+            android:padding="@dimen/generalSpace"
+            android:text="@={data.libName}"
+            android:textColor="#212121"
+            android:textColorHint="#bdbdbd"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="公开性"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_listview_selector"
+            android:drawableRight="@drawable/enter"
+            android:onClick="@{()->activity.chooseOpenOrSecret()}"
+            android:padding="@dimen/generalSpace"
+            android:text="@{data.libOpenness?@string/libOpenness:@string/libSecret}"
+            android:textColor="#212121" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="分类"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_listview_selector"
+            android:drawableRight="@drawable/enter"
+            android:onClick="@{()->activity.chooseLibType()}"
+            android:padding="@dimen/generalSpace"
+            android:text="@{data.libTypeName}"
+            android:textColor="#212121" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="图标"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_listview_selector"
+            android:onClick="@{()->activity.chooseLibIcon()}">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                app:imageLoad="@{data.libIcon}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:src="@drawable/enter" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

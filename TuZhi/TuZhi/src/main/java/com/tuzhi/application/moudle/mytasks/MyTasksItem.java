@@ -10,7 +10,8 @@ import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.BaseItem;
 
 /**
- * Created by wangpeng on 2017/10/30.
+ * @author wangpeng
+ * @date 2017/10/30
  */
 
 public class MyTasksItem extends BaseItem<MyTasksItemBean> {
@@ -22,8 +23,6 @@ public class MyTasksItem extends BaseItem<MyTasksItemBean> {
     private ItemMyTestsBinding binding;
 
     private MyTasksItemBean myTestsItemBean;
-
-    private int position;
 
     @Override
     public void bindView(View view) {
@@ -45,16 +44,21 @@ public class MyTasksItem extends BaseItem<MyTasksItemBean> {
         this.myTestsItemBean = myTestsItemBean;
         binding.setData(myTestsItemBean);
         binding.executePendingBindings();
-        position = i;
+        myTestsItemBean.setPosition(i);
+    }
+
+    public void onItemClick(View view, MyTasksItemBean myTestsItemBean) {
+        if (clickListener != null) {
+            view.setTag(myTestsItemBean);
+            clickListener.onItemClick(view);
+        }
     }
 
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            if (clickListener != null) {
-                myTestsItemBean.setCheckStatue(true);
-                buttonView.setTag(position);
-                clickListener.onItemClick(buttonView);
-            }
+        if (clickListener != null) {
+            myTestsItemBean.setCheckStatue(isChecked);
+            buttonView.setTag(myTestsItemBean);
+            clickListener.onItemClick(buttonView);
         }
     }
 }

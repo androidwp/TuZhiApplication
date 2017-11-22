@@ -16,6 +16,8 @@ import java.util.WeakHashMap;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class ChooseKnowledgeLibPresenter extends BasePresenterImpl<ChooseKnowledgeLibContract.View> implements ChooseKnowledgeLibContract.Presenter {
@@ -23,9 +25,10 @@ public class ChooseKnowledgeLibPresenter extends BasePresenterImpl<ChooseKnowled
     private final String URL = "tzkm/knowledgeLib";
 
     @Override
-    public void downLoadData() {
+    public void downLoadData(String type) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("operate", "1");
+        parameter.put("isTemplate", type);
         HttpUtilsKt.get(mView.getContext(), URL, parameter, HttpRepositoryListBean.class, new HttpCallBack<HttpRepositoryListBean>() {
             @Override
             public void onFinish() {
@@ -41,6 +44,7 @@ public class ChooseKnowledgeLibPresenter extends BasePresenterImpl<ChooseKnowled
                     bean.setId(knowledgeLibsMapBean.getId());
                     bean.setTitle(knowledgeLibsMapBean.getName());
                     bean.setText(knowledgeLibsMapBean.getContentCount() + " 知识频道");
+                    bean.setImage(knowledgeLibsMapBean.getCoverImage());
                     data.add(bean);
                 }
                 mView.downLoadFinish(data);

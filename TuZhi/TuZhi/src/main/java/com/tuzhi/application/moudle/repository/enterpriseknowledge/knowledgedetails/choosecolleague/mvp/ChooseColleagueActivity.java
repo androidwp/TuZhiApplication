@@ -20,10 +20,12 @@ import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.createtask.CreateTaskActivity;
 import com.tuzhi.application.moudle.createtask.TaskCardItem;
+import com.tuzhi.application.moudle.memberlist.MemberListActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.ChooseColleagueItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseCardItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseChannelItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseColleagueItem;
+import com.tuzhi.application.moudle.taskdetails.TaskDetailsActivity;
 import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -40,36 +42,90 @@ import kale.adapter.item.AdapterItem;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueContract.View, ChooseColleaguePresenter> implements ChooseColleagueContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ItemClickListener, OnDialogClickListener {
 
     public static final String FINISH = "ChooseColleagueActivity_FINISH";
 
-    //多处使用该界面进行复用
+    /**
+     * 要下载的数据和操作分类
+     */
     public static final String TYPE = "TYPE";
-    //卡片详情入口 分享使用
+    /**
+     * 事件发送的地址
+     */
+    public static final String EVENT_NAME = "EVENT_NAME";
+    /**
+     * 事件类型
+     */
+    public static final String EVENT_TYPE = "EVENT_TYPE";
+    /**
+     * 卡片详情入口 分享使用
+     */
     public static final String TYPE_CARD_DETAIL = "TYPE_CARD_DETAIL";
-    //任务选择管理者使用
+    /**
+     * 任务选择管理者使用
+     */
     public static final String TYPE_TASK_MANAGER = "TYPE_TASK_MANAGER";
-    //任务选择成员使用
+    /**
+     * 任务选择成员使用
+     */
     public static final String TYPE_TASK_PEOPLE = "TYPE_TASK_PEOPLE";
-    //选择频道
+    /**
+     * 选择频道
+     */
     public static final String TYPE_CHOOSE_CHANNEL = "TYPE_CHOOSE_CHANNEL";
-    //选择卡片
+    /**
+     * 选择卡片
+     */
     public static final String TYPE_CHOOSE_CARD = "TYPE_CHOOSE_CARD";
-    //频道加载需要lib_id
+    /**
+     * 添加成员
+     */
+    public static final String TYPE_ADD_MEMBER = "TYPE_Add_MEMBER";
+    /**
+     * 移除成员
+     */
+    public static final String TYPE_REMOVE_MEMBER = "TYPE_REMOVE_MEMBER";
+    /**
+     * 任务详情
+     */
+    public static final String TYPE_TASK_DETAIL = "TYPE_TASK_DETAIL";
+    /**
+     * 频道加载需要lib_id
+     */
     public static final String LIB_ID = "LIB_ID";
-    //卡片加载需要channel_id
+    /**
+     * 任务加载需要的id
+     */
+    public static final String TASK_ID = "TASK_ID";
+    /**
+     * 卡片加载需要channel_id
+     */
     public static final String CHANNEL_ID = "CHANNEL_ID";
-    //卡片加载需要的头名称
+    /**
+     * 卡片加载需要的头名称
+     */
     public static final String CHANNEL_NAME = "CHANNEL_NAME";
-    //已经选择的人id
+    /**
+     * 已经选择的人id
+     */
     public static final String TASK_PEOPLE_ID = "TASK_PEOPLE_ID";
-    //卡片的id
+    /**
+     * 卡片的id
+     */
     public static final String CID = "CID";
-    //卡片的标题
+    /**
+     * 卡片的标题
+     */
     public static final String CTITLE = "CTITLE";
+    /**
+     * 类型id
+     */
+    public static final String TYPE_ID = "TYPE_ID";
 
     private ArrayList<ChooseColleagueItemBean> data = new ArrayList<>();
     private ArrayList<ChooseColleagueItemBean> dataOriginal = new ArrayList<>();
@@ -82,6 +138,9 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
     private ArrayList<String> peopleId;
     private String libID;
     private String channelId;
+    private String eventName;
+    private String taskId;
+    private String typeId;
 
     @Override
     protected int getLayoutId() {
@@ -92,6 +151,7 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
     protected void init(ViewDataBinding viewDataBinding) {
         EventBus.getDefault().register(this);
         type = getIntent().getStringExtra(TYPE);
+        eventName = getIntent().getStringExtra(EVENT_NAME);
         binding = (ActivityChooseColleagueBinding) viewDataBinding;
         binding.setType(type);
         switch (type) {
@@ -105,12 +165,14 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
                 binding.setTitle("选择参与者");
                 binding.setLittleTitle("成员");
                 peopleId = getIntent().getStringArrayListExtra(TASK_PEOPLE_ID);
-                cId = "1";
+                libID = getIntent().getStringExtra(LIB_ID);
+                taskId = getIntent().getStringExtra(TASK_ID);
                 break;
             case TYPE_TASK_MANAGER:
                 binding.setTitle("选择负责人");
                 binding.setLittleTitle("成员");
-                cId = "1";
+                libID = getIntent().getStringExtra(LIB_ID);
+                taskId = getIntent().getStringExtra(TASK_ID);
                 break;
             case TYPE_CHOOSE_CHANNEL:
                 binding.setTitle("添加关联知识");
@@ -120,6 +182,21 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
                 binding.setTitle("添加关联知识");
                 binding.setLittleTitle(getIntent().getStringExtra(CHANNEL_NAME));
                 channelId = getIntent().getStringExtra(CHANNEL_ID);
+                break;
+            case TYPE_ADD_MEMBER:
+                binding.setTitle("添加成员");
+                binding.setLittleTitle("成员");
+                libID = getIntent().getStringExtra(LIB_ID);
+                typeId = getIntent().getStringExtra(TYPE_ID);
+
+                break;
+            case TYPE_REMOVE_MEMBER:
+                binding.setTitle("移除成员");
+                binding.setLittleTitle("成员");
+                libID = getIntent().getStringExtra(LIB_ID);
+                typeId = getIntent().getStringExtra(TYPE_ID);
+                break;
+            default:
                 break;
         }
         binding.setActivity(this);
@@ -181,6 +258,18 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             case TYPE_CHOOSE_CARD:
                 mPresenter.downloadDataCare(channelId, 0);
                 break;
+            case TYPE_TASK_MANAGER:
+                mPresenter.downloadDataManager(libID, taskId, 0);
+                break;
+            case TYPE_TASK_PEOPLE:
+                mPresenter.downloadDataPeople(libID, taskId, 0);
+                break;
+            case TYPE_ADD_MEMBER:
+                mPresenter.downloadAddMemberList(typeId, libID, 0);
+                break;
+            case TYPE_REMOVE_MEMBER:
+                mPresenter.downloadRemoveMemberList(typeId, libID);
+                break;
             default:
                 mPresenter.downloadDataColleague(cId, 0);
                 break;
@@ -196,6 +285,18 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             case TYPE_CHOOSE_CARD:
                 mPresenter.downloadDataCare(channelId, page);
                 break;
+            case TYPE_TASK_MANAGER:
+                mPresenter.downloadDataManager(libID, taskId, page);
+                break;
+            case TYPE_TASK_PEOPLE:
+                mPresenter.downloadDataPeople(libID, taskId, page);
+                break;
+            case TYPE_ADD_MEMBER:
+                mPresenter.downloadAddMemberList(typeId, libID, page);
+                break;
+            case TYPE_REMOVE_MEMBER:
+                mPresenter.downloadRemoveMemberList(typeId, libID);
+                break;
             default:
                 mPresenter.downloadDataColleague(cId, page);
                 break;
@@ -204,15 +305,19 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
 
     @Override
     public void downloadFinish(ArrayList<ChooseColleagueItemBean> newData, boolean haveNextPage, int page) {
-        dataOriginal.clear();
-        dataOriginal.addAll(newData);
+        if (newData != null) {
+            dataOriginal.clear();
+            dataOriginal.addAll(newData);
+        }
         if (type.equals(TYPE_TASK_PEOPLE)) {
             saveChooseStatue();
         }
         binding.rrv.downLoadFinish(page, haveNextPage, data, newData, false);
     }
 
-    //选择成员的时候，保存选中的状态
+    /**
+     * 选择成员的时候，保存选中的状态
+     */
     private void saveChooseStatue() {
         for (ChooseColleagueItemBean chooseColleagueItemBean : dataOriginal) {
             for (String id : peopleId) {
@@ -240,24 +345,39 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
         onBackPressed();
     }
 
+    @Override
+    public void commitSuccess() {
+        EventBus.getDefault().post(MemberListActivity.REFRESH);
+        back();
+    }
+
     public void back() {
         onBackPressed();
     }
 
     public void sure() {
-        if (type.equals(TYPE_CARD_DETAIL)) {
-            if (chooseData.size() > 0) {
-                dialog = new SendCardDialog(this);
-                dialog.setView(new EditText(this));
-                dialog.setClickListener(this);
-                dialog.setTitle(cTitle);
-                dialog.setArrayList(chooseData);
-                dialog.show();
-                KeyBoardUtils.showKeyBoard(this);
-            }
-        } else {
-            sendPeople(chooseData);
-            back();
+        switch (type) {
+            case TYPE_CARD_DETAIL:
+                if (chooseData.size() > 0) {
+                    dialog = new SendCardDialog(this);
+                    dialog.setView(new EditText(this));
+                    dialog.setClickListener(this);
+                    dialog.setTitle(cTitle);
+                    dialog.setArrayList(chooseData);
+                    dialog.show();
+                    KeyBoardUtils.showKeyBoard(this);
+                }
+                break;
+            case TYPE_ADD_MEMBER:
+                mPresenter.commitAddMember(chooseData);
+                break;
+            case TYPE_REMOVE_MEMBER:
+                mPresenter.commitRemoveMember(chooseData);
+                break;
+            default:
+                sendPeople(chooseData);
+                back();
+                break;
         }
 
     }
@@ -287,6 +407,7 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             intent.putExtra(TYPE, TYPE_CHOOSE_CARD);
             intent.putExtra(CHANNEL_ID, chooseColleagueItemBean.getKcid());
             intent.putExtra(CHANNEL_NAME, chooseColleagueItemBean.getTitle());
+            intent.putExtra(EVENT_NAME, eventName);
             startActivity(intent);
         } else if (view.getId() == R.id.llChooseCard) {
             sendCard(chooseColleagueItemBean);
@@ -298,10 +419,10 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
         ItemBean itemBean = new ItemBean(TaskCardItem.TYPE);
         itemBean.setId(chooseColleagueItemBean.getId());
         itemBean.setTitle(chooseColleagueItemBean.getTitle());
-        itemBean.setPosition("产品部 > 需求文档");
+        itemBean.setTime(chooseColleagueItemBean.getTime());
         EventBusBean busBean = new EventBusBean();
-        busBean.setName(CreateTaskActivity.EVENT_NAME);
-        busBean.setEventType(CreateTaskActivity.EVENT_TYPE_CARD);
+        busBean.setName(eventName.equals(TaskDetailsActivity.EVENT_NAME) ? TaskDetailsActivity.EVENT_NAME : CreateTaskActivity.EVENT_NAME);
+        busBean.setEventType(eventName.equals(TaskDetailsActivity.EVENT_NAME) ? TaskDetailsActivity.EVENT_TYPE_CARD : CreateTaskActivity.EVENT_TYPE_CARD);
         busBean.setObject(itemBean);
         EventBus.getDefault().post(busBean);
     }
@@ -309,16 +430,16 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
 
     private void sendManager(ChooseColleagueItemBean chooseColleagueItemBean) {
         EventBusBean busBean = new EventBusBean();
-        busBean.setName(CreateTaskActivity.EVENT_NAME);
-        busBean.setEventType(CreateTaskActivity.EVENT_TYPE_MANAGER);
+        busBean.setName(eventName.equals(TaskDetailsActivity.EVENT_NAME) ? TaskDetailsActivity.EVENT_NAME : CreateTaskActivity.EVENT_NAME);
+        busBean.setEventType(eventName.equals(TaskDetailsActivity.EVENT_NAME) ? TaskDetailsActivity.EVENT_TYPE_MANAGER : CreateTaskActivity.EVENT_TYPE_MANAGER);
         busBean.setObject(chooseColleagueItemBean);
         EventBus.getDefault().post(busBean);
     }
 
     private void sendPeople(ArrayList<ChooseColleagueItemBean> chooseData) {
         EventBusBean busBean = new EventBusBean();
-        busBean.setName(CreateTaskActivity.EVENT_NAME);
-        busBean.setEventType(CreateTaskActivity.EVENT_TYPE_PEOPLE);
+        busBean.setName(eventName.equals(TaskDetailsActivity.EVENT_NAME) ? TaskDetailsActivity.EVENT_NAME : CreateTaskActivity.EVENT_NAME);
+        busBean.setEventType(eventName.equals(TaskDetailsActivity.EVENT_NAME) ? getIntent().getIntExtra(EVENT_TYPE, -1) : CreateTaskActivity.EVENT_TYPE_PEOPLE);
         busBean.setObject(chooseData);
         EventBus.getDefault().post(busBean);
     }

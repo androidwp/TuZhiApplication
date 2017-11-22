@@ -21,10 +21,12 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.bean.EventBusBean;
 import com.tuzhi.application.databinding.FragmentSearchBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.createtask.CreateTaskActivity;
 import com.tuzhi.application.moudle.search.bean.SearchHistoryBean;
 import com.tuzhi.application.moudle.search.item.SearchHistoryHeadItem;
 import com.tuzhi.application.moudle.search.item.SearchHistoryItem;
 import com.tuzhi.application.moudle.search.searchpage.mvp.SearchPageFragment;
+import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
@@ -40,6 +42,7 @@ import kale.adapter.item.AdapterItem;
 
 /**
  * MVPPlugin
+ * @author wangpeng
  */
 
 public class SearchFragment extends MVPBaseActivity<SearchContract.View, SearchPresenter> implements SearchContract.View, TextWatcher, TextView.OnEditorActionListener {
@@ -99,8 +102,10 @@ public class SearchFragment extends MVPBaseActivity<SearchContract.View, SearchP
         titleList.add("笔记");
         titleList.add("文件");
         titleList.add("发言");
+        titleList.add("任务");
         fragmentList.add(getFragment(SearchPageFragment.TYPE_NOTE));
         fragmentList.add(getFragment(SearchPageFragment.TYPE_FILE));
+        fragmentList.add(getFragment(SearchPageFragment.TYPE_SPEAK));
         fragmentList.add(getFragment(SearchPageFragment.TYPE_SPEAK));
         binding.vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         binding.stl.setViewPager(binding.vp);
@@ -183,6 +188,10 @@ public class SearchFragment extends MVPBaseActivity<SearchContract.View, SearchP
 
     public void deleteSearchText() {
         binding.et.setText("");
+    }
+
+    public void skipCreateTask() {
+        ActivitySkipUtilsKt.toActivity(this, CreateTaskActivity.class, CreateTaskActivity.TYPE, CreateTaskActivity.TYPE_SEARCH);
     }
 
     @Override

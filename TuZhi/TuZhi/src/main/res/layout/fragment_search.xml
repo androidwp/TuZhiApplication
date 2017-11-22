@@ -40,23 +40,23 @@
                     android:background="@drawable/drawable_search_background"
                     android:drawableLeft="@drawable/searchbox"
                     android:drawablePadding="10dp"
+                    android:imeOptions="actionSearch"
                     android:maxLength="10"
                     android:maxLines="1"
                     android:paddingLeft="10dp"
-                    android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:text="@={text}"
-                    android:textSize="@dimen/generalTextSize" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/ivDelete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
-                    android:visibility="gone"
-                    android:paddingRight="10dp"
                     android:onClick="@{()->fragment.deleteSearchText()}"
-                    android:src="@drawable/deletesearch" />
+                    android:paddingRight="10dp"
+                    android:src="@drawable/deletesearch"
+                    android:visibility="gone" />
 
             </FrameLayout>
 
@@ -87,21 +87,45 @@
                     android:id="@+id/stl"
                     android:layout_width="match_parent"
                     android:layout_height="41dp"
-                    android:background="@color/colorWhite"
-                    app:tl_indicator_color="@color/colorBlueButton"
-                    app:tl_indicator_height="1dp"
+                    android:background="@color/colorNavigationBarBackground"
+                    app:tl_indicator_color="@color/colorWhite"
+                    app:tl_indicator_height="3dp"
                     app:tl_indicator_width_equal_title="true"
                     app:tl_tab_space_equal="true"
-                    app:tl_textSelectColor="@color/colorBlueButton"
-                    app:tl_textUnselectColor="@color/colorSlidingTextColor"
+                    app:tl_textSelectColor="@color/colorWhite"
+                    app:tl_textUnselectColor="@color/colorWhite"
                     app:tl_textsize="15dp" />
-
-                <View style="@style/NavigationLine" />
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/vp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/generalSpace"
+                        android:text="没有找到你需要的知识内容？邀请同事贡献此内容"
+                        android:textColor="#a4aab3"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="match_parent"
+                        android:background="#71b7fd"
+                        android:onClick="@{()->fragment.skipCreateTask()}"
+                        android:scaleType="center"
+                        android:src="@drawable/enter" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -110,11 +134,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorGeneralBackground" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shadow" />
 
         </FrameLayout>
     </LinearLayout>

@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -24,11 +23,14 @@ import com.tuzhi.application.dialog.UpdateDialog;
 import com.tuzhi.application.dialog.WarnDialog;
 import com.tuzhi.application.inter.DialogMakeCancelListener;
 import com.tuzhi.application.inter.DialogMakeSureListener;
+import com.tuzhi.application.moudle.chooseknowledgelib.ChooseKnowledgeLibActivity;
+import com.tuzhi.application.moudle.createknowledgelib.CreateKnowledgeLibActivity;
 import com.tuzhi.application.moudle.homepage.mvc.HomePageFragment;
 import com.tuzhi.application.moudle.message.mvp.MessageFragment;
 import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
 import com.tuzhi.application.moudle.mine.mvp.MineFragment;
 import com.tuzhi.application.moudle.mytasks.MyTasksFragment;
+import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -36,6 +38,7 @@ import com.tuzhi.application.utils.LogUtilsKt;
 import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.utils.UserInfoUtils;
+import com.tuzhi.application.view.ActionSheet;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.yanzhenjie.permission.AndPermission;
@@ -51,7 +54,10 @@ import java.util.WeakHashMap;
 import ezy.assist.compat.SettingsCompat;
 import me.shihao.library.XRadioGroup;
 
-public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener, DialogMakeSureListener, DialogMakeCancelListener {
+/**
+ * @author wangpeng
+ */
+public class MainActivity extends AppCompatActivity implements XRadioGroup.OnCheckedChangeListener, DialogMakeSureListener, DialogMakeCancelListener, ActionSheet.ActionSheetListener {
     public static final String NAME = "MainActivity";
     public static final int TYPE_NOTIFICATION = 0;
     public static final int TYPE_PERMISSION = 1;
@@ -59,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
     private long currentTime;
     private Map<Integer, Fragment> fragmentMap = new HashMap<>();
     private ActivityMainBinding binding;
-    private static boolean goSettingPage=false;
+    private static boolean goSettingPage = false;
+    private ActionSheet actionSheet;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -73,14 +80,6 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         AndPermission.with(this).requestCode(100).permission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.SYSTEM_ALERT_WINDOW).start();
         EventBus.getDefault().register(this);
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
-        //设置状态栏为黑色
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            DarkUtils.setStatusBarIconDark(this, true);
-//            DarkUtils.setStatusBarDarkMode(this, true);
-//        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.rg.setOnCheckedChangeListener(this);
         fragmentMap.put(R.id.rbHomePage, new HomePageFragment());
@@ -110,7 +109,16 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         });
     }
 
-    private void showDialogForRequetPermission() {
+
+    public void openMenu() {
+        actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("创建空白知识库", "从模版导入知识库")
+                .setCancelableOnTouchOutside(true)
+                .setListener(this).show();
+    }
+
+    private void showDialogForRequestPermission() {
         new WarnDialog.Builder()
                 .setTitle("提示")
                 .setBtnRightText("去设置")
@@ -121,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
                 .builder(this).show();
 
     }
+
 
     private void checkUpdate() {
         HttpInitBean userInfo = UserInfoUtils.getUserInfo(this);
@@ -153,13 +162,17 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
 
     @Override
     public void onBackPressed() {
-        long timeMillis = System.currentTimeMillis();
-        final int anInt = 2000;
-        if (timeMillis - currentTime < anInt) {
-            super.onBackPressed();
+        if (actionSheet != null && !actionSheet.ismDismissed()) {
+            actionSheet.dismiss();
         } else {
-            currentTime = timeMillis;
-            ToastUtilsKt.toast(this, "再次点击退出应用");
+            long timeMillis = System.currentTimeMillis();
+            final int anInt = 2000;
+            if (timeMillis - currentTime < anInt) {
+                super.onBackPressed();
+            } else {
+                currentTime = timeMillis;
+                ToastUtilsKt.toast(this, "再次点击退出应用");
+            }
         }
     }
 
@@ -180,19 +193,15 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
         oldCheckedId = checkedId;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!isFloatWindowOpAllowed(this)) {//未开启
+        if (!isFloatWindowOpAllowed(this)) {
             openOrCloseClipper(false);
-        }else {
-            if (goSettingPage){
-                goSettingPage=false;
+        } else {
+            if (goSettingPage) {
+                goSettingPage = false;
                 openOrCloseClipper(true);
             }
         }
@@ -202,8 +211,8 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
      * 请求用户给予悬浮窗的权限
      */
     public void requestPermission() {
-        if (!SettingsCompat.canDrawOverlays(this)) {//未开启
-            showDialogForRequetPermission();
+        if (!SettingsCompat.canDrawOverlays(this)) {
+            showDialogForRequestPermission();
         } else {
             openOrCloseClipper(true);
         }
@@ -228,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static boolean isFloatWindowOpAllowed(Context context) {
-       return SettingsCompat.canDrawOverlays(context);
+        return SettingsCompat.canDrawOverlays(context);
     }
 
 
@@ -236,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 11) {
-            if (!isFloatWindowOpAllowed(this)) {//未开启
+            if (!isFloatWindowOpAllowed(this)) {
                 openOrCloseClipper(false);
             } else {
                 ToastUtilsKt.toast(this, "成功开启悬浮窗");
@@ -294,12 +303,31 @@ public class MainActivity extends AppCompatActivity implements XRadioGroup.OnChe
 
     @Override
     public void makeSure(Dialog dialog) {
-        goSettingPage=true;
+        goSettingPage = true;
         SettingsCompat.manageDrawOverlays(this);
     }
 
     @Override
     public void makeCancel(Dialog dialog) {
         openOrCloseClipper(false);
+    }
+
+    @Override
+    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+        actionSheet.dismiss();
+    }
+
+    @Override
+    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+        switch (index) {
+            case 0:
+                ActivitySkipUtilsKt.toActivity(this, CreateKnowledgeLibActivity.class, CreateKnowledgeLibActivity.TYPE, CreateKnowledgeLibActivity.TYPE_CREATE);
+                break;
+            case 1:
+                ActivitySkipUtilsKt.toActivity(this, ChooseKnowledgeLibActivity.class, ChooseKnowledgeLibActivity.TYPE, ChooseKnowledgeLibActivity.TYPE_CHOOSE_TEMPLATE);
+                break;
+            default:
+                break;
+        }
     }
 }

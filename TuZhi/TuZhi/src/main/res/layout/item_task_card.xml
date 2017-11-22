@@ -11,6 +11,10 @@
         <variable
             name="data"
             type="com.tuzhi.application.bean.ItemBean" />
+
+        <variable
+            name="position"
+            type="Integer" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,9 +39,10 @@
                 android:src="@drawable/note" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="41dp"
                 android:layout_marginLeft="@dimen/generalSpace"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -59,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@{data.position}"
+                    android:text="@{data.time}"
                     android:textColor="#bdbdbd"
                     android:textSize="@dimen/generalSmallTextSize" />
 
@@ -71,6 +76,16 @@
                 <!--android:textSize="@dimen/generalSmallTextSize" />-->
                 <!--</LinearLayout>-->
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRemove"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="@{(view)->item.onItemClick(view,position)}"
+                android:text="移除关联"
+                android:textColor="#ff395e"
+                android:textSize="12sp" />
         </LinearLayout>
     </FrameLayout>
 </layout>

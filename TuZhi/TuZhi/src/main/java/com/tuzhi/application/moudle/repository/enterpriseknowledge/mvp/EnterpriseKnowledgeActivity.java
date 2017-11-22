@@ -17,10 +17,12 @@ import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.memberlist.MemberListActivity;
 import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.item.EnterpriseKnowledgeListItem;
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
+import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
@@ -49,6 +51,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     private DeleteDialog deleteDialog;
     private String klId;
     private String kcId;
+    private boolean flag;
 
     @Override
     protected int getLayoutId() {
@@ -68,6 +71,11 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         }
     }
 
+    public void sortChange(boolean flag) {
+        this.flag = !flag;
+        binding.setFlag(this.flag);
+    }
+
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         EventBus.getDefault().register(this);
@@ -77,6 +85,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         kcId = getIntent().getStringExtra(KCID);
         setTitle(title);
         binding.setActivity(this);
+        binding.setFlag(flag);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setLoadListener(this);
@@ -105,6 +114,9 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         binding.rrv.setAdapter(adapter);
     }
 
+    public void skipMemberManagementActivity() {
+        ActivitySkipUtilsKt.toActivity(this, MemberListActivity.class, MemberListActivity.ID, kcId);
+    }
 
     public void back() {
         onBackPressed();
@@ -217,7 +229,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
             case R.id.tvRename:
                 mPresenter.renameChannel(klId, kcId, (String) view.getTag());
                 break;
-
+            default:
+                break;
         }
     }
 }

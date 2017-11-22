@@ -63,7 +63,6 @@ public class SearchPageNoteItem extends BaseItem<SearchResultListBean> {
             }else{
                 Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
                 intent.putExtra(KnowledgeDetailsActivity.ID, bean.getAid());
-                intent.putExtra(KnowledgeDetailsActivity.TITLE, bean.getArticleTitle());
                 context.startActivity(intent);
             }
         }else{

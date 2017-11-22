@@ -6,6 +6,10 @@
         <variable
             name="activity"
             type="com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp.EnterpriseKnowledgeActivity" />
+
+        <variable
+            name="flag"
+            type="Boolean" />
     </data>
 
 
@@ -31,6 +35,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:textSize="@dimen/generalTextSize" />
 
             <ImageView
@@ -38,8 +43,8 @@
                 android:layout_height="@dimen/navigationHeight"
                 android:layout_gravity="right"
                 android:layout_marginRight="40dp"
-                android:background="@drawable/general_listview_selector"
-                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
+                android:background="@drawable/navigation_bar_click_effect"
+                android:onClick="@{()->activity.skipMemberManagementActivity()}"
                 android:paddingRight="10dp"
                 android:scaleType="center"
                 android:src="@drawable/add" />
@@ -52,6 +57,46 @@
             <View style="@style/NavigationLine" />
 
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/generalSpace"
+            android:paddingRight="@dimen/generalSpace">
+
+            <TextView
+                android:id="@+id/tvTasksChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->activity.sortChange(flag)}"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:text="@{flag?@string/inOrderOfCreationTime:@string/reverseTheCreationTime}"
+                android:textColor="@color/color71b7fd"
+                android:textSize="13sp" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvCreateTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="@dimen/generalSpace"
+                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:text="+ 新建卡片"
+                android:textColor="@color/color71b7fd"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <com.tuzhi.application.view.RefreshRecycleView
             android:id="@+id/rrv"

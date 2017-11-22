@@ -98,7 +98,7 @@
                 android:layout_marginLeft="45dp"
                 android:onClick="@{()->activity.applyForTrial()}"
                 android:padding="10dp"
-                android:text="申请试用"
+                android:text="注册图知"
                 android:textColor="@color/colorBlue71b7fd"
                 android:textSize="12sp" />
 

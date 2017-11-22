@@ -5,13 +5,14 @@ import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemDynamicCollaborationBinding;
-import com.tuzhi.application.item.BaseItem;
+import com.tuzhi.application.item.GeneralItem;
 
 /**
- * Created by wangpeng on 2017/10/26.
+ * @author wangpeng
+ * @date 2017/10/26
  */
 
-public class DynamicCollaborationItem extends BaseItem<DynamicCollaborationItemBean> {
+public class DynamicCollaborationItem extends GeneralItem<DynamicCollaborationItemBean> {
 
     public static final String TYPE = "DynamicCollaborationItem";
     private ItemDynamicCollaborationBinding binding;
@@ -29,6 +30,12 @@ public class DynamicCollaborationItem extends BaseItem<DynamicCollaborationItemB
     @Override
     public void handleData(DynamicCollaborationItemBean dynamicCollaborationItemBean, int i) {
         binding.setData(dynamicCollaborationItemBean);
+        binding.setItem(this);
         binding.executePendingBindings();
+    }
+
+    @Override
+    public void onItemClick(View view, Object object) {
+        super.onItemClick(view, object);
     }
 }

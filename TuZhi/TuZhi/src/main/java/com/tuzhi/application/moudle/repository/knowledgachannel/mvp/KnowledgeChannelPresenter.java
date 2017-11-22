@@ -20,6 +20,8 @@ import java.util.WeakHashMap;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChannelContract.View> implements KnowledgeChannelContract.Presenter {
@@ -31,7 +33,6 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("klId", id);
         parameter.put("operate", "1");
-        //parameter.put("pageNo", page + "");
         HttpUtilsKt.get(mView.getContext(), URL, parameter, KnowledgeChannelHttpBean.class, new HttpCallBack<KnowledgeChannelHttpBean>() {
             @Override
             public void onFinish() {
@@ -42,7 +43,7 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
             public void onSuccess(@Nullable KnowledgeChannelHttpBean knowledgeChannelHttpBean, @NotNull String text) {
                 List<KnowledgeChannelHttpBean.KnowledgeChannelsMapBean> knowledgeChannelsMap = knowledgeChannelHttpBean.getKnowledgeChannelsMap();
                 ArrayList<KnowledgeChannelItemBean> data = new ArrayList<>();
-                if (page==0){
+                if (page == 0) {
                     KnowledgeChannelItemBean bean = new KnowledgeChannelItemBean(CreateChannelItem.TYPE);
                     bean.setKlid(id);
                     data.add(bean);
@@ -61,7 +62,13 @@ public class KnowledgeChannelPresenter extends BasePresenterImpl<KnowledgeChanne
             @Override
             public void onFailure(@NotNull String text) {
                 if (TextUtils.equals(text, "列表无内容显示")) {
-                    mView.downloadFinish(0, false, null);
+                    ArrayList<KnowledgeChannelItemBean> data = new ArrayList<>();
+                    if (page == 0) {
+                        KnowledgeChannelItemBean bean = new KnowledgeChannelItemBean(CreateChannelItem.TYPE);
+                        bean.setKlid(id);
+                        data.add(bean);
+                    }
+                    mView.downloadFinish(0, false, data);
                 }
             }
         });

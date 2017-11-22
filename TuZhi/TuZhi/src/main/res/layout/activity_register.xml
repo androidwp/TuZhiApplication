@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.register.RegisterActivity" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.register.RegisterBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <ImageView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="注册图知"
+                android:textColor="@color/colorNavigationBarTitleText" />
+
+            <View style="@style/NavigationLine" />
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:background="@drawable/general_setting_background"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/generalSpace">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="中国 +86" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/generalSettingHeight"
+                    android:background="@null"
+                    android:hint="请输入手机号作为账号"
+                    android:paddingLeft="@dimen/generalSpace"
+                    android:paddingRight="@dimen/generalSpace"
+                    android:text="@={data.phoneNumber}"
+                    android:textColorHint="@color/colorGeneralMoreTintText" />
+
+            </LinearLayout>
+
+            <View style="@style/NavigationLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/generalEditTextHeight"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请输入验证码"
+                    android:paddingLeft="@dimen/generalSpace"
+                    android:text="@={data.authCode}"
+                    android:textColorHint="@color/colorGeneralMoreTintText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/generalEditTextHeight"
+                    android:gravity="center"
+                    android:onClick="@{()->activity.getAuthCode(data.phoneNumber)}"
+                    android:paddingLeft="@dimen/generalSpace"
+                    android:paddingRight="@dimen/generalSpace"
+                    android:text="@{data.authCodeInfo}"
+                    android:textColor="@color/colorBlueButton" />
+
+            </LinearLayout>
+
+            <View style="@style/NavigationLine" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:background="@null"
+                android:hint="请输入6-16位密码"
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={data.password}"
+                android:textColorHint="@color/colorGeneralMoreTintText" />
+
+            <View style="@style/NavigationLine" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:background="@null"
+                android:hint="请输入您的姓名"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={data.name}"
+                android:textColorHint="@color/colorGeneralMoreTintText" />
+
+            <View style="@style/NavigationLine" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/generalSettingHeight"
+                android:background="@null"
+                android:hint="请输入您的企业或团队名称"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
+                android:text="@={data.company}"
+                android:textColorHint="@color/colorGeneralMoreTintText" />
+
+        </LinearLayout>
+
+        <com.tuzhi.application.view.MyRippleView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="30dp"
+            android:onClick="@{()->activity.commit(data)}"
+            app:rv_zoomDuration="@integer/rv_zoomDuration">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/loginshadowfill"
+                android:gravity="center"
+                android:text="注册"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/generalTextSize" />
+
+        </com.tuzhi.application.view.MyRippleView>
+
+    </LinearLayout>
+
+</layout>

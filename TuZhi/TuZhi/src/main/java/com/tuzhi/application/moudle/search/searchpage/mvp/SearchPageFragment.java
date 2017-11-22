@@ -29,6 +29,8 @@ import kale.adapter.item.AdapterItem;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View, SearchPagePresenter> implements SearchPageContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {

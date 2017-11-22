@@ -2,9 +2,9 @@ package com.tuzhi.application.moudle.clipper.mvp;
 
 import android.text.TextUtils;
 
+import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.bean.HttpRepositoryListBean;
-import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -39,10 +39,10 @@ public class ClipperOnePresenter extends BasePresenterImpl<ClipperOneContract.Vi
             @Override
             public void onSuccess(@Nullable HttpRepositoryListBean httpRepositoryListBean, @NotNull String text) {
                 LogUtilsKt.showLog("TAG", text);
-                ArrayList<RepositoryListItemBean> data = new ArrayList<>();
+                ArrayList<ItemBean> data = new ArrayList<>();
                 List<HttpRepositoryListBean.KnowledgeLibsMapBean> knowledgeLibsMap = httpRepositoryListBean.getKnowledgeLibsMap();
                 for (HttpRepositoryListBean.KnowledgeLibsMapBean knowledgeLibsMapBean : knowledgeLibsMap) {
-                    RepositoryListItemBean bean = new RepositoryListItemBean(RepositoryListItem.TYPE);
+                    ItemBean bean = new ItemBean(ClipperOneItem.TYPE);
                     bean.setId(knowledgeLibsMapBean.getId());
                     bean.setTitle(knowledgeLibsMapBean.getName());
                     bean.setText(knowledgeLibsMapBean.getContentCount() + "  频道");

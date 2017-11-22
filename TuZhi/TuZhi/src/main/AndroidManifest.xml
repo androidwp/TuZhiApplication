@@ -133,8 +133,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.mvp.ChooseColleagueActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".moudle.mine.setting.settingpush.mvp.SettingPushActivity"
@@ -144,7 +144,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.search.mvp.SearchFragment"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".moudle.applyfortrial.ApplyForTrialActivity"
@@ -158,9 +159,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".moudle.createtask.CreateTaskActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".moudle.chooseknowledgelib.ChooseKnowledgeLibActivity" />
+        <activity android:name=".moudle.createknowledgelib.CreateKnowledgeLibActivity" />
+        <activity android:name=".moudle.chooselibtype.ChooseLibTypeActivity" />
+        <activity android:name=".moudle.chooselibicon.ChooseLibIconActivity" />
+        <activity android:name=".moudle.createchannel.CreateChannelActivity" />
+        <activity android:name=".moudle.choosetemplatechannel.ChooseTemplateChannelActivity" />
+        <activity android:name=".moudle.memberlist.MemberListActivity" />
+        <activity android:name=".moudle.taskdetails.TaskDetailsActivity" />
+        <activity android:name=".moudle.register.RegisterActivity" />
 
     </application>
 

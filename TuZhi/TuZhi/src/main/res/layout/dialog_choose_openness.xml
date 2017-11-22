@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="dialog"
+            type="com.tuzhi.application.dialog.ChooseOpennessDialog" />
+
+        <variable
+            name="flag"
+            type="Boolean" />
+
+        <variable
+            name="data"
+            type="String[]" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/flOpen"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/general_listview_selector"
+            android:onClick="@{(view)->dialog.onViewClick(view)}"
+            android:padding="@dimen/generalSpace">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@{data[0]}"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{data[2]}"
+                    android:textColor="#757575"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/enter"
+                android:visibility="@{flag?View.VISIBLE:View.GONE}" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/flSecret"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/general_listview_selector"
+            android:onClick="@{(view)->dialog.onViewClick(view)}"
+            android:padding="@dimen/generalSpace">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@{data[1]}"
+                    android:textColor="#212121"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{data[3]}"
+                    android:textColor="#757575"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/enter"
+                android:visibility="@{flag?View.GONE:View.VISIBLE}" />
+        </FrameLayout>
+    </LinearLayout>
+</layout>

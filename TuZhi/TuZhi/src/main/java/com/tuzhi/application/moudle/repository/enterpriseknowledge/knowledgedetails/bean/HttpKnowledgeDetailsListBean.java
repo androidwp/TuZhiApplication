@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/6/21.
+ *
+ * @author wangpeng
+ * @date 2017/6/21
  */
 
 public class HttpKnowledgeDetailsListBean {
@@ -355,6 +357,7 @@ public class HttpKnowledgeDetailsListBean {
         private String fileUrl;
         private boolean isPreview;
         private ArrayList<String> previewUrls;
+
         public ArrayList<String> getPreviewUrls() {
             return previewUrls;
         }

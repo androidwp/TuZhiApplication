@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.bean.ItemBean" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/smContentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/generalSpace"
+        android:layout_marginLeft="@dimen/generalSpace"
+        android:layout_marginRight="@dimen/generalSpace"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/generalSpace"
+        android:paddingRight="@dimen/generalSpace"
+        android:paddingTop="@dimen/generalSpace">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:scaleType="centerCrop"
+                app:errorDrawable="@{@drawable/defaulthead}"
+                app:imageLoad="@{data.image}"
+                app:riv_corner_radius="13dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/generalSpace"
+                android:layout_weight="1"
+                android:text="@{data.name}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{data.time}"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/generalSmallTextSize" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="@{data.text}"
+            android:textColor="@color/colorGeneralTintText" />
+
+
+    </LinearLayout>
+</layout>

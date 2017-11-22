@@ -1,7 +1,18 @@
 <resources>
+    <string name="imageEmpty"> </string>
     <string name="app_name">图知</string>
     <string name="commentPrefix">评论内容:</string>
     <string name="sharePrefix">备注信息:</string>
     <string name="allTasks">全部任务</string>
     <string name="myTasks">我的任务</string>
+    <string name="libOpenness">公开：企业所有人都可以访问此知识库</string>
+    <string name="libSecret">私密：只有加入的成员才能访问此知识库</string>
+    <string name="channelOpenness">公开：企业所有人都可以访问此频道</string>
+    <string name="channelSecret">私密：只有加入的成员才能访问此频道</string>
+    <string name="secretLibSummery">只有加入的成员才能访问此知识库</string>
+    <string name="openLibSummery">企业所有人都可以访问此知识库</string>
+    <string name="secretChannelSummery">只有加入的成员才能访问此频道</string>
+    <string name="openChannelSummery">企业所有人都可以访问此频道</string>
+    <string name="reverseTheCreationTime">按创建时间倒序</string>
+    <string name="inOrderOfCreationTime">按创建时间正序</string>
 </resources>

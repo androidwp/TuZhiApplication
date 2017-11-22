@@ -6,15 +6,34 @@ import com.tuzhi.application.BR;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
- * Created by wangpeng on 2017/10/30.
+ * @author wangpeng
+ * @date 2017/10/30
  */
 
 public class MyTasksItemBean extends BaseListItemBean {
     private String id;
     private String content;
+    private String lId;
+    private int position;
     //知识库进去任务部分使用
     private boolean flagAllTaskOrMyTask = true;
     private boolean checkStatue;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public String getlId() {
+        return lId;
+    }
+
+    public void setlId(String lId) {
+        this.lId = lId;
+    }
 
     @Bindable
     public boolean isFlagAllTaskOrMyTask() {

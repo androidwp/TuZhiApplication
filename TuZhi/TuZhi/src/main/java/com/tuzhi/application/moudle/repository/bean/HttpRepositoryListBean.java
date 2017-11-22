@@ -3,7 +3,8 @@ package com.tuzhi.application.moudle.repository.bean;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/6/21.
+ * @author wangpeng
+ * @date 2017/6/21
  */
 
 public class HttpRepositoryListBean {
@@ -46,7 +47,7 @@ public class HttpRepositoryListBean {
     }
 
     public static class KnowledgeLibsMapBean {
-        
+
         private String participatePersonNum;
         private String id;
         private String createTime;
@@ -54,6 +55,24 @@ public class HttpRepositoryListBean {
         private String name;
         private String contentCount;
         private String createPerson;
+        private String coverImage;
+        private boolean isOpen;
+
+        public String getCoverImage() {
+            return coverImage;
+        }
+
+        public void setCoverImage(String coverImage) {
+            this.coverImage = coverImage;
+        }
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public void setOpen(boolean open) {
+            isOpen = open;
+        }
 
         public String getParticipatePersonNum() {
             return participatePersonNum;

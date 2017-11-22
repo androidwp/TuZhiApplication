@@ -7,6 +7,12 @@
         <variable
             name="activity"
             type="com.tuzhi.application.moudle.knowledgelib.KnowledgeLibActivity" />
+
+        <variable
+            name="open"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -41,10 +47,11 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="40dp"
                 android:background="@drawable/navigation_bar_click_effect"
-                android:onClick="@{()->activity.skipCreateRepositoryActivity()}"
+                android:onClick="@{()->activity.skipMemberManagementActivity()}"
                 android:paddingRight="10dp"
                 android:scaleType="center"
-                android:src="@drawable/add" />
+                android:src="@drawable/add"
+                android:visibility="@{open?View.GONE:View.VISIBLE}" />
 
             <ImageView
                 style="@style/NavigationRightButton"

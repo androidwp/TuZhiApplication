@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="item"
             type="com.tuzhi.application.moudle.repository.item.RepositoryListItem" />
 
         <variable
             name="data"
-            type="com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean" />
+            type="com.tuzhi.application.bean.ItemBean" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/generalSpace"
+        android:layout_marginRight="@dimen/generalSpace"
         android:background="@drawable/general_listview_selector"
-        android:onClick="@{(view)->item.skip(view,data)}">
+        android:onClick="@{(view)->item.onItemClick(view,data)}"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/generalSpace"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <TextView
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:imageLoad="@{data.image}" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="9dp"
-                android:maxLines="1"
-                android:text="@{data.title}"
-                android:textSize="18sp" />
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{data.text}"
-                android:textColor="@color/colorGeneralTintText" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="9dp"
+                    android:maxLines="1"
+                    android:text="@{data.title}"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{data.text}"
+                    android:textColor="@color/colorGeneralTintText" />
+            </LinearLayout>
+
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="@dimen/generalSpace"
-            android:src="@drawable/enter" />
+        <View style="@style/NavigationLine" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lineHeight"
-            android:layout_gravity="bottom"
-            android:background="@color/colorLine" />
-
-    </FrameLayout>
+    </LinearLayout>
 </layout>

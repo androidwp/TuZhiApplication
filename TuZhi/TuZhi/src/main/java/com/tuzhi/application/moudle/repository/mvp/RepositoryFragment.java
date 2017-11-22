@@ -9,13 +9,14 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ActivityRepositoryBinding;
 import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
 import com.tuzhi.application.moudle.knowledgelib.KnowledgeLibActivity;
-import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
-import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
+import com.tuzhi.application.moudle.repository.item.CommonKnowledgeLibItem;
+import com.tuzhi.application.moudle.repository.item.KnowledgeLibTitleItem;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.view.LoadMoreListener;
@@ -32,13 +33,15 @@ import kale.adapter.item.AdapterItem;
 
 /**
  * 知识库页面
+ *
+ * @author wangpeng
  */
 
 public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View, RepositoryPresenter> implements RepositoryContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ItemClickListener {
 
     public static final String MESSAGE = "RepositoryActivity_refresh";
     private ActivityRepositoryBinding binding;
-    private ArrayList<RepositoryListItemBean> mData = new ArrayList<>();
+    private ArrayList<ItemBean> mData = new ArrayList<>();
 
 
     @Override
@@ -54,8 +57,9 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String event) {
-        if (TextUtils.equals(event, MESSAGE))
+        if (TextUtils.equals(event, MESSAGE)) {
             onRefresh();
+        }
     }
 
     @Override
@@ -68,7 +72,7 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
         binding.rrv.setLoadListener(this);
         binding.rrv.setTitle("知识库空空如也");
         binding.rrv.setInfo("点击上方的\"+\"号，创建知识库");
-        CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
+        CommonRcvAdapter<ItemBean> adapter = new CommonRcvAdapter<ItemBean>(mData) {
             @NonNull
             @Override
             public AdapterItem createItem(Object o) {
@@ -76,15 +80,21 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
                 switch (itemType) {
                     case GeneralLoadFootViewItem.TYPE:
                         return new GeneralLoadFootViewItem();
+                    case CommonKnowledgeLibItem.TYPE:
+                        CommonKnowledgeLibItem commonKnowledgeLibItem = new CommonKnowledgeLibItem();
+                        commonKnowledgeLibItem.setClickListener(RepositoryFragment.this);
+                        return commonKnowledgeLibItem;
+                    case KnowledgeLibTitleItem.TYPE:
+                        return new KnowledgeLibTitleItem();
                     default:
                         RepositoryListItem item = new RepositoryListItem();
-                        item.setItemClickListener(RepositoryFragment.this);
+                        item.setClickListener(RepositoryFragment.this);
                         return item;
                 }
             }
 
             @Override
-            public Object getItemType(RepositoryListItemBean repositoryListItemBean) {
+            public Object getItemType(ItemBean repositoryListItemBean) {
                 return repositoryListItemBean.getItemType();
             }
         };
@@ -97,7 +107,7 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
     }
 
     @Override
-    public void downLoadFinish(ArrayList<RepositoryListItemBean> data, boolean haveNextPage, int page) {
+    public void downLoadFinish(ArrayList<ItemBean> data, boolean haveNextPage, int page) {
         binding.rrv.downLoadFinish(page, haveNextPage, mData, data, false);
     }
 
@@ -113,12 +123,6 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
     }
 
 
-    public void skipCreateRepositoryActivity() {
-        Intent intent = new Intent(getContext(), CrepositoryActivity.class);
-        intent.putExtra(CrepositoryActivity.TYPE, CrepositoryActivity.REPOSITORY);
-        startActivityForResult(intent, ConstantKt.getCREATE_CODE());
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,10 +135,11 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
 
     @Override
     public void onItemClick(View view) {
-        RepositoryListItemBean tag = (RepositoryListItemBean) view.getTag();
+        ItemBean tag = (ItemBean) view.getTag();
         Intent intent = new Intent(getContext(), KnowledgeLibActivity.class);
         intent.putExtra(KnowledgeLibActivity.ID, tag.getId());
         intent.putExtra(KnowledgeLibActivity.TITLE, tag.getTitle());
+        intent.putExtra(KnowledgeLibActivity.OPEN, tag.isFlag());
         getContext().startActivity(intent);
     }
 }

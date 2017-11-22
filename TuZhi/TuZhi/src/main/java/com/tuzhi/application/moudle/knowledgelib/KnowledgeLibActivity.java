@@ -16,11 +16,11 @@ import com.tuzhi.application.dialog.DeleteDialog;
 import com.tuzhi.application.dialog.RenameDialog;
 import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.createknowledgelib.CreateKnowledgeLibActivity;
 import com.tuzhi.application.moudle.knowledgelibtask.KnowledgeLibTaskFragment;
-import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
+import com.tuzhi.application.moudle.memberlist.MemberListActivity;
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
-import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
@@ -30,16 +30,16 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * MVPPlugin
- * 邮箱 784787081@qq.com
+ * 知识库详情页   显示频道
+ *
+ * @author wangpeng
  */
 
 public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.View, KnowledgeLibPresenter> implements KnowledgeLibContract.View, ActionSheet.ActionSheetListener, OnDialogClickListener {
     public static String ID = "id";
     public static String TITLE = "TITLE";
-
+    public static String OPEN = "OPEN";
     private List<String> titles = new ArrayList<>();
     private ActionSheet actionSheet;
     private List<Fragment> fragments = new ArrayList<>();
@@ -48,6 +48,10 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
     private String id;
     private String title;
     private ActivityLibBinding binding;
+    private int setCommonLib = 0;
+    private int setLib = 1;
+    private int rename = 2;
+    private int delete = 3;
 
 
     @Override
@@ -60,12 +64,13 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
         binding = (ActivityLibBinding) viewDataBinding;
         binding.setActivity(this);
         title = getIntent().getStringExtra(TITLE);
+        binding.setOpen(getIntent().getBooleanExtra(OPEN, true));
         binding.tvTitle.setText(title);
         id = getIntent().getStringExtra(ID);
-        titles.add("任务");
         titles.add("知识");
-        fragments.add(getKnowledgeLibTaskFragment());
+        titles.add("任务");
         fragments.add(getKnowledgeLibFragment());
+        fragments.add(getKnowledgeLibTaskFragment());
         binding.vp.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager()));
         binding.stl.setViewPager(binding.vp);
     }
@@ -99,14 +104,23 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-        if (index == 0) {
+        if (index == setCommonLib) {
+
+        } else if (index == setLib) {
+            Intent intent = new Intent(this, CreateKnowledgeLibActivity.class);
+            intent.putExtra(CreateKnowledgeLibActivity.TITLE, title);
+            intent.putExtra(CreateKnowledgeLibActivity.OPENNESS, true);
+            intent.putExtra(CreateKnowledgeLibActivity.CLASSIFICATION, "1");
+            intent.putExtra(CreateKnowledgeLibActivity.IMAGE, "");
+            startActivity(intent);
+        } else if (index == rename) {
             renameDialog = new RenameDialog(getContext(), R.style.dialog);
             renameDialog.setView(new EditText(getContext()));
             renameDialog.setText(title);
             renameDialog.setClickListener(this);
             renameDialog.show();
             KeyBoardUtils.showKeyBoard(getContext());
-        } else {
+        } else if (index == delete) {
             deleteDialog = new DeleteDialog(getContext(), R.style.dialog);
             deleteDialog.setText("你确定要删除该知识库吗？删除后将无法恢复。");
             deleteDialog.setClickListener(this);
@@ -124,17 +138,17 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
         }
     }
 
-    public void skipCreateRepositoryActivity() {
-        Intent intent = new Intent(getContext(), CrepositoryActivity.class);
-        intent.putExtra(CrepositoryActivity.TYPE, CrepositoryActivity.CHANNEL);
-        intent.putExtra(CrepositoryActivity.ID, id);
-        startActivityForResult(intent, ConstantKt.getCREATE_CODE());
+    public void skipMemberManagementActivity() {
+        Intent intent = new Intent(this, MemberListActivity.class);
+        intent.putExtra(MemberListActivity.ID, id);
+        intent.putExtra(MemberListActivity.TYPE, MemberListActivity.TYPE_LIB);
+        startActivity(intent);
     }
 
     public void openMenu() {
         actionSheet = ActionSheet.createBuilder(getContext(), getSupportFragmentManager())
                 .setCancelButtonTitle("取消")
-                .setOtherButtonTitles("重命名知识库", "删除知识库")
+                .setOtherButtonTitles("设为常用知识库", "设置知识库", "重命名知识库", "删除知识库")
                 .setCancelableOnTouchOutside(true)
                 .setListener(this).show();
     }
@@ -148,6 +162,8 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
                 break;
             case R.id.tvRename:
                 mPresenter.rename(id, (String) view.getTag());
+                break;
+            default:
                 break;
         }
     }

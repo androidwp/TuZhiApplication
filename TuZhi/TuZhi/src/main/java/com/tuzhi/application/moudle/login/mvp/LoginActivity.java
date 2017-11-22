@@ -7,11 +7,11 @@ import android.text.TextUtils;
 import com.tuzhi.application.MainActivity;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityLoginBinding;
-import com.tuzhi.application.moudle.applyfortrial.ApplyForTrialActivity;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.login.bean.User;
 import com.tuzhi.application.moudle.login.forgetpassword.mvp.ForgetPasswordActivity;
 import com.tuzhi.application.moudle.mine.setting.changeinitialpassword.mvp.ChangeInitialPasswordActivity;
+import com.tuzhi.application.moudle.register.RegisterActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
@@ -50,7 +50,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     }
 
     public void applyForTrial() {
-        ActivitySkipUtilsKt.toActivity(this, ApplyForTrialActivity.class);
+        ActivitySkipUtilsKt.toActivity(this, RegisterActivity.class);
     }
 
 

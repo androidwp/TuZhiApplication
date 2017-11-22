@@ -43,8 +43,6 @@ class RefreshRecycleView : FrameLayout {
 
     constructor(context: Context) : this(context, null)
 
-
-
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         init()
     }
@@ -72,6 +70,10 @@ class RefreshRecycleView : FrameLayout {
 
     fun setDrawable(drawableId: Int) {
         iv.setImageResource(drawableId)
+    }
+
+    fun isEnabled(flag: Boolean) {
+        srl.isEnabled = flag
     }
 
     fun setOnRefreshListener(refreshListener: SwipeRefreshLayout.OnRefreshListener) {

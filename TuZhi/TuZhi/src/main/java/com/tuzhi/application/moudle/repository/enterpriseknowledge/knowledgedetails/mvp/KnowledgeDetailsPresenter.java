@@ -27,6 +27,7 @@ import java.util.WeakHashMap;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class KnowledgeDetailsPresenter extends BasePresenterImpl<KnowledgeDetailsContract.View> implements KnowledgeDetailsContract.Presenter {

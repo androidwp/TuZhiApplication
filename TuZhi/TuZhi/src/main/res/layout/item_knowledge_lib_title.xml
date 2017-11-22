@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.bean.ItemBean" />
+    </data>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@{data.viewSpace==0?@dimen/zero:@dimen/generalSpace}"
+        android:paddingLeft="@dimen/generalSpace"
+        android:paddingTop="@{data.viewSpace==1?@dimen/zero:@dimen/generalSpace}"
+        android:text="@{data.title}"
+        android:textColor="#757575"
+        android:textSize="13sp" />
+
+</layout>

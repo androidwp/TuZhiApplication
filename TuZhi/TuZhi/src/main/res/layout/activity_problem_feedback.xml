@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:text="问题反馈"
                 android:textSize="@dimen/generalTextSize" />
 

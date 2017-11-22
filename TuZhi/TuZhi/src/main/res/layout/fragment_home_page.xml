@@ -14,17 +14,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="@dimen/navigationHeight"
             android:background="@color/colorNavigationBarBackground">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_height="32dp"
                 android:layout_marginLeft="@dimen/generalSpace"
-                android:layout_marginRight="@dimen/generalSpace"
                 android:background="@drawable/drawable_search_background"
                 android:drawableLeft="@drawable/searchon"
                 android:drawablePadding="10dp"
@@ -34,7 +35,14 @@
                 android:text="搜索"
                 android:textColor="@color/colorGeneralMoreTintText" />
 
-        </FrameLayout>
+            <ImageView
+                style="@style/NavigationRightButton"
+                android:background="@drawable/navigation_bar_click_effect"
+                android:onClick="@{()->fragment.createLib()}"
+                android:scaleType="center"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
 
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/stl"

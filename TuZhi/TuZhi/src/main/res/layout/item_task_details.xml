@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.taskdetails.TaskDetailsItem" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.createtask.NewTaskBean" />
+
+        <variable
+            name="itemBean"
+            type="com.tuzhi.application.bean.ItemBean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/generalSpace"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:padding="@dimen/generalSpace">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/generalSpace"
+                android:text="客服部"
+                android:textColor="#a4aab3"
+                android:textSize="13sp" />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/generalSpace"
+                android:orientation="horizontal">
+
+
+                <CheckBox
+                    android:id="@+id/cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="@{data.checked}"
+                    android:layout_gravity="start"
+                    android:onClick="@{(view)->item.onItemClick(view,itemBean)}" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="3dp"
+                    android:onClick="@{(view)->item.onItemClick(view,itemBean)}"
+                    android:text="@{data.taskTitle}"
+                    android:textColor="#212121" />
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:id="@+id/tvSummery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view)->item.onItemClick(view,itemBean)}"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="描述"
+                    android:textColor="#a4aab3"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/generalSpace"
+                    android:text="@{data.taskSummary}"
+                    android:textColor="#a4aab3"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/flChooseManager"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_listview_selector"
+            android:onClick="@{(view)->item.onItemClick(view,itemBean)}"
+            android:padding="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:scaleType="centerCrop"
+                    app:errorDrawable="@{@drawable/defaulthead}"
+                    app:imageLoad="@{data.taskManager.image}"
+                    app:riv_corner_radius="13dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@{data.taskManager.name}"
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="负责"
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:src="@drawable/enter" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/flChoosePeople"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_listview_selector"
+            android:onClick="@{(view)->item.onItemClick(view,itemBean)}"
+            android:padding="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rivOne"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="right"
+                        android:background="@drawable/portrait_background"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="@{data.taskPeople.size()>0?View.VISIBLE:View.GONE}"
+                        app:errorDrawable="@{@drawable/defaulthead}"
+                        app:imageLoad="@{data.taskPeople.size()>0?data.taskPeople.get(0).getImage:@string/app_name}"
+                        app:riv_corner_radius="13dp" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rivTwo"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/portrait_background"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="@{data.taskPeople.size()>1?View.VISIBLE:View.GONE}"
+                        app:errorDrawable="@{@drawable/defaulthead}"
+                        app:imageLoad="@{data.taskPeople.size()>1?data.taskPeople.get(1).getImage:@string/app_name}"
+                        app:riv_corner_radius="13dp" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rivThree"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/portrait_background"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="@{data.taskPeople.size()>2?View.VISIBLE:View.GONE}"
+                        app:errorDrawable="@{@drawable/defaulthead}"
+                        app:imageLoad="@{data.taskPeople.size()>2?data.taskPeople.get(2).getImage:@string/app_name}"
+                        app:riv_corner_radius="13dp" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rivFore"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="45dp"
+                        android:background="@drawable/portrait_background"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="@{data.taskPeople.size()>3?View.VISIBLE:View.GONE}"
+                        app:errorDrawable="@{@drawable/defaulthead}"
+                        app:imageLoad="@{data.taskPeople.size()>3?data.taskPeople.get(3).getImage:@string/app_name}"
+                        app:riv_corner_radius="13dp" />
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/rivFive"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="60dp"
+                        android:background="@drawable/portrait_background"
+                        android:padding="2dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="@{data.taskPeople.size()>4?View.VISIBLE:View.GONE}"
+                        app:errorDrawable="@{@drawable/defaulthead}"
+                        app:imageLoad="@{data.taskPeople.size()>4?data.taskPeople.get(4).getImage:@string/app_name}"
+                        app:riv_corner_radius="13dp" />
+
+                </FrameLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@{data.taskPeopleNumber}"
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/generalSpace"
+                android:src="@drawable/enter" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:padding="@dimen/generalSpace">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="关联卡片"
+                    android:textColor="#212121"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvAddCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/createchannelbackground"
+                    android:drawablePadding="6dp"
+                    android:onClick="@{(view)->item.onItemClick(view,itemBean)}"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="6dp"
+                    android:text="+  添加关联卡片"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

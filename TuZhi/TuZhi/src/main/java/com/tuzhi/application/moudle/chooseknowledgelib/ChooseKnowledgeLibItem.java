@@ -6,15 +6,16 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ItemChooseKnowledgeLibBinding;
-import com.tuzhi.application.item.GeneralItemBean;
+import com.tuzhi.application.item.GeneralItem;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by wangpeng on 2017/11/9.
+ * @author wangpeng
+ * @date 2017/11/9
  */
 
-public class ChooseKnowledgeLibItem extends GeneralItemBean<ItemBean> {
+public class ChooseKnowledgeLibItem extends GeneralItem<ItemBean> {
 
     public static final String TYPE = "ChooseKnowledgeLibItem";
 
@@ -34,10 +35,11 @@ public class ChooseKnowledgeLibItem extends GeneralItemBean<ItemBean> {
     @Override
     public void handleData(ItemBean bean, int i) {
         binding.setData(bean);
+        binding.executePendingBindings();
     }
 
     @Override
-    public void onItemClick(View view, ItemBean data) {
+    public void onItemClick(View view, Object data) {
         super.onItemClick(view, data);
     }
 }

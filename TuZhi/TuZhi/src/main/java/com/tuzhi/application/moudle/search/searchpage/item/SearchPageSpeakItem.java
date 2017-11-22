@@ -12,7 +12,9 @@ import com.tuzhi.application.moudle.search.searchpage.bean.SearchResultListBean;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
 /**
- * Created by wangpeng on 2017/8/2.
+ *
+ * @author wangpeng
+ * @date 2017/8/2
  */
 
 public class SearchPageSpeakItem extends BaseItem<SearchResultListBean> {
@@ -42,7 +44,6 @@ public class SearchPageSpeakItem extends BaseItem<SearchResultListBean> {
         if (searchResultListBean.isLimit()) {
             Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
             intent.putExtra(KnowledgeDetailsActivity.ID, searchResultListBean.getAid());
-            intent.putExtra(KnowledgeDetailsActivity.TITLE, searchResultListBean.getArticleTitle());
             context.startActivity(intent);
         } else {
             ToastUtilsKt.toast(context, "无查看权限");

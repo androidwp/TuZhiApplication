@@ -23,6 +23,11 @@ fun getLongCache(context: Context, key: String): String {
     return context.getSharedPreferences(longCache, MODE_APPEND).getString(key, "")
 }
 
+
+fun getLongCache(context: Context, key: String, defValue: String): String {
+    return context.getSharedPreferences(longCache, MODE_APPEND).getString(key, defValue)
+}
+
 //保存文件地址
 fun saveFileCache(context: Context, key: String, value: String?) {
     if (value != null)

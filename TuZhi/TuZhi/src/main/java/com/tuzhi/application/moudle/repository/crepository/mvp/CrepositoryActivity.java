@@ -21,7 +21,6 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.View, CrepositoryPresenter> implements CrepositoryContract.View {
-
     //用于区分知识库和知识模块，repository为知识库，moudle为知识模块
     public static final String TYPE = "TYPE";
     public static final String REPOSITORY = "repository";
@@ -68,7 +67,6 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
             mPresenter.commit(type, name, id);
         }
     }
-
 
 
     @Override

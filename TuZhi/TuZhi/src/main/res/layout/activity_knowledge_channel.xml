@@ -13,8 +13,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-
         <com.tuzhi.application.view.RefreshRecycleView
             android:id="@+id/rrv"
             android:layout_width="match_parent"

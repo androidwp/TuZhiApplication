@@ -13,14 +13,16 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/llTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@drawable/general_listview_selector"
+        android:onClick="@{(view)->item.onItemClick(view,data)}"
         android:orientation="horizontal"
-        android:paddingTop="13dp"
         android:paddingBottom="13dp"
         android:paddingLeft="@dimen/generalSpace"
-        android:paddingRight="@dimen/generalSpace">
+        android:paddingRight="@dimen/generalSpace"
+        android:paddingTop="13dp">
 
         <CheckBox
             android:id="@+id/cbFinishTask"

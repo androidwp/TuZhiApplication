@@ -18,6 +18,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresenterImpl<V>> extends AppCompatActivity implements BaseView {
@@ -30,13 +31,6 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(this).onAppStart();
         supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            DarkUtils.setStatusBarIconDark(this, true);
-//            DarkUtils.setStatusBarDarkMode(this, true);
-//        }
         mPresenter = getInstance(this, 1);
         mPresenter.attachView((V) this);
         progressDialog = new ProgressDialog(this);
@@ -50,8 +44,9 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mPresenter != null){
             mPresenter.detachView();
+        }
     }
 
     @Override
@@ -61,7 +56,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        //super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -75,6 +70,7 @@ public abstract class MVPBaseActivity<V extends BaseView, T extends BasePresente
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 
     public <T> T getInstance(Object o, int i) {
         try {

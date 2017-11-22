@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.tuzhi.application.MainActivity;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.FragmentHomePageBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
@@ -20,6 +21,7 @@ import java.util.List;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class HomePageFragment extends MVPBaseFragment<HomePageContract.View, HomePagePresenter> implements HomePageContract.View {
@@ -27,6 +29,7 @@ public class HomePageFragment extends MVPBaseFragment<HomePageContract.View, Hom
     private FragmentHomePageBinding binding;
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> titleList = new ArrayList<>();
+
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
@@ -46,10 +49,17 @@ public class HomePageFragment extends MVPBaseFragment<HomePageContract.View, Hom
         ActivitySkipUtilsKt.toActivity(getContext(), SearchFragment.class);
     }
 
+    public void createLib() {
+        MainActivity activity = (MainActivity) getActivity();
+        activity.openMenu();
+    }
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home_page;
     }
+
 
     class MyFragmentPageAdapter extends FragmentPagerAdapter {
 

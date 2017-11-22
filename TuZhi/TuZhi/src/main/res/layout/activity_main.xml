@@ -53,7 +53,7 @@
                 android:drawableTop="@drawable/select_search"
                 android:gravity="center"
                 android:paddingTop="6dp"
-                android:text="搜索"
+                android:text="我的"
                 android:textColor="@color/select_color_bottom_navigation"
                 android:textSize="10sp" />
 
@@ -102,7 +102,7 @@
                 android:drawableTop="@drawable/select_mine"
                 android:gravity="center"
                 android:paddingTop="6dp"
-                android:text="我的"
+                android:text="个人"
                 android:textColor="@color/select_color_bottom_navigation"
                 android:textSize="10sp" />
         </me.shihao.library.XRadioGroup>

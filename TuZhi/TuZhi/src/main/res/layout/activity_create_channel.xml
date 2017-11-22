@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.tuzhi.application.moudle.createchannel.CreateChannelActivity" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.createchannel.CreateChannelBean" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGeneralBackground"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigationHeight"
+            android:background="@color/colorNavigationBarBackground">
+
+            <TextView
+                style="@style/NavigationLeftButton"
+                android:onClick="@{()->activity.back()}"
+                android:text="取消" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="新建频道"
+                android:textColor="@color/colorNavigationBarTitleText"
+                android:textSize="@dimen/generalTextSize" />
+
+            <TextView
+                style="@style/NavigationRightButton"
+                android:onClick="@{()->activity.commit()}"
+                android:text="完成" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lineHeight"
+                android:layout_gravity="bottom"
+                android:background="@color/colorLine" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="频道名称"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@color/colorWhite"
+            android:hint="请输入频道名称"
+            android:padding="@dimen/generalSpace"
+            android:text="@={data.channelName}"
+            android:textColor="#212121"
+            android:textColorHint="#bdbdbd"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="频道介绍"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@color/colorWhite"
+            android:hint="请输入频道介绍(选填)"
+            android:padding="@dimen/generalSpace"
+            android:text="@={data.channelSummery}"
+            android:textColor="#212121"
+            android:textColorHint="#bdbdbd"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/generalSpace"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="@dimen/generalSpace"
+            android:text="公开性"
+            android:textColor="#757575"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginLeft="@dimen/generalSpace"
+            android:layout_marginRight="@dimen/generalSpace"
+            android:background="@drawable/general_listview_selector"
+            android:drawableRight="@drawable/enter"
+            android:onClick="@{()->activity.chooseOpenOrSecret()}"
+            android:padding="@dimen/generalSpace"
+            android:text="@{data.openOrSecret?@string/channelOpenness:@string/channelSecret}"
+            android:textColor="#212121" />
+
+    </LinearLayout>
+</layout>

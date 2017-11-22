@@ -6,26 +6,20 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ItemTaskCardBinding;
-import com.tuzhi.application.inter.ItemClickListener;
-import com.tuzhi.application.item.BaseItem;
+import com.tuzhi.application.item.GeneralItem;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by wangpeng on 2017/11/9.
+ * @author wangpeng
+ * @date 2017/11/9
  */
 
-public class TaskCardItem extends BaseItem<ItemBean> {
+public class TaskCardItem extends GeneralItem<ItemBean> {
 
     public static final String TYPE = "TaskCardItem";
 
-    private ItemClickListener clickListener;
-
     private ItemTaskCardBinding binding;
-
-    public void setClickListener(ItemClickListener clickListener) {
-        this.clickListener = clickListener;
-    }
 
     @Override
     public void bindView(@NotNull View view) {
@@ -39,13 +33,14 @@ public class TaskCardItem extends BaseItem<ItemBean> {
 
     @Override
     public void handleData(ItemBean itemBean, int i) {
+        binding.setItem(this);
         binding.setData(itemBean);
+        binding.setPosition(i);
+        binding.executePendingBindings();
     }
 
-    public void onItemClick(View view, ItemBean bean) {
-        if (clickListener != null) {
-            view.setTag(bean);
-            clickListener.onItemClick(view);
-        }
+    @Override
+    public void onItemClick(View view, Object data) {
+        super.onItemClick(view, data);
     }
 }

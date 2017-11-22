@@ -3,9 +3,11 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedet
 import android.text.TextUtils;
 
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
+import com.tuzhi.application.moudle.memberlist.HttpMemberListBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.HttpKnowledgeModuleBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.ChooseColleagueHttpBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.ChooseColleagueItemBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.HttpManagerBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseCardItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseChannelItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseColleagueItem;
@@ -29,6 +31,8 @@ import io.reactivex.disposables.Disposable;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueContract.View> implements ChooseColleagueContract.Presenter {
@@ -40,6 +44,13 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
     private final String URL_CHANNEL = "tzkm/knowledgeChannel";
 
     private final String URL_CARD = "tzkm/articleList";
+
+    private final String URL_TASK = "tzkm/knowledgeTaskOperate";
+
+    private final String URL_ADD_MEMBER_LIST = "tzkm/getStaffList";
+
+    private final String URL_REMOVE_MEMBER_LIST = "tzkm/getKnowledgeLimitsStaffList";
+
 
     @Override
     public void downloadDataColleague(String cId, int page) {
@@ -81,7 +92,6 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("klId", lId);
         parameter.put("operate", "1");
-        //parameter.put("pageNo", page + "");
         HttpUtilsKt.get(mView.getContext(), URL_CHANNEL, parameter, KnowledgeChannelHttpBean.class, new HttpCallBack<KnowledgeChannelHttpBean>() {
             @Override
             public void onFinish() {
@@ -169,12 +179,89 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
     }
 
     @Override
+    public void downloadDataManager(String klId, String ktId, int page) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "6");
+        if (!TextUtils.isEmpty(klId)) {
+            parameter.put("klId", klId);
+        }
+        if (!TextUtils.isEmpty(ktId)) {
+            parameter.put("ktId", ktId);
+        }
+        HttpUtilsKt.post(mView.getContext(), URL_TASK, parameter, HttpManagerBean.class, new HttpCallBack<HttpManagerBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable HttpManagerBean httpManagerBean, @NotNull String text) {
+                List<HttpManagerBean.StaffMapListBean> staffMapList = httpManagerBean.getStaffMapList();
+                ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
+                for (HttpManagerBean.StaffMapListBean resultBean : staffMapList) {
+                    ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
+                    chooseColleagueItemBean.setId(resultBean.getId());
+                    chooseColleagueItemBean.setNickName(resultBean.getNickname());
+                    chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
+                    chooseColleagueItemBean.setChooseStatus(false);
+                    arrayList.add(chooseColleagueItemBean);
+                }
+                mView.downloadFinish(arrayList, false, 0);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void downloadDataPeople(String klId, String ktId, int page) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "7");
+        if (!TextUtils.isEmpty(klId)) {
+            parameter.put("klId", klId);
+        }
+        if (!TextUtils.isEmpty(ktId)) {
+            parameter.put("ktId", ktId);
+        }
+        HttpUtilsKt.post(mView.getContext(), URL_TASK, parameter, HttpManagerBean.class, new HttpCallBack<HttpManagerBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable HttpManagerBean httpManagerBean, @NotNull String text) {
+                List<HttpManagerBean.StaffMapListBean> staffMapList = httpManagerBean.getStaffMapList();
+                ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
+                for (HttpManagerBean.StaffMapListBean resultBean : staffMapList) {
+                    ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
+                    chooseColleagueItemBean.setId(resultBean.getId());
+                    chooseColleagueItemBean.setNickName(resultBean.getNickname());
+                    chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
+                    chooseColleagueItemBean.setChooseStatus(false);
+                    arrayList.add(chooseColleagueItemBean);
+                }
+                mView.downloadFinish(arrayList, false, 0);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
     public void shareCard(String cid, String staffIds, String content) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("aId", cid);
         parameter.put("staffIds", staffIds);
-        if (!TextUtils.isEmpty(content))
+        if (!TextUtils.isEmpty(content)) {
             parameter.put("content", content);
+        }
         HttpUtilsKt.get(mView.getContext(), URL_SHARE, parameter, String.class, new HttpCallBack<String>() {
             @Override
             public void onFinish() {
@@ -192,5 +279,82 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
 
             }
         });
+    }
+
+    @Override
+    public void downloadAddMemberList(String type, String id, int pageNo) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("oType", type);
+        parameter.put("oId", id);
+        parameter.put("pageNo", pageNo+"");
+        HttpUtilsKt.get(mView.getContext(), URL_ADD_MEMBER_LIST, parameter, HttpMemberListBean.class, new HttpCallBack<HttpMemberListBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(HttpMemberListBean memberListBean, String text) {
+                List<HttpMemberListBean.StaffMapListBean> staffMapList = memberListBean.getStaffMapList();
+                ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
+                for (HttpMemberListBean.StaffMapListBean resultBean : staffMapList) {
+                    ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
+                    chooseColleagueItemBean.setId(resultBean.getId());
+                    chooseColleagueItemBean.setNickName(resultBean.getNickname());
+                    chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
+                    chooseColleagueItemBean.setChooseStatus(false);
+                    arrayList.add(chooseColleagueItemBean);
+                }
+                mView.downloadFinish(arrayList, false, 0);
+            }
+
+            @Override
+            public void onFailure(String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void downloadRemoveMemberList(String type, String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("oType", type);
+        parameter.put("oId", id);
+        HttpUtilsKt.get(mView.getContext(), URL_REMOVE_MEMBER_LIST, parameter, HttpMemberListBean.class, new HttpCallBack<HttpMemberListBean>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(HttpMemberListBean memberListBean, String text) {
+                List<HttpMemberListBean.StaffMapListBean> staffMapList = memberListBean.getStaffMapList();
+                ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
+                for (HttpMemberListBean.StaffMapListBean resultBean : staffMapList) {
+                    ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
+                    chooseColleagueItemBean.setId(resultBean.getId());
+                    chooseColleagueItemBean.setNickName(resultBean.getNickname());
+                    chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
+                    chooseColleagueItemBean.setChooseStatus(false);
+                    arrayList.add(chooseColleagueItemBean);
+                }
+                mView.downloadFinish(arrayList, false, 0);
+            }
+
+            @Override
+            public void onFailure(String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void commitAddMember(ArrayList<ChooseColleagueItemBean> addMembers) {
+        mView.commitSuccess();
+    }
+
+    @Override
+    public void commitRemoveMember(ArrayList<ChooseColleagueItemBean> addMembers) {
+        mView.commitSuccess();
     }
 }

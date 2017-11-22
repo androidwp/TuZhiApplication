@@ -11,7 +11,9 @@ import com.tuzhi.application.item.BaseItem;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by wangpeng on 2017/11/6.
+ *
+ * @author wangpeng
+ * @date 2017/11/6
  */
 
 public class CompletedTaskItem extends BaseItem<MyTasksItemBean> {

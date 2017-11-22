@@ -13,11 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/generalSpace"
         android:background="@drawable/createchannelbackground"
-        android:padding="6dp"
-        android:text="新建频道"
-        android:onClick="@{()->item.createChannel()}"
-        android:drawableLeft="@drawable/searchbox"
         android:drawablePadding="6dp"
+        android:onClick="@{()->item.createChannel()}"
+        android:padding="6dp"
+        android:text="+  新建频道"
         android:textColor="@color/colorWhite"
         android:textSize="12sp" />
 

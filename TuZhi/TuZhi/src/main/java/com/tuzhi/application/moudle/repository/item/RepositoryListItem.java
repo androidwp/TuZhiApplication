@@ -4,10 +4,9 @@ import android.databinding.DataBindingUtil;
 import android.view.View;
 
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ItemRepositoryListBinding;
-import com.tuzhi.application.inter.ItemClickListener;
-import com.tuzhi.application.item.BaseItem;
-import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
+import com.tuzhi.application.item.GeneralItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,16 +14,10 @@ import org.jetbrains.annotations.NotNull;
  * Created by wangpeng on 2017/6/1.
  */
 
-public class RepositoryListItem extends BaseItem<RepositoryListItemBean> {
+public class RepositoryListItem extends GeneralItem<ItemBean> {
     public static final String TYPE = "RepositoryListItem";
 
     private ItemRepositoryListBinding binding;
-
-    private ItemClickListener itemClickListener;
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
 
     @Override
     public void bindView(@NotNull View view) {
@@ -37,16 +30,14 @@ public class RepositoryListItem extends BaseItem<RepositoryListItemBean> {
     }
 
     @Override
-    public void handleData(RepositoryListItemBean repositoryListItemBean, int i) {
+    public void handleData(ItemBean repositoryListItemBean, int i) {
         binding.setData(repositoryListItemBean);
         binding.setItem(this);
         binding.executePendingBindings();//加一行，问题解决
     }
 
-    public void skip(View view, RepositoryListItemBean bean) {
-        if (itemClickListener!=null){
-            view.setTag(bean);
-            itemClickListener.onItemClick(view);
-        }
+    @Override
+    public void onItemClick(View view, Object data) {
+        super.onItemClick(view, data);
     }
 }

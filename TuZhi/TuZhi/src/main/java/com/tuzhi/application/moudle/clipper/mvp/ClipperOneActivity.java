@@ -9,12 +9,12 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ActivityClipperOneBinding;
 import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.clipper.clippertwo.mvp.ClipperTwoActivity;
-import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 import com.tuzhi.application.moudle.repository.item.RepositoryListItem;
 import com.tuzhi.application.view.LoadMoreListener;
 
@@ -37,7 +37,7 @@ public class ClipperOneActivity extends MVPBaseActivity<ClipperOneContract.View,
 
     public static final String ARTICLE_URL = "ARTICLE_URL";
     public static final String EVENT_BACK = "ClipperOneActivity_back";
-    private ArrayList<RepositoryListItemBean> mData = new ArrayList<>();
+    private ArrayList<ItemBean> mData = new ArrayList<>();
     private ActivityClipperOneBinding binding;
 
     @Override
@@ -53,7 +53,7 @@ public class ClipperOneActivity extends MVPBaseActivity<ClipperOneContract.View,
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setLoadListener(this);
-        CommonRcvAdapter<RepositoryListItemBean> adapter = new CommonRcvAdapter<RepositoryListItemBean>(mData) {
+        CommonRcvAdapter<ItemBean> adapter = new CommonRcvAdapter<ItemBean>(mData) {
             @NonNull
             @Override
             public AdapterItem createItem(Object o) {
@@ -63,13 +63,13 @@ public class ClipperOneActivity extends MVPBaseActivity<ClipperOneContract.View,
                         return new GeneralLoadFootViewItem();
                     default:
                         RepositoryListItem item = new RepositoryListItem();
-                        item.setItemClickListener(ClipperOneActivity.this);
+                        item.setClickListener(ClipperOneActivity.this);
                         return item;
                 }
             }
 
             @Override
-            public Object getItemType(RepositoryListItemBean repositoryListItemBean) {
+            public Object getItemType(ItemBean repositoryListItemBean) {
                 return repositoryListItemBean.getItemType();
             }
         };
@@ -90,7 +90,7 @@ public class ClipperOneActivity extends MVPBaseActivity<ClipperOneContract.View,
     }
 
     @Override
-    public void downLoadFinish(ArrayList<RepositoryListItemBean> data, boolean haveNextPage, int page) {
+    public void downLoadFinish(ArrayList<ItemBean> data, boolean haveNextPage, int page) {
         binding.rrv.downLoadFinish(page, haveNextPage, mData, data, false);
     }
 
@@ -116,7 +116,7 @@ public class ClipperOneActivity extends MVPBaseActivity<ClipperOneContract.View,
 
     @Override
     public void onItemClick(View view) {
-        RepositoryListItemBean tag = (RepositoryListItemBean) view.getTag();
+        ItemBean tag = (ItemBean) view.getTag();
         Intent intent = new Intent(this, ClipperTwoActivity.class);
         intent.putExtra(ClipperTwoActivity.ARTICLE_URL, getIntent().getStringExtra(ARTICLE_URL));
         intent.putExtra(ClipperTwoActivity.ID, tag.getId());

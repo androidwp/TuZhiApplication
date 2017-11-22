@@ -1,8 +1,8 @@
 package com.tuzhi.application.moudle.clipper.mvp;
 
+import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
-import com.tuzhi.application.moudle.repository.bean.RepositoryListItemBean;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ClipperOneContract {
     interface View extends BaseView {
-        void downLoadFinish(ArrayList<RepositoryListItemBean> data, boolean haveNextPage, int page);
+        void downLoadFinish(ArrayList<ItemBean> data, boolean haveNextPage, int page);
 
         void downloadFinish();
     }

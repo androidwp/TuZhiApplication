@@ -11,10 +11,11 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
-
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class ApplyForTrialActivity extends MVPBaseActivity<ApplyForTrialContract.View, ApplyForTrialPresenter> implements ApplyForTrialContract.View {
@@ -30,6 +31,7 @@ public class ApplyForTrialActivity extends MVPBaseActivity<ApplyForTrialContract
         binding.setActivity(this);
         binding.setData(new ApplyForTrialBean());
     }
+
 
     public void back() {
         onBackPressed();

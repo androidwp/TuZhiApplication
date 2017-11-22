@@ -6,7 +6,9 @@ import com.tuzhi.application.BR;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
- * Created by wangpeng on 2017/8/10.
+ *
+ * @author wangpeng
+ * @date 2017/8/10
  */
 
 public class ChooseColleagueItemBean extends BaseListItemBean {

@@ -78,7 +78,6 @@ public class ReadListItem extends BaseItem<ReadListItemBean> {
         Intent intent;
         intent = new Intent(context, KnowledgeDetailsActivity.class);
         intent.putExtra(KnowledgeDetailsActivity.ID, readListItemBean.getArticleId());
-        intent.putExtra(KnowledgeDetailsActivity.TITLE, readListItemBean.getArticleTitle());
         return intent;
     }
 

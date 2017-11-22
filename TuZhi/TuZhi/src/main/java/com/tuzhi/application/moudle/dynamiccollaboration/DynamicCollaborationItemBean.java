@@ -3,7 +3,9 @@ package com.tuzhi.application.moudle.dynamiccollaboration;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
- * Created by wangpeng on 2017/10/26.
+ *
+ * @author wangpeng
+ * @date 2017/10/26
  */
 
 public class DynamicCollaborationItemBean extends BaseListItemBean {

@@ -54,6 +54,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorGeneralBackground"
                 android:orientation="vertical">
 
 
@@ -81,7 +82,7 @@
                     android:gravity="start"
                     android:hint="添加描述"
                     android:padding="10dp"
-                    android:text="@={data.taskTitle}"
+                    android:text="@={data.taskSummary}"
                     android:textColorHint="@color/colorGeneralMoreTintText"
                     android:textSize="13sp" />
 
@@ -299,8 +300,8 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/createchannelbackground"
                             android:drawablePadding="6dp"
-                            android:paddingBottom="6dp"
                             android:onClick="@{()->activity.chooseCard()}"
+                            android:paddingBottom="6dp"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:paddingTop="6dp"
@@ -332,9 +333,9 @@
                     android:layout_height="46dp"
                     android:layout_marginBottom="@dimen/generalSpace"
                     android:layout_marginLeft="@dimen/generalSpace"
-                    android:onClick="@{()->activity.chooseLib()}"
                     android:layout_marginRight="@dimen/generalSpace"
                     android:background="@drawable/general_listview_selector"
+                    android:onClick="@{()->activity.chooseLib()}"
                     android:padding="10dp">
 
                     <TextView
@@ -342,9 +343,9 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="选择所属知识库"
-                        android:visibility="@{data.taskLib==null?View.VISIBLE:View.GONE}"
                         android:textColor="#bdbdbd"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="@{data.taskLib==null?View.VISIBLE:View.GONE}" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -357,6 +358,7 @@
 
 
                     <ImageView
+                        android:id="@+id/iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
