@@ -12,6 +12,8 @@ import java.util.WeakHashMap;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class KnowledgeLibPresenter extends BasePresenterImpl<KnowledgeLibContract.View> implements KnowledgeLibContract.Presenter {
@@ -55,6 +57,52 @@ public class KnowledgeLibPresenter extends BasePresenterImpl<KnowledgeLibContrac
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
                 mView.renameSuccess(name);
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void collectionLib(String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "5");
+        parameter.put("klId", id);
+        HttpUtilsKt.get(mView.getContext(), URL_LIB, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.collectionLibSuccess();
+            }
+
+            @Override
+            public void onFailure(@NotNull String text) {
+
+            }
+        });
+    }
+
+    @Override
+    public void cancelCollectionLib(String id) {
+        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
+        parameter.put("operate", "6");
+        parameter.put("klId", id);
+        HttpUtilsKt.get(mView.getContext(), URL_LIB, parameter, String.class, new HttpCallBack<String>() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onSuccess(@Nullable String s, @NotNull String text) {
+                mView.collectionLibSuccess();
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.tuzhi.application.moudle.repository.crepository.mvp;
 
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
+import com.tuzhi.application.moudle.repository.crepository.bean.HttpCreateCardBean;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 
@@ -20,18 +21,8 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
     private final String URL_MOU = "tzkm/editTitle";
 
     @Override
-    public void commit(String type, String name, String libId) {
-        switch (type) {
-            case CrepositoryActivity.REPOSITORY:
-                addLib(name);
-                break;
-            case CrepositoryActivity.MOUDLE:
-                addMoudle(name, libId);
-                break;
-            case CrepositoryActivity.CHANNEL:
-                addChannel(name, libId);
-                break;
-        }
+    public void commit(String name, String id) {
+        addMoudle(name, id);
     }
 
     private void addChannel(String name, String libId) {
@@ -47,7 +38,7 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
-                mView.commitFinish();
+                //mView.commitFinish();
             }
 
             @Override
@@ -62,15 +53,15 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
         parameter.put("operate", "1");
         parameter.put("title", name);
         parameter.put("kcId", libId);
-        HttpUtilsKt.post(mView.getContext(), URL_MOU, parameter, String.class, new HttpCallBack<String>() {
+        HttpUtilsKt.post(mView.getContext(), URL_MOU, parameter, HttpCreateCardBean.class, new HttpCallBack<HttpCreateCardBean>() {
             @Override
             public void onFinish() {
 
             }
 
             @Override
-            public void onSuccess(@Nullable String s, @NotNull String text) {
-                mView.commitFinish();
+            public void onSuccess(@Nullable HttpCreateCardBean bean, @NotNull String text) {
+                mView.commitFinish(bean);
             }
 
             @Override
@@ -92,7 +83,7 @@ public class CrepositoryPresenter extends BasePresenterImpl<CrepositoryContract.
 
             @Override
             public void onSuccess(@Nullable String s, @NotNull String text) {
-                mView.commitFinish();
+                // mView.commitFinish();
             }
 
             @Override

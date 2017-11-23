@@ -25,6 +25,7 @@ import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeCha
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
+import com.tuzhi.application.utils.SharedPreferencesUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 import com.tuzhi.application.view.LoadMoreListener;
@@ -38,11 +39,17 @@ import java.util.ArrayList;
 import kale.adapter.CommonRcvAdapter;
 import kale.adapter.item.AdapterItem;
 
+/**
+ * @author wangpeng
+ */
 public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowledgeContract.View, EnterpriseKnowledgePresenter> implements EnterpriseKnowledgeContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener, OnDialogClickListener {
     public static final String MESSAGE = "EnterpriseKnowledgeActivity_refresh";
     public static final String KCID = "KCID";
     public static final String KLID = "KLID";
     public static final String TITLE = "TITLE";
+    public static final String IS_OPEN = "IS_OPEN";
+    private static final String SORT = "CARD_SORT";
+
     private ArrayList<KnowledgeCardItemBean> mData = new ArrayList<>();
     private ActivityEnterpriseKnowledgeBinding binding;
     private ActionSheet actionSheet;
@@ -52,6 +59,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     private String klId;
     private String kcId;
     private boolean flag;
+    private String sort;
 
     @Override
     protected int getLayoutId() {
@@ -74,18 +82,23 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     public void sortChange(boolean flag) {
         this.flag = !flag;
         binding.setFlag(this.flag);
+        sort = flag ? ConstantKt.getValue_true() : ConstantKt.getValue_false();
+        SharedPreferencesUtilsKt.saveLongCache(this, SORT, sort);
+        mPresenter.downLoadData(kcId, sort, 0);
     }
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         EventBus.getDefault().register(this);
+        sort = SharedPreferencesUtilsKt.getLongCache(this, SORT, ConstantKt.getValue_true());
         binding = (ActivityEnterpriseKnowledgeBinding) viewDataBinding;
         title = getIntent().getStringExtra(TITLE);
         klId = getIntent().getStringExtra(KLID);
         kcId = getIntent().getStringExtra(KCID);
         setTitle(title);
+        binding.setIsOpen(getIntent().getBooleanExtra(IS_OPEN, true));
         binding.setActivity(this);
-        binding.setFlag(flag);
+        binding.setFlag(sort.equals(ConstantKt.getValue_true()));
         binding.rrv.isShowRefreshView(true);
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setLoadListener(this);
@@ -124,7 +137,6 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
 
     public void skipCreateRepositoryActivity() {
         Intent intent = new Intent(this, CrepositoryActivity.class);
-        intent.putExtra(CrepositoryActivity.TYPE, CrepositoryActivity.MOUDLE);
         intent.putExtra(CrepositoryActivity.ID, kcId);
         startActivityForResult(intent, ConstantKt.getCREATE_CODE());
     }
@@ -139,14 +151,13 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
 
     @Override
     public void onRefresh() {
-        mPresenter.downLoadData(kcId, 0);
+        mPresenter.downLoadData(kcId, sort, 0);
     }
 
     @Override
     public void downloadFinish(int page, boolean haveNextPage, ArrayList<KnowledgeCardItemBean> data) {
         binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
     }
-
 
     @Override
     public void downloadFinishNothing() {
@@ -172,7 +183,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
 
     @Override
     public void loadMoreListener(int page) {
-        mPresenter.downLoadData(kcId, page);
+        mPresenter.downLoadData(kcId, sort, page);
     }
 
     @Override

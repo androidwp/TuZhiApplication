@@ -21,6 +21,7 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.createtask.CreateTaskActivity;
 import com.tuzhi.application.moudle.createtask.TaskCardItem;
 import com.tuzhi.application.moudle.memberlist.MemberListActivity;
+import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.ChooseColleagueItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseCardItem;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.item.ChooseChannelItem;
@@ -256,6 +257,7 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
                 mPresenter.downloadDataChannel(libID, 0);
                 break;
             case TYPE_CHOOSE_CARD:
+                binding.setChooseNumber("关联空白卡片");
                 mPresenter.downloadDataCare(channelId, 0);
                 break;
             case TYPE_TASK_MANAGER:
@@ -284,6 +286,7 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
                 break;
             case TYPE_CHOOSE_CARD:
                 mPresenter.downloadDataCare(channelId, page);
+
                 break;
             case TYPE_TASK_MANAGER:
                 mPresenter.downloadDataManager(libID, taskId, page);
@@ -374,6 +377,11 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             case TYPE_REMOVE_MEMBER:
                 mPresenter.commitRemoveMember(chooseData);
                 break;
+            case TYPE_CHOOSE_CARD:
+                Intent intent = new Intent(this, CrepositoryActivity.class);
+                intent.putExtra(CrepositoryActivity.ID, channelId);
+                startActivity(intent);
+                break;
             default:
                 sendPeople(chooseData);
                 back();
@@ -463,8 +471,14 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             data.addAll(dataOriginal);
         } else {
             for (ChooseColleagueItemBean chooseColleagueItemBean : dataOriginal) {
-                if (chooseColleagueItemBean.getNickName().contains(text)) {
-                    data.add(chooseColleagueItemBean);
+                if (chooseColleagueItemBean.getNickName() != null) {
+                    if (chooseColleagueItemBean.getNickName().contains(text)) {
+                        data.add(chooseColleagueItemBean);
+                    }
+                } else {
+                    if (chooseColleagueItemBean.getTitle().contains(text)) {
+                        data.add(chooseColleagueItemBean);
+                    }
                 }
             }
         }

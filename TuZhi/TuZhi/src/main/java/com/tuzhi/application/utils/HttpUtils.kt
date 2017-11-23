@@ -70,7 +70,7 @@ fun <T> uploadFile(context: Context, url: String, parts: Array<MultipartBody.Par
 
 fun <T> get(context: Context, url: String, parameter: WeakHashMap<String, String>, clazz: Class<T>?, callBack: HttpCallBack<T>) {
     showLog("Parameter", parameter.toString())
-    retrofit.get(url, parameter).enqueue(object : Callback<String> {
+    retrofit.get(url, dealParameter(parameter)).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>?, t: Throwable?) {
             onFailure(context, callBack, t)
         }
@@ -84,7 +84,7 @@ fun <T> get(context: Context, url: String, parameter: WeakHashMap<String, String
 
 fun <T> post(context: Context, url: String, parameter: WeakHashMap<String, String>, clazz: Class<T>?, callBack: HttpCallBack<T>) {
     showLog("Parameter", parameter.toString())
-    retrofit.post(url, parameter).enqueue(object : Callback<String> {
+    retrofit.post(url, dealParameter(parameter)).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>?, t: Throwable?) {
             onFailure(context, callBack, t)
         }
@@ -123,9 +123,11 @@ fun <T> onResponse(context: Context, clazz: Class<T>?, callBack: HttpCallBack<T>
                 callBack.onSuccess(null, result)
             }
         } else {
-            if (!TextUtils.equals(resultCode, "100003") && !TextUtils.isEmpty(resultMsg))
+            if (!TextUtils.equals(resultCode, "100003") && !TextUtils.isEmpty(resultMsg)) {
                 toast(activity, resultMsg)
-            callBack.onFailure(resultMsg)
+            } else {
+                callBack.onFailure(result)
+            }
         }
     }
 }
@@ -168,4 +170,11 @@ fun getParameter(context: Context): WeakHashMap<String, String> {
     if (!TextUtils.isEmpty(getLongCache(context, USER_ID)))
         weakMap.put("userId", getLongCache(context, USER_ID))
     return weakMap
+}
+
+fun dealParameter(parameter: WeakHashMap<String, String>): WeakHashMap<String, String> {
+    parameter.keys
+            .filter { parameter[it] == null }
+            .forEach { parameter.put(it, "") }
+    return parameter
 }

@@ -24,6 +24,8 @@ import io.reactivex.disposables.Disposable;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKnowledgeContract.View> implements EnterpriseKnowledgeContract.Presenter {
@@ -32,9 +34,10 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
     private final String URL_CHANNEL = "tzkm/knowledgeChannel";
 
     @Override
-    public void downLoadData(String id, int page) {
+    public void downLoadData(String id, String sort, int page) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("kcId", id);
+        parameter.put("sort", sort);
         parameter.put("pageNo", page + "");
         HttpUtilsKt.get(mView.getContext(), URL, parameter, HttpKnowledgeModuleBean.class, new HttpCallBack<HttpKnowledgeModuleBean>() {
             @Override

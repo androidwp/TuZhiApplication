@@ -20,12 +20,21 @@ public class ItemBean extends BaseListItemBean {
     private String image;
     private String name;
     private String time;
+    private String type;
     private ArrayList<ItemBean> itemBeans;
     private String[] jurisdiction = {"拥有者", "管理员", "成员"};
     private int index;
     private boolean flag;
     private NewTaskBean taskBean;
     private int viewSpace;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getViewSpace() {
         return viewSpace;

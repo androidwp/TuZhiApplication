@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.tuzhi.application.moudle.search.searchpage.item.SearchTaskItem" />
+
+        <variable
+            name="data"
+            type="com.tuzhi.application.moudle.search.searchpage.bean.SearchResultListBean" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/flSearchTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/general_listview_selector"
+        android:onClick="@{(view)->item.onItemClick(view,data)}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="11dp"
+            android:paddingLeft="@dimen/generalSpace"
+            android:paddingRight="@dimen/generalSpace"
+            android:paddingTop="11dp">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="32dp"
+                android:layout_height="41dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginLeft="@dimen/generalSpace"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="@{data.title}" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{data.info}"
+                    android:textColor="@color/colorGeneralTintText"
+                    android:textSize="@dimen/generalSmallTextSize" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/NavigationLine" />
+
+    </FrameLayout>
+</layout>

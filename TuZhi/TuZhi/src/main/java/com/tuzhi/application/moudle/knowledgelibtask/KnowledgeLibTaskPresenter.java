@@ -1,7 +1,5 @@
 package com.tuzhi.application.moudle.knowledgelibtask;
 
-import android.text.TextUtils;
-
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.mytasks.CompletedTaskItem;
 import com.tuzhi.application.moudle.mytasks.MyTasksItem;
@@ -47,12 +45,14 @@ public class KnowledgeLibTaskPresenter extends BasePresenterImpl<KnowledgeLibTas
             public void onSuccess(@Nullable HttpTaskListBean taskListBean, @NotNull String text) {
                 List<HttpTaskListBean.KnowledgeTaskMapListsBean> knowledgeTaskMapLists = taskListBean.getKnowledgeTaskMapLists();
                 ArrayList<MyTasksItemBean> data = new ArrayList<>();
-                for (HttpTaskListBean.KnowledgeTaskMapListsBean knowledgeTaskMapList : knowledgeTaskMapLists) {
-                    MyTasksItemBean bean = new MyTasksItemBean(MyTasksItem.TYPE);
-                    bean.setId(knowledgeTaskMapList.getId());
-                    bean.setlId(knowledgeTaskMapList.getLibId());
-                    bean.setContent(knowledgeTaskMapList.getTitle());
-                    data.add(bean);
+                if (knowledgeTaskMapLists != null) {
+                    for (HttpTaskListBean.KnowledgeTaskMapListsBean knowledgeTaskMapList : knowledgeTaskMapLists) {
+                        MyTasksItemBean bean = new MyTasksItemBean(MyTasksItem.TYPE);
+                        bean.setId(knowledgeTaskMapList.getId());
+                        bean.setlId(knowledgeTaskMapList.getLibId());
+                        bean.setContent(knowledgeTaskMapList.getTitle());
+                        data.add(bean);
+                    }
                 }
                 //已完成item
                 MyTasksItemBean bean = new MyTasksItemBean(CompletedTaskItem.TYPE);
@@ -62,14 +62,10 @@ public class KnowledgeLibTaskPresenter extends BasePresenterImpl<KnowledgeLibTas
 
             @Override
             public void onFailure(@NotNull String text) {
-                if (TextUtils.equals(text, "列表无内容显示")) {
-                    ArrayList<MyTasksItemBean> data = new ArrayList<>();
-                    MyTasksItemBean bean = new MyTasksItemBean(CompletedTaskItem.TYPE);
-                    data.add(bean);
-                    mView.downloadFinish(data, false, 0);
-                } else {
-                    mView.downloadError();
-                }
+                ArrayList<MyTasksItemBean> data = new ArrayList<>();
+                MyTasksItemBean bean = new MyTasksItemBean(CompletedTaskItem.TYPE);
+                data.add(bean);
+                mView.downloadFinish(data, false, 0);
             }
         });
     }

@@ -82,7 +82,16 @@ public class HttpKnowledgeLibBean {
         private String contentCount;
         private String createPerson;
         private String coverImage;
+        private String type;
         private boolean isOpen;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
 
         public String getParticipatePersonNum() {
             return participatePersonNum;

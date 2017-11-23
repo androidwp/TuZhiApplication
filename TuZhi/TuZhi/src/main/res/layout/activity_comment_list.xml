@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="发言详情"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:textSize="@dimen/generalTextSize" />
 
             <ImageView
@@ -68,8 +69,8 @@
                 android:drawableLeft="@{praiseStatus? @drawable/admire:@drawable/admirenormal}"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="@{praiseNumber}"
                 android:onClick="@{()->activity.commitPraise(praiseStatus,praiseNumber)}"
+                android:text="@{praiseNumber}"
                 android:textColor="@{praiseStatus? @color/colorYellowButton:@color/colorGeneralTintText}" />
 
             <View

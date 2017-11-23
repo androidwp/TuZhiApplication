@@ -1,11 +1,14 @@
 package com.tuzhi.application.moudle.search.searchpage.mvp;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.search.mvp.SearchFragment;
 import com.tuzhi.application.moudle.search.searchpage.bean.SearchResultHttpBean;
 import com.tuzhi.application.moudle.search.searchpage.bean.SearchResultListBean;
 import com.tuzhi.application.moudle.search.searchpage.item.SearchPageNoteItem;
 import com.tuzhi.application.moudle.search.searchpage.item.SearchPageSpeakItem;
+import com.tuzhi.application.moudle.search.searchpage.item.SearchTaskItem;
 import com.tuzhi.application.utils.FileUtils;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -16,6 +19,8 @@ import java.util.WeakHashMap;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.View> implements SearchPageContract.Presenter {
@@ -26,17 +31,7 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
         //从这里获取要搜索的内容
         //SearchFragment.searchText;
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-        switch (type) {
-            case SearchPageFragment.TYPE_NOTE:
-                parameter.put("type", "1");
-                break;
-            case SearchPageFragment.TYPE_FILE:
-                parameter.put("type", "2");
-                break;
-            default:
-                parameter.put("type", "3");
-                break;
-        }
+        parameter.put("type", type);
         parameter.put("keyword", SearchFragment.searchText);
         parameter.put("pageNo", page + "");
         HttpUtilsKt.get(mView.getContext(), URL, parameter, SearchResultHttpBean.class, new HttpCallBack<SearchResultHttpBean>() {
@@ -47,24 +42,32 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
 
             @Override
             public void onSuccess(SearchResultHttpBean resultHttpBean, String text) {
-                SearchResultHttpBean.ArticlePageBean articlePage = resultHttpBean.getArticlePage();
-                int index = articlePage.getIndex();
-                boolean next = articlePage.isNext();
-                ArrayList<SearchResultListBean> arrayList = new ArrayList<>();
-                for (SearchResultHttpBean.ArticlePageBean.ResultBean resultBean : articlePage.getResult()) {
-                    switch (type) {
-                        case SearchPageFragment.TYPE_NOTE:
-                            arrayList.add(dealDataForNote(resultBean));
-                            break;
-                        case SearchPageFragment.TYPE_FILE:
-                            arrayList.add(dealDataForFile(resultBean));
-                            break;
-                        default:
-                            arrayList.add(dealDataForSpeak(resultBean));
-                            break;
+                String resultCode = resultHttpBean.getResultCode();
+                if (TextUtils.equals(resultCode, "0")) {
+                    SearchResultHttpBean.ArticlePageBean articlePage = resultHttpBean.getArticlePage();
+                    int index = articlePage.getIndex();
+                    boolean next = articlePage.isNext();
+                    ArrayList<SearchResultListBean> arrayList = new ArrayList<>();
+                    if (articlePage.getResult() != null) {
+                        for (SearchResultHttpBean.ArticlePageBean.ResultBean resultBean : articlePage.getResult()) {
+                            switch (type) {
+                                case SearchPageFragment.TYPE_NOTE:
+                                    arrayList.add(dealDataForNote(resultBean));
+                                    break;
+                                case SearchPageFragment.TYPE_FILE:
+                                    arrayList.add(dealDataForFile(resultBean));
+                                    break;
+                                case SearchPageFragment.TYPE_TASK:
+                                    arrayList.add(dealDataForTask(resultBean));
+                                    break;
+                                default:
+                                    arrayList.add(dealDataForSpeak(resultBean));
+                                    break;
+                            }
+                        }
                     }
+                    mView.downloadFinish(arrayList, next, index);
                 }
-                mView.downloadFinish(arrayList, next, index);
             }
 
             @Override
@@ -72,6 +75,14 @@ public class SearchPagePresenter extends BasePresenterImpl<SearchPageContract.Vi
                 mView.downloadFinish(null, false, 0);
             }
         });
+    }
+
+    private SearchResultListBean dealDataForTask(SearchResultHttpBean.ArticlePageBean.ResultBean resultBean) {
+        SearchResultListBean noteBean = new SearchResultListBean(SearchTaskItem.TYPE);
+        noteBean.setId(resultBean.getId());
+        noteBean.setTitle(resultBean.getTitle());
+        noteBean.setInfo(resultBean.getCreateTime());
+        return noteBean;
     }
 
     private SearchResultListBean dealDataForSpeak(SearchResultHttpBean.ArticlePageBean.ResultBean resultBean) {

@@ -44,6 +44,8 @@ public class KnowledgeLibTaskFragment extends MVPBaseFragment<KnowledgeLibTaskCo
     /**
      * 用来通知刷新的字段
      */
+    public static final String ID = "ID";
+    public static final String TITLE = "TITLE";
     public static final String EVENT_REFRESH = "KnowledgeLibTaskFragment_refresh";
     private ArrayList<MyTasksItemBean> mData = new ArrayList<>();
     private CommonRcvAdapter<MyTasksItemBean> adapter;

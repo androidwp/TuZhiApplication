@@ -3,7 +3,9 @@ package com.tuzhi.application.moudle.message.read.bean;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
- * Created by wangpeng on 2017/8/1.
+ *
+ * @author wangpeng
+ * @date 2017/8/1
  */
 
 public class ReadListItemBean extends BaseListItemBean{
@@ -18,7 +20,16 @@ public class ReadListItemBean extends BaseListItemBean{
     private String articleId;
     private String commentId;
     private String articleTitle;
+    private String objectType;
     private boolean isLimit;
+
+    public String getObjectType() {
+        return objectType;
+    }
+
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
+    }
 
     public boolean isLimit() {
         return isLimit;

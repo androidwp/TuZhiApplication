@@ -2,14 +2,19 @@ package com.tuzhi.application.moudle.repository.crepository.mvp;
 
 
 import android.databinding.ViewDataBinding;
-import android.text.TextUtils;
 
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.EventBusBean;
+import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ActivityCrepositoryBinding;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.createtask.CreateTaskActivity;
+import com.tuzhi.application.moudle.createtask.TaskCardItem;
 import com.tuzhi.application.moudle.repository.crepository.bean.CreateRepositoryBean;
+import com.tuzhi.application.moudle.repository.crepository.bean.HttpCreateCardBean;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.mvp.ChooseColleagueActivity;
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
-import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
+import com.tuzhi.application.moudle.taskdetails.TaskDetailsActivity;
 import com.tuzhi.application.utils.ConstantKt;
 import com.tuzhi.application.utils.KeyBoardUtils;
 
@@ -18,17 +23,13 @@ import org.greenrobot.eventbus.EventBus;
 
 /**
  * 创建知识库页面
+ *
+ * @author wangpeng
  */
 
 public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.View, CrepositoryPresenter> implements CrepositoryContract.View {
-    //用于区分知识库和知识模块，repository为知识库，moudle为知识模块
-    public static final String TYPE = "TYPE";
-    public static final String REPOSITORY = "repository";
-    public static final String MOUDLE = "moudle";
-    public static final String CHANNEL = "CHANNEL";
     public static final String ID = "ID";
     private String id;
-    private String type;
     private boolean canClick = true;
 
 
@@ -41,19 +42,8 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
     protected void init(ViewDataBinding viewDataBinding) {
         ActivityCrepositoryBinding binding = (ActivityCrepositoryBinding) viewDataBinding;
         binding.setActivity(this);
-        type = getIntent().getStringExtra(TYPE);
         id = getIntent().getStringExtra(ID);
-        switch (type) {
-            case REPOSITORY:
-                binding.setData(new CreateRepositoryBean(type, "新建知识库", "请输入知识库名称", ""));
-                break;
-            case MOUDLE:
-                binding.setData(new CreateRepositoryBean(type, "新建卡片", "请输入卡片名称", ""));
-                break;
-            case CHANNEL:
-                binding.setData(new CreateRepositoryBean(type, "新建频道", "请输入频道名称", ""));
-                break;
-        }
+        binding.setData(new CreateRepositoryBean("新建卡片", "请输入卡片名称", ""));
         KeyBoardUtils.showKeyBoard(this);
     }
 
@@ -61,24 +51,48 @@ public class CrepositoryActivity extends MVPBaseActivity<CrepositoryContract.Vie
         onBackPressed();
     }
 
-    public void commit(String type, String name) {
+    public void commit(String name) {
         if (canClick) {
             canClick = false;
-            mPresenter.commit(type, name, id);
+            mPresenter.commit(name, id);
         }
     }
 
 
     @Override
-    public void commitFinish() {
-        if (TextUtils.equals(type, CHANNEL)) {
-            EventBus.getDefault().post(RepositoryFragment.MESSAGE);
-        } else if (TextUtils.equals(type, MOUDLE)) {
-            EventBus.getDefault().post(KnowledgeChannelActivity.MESSAGE);
-        }
+    public void commitFinish(HttpCreateCardBean bean) {
+        EventBus.getDefault().post(KnowledgeChannelActivity.MESSAGE);
         setResult(ConstantKt.getCREATE_CODE());
+        sendCard(bean);
         onBackPressed();
     }
+
+    /**
+     * 任务中  添加空白卡片是用到此方法。传出去选中的卡片信息谁用谁拿
+     *
+     * @param bean
+     */
+    private void sendCard(HttpCreateCardBean bean) {
+        HttpCreateCardBean.ArticleMapBean articleMap = bean.getArticleMap();
+        ItemBean itemBean = new ItemBean(TaskCardItem.TYPE);
+        itemBean.setId(articleMap.getId());
+        itemBean.setTitle(articleMap.getTitle());
+        itemBean.setTime(articleMap.getUpdateTime());
+
+        EventBusBean taskBean = new EventBusBean();
+        taskBean.setName(CreateTaskActivity.EVENT_NAME);
+        taskBean.setEventType(CreateTaskActivity.EVENT_TYPE_CARD);
+        taskBean.setObject(itemBean);
+        EventBus.getDefault().post(taskBean);
+
+        EventBusBean taskDetailBean = new EventBusBean();
+        taskDetailBean.setName(TaskDetailsActivity.EVENT_NAME);
+        taskDetailBean.setEventType(TaskDetailsActivity.EVENT_TYPE_CARD);
+        taskDetailBean.setObject(itemBean);
+        EventBus.getDefault().post(taskDetailBean);
+        EventBus.getDefault().post(ChooseColleagueActivity.FINISH);
+    }
+
 
     @Override
     public void commitError() {

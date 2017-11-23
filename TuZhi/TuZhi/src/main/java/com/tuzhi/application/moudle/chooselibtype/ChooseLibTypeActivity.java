@@ -25,6 +25,7 @@ import kale.adapter.item.AdapterItem;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class ChooseLibTypeActivity extends MVPBaseActivity<ChooseLibTypeContract.View, ChooseLibTypePresenter> implements ChooseLibTypeContract.View, ItemClickListener {

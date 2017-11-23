@@ -11,11 +11,20 @@ import com.tuzhi.application.BR;
  */
 
 public class CreateKnowledgeLibBean extends BaseObservable {
+    private String libId;
     private String libName;
     private boolean libOpenness = true;
     private String libTypeId = "1";
     private String libTypeName = "公共知识库";
     private String libIcon = "https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D220/sign=ad0293e246086e0675a8384932097b5a/5ab5c9ea15ce36d3c0a28ce330f33a87e850b1ba.jpg";
+
+    public String getLibId() {
+        return libId;
+    }
+
+    public void setLibId(String libId) {
+        this.libId = libId;
+    }
 
     @Bindable
     public boolean isLibOpenness() {

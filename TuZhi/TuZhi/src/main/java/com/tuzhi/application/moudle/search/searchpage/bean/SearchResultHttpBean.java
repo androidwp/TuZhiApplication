@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/8/9.
+ * @author wangpeng
+ * @date 2017/8/9
  */
 
 public class SearchResultHttpBean {
@@ -175,18 +176,36 @@ public class SearchResultHttpBean {
             private String updateTime;
             private String previewNum;
             private String articleId;
-            private String title;
             private String summary;
             private String fileSuffix;
             private String fileUrl;
             private String articleTitle;
             private String id;
+            private String createTime;
+            private String title;
+            private String libId;
             private String fileSize;
             private String author;
             private String fileName;
             private boolean isPreview;
             private boolean isLimit;
             private ArrayList<String> previewUrls;
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public String getLibId() {
+                return libId;
+            }
+
+            public void setLibId(String libId) {
+                this.libId = libId;
+            }
 
             public boolean isLimit() {
                 return isLimit;

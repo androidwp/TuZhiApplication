@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.message.read.mvp;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.message.read.bean.ReadListItemBean;
 import com.tuzhi.application.moudle.message.read.bean.ReadUnreadListHttpBean;
@@ -41,7 +43,12 @@ public class ReadPresenter extends BasePresenterImpl<ReadContract.View> implemen
                     ArrayList<ReadListItemBean> arrayList = new ArrayList();
                     for (ReadUnreadListHttpBean.NoticePageBean.ResultBean resultBean : noticePage.getResult()) {
                         ReadListItemBean readListItemBean = new ReadListItemBean(ReadListItem.TYPE);
-                        readListItemBean.setId(resultBean.getId());
+                        if (!TextUtils.isEmpty(resultBean.getTaskId())) {
+                            readListItemBean.setId(resultBean.getTaskId());
+                            readListItemBean.setObjectType(resultBean.getObjectType());
+                        } else {
+                            readListItemBean.setId(resultBean.getId());
+                        }
                         readListItemBean.setPortrait(resultBean.getUserImage());
                         readListItemBean.setNickName(resultBean.getNickname());
                         readListItemBean.setContent(resultBean.getSourceContent());

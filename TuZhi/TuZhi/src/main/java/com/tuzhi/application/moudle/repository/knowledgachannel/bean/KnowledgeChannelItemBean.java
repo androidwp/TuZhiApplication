@@ -6,7 +6,8 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
- * Created by wangpeng on 2017/6/21.
+ * @author wangpeng
+ * @date 2017/6/21
  */
 
 public class KnowledgeChannelItemBean extends BaseListItemBean {
@@ -14,6 +15,15 @@ public class KnowledgeChannelItemBean extends BaseListItemBean {
     private String klid;
     private String title;
     private String text;
+    private boolean flag;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     public KnowledgeChannelItemBean(String itemType) {
         super(itemType);

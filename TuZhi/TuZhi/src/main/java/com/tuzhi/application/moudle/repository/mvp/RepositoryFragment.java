@@ -139,7 +139,6 @@ public class RepositoryFragment extends MVPBaseFragment<RepositoryContract.View,
         Intent intent = new Intent(getContext(), KnowledgeLibActivity.class);
         intent.putExtra(KnowledgeLibActivity.ID, tag.getId());
         intent.putExtra(KnowledgeLibActivity.TITLE, tag.getTitle());
-        intent.putExtra(KnowledgeLibActivity.OPEN, tag.isFlag());
         getContext().startActivity(intent);
     }
 }

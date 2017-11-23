@@ -9,6 +9,8 @@ import java.io.File
 
 val KILL_ACTIVITY_CODE = 110
 
+val LIST_NOT_CONTENT = "100003"
+
 val CREATE_CODE = 120
 
 val NEED_REFRESH_CODE = 100

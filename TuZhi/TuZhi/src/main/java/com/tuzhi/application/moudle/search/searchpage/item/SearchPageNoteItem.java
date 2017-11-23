@@ -14,7 +14,8 @@ import com.tuzhi.application.utils.ImageUtils;
 import com.tuzhi.application.utils.ToastUtilsKt;
 
 /**
- * Created by wangpeng on 2017/8/2.
+ * @author wangpeng
+ * @date 2017/8/2
  */
 
 public class SearchPageNoteItem extends BaseItem<SearchResultListBean> {
@@ -49,8 +50,8 @@ public class SearchPageNoteItem extends BaseItem<SearchResultListBean> {
     }
 
     public void skipActivity(SearchResultListBean bean) {
-        if (bean.isLimit()){
-            if (resultType==0){
+        if (bean.isLimit()) {
+            if (resultType == 0) {
                 Intent intent = new Intent(getContext(), OpenFileActivity.class);
                 intent.putExtra(OpenFileActivity.ARTICLE_ID, bean.getAid());
                 intent.putExtra(OpenFileActivity.FILE_ID, bean.getFileId());
@@ -60,13 +61,13 @@ public class SearchPageNoteItem extends BaseItem<SearchResultListBean> {
                 intent.putExtra(OpenFileActivity.FILE_SIZE, bean.getFileSize());
                 intent.putExtra(OpenFileActivity.FILE_SUFFIX, bean.getFileType());
                 context.startActivity(intent);
-            }else{
+            } else {
                 Intent intent = new Intent(context, KnowledgeDetailsActivity.class);
                 intent.putExtra(KnowledgeDetailsActivity.ID, bean.getAid());
                 context.startActivity(intent);
             }
-        }else{
-            ToastUtilsKt.toast(context,"无查看权限");
+        } else {
+            ToastUtilsKt.toast(context, "无查看权限");
         }
 
     }

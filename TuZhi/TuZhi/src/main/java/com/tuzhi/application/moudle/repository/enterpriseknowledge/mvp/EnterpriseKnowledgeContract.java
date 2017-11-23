@@ -23,7 +23,14 @@ public class EnterpriseKnowledgeContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void downLoadData(String id, int page);
+        /**
+         * 获取数据
+         *
+         * @param id
+         * @param sort 0为正序  1为倒序
+         * @param page
+         */
+        void downLoadData(String id, String sort, int page);
 
         void deleteChannel(String klId, String kcId);
 

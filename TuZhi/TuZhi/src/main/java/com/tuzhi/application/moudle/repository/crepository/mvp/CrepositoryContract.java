@@ -2,6 +2,7 @@ package com.tuzhi.application.moudle.repository.crepository.mvp;
 
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
+import com.tuzhi.application.moudle.repository.crepository.bean.HttpCreateCardBean;
 
 /**
  * MVPPlugin
@@ -10,12 +11,23 @@ import com.tuzhi.application.moudle.basemvp.BaseView;
 
 public class CrepositoryContract {
     interface View extends BaseView {
-        void commitFinish();
+        /**
+         * 创建成功回调
+         *
+         * @param bean
+         */
+        void commitFinish(HttpCreateCardBean bean);
 
         void commitError();
     }
 
     interface Presenter extends BasePresenter<View> {
-        void commit(String type, String name, String libId);
+        /**
+         * 创建卡片
+         *
+         * @param name
+         * @param channelId 频道id
+         */
+        void commit(String name, String channelId);
     }
 }

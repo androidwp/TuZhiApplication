@@ -33,6 +33,7 @@ import kale.adapter.item.AdapterItem;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class CommentListActivity extends MVPBaseActivity<CommentListContract.View, CommentListPresenter> implements CommentListContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ActionSheet.ActionSheetListener, ItemClickListener {

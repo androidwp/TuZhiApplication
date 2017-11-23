@@ -19,6 +19,7 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.createknowledgelib.CreateKnowledgeLibActivity;
 import com.tuzhi.application.moudle.knowledgelibtask.KnowledgeLibTaskFragment;
 import com.tuzhi.application.moudle.memberlist.MemberListActivity;
+import com.tuzhi.application.moudle.repository.knowledgachannel.bean.KnowledgeChannelHttpBean;
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
 import com.tuzhi.application.utils.KeyBoardUtils;
@@ -26,6 +27,8 @@ import com.tuzhi.application.utils.ToastUtilsKt;
 import com.tuzhi.application.view.ActionSheet;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,22 +40,21 @@ import java.util.List;
  */
 
 public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.View, KnowledgeLibPresenter> implements KnowledgeLibContract.View, ActionSheet.ActionSheetListener, OnDialogClickListener {
-    public static String ID = "id";
+    public static String ID = "ID";
     public static String TITLE = "TITLE";
-    public static String OPEN = "OPEN";
     private List<String> titles = new ArrayList<>();
     private ActionSheet actionSheet;
     private List<Fragment> fragments = new ArrayList<>();
     private DeleteDialog deleteDialog;
     private RenameDialog renameDialog;
-    private String id;
-    private String title;
     private ActivityLibBinding binding;
     private int setCommonLib = 0;
     private int setLib = 1;
     private int rename = 2;
     private int delete = 3;
-
+    private String id;
+    private String title;
+    private KnowledgeChannelHttpBean.KnowledgeLibMapBean knowledgeLibMap;
 
     @Override
     protected int getLayoutId() {
@@ -61,12 +63,12 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
 
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
+        EventBus.getDefault().register(this);
         binding = (ActivityLibBinding) viewDataBinding;
         binding.setActivity(this);
-        title = getIntent().getStringExtra(TITLE);
-        binding.setOpen(getIntent().getBooleanExtra(OPEN, true));
-        binding.tvTitle.setText(title);
         id = getIntent().getStringExtra(ID);
+        title = getIntent().getStringExtra(TITLE);
+        binding.tvTitle.setText(title);
         titles.add("知识");
         titles.add("任务");
         fragments.add(getKnowledgeLibFragment());
@@ -75,11 +77,17 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
         binding.stl.setViewPager(binding.vp);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMain(KnowledgeChannelHttpBean.KnowledgeLibMapBean knowledgeLibMap) {
+        this.knowledgeLibMap = knowledgeLibMap;
+        binding.setOpen(knowledgeLibMap.isIsOpen());
+    }
+
     private Fragment getKnowledgeLibTaskFragment() {
         KnowledgeLibTaskFragment taskFragment = new KnowledgeLibTaskFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(ID, id);
-        bundle.putString(TITLE, title);
+        bundle.putString(KnowledgeLibTaskFragment.ID, id);
+        bundle.putString(KnowledgeLibTaskFragment.TITLE, title);
         taskFragment.setArguments(bundle);
         return taskFragment;
     }
@@ -87,11 +95,18 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
     private Fragment getKnowledgeLibFragment() {
         KnowledgeChannelActivity taskFragment = new KnowledgeChannelActivity();
         Bundle bundle = new Bundle();
-        bundle.putString(ID, id);
+        bundle.putString(KnowledgeChannelActivity.ID, id);
+        bundle.putString(KnowledgeChannelActivity.TITLE, title);
         taskFragment.setArguments(bundle);
         return taskFragment;
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     public void back() {
         onBackPressed();
@@ -105,14 +120,22 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
         if (index == setCommonLib) {
-
+            if (knowledgeLibMap.isIsCollection()) {
+                mPresenter.cancelCollectionLib(id);
+            } else {
+                mPresenter.collectionLib(id);
+            }
         } else if (index == setLib) {
-            Intent intent = new Intent(this, CreateKnowledgeLibActivity.class);
-            intent.putExtra(CreateKnowledgeLibActivity.TITLE, title);
-            intent.putExtra(CreateKnowledgeLibActivity.OPENNESS, true);
-            intent.putExtra(CreateKnowledgeLibActivity.CLASSIFICATION, "1");
-            intent.putExtra(CreateKnowledgeLibActivity.IMAGE, "");
-            startActivity(intent);
+            if (knowledgeLibMap != null) {
+                Intent intent = new Intent(this, CreateKnowledgeLibActivity.class);
+                intent.putExtra(CreateKnowledgeLibActivity.TYPE, CreateKnowledgeLibActivity.TYPE_SET);
+                intent.putExtra(CreateKnowledgeLibActivity.ID, id);
+                intent.putExtra(CreateKnowledgeLibActivity.TITLE, title);
+                intent.putExtra(CreateKnowledgeLibActivity.OPENNESS, knowledgeLibMap.isIsOpen());
+                intent.putExtra(CreateKnowledgeLibActivity.CLASSIFICATION, knowledgeLibMap.getType());
+                intent.putExtra(CreateKnowledgeLibActivity.IMAGE, knowledgeLibMap.getCoverImage());
+                startActivity(intent);
+            }
         } else if (index == rename) {
             renameDialog = new RenameDialog(getContext(), R.style.dialog);
             renameDialog.setView(new EditText(getContext()));
@@ -146,11 +169,13 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
     }
 
     public void openMenu() {
-        actionSheet = ActionSheet.createBuilder(getContext(), getSupportFragmentManager())
-                .setCancelButtonTitle("取消")
-                .setOtherButtonTitles("设为常用知识库", "设置知识库", "重命名知识库", "删除知识库")
-                .setCancelableOnTouchOutside(true)
-                .setListener(this).show();
+        if (knowledgeLibMap != null) {
+            actionSheet = ActionSheet.createBuilder(getContext(), getSupportFragmentManager())
+                    .setCancelButtonTitle("取消")
+                    .setOtherButtonTitles(knowledgeLibMap.isIsCollection() ? "删除常用知识库" : "设为常用知识库", "设置知识库", "重命名知识库", "删除知识库")
+                    .setCancelableOnTouchOutside(true)
+                    .setListener(this).show();
+        }
     }
 
 
@@ -171,6 +196,7 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
     @Override
     public void deleteLibSuccess() {
         deleteDialog.dismiss();
+        back();
         ToastUtilsKt.toast(getContext(), "删除成功");
         //通知刷新
         EventBus.getDefault().post(RepositoryFragment.MESSAGE);
@@ -184,6 +210,12 @@ public class KnowledgeLibActivity extends MVPBaseActivity<KnowledgeLibContract.V
         EventBus.getDefault().post(RepositoryFragment.MESSAGE);
     }
 
+    @Override
+    public void collectionLibSuccess() {
+        ToastUtilsKt.toast(this, "设置成功");
+        EventBus.getDefault().post(KnowledgeChannelActivity.MESSAGE);
+        EventBus.getDefault().post(RepositoryFragment.MESSAGE);
+    }
 
     class MyFragmentPageAdapter extends FragmentPagerAdapter {
 

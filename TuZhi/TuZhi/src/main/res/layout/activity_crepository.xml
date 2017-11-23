@@ -37,7 +37,7 @@
 
             <TextView
                 style="@style/NavigationRightButton"
-                android:onClick="@{()->activity.commit(data.type,data.name)}"
+                android:onClick="@{()->activity.commit(data.name)}"
                 android:text="确定" />
 
             <View style="@style/NavigationLine" />

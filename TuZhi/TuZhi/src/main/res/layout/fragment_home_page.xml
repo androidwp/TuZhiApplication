@@ -27,7 +27,7 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="@dimen/generalSpace"
                 android:background="@drawable/drawable_search_background"
-                android:drawableLeft="@drawable/searchon"
+                android:drawableLeft="@drawable/searchbar"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
@@ -40,7 +40,7 @@
                 android:background="@drawable/navigation_bar_click_effect"
                 android:onClick="@{()->fragment.createLib()}"
                 android:scaleType="center"
-                android:src="@drawable/add" />
+                android:src="@drawable/newconstr" />
 
         </LinearLayout>
 

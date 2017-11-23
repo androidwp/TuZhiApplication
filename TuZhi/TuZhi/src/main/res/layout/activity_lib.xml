@@ -42,16 +42,16 @@
                 android:textSize="@dimen/generalTextSize" />
 
             <ImageView
-                android:layout_width="@dimen/navigationHeight"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/navigationHeight"
                 android:layout_gravity="right"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/navigation_bar_click_effect"
                 android:onClick="@{()->activity.skipMemberManagementActivity()}"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:scaleType="center"
-                android:src="@drawable/add"
-                android:visibility="@{open?View.GONE:View.VISIBLE}" />
+                android:src="@drawable/member"
+                android:visibility="@{open?View.VISIBLE:View.GONE}" />
 
             <ImageView
                 style="@style/NavigationRightButton"

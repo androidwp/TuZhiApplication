@@ -13,6 +13,7 @@ import com.tuzhi.application.moudle.message.read.bean.ReadListItemBean;
 import com.tuzhi.application.moudle.message.read.mvp.ReadFragment;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.commentlist.mvp.CommentListActivity;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.mvp.KnowledgeDetailsActivity;
+import com.tuzhi.application.moudle.taskdetails.TaskDetailsActivity;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
@@ -60,7 +61,12 @@ public class ReadListItem extends BaseItem<ReadListItemBean> {
                     }
                     break;
                 case 2:
-                    intent = toCommentList(readListItemBean);
+                    //等于2的时候  去任务详情
+                    if (TextUtils.equals(readListItemBean.getObjectType(), "2")) {
+                        intent = toTask(readListItemBean);
+                    } else {
+                        intent = toCommentList(readListItemBean);
+                    }
                     break;
                 default:
                     intent = toKnowledgeDetails(readListItemBean);
@@ -87,6 +93,14 @@ public class ReadListItem extends BaseItem<ReadListItemBean> {
         intent = new Intent(context, CommentListActivity.class);
         intent.putExtra(CommentListActivity.AID, readListItemBean.getArticleId());
         intent.putExtra(CommentListActivity.CID, readListItemBean.getCommentId());
+        return intent;
+    }
+
+    @NonNull
+    private Intent toTask(ReadListItemBean readListItemBean) {
+        Intent intent;
+        intent = new Intent(context, TaskDetailsActivity.class);
+        intent.putExtra(TaskDetailsActivity.ID, readListItemBean.getId());
         return intent;
     }
 

@@ -3,7 +3,8 @@ package com.tuzhi.application.moudle.repository.knowledgachannel.bean;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/6/21.
+ * @author wangpeng
+ * @date 2017/6/21
  */
 
 public class KnowledgeChannelHttpBean {
@@ -16,9 +17,10 @@ public class KnowledgeChannelHttpBean {
      */
 
     private String resultMsg;
-    private boolean isDelKnowledgeChannel;
     private String resultCode;
     private List<KnowledgeChannelsMapBean> knowledgeChannelsMap;
+    private KnowledgeLibMapBean knowledgeLibMap;
+
 
     public String getResultMsg() {
         return resultMsg;
@@ -26,14 +28,6 @@ public class KnowledgeChannelHttpBean {
 
     public void setResultMsg(String resultMsg) {
         this.resultMsg = resultMsg;
-    }
-
-    public boolean isIsDelKnowledgeChannel() {
-        return isDelKnowledgeChannel;
-    }
-
-    public void setIsDelKnowledgeChannel(boolean isDelKnowledgeChannel) {
-        this.isDelKnowledgeChannel = isDelKnowledgeChannel;
     }
 
     public String getResultCode() {
@@ -52,6 +46,14 @@ public class KnowledgeChannelHttpBean {
         this.knowledgeChannelsMap = knowledgeChannelsMap;
     }
 
+    public KnowledgeLibMapBean getKnowledgeLibMap() {
+        return knowledgeLibMap;
+    }
+
+    public void setKnowledgeLibMap(KnowledgeLibMapBean knowledgeLibMap) {
+        this.knowledgeLibMap = knowledgeLibMap;
+    }
+
     public static class KnowledgeChannelsMapBean {
         /**
          * id : 73
@@ -65,7 +67,16 @@ public class KnowledgeChannelHttpBean {
         private String createTime;
         private String articleCount;
         private String name;
-        private int creator;
+        private String creator;
+        private boolean isOpen;
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public void setOpen(boolean open) {
+            isOpen = open;
+        }
 
         public String getId() {
             return id;
@@ -99,12 +110,118 @@ public class KnowledgeChannelHttpBean {
             this.name = name;
         }
 
-        public int getCreator() {
+        public String getCreator() {
             return creator;
         }
 
-        public void setCreator(int creator) {
+        public void setCreator(String creator) {
             this.creator = creator;
+        }
+    }
+
+    public static class KnowledgeLibMapBean {
+        /**
+         * participatePersonNum : 0
+         * id : 343
+         * createTime : 2017-11-22 10:52
+         * isCollection : true
+         * name : 王一臣测试
+         * contentCount : 9
+         * createPerson : 30
+         * type : 1
+         * coverImage : http://192.168.0.140:8083/libImage/image1.png
+         * isOpen : true
+         */
+
+        private String participatePersonNum;
+        private String id;
+        private String createTime;
+        private boolean isCollection;
+        private String name;
+        private String contentCount;
+        private String createPerson;
+        private String type;
+        private String coverImage;
+        private boolean isOpen;
+
+        public String getParticipatePersonNum() {
+            return participatePersonNum;
+        }
+
+        public void setParticipatePersonNum(String participatePersonNum) {
+            this.participatePersonNum = participatePersonNum;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public boolean isIsCollection() {
+            return isCollection;
+        }
+
+        public void setIsCollection(boolean isCollection) {
+            this.isCollection = isCollection;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getContentCount() {
+            return contentCount;
+        }
+
+        public void setContentCount(String contentCount) {
+            this.contentCount = contentCount;
+        }
+
+        public String getCreatePerson() {
+            return createPerson;
+        }
+
+        public void setCreatePerson(String createPerson) {
+            this.createPerson = createPerson;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getCoverImage() {
+            return coverImage;
+        }
+
+        public void setCoverImage(String coverImage) {
+            this.coverImage = coverImage;
+        }
+
+        public boolean isIsOpen() {
+            return isOpen;
+        }
+
+        public void setIsOpen(boolean isOpen) {
+            this.isOpen = isOpen;
         }
     }
 }

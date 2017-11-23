@@ -42,6 +42,7 @@ import kale.adapter.item.AdapterItem;
 
 /**
  * MVPPlugin
+ *
  * @author wangpeng
  */
 
@@ -106,7 +107,7 @@ public class SearchFragment extends MVPBaseActivity<SearchContract.View, SearchP
         fragmentList.add(getFragment(SearchPageFragment.TYPE_NOTE));
         fragmentList.add(getFragment(SearchPageFragment.TYPE_FILE));
         fragmentList.add(getFragment(SearchPageFragment.TYPE_SPEAK));
-        fragmentList.add(getFragment(SearchPageFragment.TYPE_SPEAK));
+        fragmentList.add(getFragment(SearchPageFragment.TYPE_TASK));
         binding.vp.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         binding.stl.setViewPager(binding.vp);
     }

@@ -126,27 +126,41 @@ public class TaskDetailsActivity extends MVPBaseActivity<TaskDetailsContract.Vie
                 }
                 break;
             case R.id.tvTitle:
-                showInputDialog("任务标题", bean.getTaskTitle(), 0);
+                if (!bean.isChecked()) {
+                    showInputDialog("任务标题", bean.getTaskTitle(), 0);
+                }
                 break;
             case R.id.tvSummery:
-                showInputDialog("任务描述", bean.getTaskSummary(), 1);
+                if (!bean.isChecked()) {
+                    showInputDialog("任务描述", bean.getTaskSummary(), 1);
+                }
                 break;
             case R.id.flChooseManager:
-                chooseManager();
+                if (!bean.isChecked()) {
+                    chooseManager();
+                }
                 break;
             case R.id.flChoosePeople:
-                choosePeople();
+                if (!bean.isChecked()) {
+                    choosePeople();
+                }
                 break;
             case R.id.tvAddCard:
-                chooseCard();
+                if (!bean.isChecked()) {
+                    chooseCard();
+                }
                 break;
             case R.id.flTaskCard:
-                shipKnowledgeCardActivity(view);
+                if (!bean.isChecked()) {
+                    shipKnowledgeCardActivity(view);
+                }
                 break;
             case R.id.tvRemove:
-                bean.getData().remove((int) view.getTag());
-                bean.getAdapter().notifyDataSetChanged();
-                mPresenter.updateTask(bean);
+                if (!bean.isChecked()) {
+                    bean.getData().remove((int) view.getTag());
+                    bean.getAdapter().notifyDataSetChanged();
+                    mPresenter.updateTask(bean);
+                }
             default:
                 break;
         }

@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:text="试用申请" />
 
             <View style="@style/NavigationLine" />

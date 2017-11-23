@@ -12,7 +12,9 @@ import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedeta
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by wangpeng on 2017/11/9.
+ *
+ * @author wangpeng
+ * @date 2017/11/9
  */
 
 public class ChooseCardItem extends BaseItem<ChooseColleagueItemBean> {

@@ -3,7 +3,9 @@ package com.tuzhi.application.moudle.message.read.bean;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/8/9.
+ *
+ * @author wangpeng
+ * @date 2017/8/9
  */
 
 public class ReadUnreadListHttpBean {
@@ -154,7 +156,25 @@ public class ReadUnreadListHttpBean {
             private String commentId;
             private String articleId;
             private String articleTitle;
+            private String objectType;
+            private String taskId;
             private boolean isLimit;
+
+            public String getObjectType() {
+                return objectType;
+            }
+
+            public void setObjectType(String objectType) {
+                this.objectType = objectType;
+            }
+
+            public String getTaskId() {
+                return taskId;
+            }
+
+            public void setTaskId(String taskId) {
+                this.taskId = taskId;
+            }
 
             public boolean isLimit() {
                 return isLimit;

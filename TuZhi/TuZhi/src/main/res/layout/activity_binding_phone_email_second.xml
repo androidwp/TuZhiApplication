@@ -31,7 +31,6 @@
                 style="@style/NavigationLeftButton"
                 android:onClick="@{()->activity.back()}"
                 android:text="取消"
-                android:textColor="@color/colorGeneralTintText"
                 android:textSize="@dimen/generalLittleTextSize" />
 
             <TextView
@@ -39,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@{data.title}"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:textSize="@dimen/generalTextSize" />
 
             <View style="@style/NavigationLine" />

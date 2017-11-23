@@ -6,6 +6,8 @@ import com.tuzhi.application.moudle.basemvp.BaseView;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class RegisterContract {

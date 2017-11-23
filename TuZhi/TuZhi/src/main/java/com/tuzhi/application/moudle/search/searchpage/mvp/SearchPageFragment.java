@@ -5,16 +5,21 @@ import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.bean.EventBusBean;
 import com.tuzhi.application.databinding.FragmentSearchNoteFileSpeakBinding;
+import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
 import com.tuzhi.application.moudle.search.mvp.SearchFragment;
 import com.tuzhi.application.moudle.search.searchpage.bean.SearchResultListBean;
 import com.tuzhi.application.moudle.search.searchpage.item.SearchPageNoteItem;
 import com.tuzhi.application.moudle.search.searchpage.item.SearchPageSpeakItem;
+import com.tuzhi.application.moudle.search.searchpage.item.SearchTaskItem;
+import com.tuzhi.application.moudle.taskdetails.TaskDetailsActivity;
+import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.view.LoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,12 +38,13 @@ import kale.adapter.item.AdapterItem;
  * @author wangpeng
  */
 
-public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View, SearchPagePresenter> implements SearchPageContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View, SearchPagePresenter> implements SearchPageContract.View, LoadMoreListener, SwipeRefreshLayout.OnRefreshListener, ItemClickListener {
     public static final String TYPE = "TYPE";
     public static final String NAME = "SearchPageFragment";
-    public static final String TYPE_NOTE = "TYPE_NOTE";
-    public static final String TYPE_FILE = "TYPE_FILE";
-    public static final String TYPE_SPEAK = "TYPE_SPEAK";
+    public static final String TYPE_NOTE = "1";
+    public static final String TYPE_FILE = "2";
+    public static final String TYPE_SPEAK = "3";
+    public static final String TYPE_TASK = "4";
     private String type;
     private ArrayList<SearchResultListBean> mData = new ArrayList<>();
     private FragmentSearchNoteFileSpeakBinding binding;
@@ -52,8 +58,9 @@ public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View,
         binding.rrv.setOnRefreshListener(this);
         binding.rrv.setTitle("搜索内容为空");
         binding.rrv.setDrawable(R.drawable.enptysearch);
-        if (!TextUtils.isEmpty(SearchFragment.searchText))
+        if (!TextUtils.isEmpty(SearchFragment.searchText)) {
             binding.rrv.isShowRefreshView(true);
+        }
         CommonRcvAdapter<SearchResultListBean> adapter = new CommonRcvAdapter<SearchResultListBean>(mData) {
             @NonNull
             @Override
@@ -64,6 +71,10 @@ public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View,
                         return new SearchPageNoteItem();
                     case GeneralLoadFootViewItem.TYPE:
                         return new GeneralLoadFootViewItem();
+                    case SearchTaskItem.TYPE:
+                        SearchTaskItem taskItem = new SearchTaskItem();
+                        taskItem.setClickListener(SearchPageFragment.this);
+                        return taskItem;
                     default:
                         return new SearchPageSpeakItem();
                 }
@@ -108,5 +119,17 @@ public class SearchPageFragment extends MVPBaseFragment<SearchPageContract.View,
     @Override
     public void downloadFinish(ArrayList<SearchResultListBean> data, boolean haveNextPage, int page) {
         binding.rrv.downLoadFinish(page, haveNextPage, mData, data, false);
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        switch (view.getId()) {
+            case R.id.flSearchTask:
+                SearchResultListBean bean = (SearchResultListBean) view.getTag();
+                ActivitySkipUtilsKt.toActivity(getContext(), TaskDetailsActivity.class, TaskDetailsActivity.ID, bean.getId());
+                break;
+            default:
+                break;
+        }
     }
 }

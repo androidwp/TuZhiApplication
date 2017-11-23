@@ -11,7 +11,9 @@ import com.tuzhi.application.item.GeneralItem;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Created by wangpeng on 2017/6/1.
+ *
+ * @author wangpeng
+ * @date 2017/6/1
  */
 
 public class RepositoryListItem extends GeneralItem<ItemBean> {

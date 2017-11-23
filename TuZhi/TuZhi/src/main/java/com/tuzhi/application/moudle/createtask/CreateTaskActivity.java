@@ -89,6 +89,7 @@ public class CreateTaskActivity extends MVPBaseActivity<CreateTaskContract.View,
         bean.setTaskManager(person);
         persons.add(person);
         bean.setTaskPeople(persons);
+        bean.setData(new ArrayList<ItemBean>());
         if (getIntent().getStringExtra(TYPE).equals(TYPE_LIB)) {
             bean.setTaskLib(getIntent().getStringExtra(LIB_NAME));
             bean.setTaskLibId(getIntent().getStringExtra(LIB_ID));

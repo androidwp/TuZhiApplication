@@ -87,6 +87,8 @@ public class CommentListPresenter extends BasePresenterImpl<CommentListContract.
             public void onFailure(@NotNull String text) {
                 if (TextUtils.equals(text, "列表无内容显示")) {
                     mView.downLoadFinish(0, false, null, false, "0");
+                }else {
+                    mView.deleteCommentSuccess();
                 }
             }
         });

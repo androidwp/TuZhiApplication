@@ -14,6 +14,7 @@ import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 import com.tuzhi.application.moudle.chooselibicon.ChooseLibIconActivity;
 import com.tuzhi.application.moudle.chooselibtype.ChooseLibTypeActivity;
+import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
 import com.tuzhi.application.moudle.repository.mvp.RepositoryFragment;
 import com.tuzhi.application.utils.ActivitySkipUtilsKt;
 import com.tuzhi.application.utils.ToastUtilsKt;
@@ -40,19 +41,24 @@ public class CreateKnowledgeLibActivity extends MVPBaseActivity<CreateKnowledgeL
 
     public static final String TYPE_SET = "TYPE_SET";
 
+    public static final String ID = "ID";
+
     public static final String TITLE = "TITLE";
 
     public static final String OPENNESS = "OPENNESS";
 
     public static final String CLASSIFICATION = "CLASSIFICATION";
 
-    public static final String IMAGE = "CLASSIFICATION";
+    public static final String IMAGE = "IMAGE";
 
     public static int EVENT_TYPE_LIB_TYPE = 0;
 
     public static int EVENT_TYPE_LIB_ICON = 1;
 
     private CreateKnowledgeLibBean bean;
+
+    private String[] titles = {"公共知识库", "部门知识库", "项目知识库"};
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -64,11 +70,14 @@ public class CreateKnowledgeLibActivity extends MVPBaseActivity<CreateKnowledgeL
         EventBus.getDefault().register(this);
         ActivityCreateKnowledgeLibBinding binding = (ActivityCreateKnowledgeLibBinding) viewDataBinding;
         bean = new CreateKnowledgeLibBean();
-        if (TextUtils.equals(getIntent().getStringExtra(TYPE), TYPE_SET)) {
+        type = getIntent().getStringExtra(TYPE);
+        if (TextUtils.equals(type, TYPE_SET)) {
+            bean.setLibId(getIntent().getStringExtra(ID));
             bean.setLibName(getIntent().getStringExtra(TITLE));
             bean.setLibIcon(getIntent().getStringExtra(IMAGE));
             bean.setLibTypeId(getIntent().getStringExtra(CLASSIFICATION));
-            bean.setLibOpenness(getIntent().getBooleanExtra(OPENNESS, true));
+            bean.setLibTypeName(titles[Integer.parseInt(bean.getLibTypeId()) - 1]);
+            bean.setLibOpenness(!getIntent().getBooleanExtra(OPENNESS, true));
         }
         binding.setActivity(this);
         binding.setData(bean);
@@ -101,7 +110,7 @@ public class CreateKnowledgeLibActivity extends MVPBaseActivity<CreateKnowledgeL
 
 
     public void commit() {
-        mPresenter.createLib(getIntent().getStringExtra(TYPE), bean);
+        mPresenter.createLib(type, bean);
     }
 
     public void chooseLibIcon() {
@@ -135,7 +144,12 @@ public class CreateKnowledgeLibActivity extends MVPBaseActivity<CreateKnowledgeL
     @Override
     public void createLibSuccess() {
         EventBus.getDefault().post(RepositoryFragment.MESSAGE);
-        ToastUtilsKt.toast(this, "创建成功");
+        EventBus.getDefault().post(KnowledgeChannelActivity.MESSAGE);
+        if (type.equals(TYPE_SET)) {
+            ToastUtilsKt.toast(this, "修改成功");
+        } else {
+            ToastUtilsKt.toast(this, "创建成功");
+        }
         back();
     }
 }

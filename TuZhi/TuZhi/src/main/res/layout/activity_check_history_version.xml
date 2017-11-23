@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textColor="@color/colorNavigationBarTitleText"
                 android:text="查看历史版本"
                 android:textSize="@dimen/generalTextSize" />
 

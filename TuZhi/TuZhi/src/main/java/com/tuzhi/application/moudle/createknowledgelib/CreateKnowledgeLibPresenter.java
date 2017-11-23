@@ -1,5 +1,7 @@
 package com.tuzhi.application.moudle.createknowledgelib;
 
+import android.text.TextUtils;
+
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.utils.HttpCallBack;
 import com.tuzhi.application.utils.HttpUtilsKt;
@@ -26,6 +28,9 @@ public class CreateKnowledgeLibPresenter extends BasePresenterImpl<CreateKnowled
         //2是添加3是修改
         parameter.put("operate", type.equals(CreateKnowledgeLibActivity.TYPE_CREATE) ? "2" : "3");
         parameter.put("type", bean.getLibTypeId());
+        if (!TextUtils.isEmpty(bean.getLibId())) {
+            parameter.put("klId", bean.getLibId());
+        }
         parameter.put("name", bean.getLibName());
         //0是公开1是私密
         parameter.put("isOpen", bean.isLibOpenness() ? "0" : "1");

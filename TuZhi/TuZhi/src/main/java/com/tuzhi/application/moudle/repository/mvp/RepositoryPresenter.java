@@ -61,9 +61,11 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
                         bean.setText(publicListMapsBean.getContentCount() + "  频道");
                         bean.setImage(publicListMapsBean.getCoverImage());
                         bean.setFlag(publicListMapsBean.isIsOpen());
+                        bean.setType(publicListMapsBean.getType());
                         collectionBeans.add(bean);
                     }
                     collectionItem.setItemBeans(collectionBeans);
+                    data.add(collectionItem);
                 }
 
                 //设置公共知识库
@@ -85,6 +87,7 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
                         bean.setFlag(publicListMap.isIsOpen());
                         bean.setText(publicListMap.getContentCount() + "  频道");
                         bean.setImage(publicListMap.getCoverImage());
+                        bean.setType(publicListMap.getType());
                         data.add(bean);
                     }
                 }
@@ -104,6 +107,7 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
                         bean.setFlag(publicListMap.isIsOpen());
                         bean.setText(publicListMap.getContentCount() + "  频道");
                         bean.setImage(publicListMap.getCoverImage());
+                        bean.setType(publicListMap.getType());
                         data.add(bean);
                     }
                 }
@@ -123,6 +127,7 @@ public class RepositoryPresenter extends BasePresenterImpl<RepositoryContract.Vi
                         bean.setTitle(publicListMap.getName());
                         bean.setText(publicListMap.getContentCount() + "  频道");
                         bean.setImage(publicListMap.getCoverImage());
+                        bean.setType(publicListMap.getType());
                         data.add(bean);
                     }
                 }
