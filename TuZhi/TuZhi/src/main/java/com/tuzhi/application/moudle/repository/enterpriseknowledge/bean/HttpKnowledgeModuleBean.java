@@ -3,7 +3,8 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.bean;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/6/21.
+ * @author wangpeng
+ * @date 2017/6/21
  */
 
 public class HttpKnowledgeModuleBean {
@@ -77,6 +78,24 @@ public class HttpKnowledgeModuleBean {
         private String articleCount;
         private String name;
         private String creator;
+        private String summary;
+        private boolean isOpen;
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public void setOpen(boolean open) {
+            isOpen = open;
+        }
 
         public String getId() {
             return id;
@@ -196,12 +215,11 @@ public class HttpKnowledgeModuleBean {
         }
 
 
-
         public static class ResultBean {
             /**
              * praiseNum : 1
              * commentNum : 0
-             * summary : 
+             * summary :
              * id : 430
              * author : null
              * title : fdf

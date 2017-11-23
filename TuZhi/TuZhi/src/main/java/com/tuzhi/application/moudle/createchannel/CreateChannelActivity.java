@@ -26,8 +26,16 @@ import org.greenrobot.eventbus.EventBus;
 public class CreateChannelActivity extends MVPBaseActivity<CreateChannelContract.View, CreateChannelPresenter> implements CreateChannelContract.View, OnDialogClickListener {
 
     public static final String ID = "id";
+    public static final String TYPE = "TYPE";
+    public static final String TYPE_CREATE = "2";
+    public static final String TYPE_SET = "3";
+    public static final String NAME = "NAME";
+    public static final String SUMMARY = "SUMMARY";
+    public static final String IS_OPEN = "IS_OPEN";
+
     private ActivityCreateChannelBinding binding;
     private CreateChannelBean bean;
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -37,10 +45,18 @@ public class CreateChannelActivity extends MVPBaseActivity<CreateChannelContract
     @Override
     protected void init(ViewDataBinding viewDataBinding) {
         bean = new CreateChannelBean();
+        type = getIntent().getStringExtra(TYPE);
+        bean.setType(type);
+        if (type.equals(TYPE_SET)) {
+            bean.setKlId(getIntent().getStringExtra(ID));
+            bean.setChannelName(getIntent().getStringExtra(NAME));
+            bean.setChannelSummery(getIntent().getStringExtra(SUMMARY));
+            bean.setOpenOrSecret(getIntent().getBooleanExtra(IS_OPEN, true));
+        }
         binding = (ActivityCreateChannelBinding) viewDataBinding;
         binding.setActivity(this);
         binding.setData(bean);
-        bean.setKlId(getIntent().getStringExtra(ID));
+
     }
 
     public void back() {
@@ -77,7 +93,11 @@ public class CreateChannelActivity extends MVPBaseActivity<CreateChannelContract
 
     @Override
     public void createChannelSuccess() {
-        ToastUtilsKt.toast(this, "创建成功");
+        if (type.equals(TYPE_SET)) {
+            ToastUtilsKt.toast(this, "修改成功");
+        } else {
+            ToastUtilsKt.toast(this, "创建成功");
+        }
         EventBus.getDefault().post(KnowledgeChannelActivity.MESSAGE);
         back();
     }

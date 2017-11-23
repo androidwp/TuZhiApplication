@@ -14,7 +14,16 @@ public class CreateChannelBean extends BaseObservable {
     private String klId;
     private String channelName = "";
     private String channelSummery = "";
+    private String type;
     private boolean openOrSecret = true;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getKlId() {
         return klId;

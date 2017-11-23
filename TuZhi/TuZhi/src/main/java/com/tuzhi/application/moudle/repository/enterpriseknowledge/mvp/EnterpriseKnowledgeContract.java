@@ -2,6 +2,7 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp;
 
 import com.tuzhi.application.moudle.basemvp.BasePresenter;
 import com.tuzhi.application.moudle.basemvp.BaseView;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.HttpKnowledgeModuleBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 
 public class EnterpriseKnowledgeContract {
     interface View extends BaseView {
-        void downloadFinish(int page, boolean haveNextPage, ArrayList<KnowledgeCardItemBean> data);
+        void downloadFinish(HttpKnowledgeModuleBean.KnowledgeChannelMapBean knowledgeChannelMap, int page, boolean haveNextPage, ArrayList<KnowledgeCardItemBean> data);
 
         void downloadFinishNothing();
 

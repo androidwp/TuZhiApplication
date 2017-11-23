@@ -17,8 +17,10 @@ import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.createchannel.CreateChannelActivity;
 import com.tuzhi.application.moudle.memberlist.MemberListActivity;
 import com.tuzhi.application.moudle.repository.crepository.mvp.CrepositoryActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.HttpKnowledgeModuleBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.item.EnterpriseKnowledgeListItem;
 import com.tuzhi.application.moudle.repository.knowledgachannel.mvp.KnowledgeChannelActivity;
@@ -46,10 +48,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     public static final String MESSAGE = "EnterpriseKnowledgeActivity_refresh";
     public static final String KCID = "KCID";
     public static final String KLID = "KLID";
-    public static final String TITLE = "TITLE";
-    public static final String IS_OPEN = "IS_OPEN";
     private static final String SORT = "CARD_SORT";
-
     private ArrayList<KnowledgeCardItemBean> mData = new ArrayList<>();
     private ActivityEnterpriseKnowledgeBinding binding;
     private ActionSheet actionSheet;
@@ -58,8 +57,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     private DeleteDialog deleteDialog;
     private String klId;
     private String kcId;
-    private boolean flag;
     private String sort;
+    private HttpKnowledgeModuleBean.KnowledgeChannelMapBean knowledgeChannelMap;
 
     @Override
     protected int getLayoutId() {
@@ -80,9 +79,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     }
 
     public void sortChange(boolean flag) {
-        this.flag = !flag;
-        binding.setFlag(this.flag);
-        sort = flag ? ConstantKt.getValue_true() : ConstantKt.getValue_false();
+        binding.setFlag(!flag);
+        sort = !flag ? ConstantKt.getValue_true() : ConstantKt.getValue_false();
         SharedPreferencesUtilsKt.saveLongCache(this, SORT, sort);
         mPresenter.downLoadData(kcId, sort, 0);
     }
@@ -92,11 +90,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
         EventBus.getDefault().register(this);
         sort = SharedPreferencesUtilsKt.getLongCache(this, SORT, ConstantKt.getValue_true());
         binding = (ActivityEnterpriseKnowledgeBinding) viewDataBinding;
-        title = getIntent().getStringExtra(TITLE);
         klId = getIntent().getStringExtra(KLID);
         kcId = getIntent().getStringExtra(KCID);
-        setTitle(title);
-        binding.setIsOpen(getIntent().getBooleanExtra(IS_OPEN, true));
         binding.setActivity(this);
         binding.setFlag(sort.equals(ConstantKt.getValue_true()));
         binding.rrv.isShowRefreshView(true);
@@ -144,7 +139,7 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     public void openMenu() {
         actionSheet = ActionSheet.createBuilder(this, getSupportFragmentManager())
                 .setCancelButtonTitle("取消")
-                .setOtherButtonTitles("重命名知识频道", "删除知识频道")
+                .setOtherButtonTitles("设置频道", "重命名知识频道", "删除知识频道")
                 .setCancelableOnTouchOutside(true)
                 .setListener(this).show();
     }
@@ -155,7 +150,10 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     }
 
     @Override
-    public void downloadFinish(int page, boolean haveNextPage, ArrayList<KnowledgeCardItemBean> data) {
+    public void downloadFinish(HttpKnowledgeModuleBean.KnowledgeChannelMapBean knowledgeChannelMap, int page, boolean haveNextPage, ArrayList<KnowledgeCardItemBean> data) {
+        this.knowledgeChannelMap = knowledgeChannelMap;
+        setTitle(knowledgeChannelMap.getName());
+        binding.setIsOpen(knowledgeChannelMap.isOpen());
         binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
     }
 
@@ -203,13 +201,21 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
         if (index == 0) {
+            Intent intent = new Intent(this, CreateChannelActivity.class);
+            intent.putExtra(CreateChannelActivity.ID, knowledgeChannelMap.getId());
+            intent.putExtra(CreateChannelActivity.TYPE, CreateChannelActivity.TYPE_SET);
+            intent.putExtra(CreateChannelActivity.NAME, knowledgeChannelMap.getName());
+            intent.putExtra(CreateChannelActivity.SUMMARY, knowledgeChannelMap.getSummary());
+            intent.putExtra(CreateChannelActivity.IS_OPEN, knowledgeChannelMap.isOpen());
+            startActivity(intent);
+        } else if (index == 1) {
             renameDialog = new RenameDialog(this, R.style.dialog);
             renameDialog.setView(new EditText(this));
             renameDialog.setText(title);
             renameDialog.setClickListener(this);
             renameDialog.show();
             KeyBoardUtils.showKeyBoard(this);
-        } else {
+        } else if (index == 2) {
             deleteDialog = new DeleteDialog(this, R.style.dialog);
             deleteDialog.setText("你确定要删除该频道吗？删除后将无法恢复。");
             deleteDialog.setClickListener(this);

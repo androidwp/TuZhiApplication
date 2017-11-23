@@ -32,6 +32,7 @@ import kale.adapter.item.AdapterItem;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class ClipperTwoActivity extends MVPBaseActivity<ClipperTwoContract.View, ClipperTwoPresenter> implements ClipperTwoContract.View, SwipeRefreshLayout.OnRefreshListener, LoadMoreListener, ItemClickListener, OnDialogClickListener {

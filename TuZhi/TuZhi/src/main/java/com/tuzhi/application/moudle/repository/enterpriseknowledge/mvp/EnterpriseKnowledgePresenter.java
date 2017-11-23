@@ -1,7 +1,6 @@
 package com.tuzhi.application.moudle.repository.enterpriseknowledge.mvp;
 
-import android.text.TextUtils;
-
+import com.alibaba.fastjson.JSON;
 import com.tuzhi.application.moudle.basemvp.BasePresenterImpl;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.HttpKnowledgeModuleBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.bean.KnowledgeCardItemBean;
@@ -47,6 +46,7 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
 
             @Override
             public void onSuccess(@Nullable final HttpKnowledgeModuleBean httpKnowledgeModuleBean, @NotNull String text) {
+                final HttpKnowledgeModuleBean.KnowledgeChannelMapBean knowledgeChannelMap = httpKnowledgeModuleBean.getKnowledgeChannelMap();
                 final ArrayList<KnowledgeCardItemBean> data = new ArrayList<>();
                 HttpKnowledgeModuleBean.ArticlePageBean articlePage = httpKnowledgeModuleBean.getArticlePage();
                 final boolean next = articlePage.isNext();
@@ -85,7 +85,7 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
 
                     @Override
                     public void onComplete() {
-                        mView.downloadFinish(index, next, data);
+                        mView.downloadFinish(knowledgeChannelMap, index, next, data);
                     }
                 });
 
@@ -93,9 +93,8 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
 
             @Override
             public void onFailure(@NotNull String text) {
-                if (TextUtils.equals(text, "列表无内容显示")) {
-                    mView.downloadFinish(0, false, null);
-                }
+                HttpKnowledgeModuleBean httpKnowledgeModuleBean = JSON.parseObject(text, HttpKnowledgeModuleBean.class);
+                mView.downloadFinish(httpKnowledgeModuleBean.getKnowledgeChannelMap(), 0, false, null);
             }
         });
 

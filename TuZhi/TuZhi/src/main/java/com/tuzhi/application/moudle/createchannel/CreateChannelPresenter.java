@@ -23,8 +23,12 @@ public class CreateChannelPresenter extends BasePresenterImpl<CreateChannelContr
     @Override
     public void createChannel(CreateChannelBean bean) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-        parameter.put("operate", "2");
-        parameter.put("klId", bean.getKlId());
+        parameter.put("operate", bean.getType());
+        if (bean.getType().equals(CreateChannelActivity.TYPE_SET)) {
+            parameter.put("kcId", bean.getKlId());
+        } else {
+            parameter.put("klId", bean.getKlId());
+        }
         parameter.put("name", bean.getChannelName());
         parameter.put("summary", bean.getChannelSummery());
         parameter.put("isOpen", bean.isOpenOrSecret() ? "0" : "1");

@@ -33,6 +33,7 @@ import kale.adapter.item.AdapterItem;
 
 /**
  * MVPPlugin
+ *
  * @author wangpeng
  */
 
@@ -138,13 +139,13 @@ public class KnowledgeChannelActivity extends MVPBaseFragment<KnowledgeChannelCo
         if (view == null) {
             Intent intent = new Intent(getContext(), CreateChannelActivity.class);
             intent.putExtra(CreateChannelActivity.ID, listId);
+            intent.putExtra(CreateChannelActivity.TYPE, CreateChannelActivity.TYPE_CREATE);
             startActivity(intent);
         } else {
             KnowledgeChannelItemBean knowledgeChannelItemBean = (KnowledgeChannelItemBean) view.getTag();
             Intent intent = new Intent(getContext(), EnterpriseKnowledgeActivity.class);
             intent.putExtra(EnterpriseKnowledgeActivity.KLID, knowledgeChannelItemBean.getKlid());
             intent.putExtra(EnterpriseKnowledgeActivity.KCID, knowledgeChannelItemBean.getKcid());
-            intent.putExtra(EnterpriseKnowledgeActivity.TITLE, knowledgeChannelItemBean.getTitle());
             startActivity(intent);
         }
     }
