@@ -118,7 +118,7 @@
             android:drawableRight="@drawable/enter"
             android:onClick="@{()->activity.chooseOpenOrSecret()}"
             android:padding="@dimen/generalSpace"
-            android:text="@{data.openOrSecret?@string/channelOpenness:@string/channelSecret}"
+            android:text="@{data.openOrSecret?@string/channelSecret:@string/channelOpenness}"
             android:textColor="#212121" />
 
     </LinearLayout>

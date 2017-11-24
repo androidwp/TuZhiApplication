@@ -202,7 +202,8 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
         if (index == 0) {
             Intent intent = new Intent(this, CreateChannelActivity.class);
-            intent.putExtra(CreateChannelActivity.ID, knowledgeChannelMap.getId());
+            intent.putExtra(CreateChannelActivity.KID, klId);
+            intent.putExtra(CreateChannelActivity.CID, kcId);
             intent.putExtra(CreateChannelActivity.TYPE, CreateChannelActivity.TYPE_SET);
             intent.putExtra(CreateChannelActivity.NAME, knowledgeChannelMap.getName());
             intent.putExtra(CreateChannelActivity.SUMMARY, knowledgeChannelMap.getSummary());

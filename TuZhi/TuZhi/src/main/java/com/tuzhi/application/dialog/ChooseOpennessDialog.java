@@ -8,7 +8,9 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.DialogChooseOpennessBinding;
 
 /**
- * Created by wangpeng on 2017/11/10.
+ *
+ * @author wangpeng
+ * @date 2017/11/10
  */
 
 public class ChooseOpennessDialog extends BaseDialog {

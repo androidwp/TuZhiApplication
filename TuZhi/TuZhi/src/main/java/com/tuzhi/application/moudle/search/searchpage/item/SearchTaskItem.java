@@ -34,7 +34,7 @@ public class SearchTaskItem extends GeneralItem<SearchResultListBean> {
     public void handleData(SearchResultListBean searchResultListBean, int i) {
         binding.setData(searchResultListBean);
         binding.executePendingBindings();
-        binding.iv.setImageResource(R.drawable.note);
+        binding.iv.setImageResource(R.drawable.task);
     }
 
     @Override

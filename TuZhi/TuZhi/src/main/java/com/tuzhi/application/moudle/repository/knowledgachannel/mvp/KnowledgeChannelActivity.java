@@ -138,7 +138,7 @@ public class KnowledgeChannelActivity extends MVPBaseFragment<KnowledgeChannelCo
     public void onItemClick(View view) {
         if (view == null) {
             Intent intent = new Intent(getContext(), CreateChannelActivity.class);
-            intent.putExtra(CreateChannelActivity.ID, listId);
+            intent.putExtra(CreateChannelActivity.KID, listId);
             intent.putExtra(CreateChannelActivity.TYPE, CreateChannelActivity.TYPE_CREATE);
             startActivity(intent);
         } else {

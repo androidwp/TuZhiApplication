@@ -11,7 +11,8 @@ import com.tuzhi.application.BR;
  */
 
 public class CreateChannelBean extends BaseObservable {
-    private String klId;
+    private String kId;
+    private String CId;
     private String channelName = "";
     private String channelSummery = "";
     private String type;
@@ -25,12 +26,20 @@ public class CreateChannelBean extends BaseObservable {
         this.type = type;
     }
 
-    public String getKlId() {
-        return klId;
+    public String getkId() {
+        return kId;
     }
 
-    public void setKlId(String klId) {
-        this.klId = klId;
+    public void setkId(String kId) {
+        this.kId = kId;
+    }
+
+    public String getCId() {
+        return CId;
+    }
+
+    public void setCId(String CId) {
+        this.CId = CId;
     }
 
     public String getChannelName() {

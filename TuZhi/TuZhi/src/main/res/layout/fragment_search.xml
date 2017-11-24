@@ -124,7 +124,7 @@
                         android:background="#71b7fd"
                         android:onClick="@{()->fragment.skipCreateTask()}"
                         android:scaleType="center"
-                        android:src="@drawable/enter" />
+                        android:src="@drawable/entertask" />
                 </LinearLayout>
 
             </LinearLayout>
