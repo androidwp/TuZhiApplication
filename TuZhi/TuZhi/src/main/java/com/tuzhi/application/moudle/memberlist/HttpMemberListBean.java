@@ -3,7 +3,9 @@ package com.tuzhi.application.moudle.memberlist;
 import java.util.List;
 
 /**
- * Created by wangpeng on 2017/11/22.
+ *
+ * @author wangpeng
+ * @date 2017/11/22
  */
 
 public class HttpMemberListBean {
@@ -51,13 +53,21 @@ public class HttpMemberListBean {
          * nickname : 所有者
          * userImage : http://upload.guigutang.cn:8082/tuzhikmMobile/20170823/100115481536.jpg
          */
-
         private String id;
         private int knowledgeRoleId;
         private String staffId;
         private String knowledgeRoleStr;
         private String nickname;
         private String userImage;
+        private boolean isSelect;
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
 
         public String getId() {
             return id;

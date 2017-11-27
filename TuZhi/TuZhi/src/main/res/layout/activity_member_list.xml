@@ -7,6 +7,11 @@
             name="activity"
             type="com.tuzhi.application.moudle.memberlist.MemberListActivity" />
 
+        <variable
+            name="permissions"
+            type="Integer" />
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -42,17 +47,18 @@
             android:layout_marginBottom="@dimen/generalSpace"
             android:background="@color/colorWhite"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/generalSpace"
-            android:paddingRight="@dimen/generalSpace">
+            android:visibility="@{permissions==2?View.GONE:View.VISIBLE}">
 
             <TextView
                 android:id="@+id/tvAddMember"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/general_listview_selector"
                 android:onClick="@{()->activity.addMember()}"
                 android:paddingBottom="13dp"
+                android:paddingLeft="@dimen/generalSpace"
                 android:paddingTop="13dp"
-                android:text="添加成员"
+                android:text="编辑成员"
                 android:textColor="#7299d8"
                 android:textSize="12sp" />
 
@@ -66,12 +72,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginLeft="@dimen/generalSpace"
-                android:onClick="@{()->activity.removeMember()}"
+                android:background="@drawable/general_listview_selector"
+                android:onClick="@{()->activity.commit()}"
                 android:paddingBottom="13dp"
+                android:paddingLeft="@dimen/generalSpace"
+                android:paddingRight="@dimen/generalSpace"
                 android:paddingTop="13dp"
-                android:text="移除成员"
-                android:textColor="#ff395e"
+                android:text="完成"
+                android:textColor="#7299d8"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 

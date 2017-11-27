@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
-                android:src="@drawable/enter"
+                android:src="@drawable/choosemore"
                 android:visibility="@{flag?View.VISIBLE:View.GONE}" />
         </FrameLayout>
 
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
-                android:src="@drawable/enter"
+                android:src="@drawable/choosemore"
                 android:visibility="@{flag?View.GONE:View.VISIBLE}" />
         </FrameLayout>
     </LinearLayout>

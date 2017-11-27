@@ -11,6 +11,7 @@ import android.view.View;
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ActivityMyTasksBinding;
 import com.tuzhi.application.inter.ItemClickListener;
+import com.tuzhi.application.item.GeneralEmptyFootViewItem;
 import com.tuzhi.application.item.GeneralLoadFootViewItem;
 import com.tuzhi.application.moudle.basemvp.MVPBaseFragment;
 import com.tuzhi.application.moudle.completedtasks.CompletedTasksActivity;
@@ -64,10 +65,12 @@ public class MyTasksFragment extends MVPBaseFragment<MyTasksContract.View, MyTas
                         return completedTaskItem;
                     case GeneralLoadFootViewItem.TYPE:
                         return new GeneralLoadFootViewItem();
+                    case GeneralEmptyFootViewItem.TYPE:
+                        return new GeneralEmptyFootViewItem();
                     default:
-                        MyTasksItem MyTasksItem = new MyTasksItem();
-                        MyTasksItem.setClickListener(MyTasksFragment.this);
-                        return MyTasksItem;
+                        MyTasksItem myTasksItem = new MyTasksItem();
+                        myTasksItem.setClickListener(MyTasksFragment.this);
+                        return myTasksItem;
                 }
             }
 
@@ -99,7 +102,7 @@ public class MyTasksFragment extends MVPBaseFragment<MyTasksContract.View, MyTas
 
     @Override
     public void downloadFinish(ArrayList<MyTasksItemBean> data, boolean haveNextPage, int page) {
-        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, false);
+        binding.rrv.downLoadFinish(page, haveNextPage, mData, data, true);
     }
 
 

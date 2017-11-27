@@ -6,7 +6,6 @@ import com.tuzhi.application.BR;
 import com.tuzhi.application.bean.BaseListItemBean;
 
 /**
- *
  * @author wangpeng
  * @date 2017/8/10
  */
@@ -21,6 +20,15 @@ public class ChooseColleagueItemBean extends BaseListItemBean {
     private String title;
     private String text;
     private String time;
+    private int knowledgeRoleId;
+
+    public int getKnowledgeRoleId() {
+        return knowledgeRoleId;
+    }
+
+    public void setKnowledgeRoleId(int knowledgeRoleId) {
+        this.knowledgeRoleId = knowledgeRoleId;
+    }
 
     public String getTime() {
         return time;
@@ -61,7 +69,7 @@ public class ChooseColleagueItemBean extends BaseListItemBean {
 
     public void setText(String text) {
         this.text = text;
-        notifyPropertyChanged(com.android.databinding.library.baseAdapters.BR.text);
+        notifyPropertyChanged(BR.text);
     }
 
     @Bindable

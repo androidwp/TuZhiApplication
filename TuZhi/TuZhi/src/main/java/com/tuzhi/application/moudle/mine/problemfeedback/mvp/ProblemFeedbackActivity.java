@@ -14,6 +14,8 @@ import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ *
+ * @author wangpeng
  */
 
 public class ProblemFeedbackActivity extends MVPBaseActivity<ProblemFeedbackContract.View, ProblemFeedbackPresenter> implements ProblemFeedbackContract.View {

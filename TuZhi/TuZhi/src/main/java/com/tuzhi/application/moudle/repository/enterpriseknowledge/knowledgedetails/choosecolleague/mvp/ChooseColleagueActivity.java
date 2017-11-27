@@ -269,9 +269,6 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             case TYPE_ADD_MEMBER:
                 mPresenter.downloadAddMemberList(typeId, libID, 0);
                 break;
-            case TYPE_REMOVE_MEMBER:
-                mPresenter.downloadRemoveMemberList(typeId, libID);
-                break;
             default:
                 mPresenter.downloadDataColleague(cId, 0);
                 break;
@@ -297,9 +294,6 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
             case TYPE_ADD_MEMBER:
                 mPresenter.downloadAddMemberList(typeId, libID, page);
                 break;
-            case TYPE_REMOVE_MEMBER:
-                mPresenter.downloadRemoveMemberList(typeId, libID);
-                break;
             default:
                 mPresenter.downloadDataColleague(cId, page);
                 break;
@@ -311,9 +305,9 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
         if (newData != null) {
             dataOriginal.clear();
             dataOriginal.addAll(newData);
-        }
-        if (type.equals(TYPE_TASK_PEOPLE)) {
-            saveChooseStatue();
+            if (type.equals(TYPE_TASK_PEOPLE) || type.equals(TYPE_ADD_MEMBER)) {
+                saveChooseStatue();
+            }
         }
         binding.rrv.downLoadFinish(page, haveNextPage, data, newData, false);
     }
@@ -323,10 +317,12 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
      */
     private void saveChooseStatue() {
         for (ChooseColleagueItemBean chooseColleagueItemBean : dataOriginal) {
-            for (String id : peopleId) {
-                if (chooseColleagueItemBean.getId().equals(id)) {
-                    chooseColleagueItemBean.setChooseStatus(true);
-                    chooseData.add(chooseColleagueItemBean);
+            if (peopleId != null) {
+                for (String id : peopleId) {
+                    if (chooseColleagueItemBean.getId().equals(id)) {
+                        chooseColleagueItemBean.setChooseStatus(true);
+                        chooseData.add(chooseColleagueItemBean);
+                    }
                 }
             }
         }
@@ -354,6 +350,11 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
         back();
     }
 
+    @Override
+    public void setChoosePeoples(ArrayList<String> peopleId) {
+        this.peopleId = peopleId;
+    }
+
     public void back() {
         onBackPressed();
     }
@@ -372,10 +373,7 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
                 }
                 break;
             case TYPE_ADD_MEMBER:
-                mPresenter.commitAddMember(chooseData);
-                break;
-            case TYPE_REMOVE_MEMBER:
-                mPresenter.commitRemoveMember(chooseData);
+                sentChooseMemberList();
                 break;
             case TYPE_CHOOSE_CARD:
                 Intent intent = new Intent(this, CrepositoryActivity.class);
@@ -388,6 +386,15 @@ public class ChooseColleagueActivity extends MVPBaseActivity<ChooseColleagueCont
                 break;
         }
 
+    }
+
+
+    private void sentChooseMemberList() {
+        EventBusBean eventBusBean = new EventBusBean();
+        eventBusBean.setName(MemberListActivity.EVENT_NAME);
+        eventBusBean.setObject(chooseData);
+        EventBus.getDefault().post(eventBusBean);
+        back();
     }
 
     @Override

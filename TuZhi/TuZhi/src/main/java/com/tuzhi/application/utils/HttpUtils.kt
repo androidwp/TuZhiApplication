@@ -25,8 +25,8 @@ private val URL_IMAGE = "http://upload.tuzhikm.com:8082/upload.htm"
 //private val URL_IMAGE = "http://192.168.0.140:8081/upload.htm"
 
 //var baseUrl = "http://api.tuzhikm.com:9001/"
-//var baseUrl = "http://192.168.0.132:9001/"
-var baseUrl = "http://192.168.0.151:9001/"
+var baseUrl = "http://192.168.0.132:9001/"
+//var baseUrl = "http://192.168.0.151:9001/"
 
 val retrofit: Http by lazy {
     Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(ScalarsConverterFactory.create()).build().create(Http::class.java)
@@ -70,7 +70,7 @@ fun <T> uploadFile(context: Context, url: String, parts: Array<MultipartBody.Par
 
 fun <T> get(context: Context, url: String, parameter: WeakHashMap<String, String>, clazz: Class<T>?, callBack: HttpCallBack<T>) {
     showLog("Parameter", parameter.toString())
-    retrofit.get(url, dealParameter(parameter)).enqueue(object : Callback<String> {
+    retrofit.get(url, parameter).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>?, t: Throwable?) {
             onFailure(context, callBack, t)
         }
@@ -84,7 +84,7 @@ fun <T> get(context: Context, url: String, parameter: WeakHashMap<String, String
 
 fun <T> post(context: Context, url: String, parameter: WeakHashMap<String, String>, clazz: Class<T>?, callBack: HttpCallBack<T>) {
     showLog("Parameter", parameter.toString())
-    retrofit.post(url, dealParameter(parameter)).enqueue(object : Callback<String> {
+    retrofit.post(url, parameter).enqueue(object : Callback<String> {
         override fun onFailure(call: Call<String>?, t: Throwable?) {
             onFailure(context, callBack, t)
         }
@@ -172,9 +172,3 @@ fun getParameter(context: Context): WeakHashMap<String, String> {
     return weakMap
 }
 
-fun dealParameter(parameter: WeakHashMap<String, String>): WeakHashMap<String, String> {
-    parameter.keys
-            .filter { parameter[it] == null }
-            .forEach { parameter.put(it, "") }
-    return parameter
-}

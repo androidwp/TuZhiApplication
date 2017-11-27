@@ -1,6 +1,7 @@
 package com.tuzhi.application.moudle.memberlist;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
@@ -8,13 +9,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.tuzhi.application.R;
+import com.tuzhi.application.bean.EventBusBean;
 import com.tuzhi.application.bean.ItemBean;
 import com.tuzhi.application.databinding.ActivityMemberListBinding;
 import com.tuzhi.application.dialog.ChooseOpennessDialog;
+import com.tuzhi.application.dialog.WarnDialog;
+import com.tuzhi.application.inter.DialogMakeSureListener;
 import com.tuzhi.application.inter.ItemClickListener;
 import com.tuzhi.application.inter.OnDialogClickListener;
 import com.tuzhi.application.moudle.basemvp.MVPBaseActivity;
+import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.bean.ChooseColleagueItemBean;
 import com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedetails.choosecolleague.mvp.ChooseColleagueActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +28,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import kale.adapter.CommonRcvAdapter;
 import kale.adapter.item.AdapterItem;
@@ -36,6 +45,8 @@ import kale.adapter.item.AdapterItem;
 public class MemberListActivity extends MVPBaseActivity<MemberListContract.View, MemberListPresenter> implements MemberListContract.View, ItemClickListener, OnDialogClickListener {
 
     public static final String REFRESH = "MemberListActivity_REFRESH";
+
+    public static final String EVENT_NAME = "MemberListActivity";
     /**
      * 数据库或者频道的id
      */
@@ -53,12 +64,16 @@ public class MemberListActivity extends MVPBaseActivity<MemberListContract.View,
      */
     public static final String TYPE_CHANNEL = "2";
 
+
     private ActivityMemberListBinding binding;
     private ArrayList<ItemBean> data = new ArrayList<>();
     private CommonRcvAdapter<ItemBean> adapter;
     private String id;
     private ItemBean bean;
     private String type;
+    private int permissions;
+    private WarnDialog dialog;
+    private boolean isChange;
 
     @Override
     protected int getLayoutId() {
@@ -72,7 +87,14 @@ public class MemberListActivity extends MVPBaseActivity<MemberListContract.View,
         type = getIntent().getStringExtra(TYPE);
         binding = (ActivityMemberListBinding) viewDataBinding;
         binding.setActivity(this);
+        binding.setPermissions(2);
         mPresenter.downloadData(type, id);
+        dialog = new WarnDialog.Builder().setTitle("提示").setInfo("是否放弃保存,直接退出").setBtnLeftText("取消").setBtnRightText("确定").setClickListener(new DialogMakeSureListener() {
+            @Override
+            public void makeSure(Dialog dialog) {
+                MemberListActivity.super.onBackPressed();
+            }
+        }).builder(this);
         setAdapter();
     }
 
@@ -86,6 +108,42 @@ public class MemberListActivity extends MVPBaseActivity<MemberListContract.View,
     public void onMainEvent(String text) {
         if (TextUtils.equals(text, REFRESH)) {
             mPresenter.downloadData(type, id);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMainEvent(EventBusBean bean) {
+        if (TextUtils.equals(bean.getName(), EVENT_NAME)) {
+            ArrayList<ChooseColleagueItemBean> chooseBeans = (ArrayList<ChooseColleagueItemBean>) bean.getObject();
+            if (permissions == 0) {
+                //拥有者进入
+                ItemBean manager = data.get(0);
+                data.clear();
+                data.add(manager);
+            } else {
+                //管理员进入
+                ArrayList<ItemBean> cache = new ArrayList<>();
+                for (ItemBean datum : data) {
+                    //只删除成员
+                    if (datum.getIndex() != 2) {
+                        cache.add(datum);
+                    }
+                }
+                data.clear();
+                data.addAll(cache);
+            }
+
+            for (ChooseColleagueItemBean chooseBean : chooseBeans) {
+                ItemBean itemBean = new ItemBean(MemberListItem.TYPE);
+                itemBean.setId(chooseBean.getId());
+                itemBean.setName(chooseBean.getNickName());
+                itemBean.setImage(chooseBean.getPortrait());
+                itemBean.setIndex(chooseBean.getKnowledgeRoleId());
+                itemBean.setPermissions(itemBean.getIndex());
+                data.add(itemBean);
+                isChange = true;
+            }
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -115,12 +173,19 @@ public class MemberListActivity extends MVPBaseActivity<MemberListContract.View,
         startActivity(intent);
     }
 
-    public void removeMember() {
-        Intent intent = new Intent(this, ChooseColleagueActivity.class);
-        intent.putExtra(ChooseColleagueActivity.TYPE, ChooseColleagueActivity.TYPE_REMOVE_MEMBER);
-        intent.putExtra(ChooseColleagueActivity.LIB_ID, id);
-        intent.putExtra(ChooseColleagueActivity.TYPE_ID, type);
-        startActivity(intent);
+    public void commit() {
+        List<Map<String, String>> dealData = new ArrayList<>();
+        int i = 0;
+        for (ItemBean datum : data) {
+            if (i != 0) {
+                Map<String, String> info = new HashMap<>(2);
+                info.put("userId", datum.getId());
+                info.put("userType", datum.getIndex() + "");
+                dealData.add(info);
+            }
+            i++;
+        }
+        mPresenter.commit(type, id, JSON.toJSONString(dealData));
     }
 
     @Override
@@ -128,6 +193,27 @@ public class MemberListActivity extends MVPBaseActivity<MemberListContract.View,
         data.clear();
         data.addAll(httpData);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setPermissions(int permissions) {
+        this.permissions = permissions;
+        binding.setPermissions(permissions);
+    }
+
+    @Override
+    public void commitSuccess() {
+        super.onBackPressed();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (isChange) {
+            dialog.show();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -148,12 +234,15 @@ public class MemberListActivity extends MVPBaseActivity<MemberListContract.View,
 
     @Override
     public void onDialogClick(View view) {
+        isChange = true;
         switch (view.getId()) {
             case R.id.flOpen:
                 bean.setIndex(1);
+                bean.setPermissions(1);
                 break;
             case R.id.flSecret:
                 bean.setIndex(2);
+                bean.setPermissions(2);
                 break;
             default:
                 break;

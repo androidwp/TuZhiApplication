@@ -38,6 +38,14 @@ public class ChooseColleagueContract {
          * 提交回调
          */
         void commitSuccess();
+
+        /**
+         * 回调已选中的人
+         *
+         * @param peopleId
+         */
+
+        void setChoosePeoples(ArrayList<String> peopleId);
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -98,32 +106,12 @@ public class ChooseColleagueContract {
          *
          * @param type
          * @param id
+         * @param pageNo
          */
 
         void downloadAddMemberList(String type, String id, int pageNo);
 
-        /**
-         * 下载可移除的成员列表
-         *
-         * @param type
-         * @param id
-         */
 
-        void downloadRemoveMemberList(String type, String id);
-
-        /**
-         * 添加成员
-         *
-         * @param addMembers
-         */
-        void commitAddMember(ArrayList<ChooseColleagueItemBean> addMembers);
-
-        /**
-         * 删除成员
-         *
-         * @param addMembers
-         */
-        void commitRemoveMember(ArrayList<ChooseColleagueItemBean> addMembers);
 
 
     }

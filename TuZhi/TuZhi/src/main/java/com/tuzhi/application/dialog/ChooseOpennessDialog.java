@@ -8,7 +8,6 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.DialogChooseOpennessBinding;
 
 /**
- *
  * @author wangpeng
  * @date 2017/11/10
  */
@@ -40,6 +39,8 @@ public class ChooseOpennessDialog extends BaseDialog {
                 break;
             case 2:
                 binding.setData(jurisdiction);
+                break;
+            default:
                 break;
         }
 

@@ -282,11 +282,11 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
     }
 
     @Override
-    public void downloadAddMemberList(String type, String id, int pageNo) {
+    public void downloadAddMemberList(String type, final String id, int pageNo) {
         WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
         parameter.put("oType", type);
         parameter.put("oId", id);
-        parameter.put("pageNo", pageNo+"");
+        parameter.put("pageNo", pageNo + "");
         HttpUtilsKt.get(mView.getContext(), URL_ADD_MEMBER_LIST, parameter, HttpMemberListBean.class, new HttpCallBack<HttpMemberListBean>() {
             @Override
             public void onFinish() {
@@ -297,14 +297,20 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
             public void onSuccess(HttpMemberListBean memberListBean, String text) {
                 List<HttpMemberListBean.StaffMapListBean> staffMapList = memberListBean.getStaffMapList();
                 ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
+                ArrayList<String> peopleIds = new ArrayList<>();
                 for (HttpMemberListBean.StaffMapListBean resultBean : staffMapList) {
                     ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
                     chooseColleagueItemBean.setId(resultBean.getId());
                     chooseColleagueItemBean.setNickName(resultBean.getNickname());
                     chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
-                    chooseColleagueItemBean.setChooseStatus(false);
+                    chooseColleagueItemBean.setKnowledgeRoleId(resultBean.getKnowledgeRoleId());
+                    chooseColleagueItemBean.setChooseStatus(resultBean.isSelect());
+                    if (chooseColleagueItemBean.isChooseStatus()) {
+                        peopleIds.add(chooseColleagueItemBean.getId());
+                    }
                     arrayList.add(chooseColleagueItemBean);
                 }
+                mView.setChoosePeoples(peopleIds);
                 mView.downloadFinish(arrayList, false, 0);
             }
 
@@ -313,48 +319,5 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
 
             }
         });
-    }
-
-    @Override
-    public void downloadRemoveMemberList(String type, String id) {
-        WeakHashMap<String, String> parameter = HttpUtilsKt.getParameter(mView.getContext());
-        parameter.put("oType", type);
-        parameter.put("oId", id);
-        HttpUtilsKt.get(mView.getContext(), URL_REMOVE_MEMBER_LIST, parameter, HttpMemberListBean.class, new HttpCallBack<HttpMemberListBean>() {
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onSuccess(HttpMemberListBean memberListBean, String text) {
-                List<HttpMemberListBean.StaffMapListBean> staffMapList = memberListBean.getStaffMapList();
-                ArrayList<ChooseColleagueItemBean> arrayList = new ArrayList<>();
-                for (HttpMemberListBean.StaffMapListBean resultBean : staffMapList) {
-                    ChooseColleagueItemBean chooseColleagueItemBean = new ChooseColleagueItemBean(ChooseColleagueItem.TYPE);
-                    chooseColleagueItemBean.setId(resultBean.getId());
-                    chooseColleagueItemBean.setNickName(resultBean.getNickname());
-                    chooseColleagueItemBean.setPortrait(resultBean.getUserImage());
-                    chooseColleagueItemBean.setChooseStatus(false);
-                    arrayList.add(chooseColleagueItemBean);
-                }
-                mView.downloadFinish(arrayList, false, 0);
-            }
-
-            @Override
-            public void onFailure(String text) {
-
-            }
-        });
-    }
-
-    @Override
-    public void commitAddMember(ArrayList<ChooseColleagueItemBean> addMembers) {
-        mView.commitSuccess();
-    }
-
-    @Override
-    public void commitRemoveMember(ArrayList<ChooseColleagueItemBean> addMembers) {
-        mView.commitSuccess();
     }
 }

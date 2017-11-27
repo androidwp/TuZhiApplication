@@ -2,7 +2,6 @@ package com.tuzhi.application.moudle.repository.enterpriseknowledge.knowledgedet
 
 import android.databinding.DataBindingUtil;
 import android.view.View;
-import android.widget.CompoundButton;
 
 import com.tuzhi.application.R;
 import com.tuzhi.application.databinding.ItemChooseColleagueBinding;
@@ -43,9 +42,9 @@ public class ChooseColleagueItem extends BaseItem<ChooseColleagueItemBean> {
         binding.executePendingBindings();
     }
 
-    public void itemClick(View view, ChooseColleagueItemBean ChooseColleagueItemBean) {
+    public void itemClick(View view, ChooseColleagueItemBean chooseColleagueItemBean) {
         if (clickListener != null) {
-            view.setTag(ChooseColleagueItemBean);
+            view.setTag(chooseColleagueItemBean);
             clickListener.onItemClick(view);
         }
     }

@@ -12,15 +12,14 @@ import java.util.ArrayList;
 import kale.adapter.CommonRcvAdapter;
 
 /**
- *
  * @author wangpeng
  * @date 2017/11/7
  */
 
 public class NewTaskBean extends BaseObservable {
     private String taskId;
-    private String taskTitle="";
-    private String taskSummary="";
+    private String taskTitle = "";
+    private String taskSummary = "";
     private Person taskManager;
     private ArrayList<Person> taskPeople;
     private ArrayList<String> taskCards;
@@ -109,7 +108,7 @@ public class NewTaskBean extends BaseObservable {
         if (taskPeople.size() > 5) {
             setTaskPeopleNumber("等" + taskPeople.size() + "人参与");
         } else {
-            setTaskPeopleNumber("");
+            setTaskPeopleNumber("参与");
         }
         notifyPropertyChanged(BR.taskPeople);
     }

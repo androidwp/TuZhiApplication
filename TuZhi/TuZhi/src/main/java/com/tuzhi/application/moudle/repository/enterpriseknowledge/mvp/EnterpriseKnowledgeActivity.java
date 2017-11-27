@@ -123,7 +123,10 @@ public class EnterpriseKnowledgeActivity extends MVPBaseActivity<EnterpriseKnowl
     }
 
     public void skipMemberManagementActivity() {
-        ActivitySkipUtilsKt.toActivity(this, MemberListActivity.class, MemberListActivity.ID, kcId);
+        Intent intent = new Intent(this, MemberListActivity.class);
+        intent.putExtra(MemberListActivity.ID, kcId);
+        intent.putExtra(MemberListActivity.TYPE, MemberListActivity.TYPE_CHANNEL);
+        startActivity(intent);
     }
 
     public void back() {

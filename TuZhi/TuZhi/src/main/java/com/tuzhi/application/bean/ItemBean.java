@@ -87,6 +87,9 @@ public class ItemBean extends BaseListItemBean {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public void setPermissions(int index) {
         setText(jurisdiction[index]);
     }
 
