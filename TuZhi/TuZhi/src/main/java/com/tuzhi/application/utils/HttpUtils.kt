@@ -7,6 +7,7 @@ import android.view.View
 import com.alibaba.fastjson.JSONObject.parseObject
 import okhttp3.MediaType
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,7 +30,7 @@ var baseUrl = "http://192.168.0.132:9001/"
 //var baseUrl = "http://192.168.0.151:9001/"
 
 val retrofit: Http by lazy {
-    Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(ScalarsConverterFactory.create()).build().create(Http::class.java)
+    Retrofit.Builder().client(OkHttpClient()).baseUrl(baseUrl).addConverterFactory(ScalarsConverterFactory.create()).build().create(Http::class.java)
 }
 
 interface Http {

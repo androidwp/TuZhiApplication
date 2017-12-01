@@ -10,8 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.WeakHashMap;
+
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * MVPPlugin
@@ -37,16 +40,23 @@ public class ChooseKnowledgeLibPresenter extends BasePresenterImpl<ChooseKnowled
 
             @Override
             public void onSuccess(@Nullable HttpRepositoryListBean httpRepositoryListBean, @NotNull String text) {
-                ArrayList<ItemBean> data = new ArrayList<>();
-                List<HttpRepositoryListBean.KnowledgeLibsMapBean> knowledgeLibsMap = httpRepositoryListBean.getKnowledgeLibsMap();
-                for (HttpRepositoryListBean.KnowledgeLibsMapBean knowledgeLibsMapBean : knowledgeLibsMap) {
-                    ItemBean bean = new ItemBean(ChooseKnowledgeLibItem.TYPE);
-                    bean.setId(knowledgeLibsMapBean.getId());
-                    bean.setTitle(knowledgeLibsMapBean.getName());
-                    bean.setText(knowledgeLibsMapBean.getContentCount() + " 知识频道");
-                    bean.setImage(knowledgeLibsMapBean.getCoverImage());
-                    data.add(bean);
-                }
+                final ArrayList<ItemBean> data = new ArrayList<>();
+                Observable.just(httpRepositoryListBean).flatMap(new Func1<HttpRepositoryListBean, Observable<HttpRepositoryListBean.KnowledgeLibsMapBean>>() {
+                    @Override
+                    public Observable<HttpRepositoryListBean.KnowledgeLibsMapBean> call(HttpRepositoryListBean httpRepositoryListBean) {
+                        return Observable.from(httpRepositoryListBean.getKnowledgeLibsMap());
+                    }
+                }).subscribe(new Action1<HttpRepositoryListBean.KnowledgeLibsMapBean>() {
+                    @Override
+                    public void call(HttpRepositoryListBean.KnowledgeLibsMapBean knowledgeLibsMapBean) {
+                        ItemBean bean = new ItemBean(ChooseKnowledgeLibItem.TYPE);
+                        bean.setId(knowledgeLibsMapBean.getId());
+                        bean.setTitle(knowledgeLibsMapBean.getName());
+                        bean.setText(knowledgeLibsMapBean.getContentCount() + " 知识频道");
+                        bean.setImage(knowledgeLibsMapBean.getCoverImage());
+                        data.add(bean);
+                    }
+                });
                 mView.downLoadFinish(data);
             }
 

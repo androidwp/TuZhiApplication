@@ -15,10 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
+import rx.Observable;
+import rx.Observer;
 
 /**
  * MVPPlugin
@@ -52,14 +50,19 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
                 final boolean next = articlePage.isNext();
                 final int index = articlePage.getIndex();
                 final List<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean> result = articlePage.getResult();
-                Observable.fromIterable(result).subscribe(new Observer<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean>() {
+                Observable.from(result).subscribe(new Observer<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean>() {
                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+                    public void onCompleted() {
+                        mView.downloadFinish(knowledgeChannelMap, index, next, data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
 
                     }
 
                     @Override
-                    public void onNext(@NonNull HttpKnowledgeModuleBean.ArticlePageBean.ResultBean resultBean) {
+                    public void onNext(HttpKnowledgeModuleBean.ArticlePageBean.ResultBean resultBean) {
                         KnowledgeCardItemBean cardItemBean = new KnowledgeCardItemBean(EnterpriseKnowledgeListItem.TYPE);
                         cardItemBean.setId(resultBean.getId());
                         cardItemBean.setTitle(resultBean.getTitle());
@@ -77,18 +80,7 @@ public class EnterpriseKnowledgePresenter extends BasePresenterImpl<EnterpriseKn
                         cardItemBean.setJoinPortraits(partners);
                         data.add(cardItemBean);
                     }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.downloadFinish(knowledgeChannelMap, index, next, data);
-                    }
                 });
-
             }
 
             @Override

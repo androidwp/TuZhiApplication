@@ -9,6 +9,7 @@ import java.util.WeakHashMap;
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
+ * @author wangpeng
  */
 
 public class ApplyForTrialPresenter extends BasePresenterImpl<ApplyForTrialContract.View> implements ApplyForTrialContract.Presenter {

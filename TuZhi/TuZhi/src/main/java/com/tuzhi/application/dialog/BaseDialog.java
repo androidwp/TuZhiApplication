@@ -11,7 +11,9 @@ import com.tuzhi.application.R;
 import com.tuzhi.application.inter.OnDialogClickListener;
 
 /**
- * Created by wangpeng on 2017/11/10.
+ *
+ * @author wangpeng
+ * @date 2017/11/10
  */
 
 public abstract class BaseDialog extends AlertDialog {
@@ -50,15 +52,6 @@ public abstract class BaseDialog extends AlertDialog {
             view.setTag(object);
             clickListener.onDialogClick(view);
             dismiss();
-        }
-    }
-
-    public void onViewClick(View view, Object... objects) {
-        if (clickListener != null) {
-            for (int i = 0; i < objects.length; i++) {
-                view.setTag(i, objects[i]);
-            }
-            clickListener.onDialogClick(view);
         }
     }
 }

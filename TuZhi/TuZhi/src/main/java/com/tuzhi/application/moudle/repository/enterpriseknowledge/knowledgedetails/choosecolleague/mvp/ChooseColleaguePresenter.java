@@ -23,11 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.WeakHashMap;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
@@ -140,30 +135,25 @@ public class ChooseColleaguePresenter extends BasePresenterImpl<ChooseColleagueC
                 final boolean next = articlePage.isNext();
                 final int index = articlePage.getIndex();
                 final List<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean> result = articlePage.getResult();
-                Observable.fromIterable(result).subscribe(new Observer<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean>() {
+                rx.Observable.from(result).subscribe(new rx.Observer<HttpKnowledgeModuleBean.ArticlePageBean.ResultBean>() {
                     @Override
-                    public void onSubscribe(@NonNull Disposable d) {
+                    public void onCompleted() {
+                        mView.downloadFinish(data, next, index);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
 
                     }
 
                     @Override
-                    public void onNext(@NonNull HttpKnowledgeModuleBean.ArticlePageBean.ResultBean resultBean) {
+                    public void onNext(HttpKnowledgeModuleBean.ArticlePageBean.ResultBean resultBean) {
                         ChooseColleagueItemBean cardItemBean = new ChooseColleagueItemBean(ChooseCardItem.TYPE);
                         cardItemBean.setId(resultBean.getId());
                         cardItemBean.setTitle(resultBean.getTitle());
                         cardItemBean.setPortrait(resultBean.getAuthor());
                         cardItemBean.setTime(resultBean.getUpdateTime());
                         data.add(cardItemBean);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        mView.downloadFinish(data, next, index);
                     }
                 });
 
